@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>z0archy · Zer0 architecture</title>
+<style>
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%; overflow:hidden; font-family:Helvetica,Arial,sans-serif;}
+  #viewport{position:fixed; inset:0; touch-action:none; cursor:grab; overflow:hidden;}
+  #viewport.dragging{cursor:grabbing;}
+  #world{position:absolute; left:0; top:0; width:100px; height:100px; transform-origin:0 0;}
+  #bootmsg{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:60;
+    background:#FCFBF7; text-align:center; padding:30px;
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:13px; color:#62666F; line-height:1.7;}
+  #edgelayer{position:absolute; left:0; top:0; overflow:visible; pointer-events:none;}
+
+  .node{position:absolute; opacity:.55; transition:opacity .7s ease; cursor:pointer; user-select:none;
+    -webkit-user-select:none; will-change:transform;}
+  #slidecard{position:absolute; width:380px; background:#fff; border:1.5px solid #DDD8CB; border-radius:16px;
+    padding:16px 20px 15px; box-shadow:0 2px 8px rgba(90,80,60,.08); opacity:0; pointer-events:none;
+    transition:opacity .55s ease .12s, left .7s ease, top .7s ease;}
+  #slidecard.in{opacity:1;}
+  #slidecard .t{font-weight:bold; font-size:21px; letter-spacing:-.01em; color:#1D1F23; line-height:1.2;}
+  #slidecard .c{font-size:12.5px; color:#62666F; font-style:italic; margin-top:6px; line-height:1.45;}
+  .node.on{opacity:1;}
+  .node.hid{opacity:0 !important; pointer-events:none;}
+  .edge.hid, .elabel.hid{opacity:0 !important;}
+  .node .t{font-weight:bold; line-height:1.22; letter-spacing:-.01em;}
+  .node .s{font-size:11px; margin-top:3px; line-height:1.35;}
+  .node .x{font-size:10px; margin-top:5px; line-height:1.5;
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;}
+  .node.is-ring{display:flex; flex-direction:column; align-items:center; justify-content:center;}
+
+  .minilists{display:flex; gap:7px; margin-top:6px;}
+  .minilists .col{border:1px solid #E7E3D9; border-radius:6px; padding:5px 8px; background:#fff;
+    font-family:ui-monospace,Menlo,Consolas,monospace; font-size:8.5px; color:#1D1F23;}
+  .minilists .col .h{color:#9BA0A8; border-bottom:1px solid #E7E3D9; margin-bottom:3px; padding-bottom:2px;}
+  .minilists .col div{line-height:1.55; white-space:nowrap;}
+  .minilists .d{color:#6FA83C;} .minilists .e{color:#A87B3E;}
+
+  .edge{fill:none; opacity:.08; transition:opacity .7s ease;}
+  .edge.on{opacity:.9;} .edge.half{opacity:.3;}
+  .elabel{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; opacity:0;
+    transition:opacity .7s ease; text-anchor:middle; paint-order:stroke; stroke-width:4px;}
+  .elabel.on{opacity:1;}
+
+  #brand{position:fixed; top:18px; left:22px; font-size:12px; z-index:10; pointer-events:none; letter-spacing:.02em;}
+  #legend{position:fixed; top:42px; left:22px; z-index:10; pointer-events:none;
+    font-family:ui-monospace,Menlo,Consolas,monospace; font-size:10px; color:#62666F;
+    background:#fff; border:1px solid #E7E3D9; border-radius:9px; padding:6px 11px;}
+  #legend i{display:inline-block; width:8px; height:8px; border-radius:99px; margin:0 4px 0 10px; vertical-align:-1px;}
+  #legend i:first-child{margin-left:0;}
+  #tip{position:fixed; z-index:30; max-width:270px; background:#1D1F23; color:#F3F1EA; font-size:11.5px;
+    line-height:1.5; padding:9px 12px; border-radius:9px; pointer-events:none; opacity:0;
+    transition:opacity .18s ease; font-family:Helvetica,Arial,sans-serif;}
+  #tip.show{opacity:.96;}
+  #caption{position:fixed; left:22px; bottom:20px; z-index:10; max-width:min(580px,68vw); pointer-events:none;}
+  #caption .num{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11px; margin-bottom:4px;}
+  #caption .tt{font-size:20px; font-weight:bold; letter-spacing:-.01em;}
+  #caption .cc{font-size:12.5px; font-style:italic; margin-top:4px; line-height:1.4;}
+  #nav{position:fixed; right:22px; bottom:20px; z-index:10; display:flex; gap:8px; align-items:center;}
+  #nav button{border:1.5px solid #E7E3D9; background:#fff; border-radius:999px; width:42px; height:42px;
+    font-size:17px; cursor:pointer;}
+  #nav button.wide{width:auto; padding:0 15px; font-size:12px; font-family:ui-monospace,Menlo,Consolas,monospace;}
+  #nav button:hover{border-color:#574CE3; color:#574CE3;}
+  #dots{position:fixed; bottom:74px; right:26px; display:flex; gap:5px; z-index:10;}
+  #dots i{width:6px; height:6px; border-radius:999px; background:#E7E3D9; cursor:pointer; transition:background .3s;}
+  #dots i.on{background:#574CE3;}
+  #hint{position:fixed; top:18px; right:22px; font-size:11px; z-index:10; text-align:right;
+    font-family:ui-monospace,Menlo,Consolas,monospace; pointer-events:none; line-height:1.6;}
+
+  #panel{position:fixed; top:0; right:0; bottom:0; width:270px; background:rgba(255,255,255,.94);
+    border-left:1px solid #E7E3D9; z-index:20; padding:18px 18px 90px; overflow-y:auto;
+    transform:translateX(100%); transition:transform .35s ease;
+    font-family:ui-monospace,Menlo,Consolas,monospace;}
+  #panel.open{transform:translateX(0);}
+  #panel h3{font-size:12px; color:#1D1F23; margin-bottom:2px; font-family:Helvetica,Arial,sans-serif;}
+  #panel .slidename{font-size:10px; color:#9BA0A8; margin-bottom:14px; word-break:break-all;}
+  #panel .row{margin-bottom:11px;}
+  #panel label{display:flex; justify-content:space-between; font-size:10px; color:#62666F; margin-bottom:3px;}
+  #panel label b{color:#574CE3; font-weight:normal;}
+  #panel input[type=range]{width:100%; accent-color:#574CE3;}
+  #panel .btns{display:flex; flex-direction:column; gap:7px; margin-top:16px;}
+  #panel button{border:1.5px solid #E7E3D9; background:#fff; border-radius:8px; padding:8px 10px;
+    font-size:11px; cursor:pointer; font-family:inherit; text-align:left;}
+  #panel button:hover{border-color:#574CE3; color:#574CE3;}
+  #panel .note{font-size:9.5px; color:#9BA0A8; margin-top:14px; line-height:1.6;}
+  #jsonmodal{position:fixed; inset:0; background:rgba(29,31,35,.45); z-index:40; display:none;
+    align-items:center; justify-content:center;}
+  #jsonmodal.open{display:flex;}
+  #jsonmodal .box{background:#fff; border-radius:14px; padding:18px; width:min(720px,90vw); height:min(560px,80vh);
+    display:flex; flex-direction:column; gap:10px;}
+  #jsonmodal textarea{flex:1; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:10.5px;
+    border:1px solid #E7E3D9; border-radius:8px; padding:10px; resize:none;}
+  #jsonmodal .mrow{display:flex; gap:8px; justify-content:flex-end;}
+  #jsonmodal button{border:1.5px solid #E7E3D9; background:#fff; border-radius:8px; padding:7px 14px;
+    font-size:12px; cursor:pointer;}
+  #toast{position:fixed; top:60px; right:22px; z-index:50; background:#1D1F23; color:#fff; font-size:12px;
+    padding:9px 16px; border-radius:999px; opacity:0; transition:opacity .3s;
+    font-family:ui-monospace,Menlo,Consolas,monospace; pointer-events:none;}
+  #toast.show{opacity:1;}
+  @media (max-width:700px){
+    #hint{display:none;} #dots{display:none;}
+    #caption{bottom:86px; max-width:calc(100vw - 44px);}
+    #caption .tt{font-size:16px;} #caption .cc{font-size:11.5px;}
+    #nav{left:22px; right:22px; justify-content:flex-end;}
+    #nav button{width:38px; height:38px; font-size:15px;}
+    #nav button.wide{padding:0 11px; font-size:11px; height:38px;}
+    #panel{width:min(270px, 86vw);}
+  }
+</style>
+</head>
+<body>
+<div id="viewport"><div id="world"><svg id="edgelayer" width="100" height="100"></svg></div></div>
+<div id="bootmsg">loading the graph…<br><br>if this message stays, this preview can’t run scripts —<br>download the file and open it in a browser.</div>
+<script>
+// surface any failure on screen instead of a silent blank page
+function __showErr(msg, line, err){
+  var b = document.getElementById("bootmsg");
+  if(!b) return;
+  var stack = (err && err.stack) ? String(err.stack).split("\n").slice(0,4).join("<br>") : "";
+  b.style.display = "flex";
+  b.innerHTML = "something went wrong loading the deck:<br><br><b>" + msg + "</b>" +
+    (line ? " (line " + line + ")" : "") +
+    (stack ? "<br><br><span style='font-size:10px'>" + stack + "</span>" : "") +
+    "<br><br><span style='font-size:10px'>" + navigator.userAgent + "</span>";
+}
+window.onerror = function(msg, src, line, col, err){ __showErr(msg, line, err); };
+window.addEventListener("unhandledrejection", function(e){
+  __showErr(e.reason && e.reason.message ? e.reason.message : String(e.reason), 0, e.reason);
+});
+</script>
+
+<div id="brand"></div>
+<div id="legend"><i style="background:#574CE3"></i>runtime<i style="background:#2D7DD2"></i>decision<i style="background:#A87B3E"></i>measurement<i style="background:#5E9430"></i>research<i style="background:#8B5CF6"></i>compute</div>
+<div id="tip"></div>
+<div id="hint">← → scenes · drag pan · scroll/pinch zoom<br>e edit · o whole graph · click dim node to travel · hover for detail</div>
+<div id="caption"><div class="num"></div><div class="tt"></div><div class="cc"></div></div>
+<div id="dots"></div>
+<div id="nav">
+  <button class="wide" id="editbtn">edit</button>
+  <button class="wide" id="ovbtn">whole graph</button>
+  <button id="prevbtn">‹</button>
+  <button id="nextbtn">›</button>
+</div>
+
+<div id="panel">
+  <h3>slide view</h3>
+  <div class="slidename"></div>
+  <div id="sliders"></div>
+  <div class="btns">
+    <button id="copyjson">copy deck JSON</button>
+    <button id="viewjson">view / paste JSON…</button>
+    <button id="loadjson">load .json file…</button>
+    <button id="undolayout">undo layout edits on this slide</button>
+  </div>
+  <div class="note">drag any node to move it — in edit mode the new position is written into the deck (in view mode it springs back). “copy deck JSON” exports everything, including moved nodes and slider changes.</div>
+  <input type="file" id="filein" accept=".json,application/json" style="display:none">
+</div>
+
+<div id="jsonmodal"><div class="box">
+  <textarea spellcheck="false"></textarea>
+  <div class="mrow"><button id="applyjson">apply</button><button id="closejson">close</button></div>
+</div></div>
+<div id="toast"></div>
+
+<script>
+"use strict";
+/* ============================================================
+   z0archy — Zer0 architecture visualization, adapted from graph-deck.
+   graph-deck — a knowledge-graph presentation engine (no forces).
+   Nodes live at authored positions and float free. On slide switch
+   the camera centers + zooms to the slide's nodes with a margin,
+   and every node not in the slide glides out past the window edge.
+   ============================================================ */
+
+const $ = s => document.querySelector(s);
+const world = $("#world"), svg = $("#edgelayer"), vp = $("#viewport");
+
+const LAYOUT_SCHEMA = [
+  ["floatAmp",   0, 12, .5, "float"],
+  ["fitMargin", 40, 340, 10, "fit margin"],
+  ["pushMargin", 0, 420, 10, "push margin"],
+  ["zoomMax",   .5, 1.6, .05, "max zoom"],
+];
+
+let deck, S;
+let nodes = {}, edgeObjs = [], scenes = [];
+let cur = 0, freeCam = false, editMode = false;
+let cam = {x:2000,y:1200,s:.3};
+let frameCount = 0;
+let camTarget = null;          // {x,y,s}
+let pushCtx = null;            // {cx,cy,rw,rh,margin} in world coords
+let posSnapshot = {};          // slideId -> {nodeId: [x,y]} for undo
+
+function layoutOf(sl){ return Object.assign({}, deck.layoutDefaults||{}, (sl&&sl.layout)||{}); }
+function styleFor(kindStr, map){
+  const out = Object.assign({}, map.default || {});
+  (kindStr||"").split(/\s+/).forEach(k=>{ if(map[k]) Object.assign(out, map[k]); });
+  return out;
+}
+
+/* ---------------- boot ---------------- */
+function boot(newDeck){
+  deck = newDeck; S = deck.styling || {};
+  const cv = S.canvas || {};
+  document.body.style.background = cv.background || "#FCFBF7";
+  document.body.style.fontFamily = cv.fontFamily || "Helvetica,Arial,sans-serif";
+  document.body.style.color = cv.ink || "#1D1F23";
+  $("#brand").innerHTML = `<b>${deck.meta.title}</b> · ${deck.meta.event||""} · ${deck.meta.date||""}`;
+  $("#brand").style.color = cv.lgray || "#9BA0A8";
+  $("#brand").querySelector("b").style.color = cv.ink || "#1D1F23";
+  $("#caption .num").style.color = cv.lgray||"#9BA0A8";
+  $("#caption .cc").style.color = cv.gray||"#62666F";
+
+  world.querySelectorAll(".node").forEach(n=>n.remove());
+  svg.innerHTML = "";
+  nodes = {}; edgeObjs = []; scenes = []; posSnapshot = {}; lastCardScene = -1;
+  $("#dots").innerHTML = "";
+  let card = document.getElementById("slidecard");
+  if(!card){
+    card = document.createElement("div"); card.id = "slidecard";
+    card.innerHTML = '<div class="t"></div><div class="c"></div>';
+  }
+  world.appendChild(card);
+
+  deck.slides.forEach(sl=>{
+    sl.layout = sl.layout || {};
+    posSnapshot[sl.id] = {};
+    sl.nodes.forEach((nd,idx)=>{
+      if(!nd.pos){ const a=idx/sl.nodes.length*6.283; nd.pos=[Math.round(Math.cos(a)*200), Math.round(Math.sin(a)*160)]; }
+      posSnapshot[sl.id][nd.id] = [...nd.pos];
+      const st = styleFor(nd.kind, S.nodeStyles||{});
+      const el = document.createElement("div");
+      el.className = "node";
+      const isRing = (nd.kind||"").includes("ring");
+      if(isRing){ el.classList.add("is-ring"); el.style.width = el.style.height = (nd.r*2)+"px"; }
+      else el.style.width = (nd.w||180)+"px";
+      el.style.background = st.background ?? "#fff";
+      el.style.border = `${st.borderWidth??1.5}px solid ${st.borderColor??"#E7E3D9"}`;
+      el.style.borderRadius = (st.radius??12)+"px";
+      el.style.padding = isRing ? "0 18px" : (st.padding??"10px 14px 11px");
+      el.style.textAlign = st.align || "left";
+      if(st.shadow !== false && !isRing) el.style.boxShadow = "0 1px 3px rgba(90,80,60,.07)";
+      let h = "";
+      if(nd.title) h += `<div class="t" style="color:${st.titleColor??"#1D1F23"};font-size:${st.titleSize??15}px">${nd.title}</div>`;
+      if(nd.sub)   h += `<div class="s" style="color:${st.subColor??"#62666F"}">${nd.sub}</div>`;
+      if(nd.body)  h += `<div class="x" style="color:${st.bodyColor??"#9BA0A8"}">${nd.body}</div>`;
+      if(nd.image && deck.assets && deck.assets[nd.image]) h += deck.assets[nd.image];
+      el.innerHTML = h;
+      world.appendChild(el);
+      const w = el.offsetWidth, hh = el.offsetHeight;
+      nodes[nd.id] = {
+        id:nd.id, def:nd, slide:sl, el, w, h:hh,
+        r: nd.r||0, isRing,
+        phase: nd.floatPhase!=null ? nd.floatPhase : (idx*1.83)%6.283,
+        px:0, py:0,          // eased push displacement
+        tx:0, ty:0,          // temporary drag offset (view mode)
+        fx:0, fy:0,          // current rendered world pos (filled per frame)
+      };
+      attachNodePointer(nodes[nd.id]);
+    });
+  });
+
+  const mkEdge = (e)=>{
+    const st = styleFor(e.kind||"default", S.edgeStyles||{});
+    const p = document.createElementNS("http://www.w3.org/2000/svg","path");
+    p.setAttribute("class","edge");
+    p.style.stroke = st.stroke ?? "#D9D4C7";
+    p.style.strokeWidth = st.width ?? 1.6;
+    if(st.dash) p.style.strokeDasharray = st.dash;
+    svg.insertBefore(p, svg.firstChild);
+    let lab = null;
+    if(e.label){
+      lab = document.createElementNS("http://www.w3.org/2000/svg","text");
+      lab.setAttribute("class","elabel");
+      lab.textContent = e.label;
+      lab.style.fill = st.labelColor ?? "#9BA0A8";
+      lab.style.stroke = (S.canvas&&S.canvas.background)||"#FCFBF7";
+      svg.appendChild(lab);
+    }
+    edgeObjs.push({e, kind:e.kind||"default", a:e.from, b:e.to, p, lab});
+  };
+  deck.slides.forEach(sl=> (sl.edges||[]).forEach(mkEdge));
+  (deck.connections||[]).forEach(mkEdge);
+
+  // a slide's scene = its own nodes + any nodes it `include`s from other slides (shared nodes)
+  scenes = deck.slides.map(sl=>({slide:sl, title:sl.title, cap:sl.caption,
+    ids:[...sl.nodes.map(n=>n.id), ...((sl.include||[]).filter(id=>nodes[id]))]}));
+  const ov = (deck.meta.overview)||{};
+  scenes.push({slide:null, title:ov.title||"Overview", cap:ov.caption||"", ids:Object.keys(nodes), overview:true});
+  scenes.forEach((sc,i)=>{
+    const d = document.createElement("i");
+    d.addEventListener("click",()=>go(i));
+    $("#dots").appendChild(d);
+  });
+  // size the world (and edge canvas) to the content, not a fixed giant layer —
+  // oversized composited layers can render blank on mobile WebKit
+  let mx=0, my=0;
+  Object.values(nodes).forEach(n=>{
+    mx=Math.max(mx, homeX(n)+(n.isRing?n.r:n.w/2));
+    my=Math.max(my, homeY(n)+(n.isRing?n.r:n.h/2));
+  });
+  world.style.width=(mx+300)+"px"; world.style.height=(my+300)+"px";
+  svg.setAttribute("width",mx+300); svg.setAttribute("height",my+300);
+  const bm=$("#bootmsg"); if(bm) bm.style.display="none";
+  go(0);
+}
+
+/* ---------------- positions ---------------- */
+function homeX(n){ return n.slide.anchor[0] + n.def.pos[0]; }
+function homeY(n){ return n.slide.anchor[1] + n.def.pos[1]; }
+
+/* ---------------- scenes / reveal steps ---------------- */
+let actSet = new Set();
+let revealed = 0;   // reveal steps within the current slide (node step > revealed = hidden)
+function stepOf(sl, n){
+  if(n.slide === sl) return n.def.step || 0;
+  if(sl && sl.includeSteps && sl.includeSteps[n.id]) return sl.includeSteps[n.id];
+  return 0;
+}
+function isHidden(n){
+  const sl = scenes[cur] && scenes[cur].slide;
+  return !!(sl && stepOf(sl, n) > revealed);
+}
+function maxStep(sc){
+  if(!sc.slide) return 0;
+  let m = sc.slide.nodes.reduce((x,nd)=>Math.max(x, nd.step||0), 0);
+  if(sc.slide.includeSteps) for(const k in sc.slide.includeSteps) m = Math.max(m, sc.slide.includeSteps[k]);
+  return m;
+}
+function refreshEdgeHid(){
+  edgeObjs.forEach(eo=>{
+    const hid = nodes[eo.a].el.classList.contains("hid") || nodes[eo.b].el.classList.contains("hid");
+    eo.p.classList.toggle("hid", hid);
+    if(eo.lab) eo.lab.classList.toggle("hid", hid);
+  });
+}
+function updateVisibility(){
+  Object.values(nodes).forEach(n=> n.el.classList.toggle("hid", isHidden(n)));
+  refreshEdgeHid();
+}
+function visibleIds(sc){ return sc.ids.filter(id=>!isHidden(nodes[id])); }
+let staggerTimers = [];
+function staggerReveal(sc){
+  // reveal the freshly-unlocked nodes one by one, starting with whatever connects to what's in view
+  staggerTimers.forEach(clearTimeout); staggerTimers = [];
+  const fresh = sc.ids.filter(id => stepOf(sc.slide, nodes[id]) === revealed);
+  const vis = new Set(sc.ids.filter(id => !isHidden(nodes[id]) && !fresh.includes(id)));
+  const pool = new Set(fresh), order = [];
+  while(pool.size){
+    let pick = null;
+    for(const id of pool){
+      if(edgeObjs.some(e => (e.a===id && vis.has(e.b)) || (e.b===id && vis.has(e.a)))){ pick = id; break; }
+    }
+    if(!pick) pick = pool.values().next().value;
+    pool.delete(pick); vis.add(pick); order.push(pick);
+  }
+  order.forEach(id => nodes[id].el.classList.add("hid"));
+  refreshEdgeHid();
+  order.forEach((id,i)=>{
+    staggerTimers.push(setTimeout(()=>{ nodes[id].el.classList.remove("hid"); refreshEdgeHid(); }, 80 + i*140));
+  });
+}
+function highlight(ids, ov){
+  actSet = new Set(ids);
+  Object.values(nodes).forEach(n=> n.el.classList.toggle("on", actSet.has(n.id)));
+  edgeObjs.forEach(eo=>{
+    const both = actSet.has(eo.a) && actSet.has(eo.b);
+    const one = actSet.has(eo.a) || actSet.has(eo.b);
+    const isSpine = eo.kind==="spine", isCross = eo.kind==="cross";
+    const on = ov ? !isSpine : both;
+    eo.p.classList.toggle("on", on);
+    eo.p.classList.toggle("half", !on && (ov ? isSpine : (one && isCross)));
+    if(eo.lab) eo.lab.classList.toggle("on", ov ? isCross : both);
+  });
+}
+let lastCardScene = -1;
+function updateNum(){
+  $("#caption .num").textContent = String(cur+1).padStart(2,"0")+" / "+scenes.length +
+    (maxStep(scenes[cur]) ? "  ·  "+revealed+"/"+maxStep(scenes[cur]) : "");
+}
+function setCard(title, cap, refade){
+  const card = $("#slidecard");
+  card.querySelector(".t").textContent = title;
+  card.querySelector(".c").textContent = cap || "";
+  if(refade){ card.classList.remove("in"); void card.offsetWidth; card.classList.add("in"); }
+}
+function applyScene(){
+  const sc = scenes[cur];
+  hideTip();
+  highlight(visibleIds(sc), !!sc.overview);
+  updateVisibility();
+  updateNum();
+  setCard(sc.title, sc.cap, lastCardScene !== cur);
+  lastCardScene = cur;
+  [...$("#dots").children].forEach((d,k)=>d.classList.toggle("on",k===cur));
+  refreshPanel();
+}
+
+function computeFit(){
+  const sc = scenes[cur];
+  const L = layoutOf(sc.slide);
+  let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
+  sc.ids.forEach(id=>{
+    const n=nodes[id];
+    if(isHidden(n)) return;
+    const hw = n.isRing? n.r : n.w/2, hh = n.isRing? n.r : n.h/2;
+    x0=Math.min(x0,homeX(n)-hw); y0=Math.min(y0,homeY(n)-hh);
+    x1=Math.max(x1,homeX(n)+hw); y1=Math.max(y1,homeY(n)+hh);
+  });
+  if(sc.overview){
+    // the finale replays every slide's window — keep the moving border fully in view
+    for(let i=0;i<deck.slides.length;i++){
+      const w = slideWindow(i);
+      x0=Math.min(x0,w.cx-w.rw); y0=Math.min(y0,w.cy-w.rh);
+      x1=Math.max(x1,w.cx+w.rw); y1=Math.max(y1,w.cy+w.rh);
+    }
+  }
+  // floating title card sits above the slide content and is part of the fit
+  const card = $("#slidecard");
+  const noCard = sc.slide && sc.slide.layout && sc.slide.layout.noCard;
+  card.style.display = noCard ? "none" : "";
+  if(!noCard){
+    card.style.left = x0+"px";
+    const ch = card.offsetHeight || 110;
+    card.style.top = (y0 - ch - 70)+"px";
+    y0 = y0 - ch - 100;
+    x1 = Math.max(x1, x0 + 400);
+  }
+
+  const pad = L.fitMargin ?? 150;
+  const vw = innerWidth-(editMode?270:0), vh = innerHeight;
+  const s = Math.min(vw/(x1-x0+pad*2), vh/(y1-y0+pad*2+40), L.zoomMax ?? 1.15);
+  const cx = (x0+x1)/2, cy = (y0+y1)/2 + 14;
+  camTarget = {x:cx, y:cy, s};
+  pushCtx = sc.overview ? null : {
+    cx, cy,
+    rw: vw/2/s, rh: vh/2/s,
+    margin: L.pushMargin ?? 160,
+  };
+}
+
+function go(i){
+  cur = (i+scenes.length)%scenes.length;
+  revealed = 0;
+  freeCam = false;
+  applyScene();
+  computeFit();
+  if(scenes[cur].overview) startTour(); else stopTour();
+}
+function advance(){          // next = reveal the next step, or move to the next slide
+  if(revealed < maxStep(scenes[cur])){
+    revealed++;
+    const sc = scenes[cur];
+    hideTip();
+    highlight(visibleIds(sc), false);
+    updateVisibility();
+    staggerReveal(sc);
+    updateNum();
+    computeFit();
+  }
+  else go(cur+1);
+}
+function back(){
+  if(revealed > 0){ revealed--; applyScene(); computeFit(); }
+  else go(cur-1);
+}
+
+/* ---------------- finale tour: the window itself replays the slides ----------------
+   Camera stays at the zoomed-out fit; a visible border rect tweens between each
+   slide's content window (same fit math), and highlight + push-out follow it. */
+let tour = null, tourRect = null;
+function slideWindow(i){
+  const sc = scenes[i], L = layoutOf(sc.slide);   // steps count as revealed here (tour shows everything)
+  let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
+  sc.ids.forEach(id=>{
+    const n=nodes[id];
+    const hw = n.isRing? n.r : n.w/2, hh = n.isRing? n.r : n.h/2;
+    x0=Math.min(x0,homeX(n)-hw); y0=Math.min(y0,homeY(n)-hh);
+    x1=Math.max(x1,homeX(n)+hw); y1=Math.max(y1,homeY(n)+hh);
+  });
+  const pad = L.fitMargin ?? 150;
+  const vw = innerWidth-(editMode?270:0), vh = innerHeight;
+  const s = Math.min(vw/(x1-x0+pad*2), vh/(y1-y0+pad*2+80), L.zoomMax ?? 1.15);
+  return {cx:(x0+x1)/2, cy:(y0+y1)/2+14, rw:vw/2/s, rh:vh/2/s, margin:L.pushMargin ?? 160};
+}
+function easeIO(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+function startTour(){
+  if(!tourRect){
+    tourRect = document.createElementNS("http://www.w3.org/2000/svg","rect");
+    tourRect.style.fill = "none";
+    tourRect.style.stroke = "#574CE3";
+    tourRect.style.transition = "opacity .5s ease";
+  }
+  svg.appendChild(tourRect);
+  tourRect.style.opacity = .85;
+  tour = {i:-1, phase:"pause", until:performance.now()+500, cur:null};
+}
+function stopTour(){
+  if(!tour) return;
+  tour = null;
+  if(tourRect) tourRect.style.opacity = 0;
+}
+function tourStep(now){
+  if(now >= tour.until){
+    if(tour.phase === "pause"){
+      tour.i = (tour.i+1) % deck.slides.length;
+      tour.to = slideWindow(tour.i);
+      tour.from = tour.cur || tour.to;
+      tour.phase = "move"; tour.t0 = now; tour.until = now + 700;
+      // same highlight + push-out logic as visiting the slide — the box is the window
+      highlight(scenes[tour.i].ids, false);
+      pushCtx = {cx:tour.to.cx, cy:tour.to.cy, rw:tour.to.rw, rh:tour.to.rh, margin:tour.to.margin};
+      setCard(scenes[tour.i].title, scenes[tour.i].cap, false);
+      const tc = $("#slidecard");
+      tc.style.left = (tour.to.cx - tour.to.rw + 40)+"px";
+      tc.style.top = (tour.to.cy - tour.to.rh + 40)+"px";
+    } else {
+      tour.phase = "pause"; tour.until = now + 500;
+    }
+  }
+  if(!tour.to) return;   // waiting for the first step
+  let r;
+  if(tour.phase === "move"){
+    const k = easeIO(Math.min(1,(now-tour.t0)/700));
+    r = { cx: tour.from.cx+(tour.to.cx-tour.from.cx)*k,
+          cy: tour.from.cy+(tour.to.cy-tour.from.cy)*k,
+          rw: tour.from.rw+(tour.to.rw-tour.from.rw)*k,
+          rh: tour.from.rh+(tour.to.rh-tour.from.rh)*k };
+  } else r = tour.to;
+  tour.cur = r;
+  tourRect.setAttribute("x", r.cx-r.rw); tourRect.setAttribute("y", r.cy-r.rh);
+  tourRect.setAttribute("width", r.rw*2); tourRect.setAttribute("height", r.rh*2);
+  tourRect.setAttribute("rx", 16/cam.s);
+  tourRect.style.strokeWidth = 2.4/cam.s;
+}
+function travelTo(id){
+  if(new Set(scenes[cur].ids).has(id)) return;
+  const i = deck.slides.findIndex(sl=>sl.nodes.some(n=>n.id===id));
+  if(i>=0) go(i);
+}
+
+/* ---------------- push-out targets ---------------- */
+function pushTarget(n){
+  if(!pushCtx) return [0,0];
+  if(actSet.has(n.id)) return [0,0];
+  const hx=homeX(n), hy=homeY(n);
+  let dx=hx-pushCtx.cx, dy=hy-pushCtx.cy;
+  if(!dx && !dy){ dx=0; dy=1; }
+  const hw = n.isRing? n.r : n.w/2, hh = n.isRing? n.r : n.h/2;
+  const RW = pushCtx.rw + hw + pushCtx.margin;
+  const RH = pushCtx.rh + hh + pushCtx.margin;
+  const m = Math.max(Math.abs(dx)/RW, Math.abs(dy)/RH);
+  if(m >= 1) return [0,0];                 // already outside the window
+  const k = 1/m;                           // scale ray until it exits the rect
+  return [dx*(k-1), dy*(k-1)];
+}
+
+/* ---------------- render loop ---------------- */
+function frame(t){
+  if(tour) tourStep(t);
+  // camera
+  if(camTarget && !freeCam){
+    cam.x += (camTarget.x-cam.x)*.065;
+    cam.y += (camTarget.y-cam.y)*.065;
+    cam.s += (camTarget.s-cam.s)*.065;
+  }
+  const vw=innerWidth-(editMode?270:0);
+  world.style.transform = `translate(${vw/2-cam.x*cam.s}px, ${innerHeight/2-cam.y*cam.s}px) scale(${cam.s})`;
+
+  // nodes: home + float + eased push + temp drag
+  Object.values(nodes).forEach(n=>{
+    const L = layoutOf(n.slide);
+    const amp = L.floatAmp ?? 3.5;
+    const dxf = Math.sin(t*.00055+n.phase)*amp;
+    const dyf = Math.cos(t*.00045+n.phase*1.4)*amp;
+    const [ptx,pty] = pushTarget(n);
+    n.px += (ptx-n.px)*.06;
+    n.py += (pty-n.py)*.06;
+    if(!n.dragging){ n.tx*=.88; n.ty*=.88; }   // spring back after view-mode drag
+    n.fx = homeX(n)+dxf+n.px+n.tx;
+    n.fy = homeY(n)+dyf+n.py+n.ty;
+    n.el.style.transform = `translate(${n.fx-n.w/2}px, ${n.fy-n.h/2}px)`;
+  });
+  if(tipFor) positionTip(tipFor);
+
+  // edges (every other frame — halves paint cost, kills fullscreen flicker)
+  frameCount++;
+  if(frameCount % 2) { requestAnimationFrame(frame); return; }
+  edgeObjs.forEach(eo=>{
+    const A=nodes[eo.a], B=nodes[eo.b];
+    if(!A||!B) return;
+    const [ax,ay]=borderPoint(A,B.fx,B.fy);
+    const [bx,by]=borderPoint(B,A.fx,A.fy);
+    let d;
+    const curve = eo.e.curve;
+    if(curve){
+      const mx=(ax+bx)/2, my=(ay+by)/2;
+      let px=-(by-ay), py=(bx-ax);
+      const l=Math.hypot(px,py)||1;
+      d=`M ${ax} ${ay} Q ${mx+px/l*curve} ${my+py/l*curve} ${bx} ${by}`;
+    } else d=`M ${ax} ${ay} L ${bx} ${by}`;
+    eo.p.setAttribute("d",d);
+    if(eo.lab){
+      eo.lab.setAttribute("x",(ax+bx)/2);
+      eo.lab.setAttribute("y",(ay+by)/2-8-(curve?curve*.42:0));
+    }
+  });
+  requestAnimationFrame(frame);
+}
+function borderPoint(n, tx, ty){
+  const dx=tx-n.fx, dy=ty-n.fy;
+  if(!dx && !dy) return [n.fx,n.fy];
+  if(n.isRing){ const d=Math.hypot(dx,dy); return [n.fx+dx/d*n.r, n.fy+dy/d*n.r]; }
+  const hw=n.w/2+6, hh=n.h/2+6;
+  const s=Math.min(dx?hw/Math.abs(dx):1e9, dy?hh/Math.abs(dy):1e9, 1);
+  return [n.fx+dx*s, n.fy+dy*s];
+}
+
+/* ---------------- interaction ---------------- */
+let dragging=null, panning=null;
+function attachNodePointer(n){
+  n.el.addEventListener("pointerdown", ev=>{
+    ev.stopPropagation();
+    dragging={n, sx:ev.clientX, sy:ev.clientY, ox:[...n.def.pos], otx:n.tx, oty:n.ty, moved:false};
+    n.dragging=true;
+    try{ n.el.setPointerCapture(ev.pointerId); }catch(_){}
+  });
+  n.el.addEventListener("pointermove", ev=>{
+    if(!dragging || dragging.n!==n) return;
+    const dx=(ev.clientX-dragging.sx)/cam.s, dy=(ev.clientY-dragging.sy)/cam.s;
+    if(Math.abs(dx)+Math.abs(dy)>4) dragging.moved=true;
+    if(!dragging.moved) return;
+    if(editMode){
+      n.def.pos[0]=dragging.ox[0]+dx;
+      n.def.pos[1]=dragging.ox[1]+dy;
+    } else {
+      n.tx=dragging.otx+dx; n.ty=dragging.oty+dy;
+    }
+  });
+  n.el.addEventListener("pointerup", ()=>{
+    if(!dragging || dragging.n!==n) return;
+    n.dragging=false;
+    if(!dragging.moved){
+      if(actSet.has(n.id) && n.def.tip){ tipFor===n ? hideTip() : showTip(n); }  // tap active node → tooltip
+      else travelTo(n.id);
+    }
+    else if(editMode) computeFit();          // bounds may have changed
+    dragging=null;
+  });
+  n.el.addEventListener("pointerenter", ()=>{ if(n.def.tip && !n.el.classList.contains("hid")) showTip(n); });
+  n.el.addEventListener("pointerleave", ()=>{ if(tipFor===n) hideTip(); });
+}
+const touches = new Map();   // active pointers on the background (pan + pinch)
+let pinch = null;
+vp.addEventListener("pointerdown", e=>{
+  hideTip();
+  touches.set(e.pointerId, {x:e.clientX, y:e.clientY});
+  if(touches.size===1){
+    panning={px:e.clientX,py:e.clientY,cx:cam.x,cy:cam.y};
+  } else if(touches.size===2){
+    panning=null;
+    const [a,b]=[...touches.values()];
+    const mid={x:(a.x+b.x)/2, y:(a.y+b.y)/2};
+    pinch={ d0:Math.hypot(a.x-b.x,a.y-b.y)||1, s0:cam.s,
+            wx:cam.x+(mid.x-innerWidth/2)/cam.s, wy:cam.y+(mid.y-innerHeight/2)/cam.s };
+  }
+  vp.classList.add("dragging");
+  try{ vp.setPointerCapture(e.pointerId); }catch(_){}
+});
+vp.addEventListener("pointermove", e=>{
+  if(!touches.has(e.pointerId)) return;
+  touches.set(e.pointerId, {x:e.clientX, y:e.clientY});
+  if(pinch && touches.size>=2){
+    freeCam=true;
+    const [a,b]=[...touches.values()];
+    const mid={x:(a.x+b.x)/2, y:(a.y+b.y)/2};
+    const d=Math.hypot(a.x-b.x,a.y-b.y)||1;
+    cam.s=Math.min(2.4, Math.max(.12, pinch.s0*d/pinch.d0));
+    cam.x=pinch.wx-(mid.x-innerWidth/2)/cam.s;
+    cam.y=pinch.wy-(mid.y-innerHeight/2)/cam.s;
+    return;
+  }
+  if(!panning) return;
+  const dx=e.clientX-panning.px, dy=e.clientY-panning.py;
+  if(Math.abs(dx)+Math.abs(dy)>3) freeCam=true;
+  if(freeCam){ cam.x=panning.cx-dx/cam.s; cam.y=panning.cy-dy/cam.s; }
+});
+function endTouch(e){
+  touches.delete(e.pointerId);
+  if(touches.size<2) pinch=null;
+  if(touches.size===1){
+    const [a]=[...touches.values()];
+    panning={px:a.x,py:a.y,cx:cam.x,cy:cam.y};
+  } else if(touches.size===0){
+    panning=null; vp.classList.remove("dragging");
+  }
+}
+vp.addEventListener("pointerup", endTouch);
+vp.addEventListener("pointercancel", endTouch);
+vp.addEventListener("wheel", e=>{
+  e.preventDefault(); freeCam=true;
+  const k=Math.exp(-e.deltaY*.0012);
+  const wx0=cam.x+(e.clientX-innerWidth/2)/cam.s, wy0=cam.y+(e.clientY-innerHeight/2)/cam.s;
+  cam.s=Math.min(2.4, Math.max(.12, cam.s*k));
+  cam.x=wx0-(e.clientX-innerWidth/2)/cam.s;
+  cam.y=wy0-(e.clientY-innerHeight/2)/cam.s;
+},{passive:false});
+
+$("#nextbtn").onclick=advance;
+$("#prevbtn").onclick=back;
+$("#ovbtn").onclick=()=>go(scenes.length-1);
+$("#editbtn").onclick=toggleEdit;
+addEventListener("keydown", e=>{
+  if(e.target.tagName==="TEXTAREA"||e.target.tagName==="INPUT"||e.target.tagName==="SELECT") return;
+  if(e.key==="ArrowRight"||e.key===" ") advance();
+  else if(e.key==="ArrowLeft") back();
+  else if(e.key.toLowerCase()==="o") go(scenes.length-1);
+  else if(e.key.toLowerCase()==="e") toggleEdit();
+});
+
+/* ---------------- tooltips (node.tip) ---------------- */
+const tipEl = $("#tip");
+let tipFor = null;
+function showTip(n){
+  tipFor = n;
+  tipEl.textContent = n.def.tip;
+  tipEl.classList.add("show");
+  positionTip(n);
+}
+function positionTip(n){
+  const r = n.el.getBoundingClientRect();
+  tipEl.style.left = "0px"; tipEl.style.top = "0px";           // reset before measuring
+  const tw = tipEl.offsetWidth, th = tipEl.offsetHeight;
+  let x = r.left + r.width/2 - tw/2, y = r.top - th - 10;
+  x = Math.max(10, Math.min(innerWidth - tw - 10, x));
+  if(y < 10) y = r.bottom + 10;
+  tipEl.style.left = x+"px"; tipEl.style.top = y+"px";
+}
+function hideTip(){ tipFor = null; tipEl.classList.remove("show"); }
+addEventListener("resize", ()=>{ if(!freeCam) computeFit(); });
+
+/* ---------------- edit panel ---------------- */
+function toggleEdit(){
+  editMode=!editMode;
+  $("#panel").classList.toggle("open", editMode);
+  $("#editbtn").textContent = editMode?"done":"edit";
+  refreshPanel(); computeFit();
+}
+function curSlide(){ return scenes[cur].slide; }
+function refreshPanel(){
+  if(!editMode) return;
+  const sl = curSlide();
+  $("#panel .slidename").textContent = sl? `slide: ${sl.id}` : "overview — pick a slide to edit";
+  const holder = $("#sliders");
+  holder.innerHTML = "";
+  if(!sl) return;
+  const L = layoutOf(sl);
+  LAYOUT_SCHEMA.forEach(([key,min,max,step,label])=>{
+    const row=document.createElement("div"); row.className="row";
+    row.innerHTML=`<label>${label} <b>${L[key]}</b></label>
+      <input type="range" min="${min}" max="${max}" step="${step}" value="${L[key]}">`;
+    const inp=row.querySelector("input"), val=row.querySelector("b");
+    inp.addEventListener("input",()=>{
+      sl.layout[key]=parseFloat(inp.value);
+      val.textContent=inp.value;
+      computeFit();
+    });
+    holder.appendChild(row);
+  });
+}
+$("#undolayout").onclick=()=>{
+  const sl=curSlide(); if(!sl) return;
+  sl.nodes.forEach(nd=>{ if(posSnapshot[sl.id][nd.id]) nd.pos=[...posSnapshot[sl.id][nd.id]]; });
+  computeFit();
+  toast("layout restored on "+sl.id);
+};
+function deckJSON(){
+  // round positions for a clean export
+  deck.slides.forEach(sl=>sl.nodes.forEach(nd=>{ if(nd.pos) nd.pos=[Math.round(nd.pos[0]), Math.round(nd.pos[1])]; }));
+  return JSON.stringify(deck, null, 2);
+}
+$("#copyjson").onclick=async ()=>{
+  try{ await navigator.clipboard.writeText(deckJSON()); toast("deck JSON copied"); }
+  catch(e){ openModal(); }
+};
+$("#viewjson").onclick=openModal;
+function openModal(){ $("#jsonmodal").classList.add("open"); $("#jsonmodal textarea").value=deckJSON(); }
+$("#closejson").onclick=()=>$("#jsonmodal").classList.remove("open");
+$("#applyjson").onclick=()=>{
+  try{ boot(JSON.parse($("#jsonmodal textarea").value)); $("#jsonmodal").classList.remove("open"); toast("deck loaded"); }
+  catch(err){ toast("invalid JSON: "+err.message); }
+};
+$("#loadjson").onclick=()=>$("#filein").click();
+$("#filein").addEventListener("change", e=>{
+  const f=e.target.files[0]; if(!f) return;
+  f.text().then(txt=>{ boot(JSON.parse(txt)); toast("loaded "+f.name); }).catch(()=>toast("invalid JSON"));
+});
+addEventListener("dragover", e=>e.preventDefault());
+addEventListener("drop", e=>{
+  e.preventDefault();
+  const f=e.dataTransfer.files[0]; if(!f) return;
+  f.text().then(txt=>{ boot(JSON.parse(txt)); toast("loaded "+f.name); }).catch(()=>toast("invalid JSON"));
+});
+let toastTimer=null;
+function toast(msg){
+  const t=$("#toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),2200);
+}
+
+// deck embedded directly in the executing script — separate JSON script tags
+// get stripped by some HTML-preview sanitizers, which left the page blank
+async function loadZ0Deck(){
+  try {
+    const res = await fetch("./deck.json", {cache:"no-store"});
+    if(!res.ok) throw new Error("deck.json: HTTP " + res.status);
+    const data = await res.json();
+    boot(data);
+    requestAnimationFrame(frame);
+  } catch(err) {
+    __showErr(err.message || String(err), 0, err);
+  }
+}
+loadZ0Deck();
+</script>
+</body>
+</html>
