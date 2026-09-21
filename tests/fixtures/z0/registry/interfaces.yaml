@@ -1,0 +1,4 @@
+interfaces:
+  runtime.event.v1:
+    owner: runtime
+    summary: Fixture event.
