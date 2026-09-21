@@ -1,0 +1,29 @@
+components:
+  runtime:
+    name: Runtime
+    repo: example/runtime
+    kind: runtime
+    status: canary
+    execution: live
+    profiles: [core]
+    depends_on: []
+    integrates_with: [metrics]
+    provides: [runtime.event.v1]
+    consumes: []
+    install:
+      branch: main
+      ref: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  metrics:
+    name: Metrics
+    repo: example/metrics
+    kind: measurement
+    status: experimental
+    execution: shadow
+    profiles: [core]
+    depends_on: [runtime]
+    integrates_with: [runtime]
+    provides: []
+    consumes: [runtime.event.v1]
+    install:
+      branch: main
+      ref: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
