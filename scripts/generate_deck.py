@@ -47,11 +47,23 @@ def grid_pos(i: int, n: int) -> list[int]:
     step = width / max(cols - 1, 1)
     return [round(x0 + col * step), row * 260]
 
-def build() -> dict:
-    component_doc = fetch_yaml("registry/components.yaml")
-    interface_doc = fetch_yaml("registry/interfaces.yaml")
-    components = component_doc["components"]
-    interfaces = interface_doc["interfaces"]
+def build(graph: dict | None = None) -> dict:
+    if graph is None:
+        component_doc = fetch_yaml("registry/components.yaml")
+        interface_doc = fetch_yaml("registry/interfaces.yaml")
+        components = component_doc["components"]
+        interfaces = interface_doc["interfaces"]
+    else:
+        components = {
+            n["attributes"]["component_id"]: n["attributes"]
+            for n in graph.get("nodes", [])
+            if n.get("type") == "component"
+        }
+        interfaces = {
+            n["attributes"]["interface"]: n["attributes"]
+            for n in graph.get("nodes", [])
+            if n.get("type") == "interface"
+        }
 
     plane_of = {cid: PLANE_BY_KIND.get(c.get("kind"), "decision") for cid, c in components.items()}
     component_ids = list(components)
@@ -96,6 +108,12 @@ def build() -> dict:
                 "w": 300,
                 "kind": f"hub {style}",
                 "tip": tip,
+                "meta": {
+                    "component": cid,
+                    "repo": c.get("repo"),
+                    "canonicalBranch": (c.get("install") or {}).get("branch"),
+                    "canonicalRef": (c.get("install") or {}).get("ref"),
+                },
             })
         slides.append({
             "id": pid,
@@ -190,11 +208,14 @@ def build() -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--graph", default="generated/graph.json")
     parser.add_argument("--output", default="deck.json")
     args = parser.parse_args()
+    graph_path = Path(args.graph)
+    graph = json.loads(graph_path.read_text(encoding="utf-8")) if graph_path.exists() else None
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(build(), indent=2) + "\n", encoding="utf-8")
+    output.write_text(json.dumps(build(graph), indent=2) + "\n", encoding="utf-8")
     print(f"wrote {output}")
 
 if __name__ == "__main__":
