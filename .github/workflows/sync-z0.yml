@@ -1,0 +1,32 @@
+name: sync-z0
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r requirements.txt
+      - run: python scripts/generate_deck.py
+      - run: python scripts/validate_deck.py deck.json
+      - name: Commit registry projection when changed
+        run: |
+          if git diff --quiet -- deck.json; then
+            echo "deck already matches kvnloo/z0"
+            exit 0
+          fi
+          git config user.name "z0archy-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add deck.json
+          git commit -m "chore: sync architecture from kvnloo/z0"
+          git push
