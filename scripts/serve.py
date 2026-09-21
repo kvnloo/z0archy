@@ -2,11 +2,14 @@
 from __future__ import annotations
 
 import argparse
+import sys
 import json
 import threading
 import time
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from z0archy_core.local_git import build_local_snapshot_from_git_roots, discover_git_roots
 
