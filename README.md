@@ -34,7 +34,7 @@ Declared z0 facts never get silently overwritten by Git or local observations.
 
 ## Hosted mode
 
-GitHub Pages rebuilds every three hours and on `main` pushes.
+GitHub Pages rebuilds every three hours and on `main` pushes. The repository must have Pages configured once with **Source: GitHub Actions**; the workflow deliberately does not request repository-administration permission to create the Pages site itself.
 
 The build:
 
