@@ -70,6 +70,17 @@
   #hint{position:fixed; top:18px; right:22px; font-size:11px; z-index:10; text-align:right;
     font-family:ui-monospace,Menlo,Consolas,monospace; pointer-events:none; line-height:1.6;}
 
+
+  #sourcebar{position:fixed; top:14px; left:50%; transform:translateX(-50%); z-index:16;
+    display:flex; align-items:center; gap:6px; max-width:min(780px,72vw); padding:6px 8px;
+    background:rgba(255,255,255,.94); border:1px solid #E7E3D9; border-radius:11px;
+    box-shadow:0 2px 8px rgba(90,80,60,.06); font-family:ui-monospace,Menlo,Consolas,monospace;}
+  #sourcebar select{min-width:105px; max-width:240px; border:1px solid #E7E3D9; background:#fff;
+    color:#1D1F23; border-radius:7px; padding:5px 7px; font:10px ui-monospace,Menlo,Consolas,monospace;}
+  #sourcebar #componentselect{min-width:150px;}
+  #sourcebar #refselect{min-width:180px; max-width:320px;}
+  #sourcebar .state{font-size:9px; color:#62666F; white-space:nowrap;}
+
   #panel{position:fixed; top:0; right:0; bottom:0; width:270px; background:rgba(255,255,255,.94);
     border-left:1px solid #E7E3D9; z-index:20; padding:18px 18px 90px; overflow-y:auto;
     transform:translateX(100%); transition:transform .35s ease;
@@ -102,6 +113,9 @@
   #toast.show{opacity:1;}
   @media (max-width:700px){
     #hint{display:none;} #dots{display:none;}
+    #sourcebar{left:12px; right:12px; top:48px; transform:none; max-width:none; flex-wrap:wrap;}
+    #sourcebar select{flex:1; min-width:92px; max-width:none;}
+    #sourcebar .state{width:100%;}
     #caption{bottom:86px; max-width:calc(100vw - 44px);}
     #caption .tt{font-size:16px;} #caption .cc{font-size:11.5px;}
     #nav{left:22px; right:22px; justify-content:flex-end;}
@@ -136,6 +150,16 @@ window.addEventListener("unhandledrejection", function(e){
 <div id="legend"><i style="background:#574CE3"></i>runtime<i style="background:#2D7DD2"></i>decision<i style="background:#A87B3E"></i>measurement<i style="background:#5E9430"></i>research<i style="background:#8B5CF6"></i>compute</div>
 <div id="tip"></div>
 <div id="hint">← → scenes · drag pan · scroll/pinch zoom<br>e edit · o whole graph · click dim node to travel · hover for detail</div>
+<div id="sourcebar">
+  <select id="sourcesel" aria-label="evidence source">
+    <option value="canonical">canonical</option>
+    <option value="github">github</option>
+    <option value="local">local</option>
+  </select>
+  <select id="componentselect" aria-label="component"></select>
+  <select id="refselect" aria-label="branch or worktree"></select>
+  <span class="state" id="refstate"></span>
+</div>
 <div id="caption"><div class="num"></div><div class="tt"></div><div class="cc"></div></div>
 <div id="dots"></div>
 <div id="nav">
@@ -306,6 +330,7 @@ function boot(newDeck){
   svg.setAttribute("width",mx+300); svg.setAttribute("height",my+300);
   const bm=$("#bootmsg"); if(bm) bm.style.display="none";
   go(0);
+  window.dispatchEvent(new CustomEvent("z0archy:boot"));
 }
 
 /* ---------------- positions ---------------- */
@@ -825,5 +850,6 @@ async function loadZ0Deck(){
 }
 loadZ0Deck();
 </script>
+<script src="./sourcebar.js"></script>
 </body>
 </html>

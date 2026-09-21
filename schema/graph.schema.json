@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kvnloo/z0archy/schema/graph.schema.json",
+  "title": "z0archy graph IR",
+  "type": "object",
+  "required": ["schemaVersion", "snapshot", "nodes", "edges"],
+  "properties": {
+    "schemaVersion": {"type": "string"},
+    "snapshot": {
+      "type": "object",
+      "required": ["truthClass", "source"],
+      "properties": {
+        "generatedAt": {"type": ["string", "null"]},
+        "truthClass": {"enum": ["declared", "implemented", "observed", "historical", "derived"]},
+        "source": {
+          "type": "object",
+          "required": ["repo", "ref"],
+          "properties": {
+            "repo": {"type": "string"},
+            "ref": {"type": "string"}
+          }
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "label", "attributes", "provenance"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^z0://"},
+          "type": {"type": "string"},
+          "label": {"type": "string"},
+          "attributes": {"type": "object"},
+          "provenance": {"type": "array", "minItems": 1}
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "source", "target"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^z0://edge/"},
+          "type": {"type": "string"},
+          "source": {"type": "string", "pattern": "^z0://"},
+          "target": {"type": "string", "pattern": "^z0://"}
+        }
+      }
+    }
+  }
+}
