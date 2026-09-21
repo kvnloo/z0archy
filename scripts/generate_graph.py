@@ -23,6 +23,14 @@ def main() -> None:
     )
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
+    if out.exists():
+        old = json.loads(out.read_text(encoding="utf-8"))
+        old_cmp = json.loads(json.dumps(old))
+        new_cmp = json.loads(json.dumps(graph))
+        (old_cmp.get("snapshot") or {}).pop("generatedAt", None)
+        (new_cmp.get("snapshot") or {}).pop("generatedAt", None)
+        if old_cmp == new_cmp:
+            graph["snapshot"]["generatedAt"] = old.get("snapshot", {}).get("generatedAt")
     out.write_text(json.dumps(graph, indent=2, sort_keys=False) + "\n", encoding="utf-8")
     print(f"wrote {out}: {len(graph['nodes'])} nodes, {len(graph['edges'])} edges")
 
