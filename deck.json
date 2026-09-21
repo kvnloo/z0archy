@@ -1,0 +1,791 @@
+{
+  "meta": {
+    "title": "z0archy",
+    "author": "Zer0",
+    "event": "live architecture",
+    "date": "generated from kvnloo/z0",
+    "source": "https://github.com/kvnloo/z0",
+    "overview": {
+      "title": "Whole Zer0 graph",
+      "caption": "Every registered component and contract in one spatial map. Use the arrow keys for guided plane-by-plane navigation."
+    }
+  },
+  "styling": {
+    "canvas": {
+      "background": "#FCFBF7",
+      "fontFamily": "Helvetica, Arial, sans-serif",
+      "monoFamily": "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
+      "ink": "#1D1F23",
+      "gray": "#62666F",
+      "lgray": "#9BA0A8",
+      "hair": "#E7E3D9"
+    },
+    "nodeStyles": {
+      "default": {
+        "background": "#FFFFFF",
+        "borderColor": "#E7E3D9",
+        "borderWidth": 1.5,
+        "titleColor": "#1D1F23",
+        "titleSize": 16,
+        "subColor": "#62666F",
+        "bodyColor": "#9BA0A8",
+        "radius": 12,
+        "padding": "10px 14px 11px",
+        "shadow": true
+      },
+      "indigo": {
+        "borderColor": "#574CE3",
+        "titleColor": "#574CE3"
+      },
+      "runtime": {
+        "borderColor": "#574CE3",
+        "titleColor": "#574CE3"
+      },
+      "decision": {
+        "borderColor": "#2D7DD2",
+        "titleColor": "#2D7DD2"
+      },
+      "measurement": {
+        "borderColor": "#A87B3E",
+        "titleColor": "#A87B3E"
+      },
+      "environment": {
+        "borderColor": "#5E9430",
+        "titleColor": "#5E9430"
+      },
+      "compute": {
+        "borderColor": "#8B5CF6",
+        "titleColor": "#8B5CF6"
+      },
+      "research": {
+        "borderColor": "#118A7E",
+        "titleColor": "#118A7E"
+      },
+      "memory": {
+        "borderColor": "#C05684",
+        "titleColor": "#C05684"
+      },
+      "contract": {
+        "borderColor": "#62666F",
+        "titleColor": "#62666F",
+        "background": "#F8F7F3"
+      },
+      "hub": {
+        "titleSize": 22,
+        "radius": 16,
+        "padding": "15px 21px"
+      },
+      "mega": {
+        "titleSize": 30,
+        "padding": "18px 26px"
+      },
+      "tiny": {
+        "titleSize": 12,
+        "radius": 10,
+        "padding": "8px 11px"
+      }
+    },
+    "edgeStyles": {
+      "default": {
+        "stroke": "#D9D4C7",
+        "width": 1.5,
+        "labelColor": "#9BA0A8"
+      },
+      "depends": {
+        "stroke": "#1D1F23",
+        "width": 2.3,
+        "labelColor": "#62666F"
+      },
+      "integrates": {
+        "stroke": "#C9C4B8",
+        "width": 1.2,
+        "dash": "5 7",
+        "labelColor": "#9BA0A8"
+      },
+      "provides": {
+        "stroke": "#2D7DD2",
+        "width": 1.4,
+        "labelColor": "#2D7DD2"
+      },
+      "consumes": {
+        "stroke": "#A87B3E",
+        "width": 1.2,
+        "dash": "3 6",
+        "labelColor": "#A87B3E"
+      }
+    }
+  },
+  "layoutDefaults": {
+    "floatAmp": 2.5,
+    "fitMargin": 150,
+    "pushMargin": 170,
+    "zoomMax": 1.05
+  },
+  "slides": [
+    {
+      "id": "system",
+      "title": "Zer0",
+      "caption": "A federation of independently useful repos joined by contracts, measurement, routing, execution and verified learning. z0 is the canonical map; z0archy is this visual projection.",
+      "anchor": [
+        2500,
+        250
+      ],
+      "nodes": [
+        {
+          "id": "z0-root",
+          "title": "Zer0",
+          "sub": "canonical architecture registry",
+          "body": "kvnloo/z0",
+          "pos": [
+            0,
+            0
+          ],
+          "w": 420,
+          "kind": "mega indigo",
+          "tip": "Source of truth for component boundaries, profiles and cross-system interfaces. z0archy renders it; it does not replace it."
+        }
+      ],
+      "include": [
+        "oh-my-pi",
+        "z0intelligence",
+        "openjev",
+        "aodl",
+        "tokenomics",
+        "agenttrace",
+        "flow",
+        "kerdoios",
+        "evolution-lab",
+        "frontier-kb",
+        "memento"
+      ],
+      "layout": {
+        "fitMargin": 180,
+        "zoomMax": 0.72,
+        "noCard": false
+      }
+    },
+    {
+      "id": "interaction",
+      "title": "Interaction + runtime",
+      "caption": "Where users and agents actually act. OMP owns execution; learned policy does not bypass runtime authority.",
+      "anchor": [
+        900,
+        1100
+      ],
+      "nodes": [
+        {
+          "id": "oh-my-pi",
+          "title": "OMP (Oh My Pi)",
+          "sub": "runtime · canary · canary",
+          "body": "kvnloo/oh-my-pi",
+          "pos": [
+            -290,
+            0
+          ],
+          "w": 300,
+          "kind": "hub runtime",
+          "tip": "Coding agent runtime: CLI, RPC, RLM context spill, Jev decisions, Handsfree HUD, Live voice, and computer-use stage manager.\\n\\nrepo: kvnloo/oh-my-pi\\nstatus: canary\\nexecution: canary"
+        }
+      ],
+      "layout": {
+        "fitMargin": 150,
+        "zoomMax": 1
+      }
+    },
+    {
+      "id": "decision",
+      "title": "Decision + contracts",
+      "caption": "Typed intent, bounded scorers and learned routing live here. Legal actions are filtered before learned selection.",
+      "anchor": [
+        2500,
+        1100
+      ],
+      "nodes": [
+        {
+          "id": "z0intelligence",
+          "title": "z0intelligence",
+          "sub": "intelligence · experimental · log_only",
+          "body": "kvnloo/z0intelligence",
+          "pos": [
+            -380,
+            0
+          ],
+          "w": 300,
+          "kind": "hub decision",
+          "tip": "Personal learned policy: specialists, routines, autoresearch, decision receipts, model/tool routing and promotion.\\n\\nrepo: kvnloo/z0intelligence\\nstatus: experimental\\nexecution: log_only"
+        },
+        {
+          "id": "openjev",
+          "title": "OpenJev",
+          "sub": "decision · experimental · shadow",
+          "body": "kvnloo/openjev",
+          "pos": [
+            0,
+            0
+          ],
+          "w": 300,
+          "kind": "hub decision",
+          "tip": "Local typed decision heads for fast bounded routing and hotpath choices.\\n\\nrepo: kvnloo/openjev\\nstatus: experimental\\nexecution: shadow"
+        },
+        {
+          "id": "aodl",
+          "title": "AODL",
+          "sub": "contract · experimental · shadow",
+          "body": "kvnloo/aodl",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 300,
+          "kind": "hub decision",
+          "tip": "Typed intent and plan schema. Contracts only, not runtime execution.\\n\\nrepo: kvnloo/aodl\\nstatus: experimental\\nexecution: shadow"
+        }
+      ],
+      "layout": {
+        "fitMargin": 150,
+        "zoomMax": 1
+      }
+    },
+    {
+      "id": "measurement",
+      "title": "Measurement + observability",
+      "caption": "Execution facts, spans and verified outcomes stay independent from the models that made the decisions.",
+      "anchor": [
+        4100,
+        1100
+      ],
+      "nodes": [
+        {
+          "id": "tokenomics",
+          "title": "Tokenomics",
+          "sub": "measurement · experimental · live",
+          "body": "kvnloo/tokenomics",
+          "pos": [
+            -290,
+            0
+          ],
+          "w": 300,
+          "kind": "hub measurement",
+          "tip": "Vendor-neutral token, cost, latency and verified-task economics measurement kernel.\\n\\nrepo: kvnloo/tokenomics\\nstatus: experimental\\nexecution: live"
+        },
+        {
+          "id": "agenttrace",
+          "title": "AgentTrace",
+          "sub": "observability · experimental · log_only",
+          "body": "kvnloo/agenttrace",
+          "pos": [
+            290,
+            0
+          ],
+          "w": 300,
+          "kind": "hub measurement",
+          "tip": "Historical agent spans and observability export for debugging and audit.\\n\\nrepo: kvnloo/agenttrace\\nstatus: experimental\\nexecution: log_only"
+        }
+      ],
+      "layout": {
+        "fitMargin": 150,
+        "zoomMax": 1
+      }
+    },
+    {
+      "id": "environment",
+      "title": "Desktop + environment",
+      "caption": "Prediction and prepare surfaces that make the surrounding OS more agent-native without becoming the agent runtime.",
+      "anchor": [
+        900,
+        2800
+      ],
+      "nodes": [
+        {
+          "id": "flow",
+          "title": "Flow",
+          "sub": "desktop · experimental · shadow",
+          "body": "kvnloo/.files",
+          "pos": [
+            -290,
+            0
+          ],
+          "w": 300,
+          "kind": "hub environment",
+          "tip": "Predictive desktop UX: context episodes, prediction horizons, prepare cache and routine suggestion mining.\\n\\nrepo: kvnloo/.files\\nstatus: experimental\\nexecution: shadow"
+        }
+      ],
+      "layout": {
+        "fitMargin": 150,
+        "zoomMax": 1
+      }
+    },
+    {
+      "id": "compute",
+      "title": "Compute + placement",
+      "caption": "Resource-aware placement and provider allocation among semantically allowed candidates.",
+      "anchor": [
+        2500,
+        2800
+      ],
+      "nodes": [
+        {
+          "id": "kerdoios",
+          "title": "Kerdoios",
+          "sub": "compute · experimental · live",
+          "body": "kvnloo/kerdoios",
+          "pos": [
+            -290,
+            0
+          ],
+          "w": 300,
+          "kind": "hub compute",
+          "tip": "Compute and provider allocation with cost, latency, residency and resource awareness.\\n\\nrepo: kvnloo/kerdoios\\nstatus: experimental\\nexecution: live"
+        }
+      ],
+      "layout": {
+        "fitMargin": 150,
+        "zoomMax": 1
+      }
+    },
+    {
+      "id": "learning",
+      "title": "Learning + evidence",
+      "caption": "Experiments, distillation and research evidence. Promotion is gated by held-out verified outcomes.",
+      "anchor": [
+        4100,
+        2800
+      ],
+      "nodes": [
+        {
+          "id": "evolution-lab",
+          "title": "Evolution Lab",
+          "sub": "research · experimental · shadow",
+          "body": "kvnloo/evolution-lab",
+          "pos": [
+            -290,
+            0
+          ],
+          "w": 300,
+          "kind": "hub research",
+          "tip": "Automatic AI research loop: hypothesis search, experiments, distillation and verified candidate promotion.\\n\\nrepo: kvnloo/evolution-lab\\nstatus: experimental\\nexecution: shadow"
+        },
+        {
+          "id": "frontier-kb",
+          "title": "frontier-kb",
+          "sub": "research · experimental · shadow",
+          "body": "kvnloo/frontier-kb",
+          "pos": [
+            290,
+            0
+          ],
+          "w": 300,
+          "kind": "hub research",
+          "tip": "Research evidence base: papers, external systems, hypotheses, limits and kill criteria.\\n\\nrepo: kvnloo/frontier-kb\\nstatus: experimental\\nexecution: shadow"
+        }
+      ],
+      "layout": {
+        "fitMargin": 150,
+        "zoomMax": 1
+      }
+    },
+    {
+      "id": "memory",
+      "title": "Memory",
+      "caption": "Private durable history and episodic recall remain separate from the public research evidence base.",
+      "anchor": [
+        900,
+        4500
+      ],
+      "nodes": [
+        {
+          "id": "memento",
+          "title": "Memento",
+          "sub": "memory · idea · shadow",
+          "body": "kvnloo/memento",
+          "pos": [
+            -290,
+            0
+          ],
+          "w": 300,
+          "kind": "hub memory",
+          "tip": "Visual private history and episodic recall surface.\\n\\nrepo: kvnloo/memento\\nstatus: idea\\nexecution: shadow"
+        }
+      ],
+      "layout": {
+        "fitMargin": 150,
+        "zoomMax": 1
+      }
+    },
+    {
+      "id": "interfaces",
+      "title": "Cross-component interfaces",
+      "caption": "Named contracts connect independently useful repos. Schemas remain in their owning repos; z0 owns the cross-system map.",
+      "anchor": [
+        3000,
+        4500
+      ],
+      "nodes": [
+        {
+          "id": "iface:tokenomics.event.v0",
+          "title": "tokenomics.event.v0",
+          "sub": "owner: Tokenomics",
+          "body": "usage / cost / latency event",
+          "pos": [
+            -380,
+            0
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "usage / cost / latency event\\n\\nowner: Tokenomics"
+        },
+        {
+          "id": "iface:tokenomics.report.v1",
+          "title": "tokenomics.report.v1",
+          "sub": "owner: Tokenomics",
+          "body": "savings + reconciliation report",
+          "pos": [
+            0,
+            0
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "savings + reconciliation report\\n\\nowner: Tokenomics"
+        },
+        {
+          "id": "iface:z0int.decision_receipt.v1",
+          "title": "z0int.decision_receipt.v1",
+          "sub": "owner: z0intelligence",
+          "body": "structured routing/policy receipt",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "structured routing/policy receipt\\n\\nowner: z0intelligence"
+        },
+        {
+          "id": "iface:flow_prediction.v1",
+          "title": "flow_prediction.v1",
+          "sub": "owner: Flow",
+          "body": "desktop prediction + gates",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "desktop prediction + gates\\n\\nowner: Flow"
+        },
+        {
+          "id": "iface:os.next_context.v0",
+          "title": "os.next_context.v0",
+          "sub": "owner: Flow",
+          "body": "next desktop context prediction",
+          "pos": [
+            0,
+            260
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "next desktop context prediction\\n\\nowner: Flow"
+        },
+        {
+          "id": "iface:aodl.intent.v1",
+          "title": "aodl.intent.v1",
+          "sub": "owner: AODL",
+          "body": "typed intent / plan contract",
+          "pos": [
+            380,
+            260
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "typed intent / plan contract\\n\\nowner: AODL"
+        },
+        {
+          "id": "iface:omp.session.aggregate",
+          "title": "omp.session.aggregate",
+          "sub": "owner: OMP",
+          "body": "session token rollup",
+          "pos": [
+            -380,
+            520
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "session token rollup\\n\\nowner: OMP"
+        },
+        {
+          "id": "iface:cu.stage_intent.v0",
+          "title": "cu.stage_intent.v0",
+          "sub": "owner: OMP",
+          "body": "computer-use stage intent",
+          "pos": [
+            0,
+            520
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "computer-use stage intent\\n\\nowner: OMP"
+        },
+        {
+          "id": "iface:kerdoios.route.v1",
+          "title": "kerdoios.route.v1",
+          "sub": "owner: Kerdoios",
+          "body": "compute/model placement decision",
+          "pos": [
+            380,
+            520
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "compute/model placement decision\\n\\nowner: Kerdoios"
+        },
+        {
+          "id": "iface:agenttrace.span.v0",
+          "title": "agenttrace.span.v0",
+          "sub": "owner: AgentTrace",
+          "body": "historical agent span",
+          "pos": [
+            -380,
+            780
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "historical agent span\\n\\nowner: AgentTrace"
+        }
+      ],
+      "layout": {
+        "fitMargin": 160,
+        "zoomMax": 0.86
+      }
+    }
+  ],
+  "connections": [
+    {
+      "from": "oh-my-pi",
+      "to": "flow",
+      "kind": "depends",
+      "label": "depends"
+    },
+    {
+      "from": "tokenomics",
+      "to": "evolution-lab",
+      "kind": "depends",
+      "label": "depends"
+    },
+    {
+      "from": "z0intelligence",
+      "to": "memento",
+      "kind": "depends",
+      "label": "depends"
+    },
+    {
+      "from": "oh-my-pi",
+      "to": "tokenomics",
+      "kind": "integrates"
+    },
+    {
+      "from": "oh-my-pi",
+      "to": "z0intelligence",
+      "kind": "integrates"
+    },
+    {
+      "from": "oh-my-pi",
+      "to": "aodl",
+      "kind": "integrates"
+    },
+    {
+      "from": "oh-my-pi",
+      "to": "kerdoios",
+      "kind": "integrates"
+    },
+    {
+      "from": "oh-my-pi",
+      "to": "agenttrace",
+      "kind": "integrates"
+    },
+    {
+      "from": "tokenomics",
+      "to": "z0intelligence",
+      "kind": "integrates"
+    },
+    {
+      "from": "tokenomics",
+      "to": "kerdoios",
+      "kind": "integrates"
+    },
+    {
+      "from": "tokenomics",
+      "to": "agenttrace",
+      "kind": "integrates"
+    },
+    {
+      "from": "tokenomics",
+      "to": "flow",
+      "kind": "integrates"
+    },
+    {
+      "from": "flow",
+      "to": "z0intelligence",
+      "kind": "integrates"
+    },
+    {
+      "from": "z0intelligence",
+      "to": "kerdoios",
+      "kind": "integrates"
+    },
+    {
+      "from": "z0intelligence",
+      "to": "evolution-lab",
+      "kind": "integrates"
+    },
+    {
+      "from": "kerdoios",
+      "to": "aodl",
+      "kind": "integrates"
+    },
+    {
+      "from": "evolution-lab",
+      "to": "frontier-kb",
+      "kind": "integrates"
+    },
+    {
+      "from": "memento",
+      "to": "flow",
+      "kind": "integrates"
+    },
+    {
+      "from": "openjev",
+      "to": "oh-my-pi",
+      "kind": "integrates"
+    },
+    {
+      "from": "openjev",
+      "to": "z0intelligence",
+      "kind": "integrates"
+    },
+    {
+      "from": "tokenomics",
+      "to": "iface:tokenomics.event.v0",
+      "kind": "provides"
+    },
+    {
+      "from": "tokenomics",
+      "to": "iface:tokenomics.report.v1",
+      "kind": "provides"
+    },
+    {
+      "from": "z0intelligence",
+      "to": "iface:z0int.decision_receipt.v1",
+      "kind": "provides"
+    },
+    {
+      "from": "flow",
+      "to": "iface:flow_prediction.v1",
+      "kind": "provides"
+    },
+    {
+      "from": "flow",
+      "to": "iface:os.next_context.v0",
+      "kind": "provides"
+    },
+    {
+      "from": "aodl",
+      "to": "iface:aodl.intent.v1",
+      "kind": "provides"
+    },
+    {
+      "from": "oh-my-pi",
+      "to": "iface:omp.session.aggregate",
+      "kind": "provides"
+    },
+    {
+      "from": "oh-my-pi",
+      "to": "iface:cu.stage_intent.v0",
+      "kind": "provides"
+    },
+    {
+      "from": "kerdoios",
+      "to": "iface:kerdoios.route.v1",
+      "kind": "provides"
+    },
+    {
+      "from": "agenttrace",
+      "to": "iface:agenttrace.span.v0",
+      "kind": "provides"
+    },
+    {
+      "from": "iface:tokenomics.event.v0",
+      "to": "oh-my-pi",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:z0int.decision_receipt.v1",
+      "to": "oh-my-pi",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:aodl.intent.v1",
+      "to": "oh-my-pi",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:kerdoios.route.v1",
+      "to": "oh-my-pi",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:z0int.decision_receipt.v1",
+      "to": "tokenomics",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:flow_prediction.v1",
+      "to": "tokenomics",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:tokenomics.event.v0",
+      "to": "flow",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:z0int.decision_receipt.v1",
+      "to": "flow",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:tokenomics.report.v1",
+      "to": "z0intelligence",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:flow_prediction.v1",
+      "to": "z0intelligence",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:tokenomics.event.v0",
+      "to": "kerdoios",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:z0int.decision_receipt.v1",
+      "to": "kerdoios",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:tokenomics.report.v1",
+      "to": "evolution-lab",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:z0int.decision_receipt.v1",
+      "to": "evolution-lab",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:tokenomics.event.v0",
+      "to": "agenttrace",
+      "kind": "consumes"
+    }
+  ]
+}
