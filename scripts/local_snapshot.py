@@ -2,8 +2,11 @@
 from __future__ import annotations
 
 import argparse
+import sys
 import json
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from z0archy_core.local_git import build_local_snapshot
 
