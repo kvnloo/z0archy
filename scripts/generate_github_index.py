@@ -2,9 +2,12 @@
 from __future__ import annotations
 
 import argparse
+import sys
 import json
 from datetime import datetime, timezone
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from z0archy_core.github import GitHubGraphQLClient, fetch_branch_index
 
