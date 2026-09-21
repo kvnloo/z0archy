@@ -42,24 +42,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: python scripts/generate_deck.py --graph generated/graph.json
       - run: python scripts/validate_deck.py deck.json
-      - name: Detect Pages site
-        id: pages_state
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          if gh api "repos/${GITHUB_REPOSITORY}/pages" >/dev/null 2>&1; then
-            echo "enabled=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "enabled=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::GitHub Pages is not enabled; graph build passed and deployment is skipped."
-          fi
       - uses: actions/configure-pages@v5
-        if: steps.pages_state.outputs.enabled == 'true'
       - uses: actions/upload-pages-artifact@v3
-        if: steps.pages_state.outputs.enabled == 'true'
         with:
           path: .
       - name: Deploy
-        if: steps.pages_state.outputs.enabled == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
