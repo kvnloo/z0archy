@@ -1,0 +1,6 @@
+status:
+  experimental: Fixture experimental.
+  canary: Fixture canary.
+execution:
+  shadow: Fixture shadow.
+  live: Fixture live.
