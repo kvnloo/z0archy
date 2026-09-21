@@ -1,0 +1,4 @@
+profiles:
+  core:
+    summary: Fixture profile.
+    components: [runtime, metrics]
