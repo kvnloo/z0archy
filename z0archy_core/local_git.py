@@ -40,9 +40,16 @@ def discover_git_roots(roots: Iterable[str | Path]) -> list[Path]:
 
 
 def build_local_snapshot(roots: Iterable[str | Path]) -> dict[str, Any]:
+    return build_local_snapshot_from_git_roots(discover_git_roots(roots))
+
+
+def build_local_snapshot_from_git_roots(git_roots: Iterable[str | Path]) -> dict[str, Any]:
     repos: dict[str, dict[str, Any]] = {}
     visited_worktrees: set[str] = set()
-    for root in discover_git_roots(roots):
+    for raw_root in git_roots:
+        root = Path(raw_root).expanduser().resolve()
+        if not (root / ".git").exists():
+            continue
         remote = _git(root, "remote", "get-url", "origin", check=False).strip()
         github_repo = normalize_remote(remote) if remote else None
         repo_id = github_repo or f"local:{hashlib.sha256(str(root).encode()).hexdigest()[:16]}"
