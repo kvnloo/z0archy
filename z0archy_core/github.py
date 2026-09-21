@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 import os
 import urllib.error
 import urllib.request
@@ -53,7 +54,7 @@ class GitHubGraphQLClient:
                 return stale
             raise RuntimeError("GH_TOKEN or GITHUB_TOKEN is required when the GitHub cache is cold")
 
-        if self.last_rate_limit.remaining is not None and self.last_rate_limit.remaining < self.min_remaining:
+        if self._budget_is_low():
             if stale is not None:
                 return stale
             raise RuntimeError(
@@ -88,6 +89,20 @@ class GitHubGraphQLClient:
         self._capture_rate_limit(payload)
         self.cache.put(key, payload, self.ttl_seconds)
         return payload
+
+    def _budget_is_low(self) -> bool:
+        remaining = self.last_rate_limit.remaining
+        if remaining is None or remaining >= self.min_remaining:
+            return False
+        reset_at = self.last_rate_limit.reset_at
+        if reset_at:
+            try:
+                reset = datetime.fromisoformat(reset_at.replace("Z", "+00:00"))
+                if reset <= datetime.now(timezone.utc):
+                    return False
+            except ValueError:
+                pass
+        return True
 
     def _capture_rate_limit(self, payload: dict[str, Any]) -> None:
         rl = (payload.get("data") or {}).get("rateLimit") or {}
