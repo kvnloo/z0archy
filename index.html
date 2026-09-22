@@ -82,6 +82,17 @@
   #sourcebar #historyselect{min-width:130px; max-width:220px;}
   #sourcebar .state{font-size:9px; color:#62666F; white-space:nowrap;}
 
+
+  #mocbar{position:fixed; top:56px; left:50%; transform:translateX(-50%); z-index:15;
+    display:flex; align-items:center; gap:6px; padding:5px 7px; background:rgba(255,255,255,.92);
+    border:1px solid #E7E3D9; border-radius:9px; box-shadow:0 1px 5px rgba(90,80,60,.05);
+    font-family:ui-monospace,Menlo,Consolas,monospace;}
+  #mocbar input{width:min(310px,48vw); border:1px solid #E7E3D9; border-radius:7px; padding:6px 8px;
+    background:#fff; color:#1D1F23; font:10px ui-monospace,Menlo,Consolas,monospace;}
+  #mocbar button{border:1px solid #E7E3D9; background:#fff; border-radius:7px; padding:6px 9px;
+    cursor:pointer; font:10px ui-monospace,Menlo,Consolas,monospace;}
+  #mocbar button:hover{border-color:#574CE3; color:#574CE3;}
+
   #panel{position:fixed; top:0; right:0; bottom:0; width:270px; background:rgba(255,255,255,.94);
     border-left:1px solid #E7E3D9; z-index:20; padding:18px 18px 90px; overflow-y:auto;
     transform:translateX(100%); transition:transform .35s ease;
@@ -117,6 +128,8 @@
     #sourcebar{left:12px; right:12px; top:48px; transform:none; max-width:none; flex-wrap:wrap;}
     #sourcebar select{flex:1; min-width:92px; max-width:none;}
     #sourcebar .state{width:100%;}
+    #mocbar{top:126px; left:12px; right:12px; transform:none;}
+    #mocbar input{width:auto; flex:1;}
     #caption{bottom:86px; max-width:calc(100vw - 44px);}
     #caption .tt{font-size:16px;} #caption .cc{font-size:11.5px;}
     #nav{left:22px; right:22px; justify-content:flex-end;}
@@ -161,6 +174,11 @@ window.addEventListener("unhandledrejection", function(e){
   <select id="refselect" aria-label="branch or worktree"></select>
   <select id="historyselect" aria-label="architecture history"><option value="live">live</option></select>
   <span class="state" id="refstate"></span>
+</div>
+<div id="mocbar">
+  <input id="mocquery" type="text" aria-label="Map of Content question" placeholder="map: context compression, routing, evidence…">
+  <button id="mocapply">map</button>
+  <button id="mocclear" aria-label="clear Map of Content">×</button>
 </div>
 <div id="caption"><div class="num"></div><div class="tt"></div><div class="cc"></div></div>
 <div id="dots"></div>
@@ -854,5 +872,7 @@ loadZ0Deck();
 </script>
 <script src="./sourcebar.js"></script>
 <script src="./historybar.js"></script>
+<script src="./moc_core.js"></script>
+<script src="./mocbar.js"></script>
 </body>
 </html>
