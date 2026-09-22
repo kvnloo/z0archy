@@ -9,7 +9,7 @@ The presentation engine is adapted from Yohei Nakajima's MIT-licensed [`graphcon
 
 ## World model
 
-The semantic graph distinguishes installable **components**, execution **harnesses**, reusable **mechanisms**, named **interfaces**, install **profiles**, promotion/history **lifecycles**, implementation **repositories**, exact **repo refs**, and source **artifacts**. Nodes and relations carry provenance.
+The semantic graph distinguishes installable **components**, execution **harnesses**, reusable **mechanisms**, named **interfaces**, install **profiles**, promotion/history **lifecycles**, implementation **repositories**, exact **repo refs**, source **artifacts**, information **representations**, and epistemic **EvidenceDependency** claims. Nodes and relations carry provenance.
 
 ```text
 kvnloo/z0 -> declared semantics -> canonical graph IR
@@ -77,6 +77,18 @@ python scripts/diff_snapshots.py old.json new.json
 
 Local selections use repeatable `--local-root owner/repo=/path/to/worktree`. Structural diffs report added, removed, and changed semantic nodes and relations.
 
+## Information + epistemic planes
+
+`registry/representations.yaml` makes the semantic data plane visible: raw context, addresses, ObservationPacks, compiled decision state, plans, observed topology, receipts and measurements can be graphed independently from the services that carry them.
+
+`registry/evidence_dependencies.yaml` turns important relationships into inspectable claims. Each EvidenceDependency can preserve required evidence, invariants, invalidators, abstention conditions, confidence, and fastest/fallback retrieval paths. Required evidence references are first-class nodes rather than comments on an edge.
+
+```bash
+python scripts/lint_graph.py generated/graph.json --fail-on error
+```
+
+The linter fails unresolved evidence endpoints and structurally unverifiable claims while reporting weaker architecture-quality warnings separately.
+
 ## GitHub API budget
 
 The GitHub layer builds on GraphQL pagination + SQLite ingestion ideas previously used in `kvnloo/gh-contrib-archive`, adding deterministic query cache keys, batching, explicit rate-limit accounting, stale fallback, immutable commit-keyed evidence, and Actions cache persistence.
@@ -86,6 +98,7 @@ The GitHub layer builds on GraphQL pagination + SQLite ingestion ideas previousl
 ```bash
 python -m unittest discover -s tests -v
 python scripts/validate_graph.py generated/graph.json
+python scripts/lint_graph.py generated/graph.json --fail-on error
 python scripts/validate_deck.py deck.json
 node --check sourcebar.js
 ```
