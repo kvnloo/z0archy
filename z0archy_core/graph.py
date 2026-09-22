@@ -4,6 +4,8 @@ from datetime import datetime, timezone
 from typing import Any
 from urllib.parse import quote
 
+from .evidence import attach_evidence_dependencies
+
 SCHEMA_VERSION = "0.2.0"
 
 
@@ -408,6 +410,7 @@ def compile_graph(
 
     nodes = sorted(node_map.values(), key=lambda n: n["id"])
     edges.sort(key=lambda e: e["id"])
+    attach_evidence_dependencies(edges, verified_at=generated_at)
     return {
         "schemaVersion": SCHEMA_VERSION,
         "snapshot": {
