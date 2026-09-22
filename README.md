@@ -11,6 +11,8 @@ The presentation engine is adapted from Yohei Nakajima's MIT-licensed [`graphcon
 
 The semantic graph distinguishes installable **components**, execution **harnesses**, reusable **mechanisms**, named **interfaces**, install **profiles**, promotion/history **lifecycles**, implementation **repositories**, exact **repo refs**, source **artifacts**, information **representations**, and epistemic **EvidenceDependency** claims. Nodes and relations carry provenance.
 
+`registry/suite.yaml` is also projected into the world model. It lets z0 name repository surfaces such as z0evals, Ripple, Hermes extensions, Verified OSS Loop and z0archy itself without falsely classifying those repositories as installable components. Suite rows enrich repository nodes with role/authority/status and typed links into components, harnesses, mechanisms and lifecycles. Because Git/ref discovery already operates over repository nodes, newly catalogued suite repos automatically enter branch indexing and exact-ref introspection.
+
 ```text
 kvnloo/z0 -> declared semantics -> canonical graph IR
                                  /              \
