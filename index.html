@@ -72,13 +72,14 @@
 
 
   #sourcebar{position:fixed; top:14px; left:50%; transform:translateX(-50%); z-index:16;
-    display:flex; align-items:center; gap:6px; max-width:min(780px,72vw); padding:6px 8px;
+    display:flex; align-items:center; gap:6px; max-width:min(940px,78vw); padding:6px 8px;
     background:rgba(255,255,255,.94); border:1px solid #E7E3D9; border-radius:11px;
     box-shadow:0 2px 8px rgba(90,80,60,.06); font-family:ui-monospace,Menlo,Consolas,monospace;}
   #sourcebar select{min-width:105px; max-width:240px; border:1px solid #E7E3D9; background:#fff;
     color:#1D1F23; border-radius:7px; padding:5px 7px; font:10px ui-monospace,Menlo,Consolas,monospace;}
   #sourcebar #componentselect{min-width:150px;}
   #sourcebar #refselect{min-width:180px; max-width:320px;}
+  #sourcebar #historyselect{min-width:130px; max-width:220px;}
   #sourcebar .state{font-size:9px; color:#62666F; white-space:nowrap;}
 
   #panel{position:fixed; top:0; right:0; bottom:0; width:270px; background:rgba(255,255,255,.94);
@@ -158,6 +159,7 @@ window.addEventListener("unhandledrejection", function(e){
   </select>
   <select id="componentselect" aria-label="component"></select>
   <select id="refselect" aria-label="branch or worktree"></select>
+  <select id="historyselect" aria-label="architecture history"><option value="live">live</option></select>
   <span class="state" id="refstate"></span>
 </div>
 <div id="caption"><div class="num"></div><div class="tt"></div><div class="cc"></div></div>
@@ -851,5 +853,6 @@ async function loadZ0Deck(){
 loadZ0Deck();
 </script>
 <script src="./sourcebar.js"></script>
+<script src="./historybar.js"></script>
 </body>
 </html>

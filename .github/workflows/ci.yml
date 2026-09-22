@@ -20,6 +20,7 @@ jobs:
       - run: python -m unittest discover -s tests -v
       - run: python -m compileall -q z0archy_core scripts
       - run: node --check sourcebar.js
+      - run: node --check historybar.js
       - run: python scripts/validate_deck.py deck.json
       - name: Offline end-to-end projection
         run: |
@@ -27,5 +28,7 @@ jobs:
           python scripts/validate_graph.py /tmp/graph.json
           python scripts/lint_graph.py /tmp/graph.json --fail-on error
           python scripts/record_history.py /tmp/graph.json --store /tmp/history.sqlite3 --index /tmp/history-index.json --history-dir /tmp/history
+          python scripts/generate_history_decks.py --index /tmp/history-index.json --history-dir /tmp/history --output-dir /tmp/history-decks
+          test -n "$(find /tmp/history-decks -name '*.json' -print -quit)"
           python scripts/generate_deck.py --graph /tmp/graph.json --output /tmp/deck.json
           python scripts/validate_deck.py /tmp/deck.json
