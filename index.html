@@ -100,6 +100,33 @@
     border:1px solid #E7E3D9; border-radius:999px; background:rgba(255,255,255,.92);
     color:#62666F; font:9px ui-monospace,Menlo,Consolas,monospace; pointer-events:none;}
 
+
+  #sourcebar button{border:1px solid #E7E3D9; background:#fff; color:#1D1F23; border-radius:7px;
+    padding:5px 8px; cursor:pointer; font:10px ui-monospace,Menlo,Consolas,monospace;}
+  #sourcebar button:hover{border-color:#574CE3; color:#574CE3;}
+  #matrixpanel{position:fixed; top:0; right:0; bottom:0; width:min(620px,94vw); z-index:35;
+    background:rgba(252,251,247,.98); border-left:1px solid #E7E3D9; box-shadow:-8px 0 30px rgba(40,35,25,.08);
+    transform:translateX(100%); transition:transform .28s ease; overflow:auto; padding:20px;}
+  #matrixpanel.open{transform:translateX(0);}
+  #matrixpanel .matrix-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;}
+  #matrixpanel h2{font-size:18px; color:#1D1F23;}
+  #matrixpanel .matrix-help{font-size:10px; color:#62666F; line-height:1.5; margin-bottom:14px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;}
+  #matrixpanel .matrix-actions{display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px;}
+  #matrixpanel button{border:1px solid #E7E3D9; background:#fff; border-radius:7px; padding:7px 10px;
+    cursor:pointer; font:10px ui-monospace,Menlo,Consolas,monospace;}
+  #matrixpanel button:hover{border-color:#574CE3; color:#574CE3;}
+  #matrixrows{display:flex; flex-direction:column; gap:7px;}
+  .matrix-row{display:grid; grid-template-columns:minmax(180px,1fr) minmax(220px,1.25fr) 54px; gap:8px;
+    align-items:center; padding:8px 9px; background:#fff; border:1px solid #E7E3D9; border-radius:9px;}
+  .matrix-name{display:flex; flex-direction:column; gap:3px; min-width:0;}
+  .matrix-name b{font-size:11px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .matrix-name span{font:9px ui-monospace,Menlo,Consolas,monospace; color:#62666F;}
+  .matrix-name span.declared{color:#574CE3;} .matrix-name span.fallback{color:#A87B3E;}
+  .matrix-row select{min-width:0; width:100%; border:1px solid #E7E3D9; background:#fff; border-radius:7px;
+    padding:6px; font:10px ui-monospace,Menlo,Consolas,monospace;}
+  .matrix-diff{font:10px ui-monospace,Menlo,Consolas,monospace; color:#62666F; text-align:right;}
+
   #panel{position:fixed; top:0; right:0; bottom:0; width:270px; background:rgba(255,255,255,.94);
     border-left:1px solid #E7E3D9; z-index:20; padding:18px 18px 90px; overflow-y:auto;
     transform:translateX(100%); transition:transform .35s ease;
@@ -182,6 +209,7 @@ window.addEventListener("unhandledrejection", function(e){
   <select id="componentselect" aria-label="component"></select>
   <select id="refselect" aria-label="branch or worktree"></select>
   <select id="historyselect" aria-label="architecture history"><option value="live">live</option></select>
+  <button id="matrixbtn" type="button">ref matrix</button>
   <span class="state" id="refstate"></span>
 </div>
 <div id="mocbar">
@@ -189,6 +217,21 @@ window.addEventListener("unhandledrejection", function(e){
   <button id="mocapply">map</button>
   <button id="mocclear" aria-label="clear Map of Content">×</button>
 </div>
+<aside id="matrixpanel" aria-label="virtual architecture ref matrix">
+  <div class="matrix-head">
+    <h2>Virtual architecture</h2>
+    <button id="matrixclose" type="button">close</button>
+  </div>
+  <div class="matrix-help">Compose the whole Zer0 world from immutable Git refs. “Canonical” uses exact z0 pins when declared; un-pinned repositories stay explicitly observational. Applying the matrix builds one derived semantic graph and compares probed implementation evidence against canonical.</div>
+  <div class="matrix-actions">
+    <button id="matrixcanonical" type="button">canonical</button>
+    <button id="matrixdefaults" type="button">default branches</button>
+    <button id="matrixapply" type="button">apply + diff</button>
+    <button id="matrixcopy" type="button">copy manifest</button>
+    <button id="matrixclear" type="button">clear virtual world</button>
+  </div>
+  <div id="matrixrows"></div>
+</aside>
 <div id="caption"><div class="num"></div><div class="tt"></div><div class="cc"></div></div>
 <div id="dots"></div>
 <div id="nav">
@@ -885,5 +928,7 @@ loadZ0Deck();
 <script src="./mocbar.js"></script>
 <script src="./semantic_zoom_core.js"></script>
 <script src="./semantic_zoom.js"></script>
+<script src="./virtual_core.js"></script>
+<script src="./ref_matrix.js"></script>
 </body>
 </html>
