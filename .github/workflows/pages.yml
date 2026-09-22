@@ -41,6 +41,7 @@ jobs:
       - run: python scripts/generate_graph.py
       - run: python scripts/validate_graph.py generated/graph.json
       - run: python scripts/lint_graph.py generated/graph.json --fail-on error
+      - run: python scripts/lint_graph.py generated/graph.json --json --fail-on none > generated/lint.json
       - run: python scripts/record_history.py generated/graph.json
       - run: python scripts/generate_github_index.py --cache-ttl 10800
         env:
