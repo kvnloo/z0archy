@@ -88,7 +88,7 @@ async function switchHistory(value){
 
 function updateHistoryLock(){
   const locked=historyState.active!=="live";
-  ["#sourcesel","#componentselect","#refselect"].forEach(function(selector){
+  ["#sourcesel","#componentselect","#refselect","#matrixbtn"].forEach(function(selector){
     const element=$(selector);
     if(element) element.disabled=locked;
   });
