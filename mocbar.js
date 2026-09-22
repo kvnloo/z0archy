@@ -89,6 +89,14 @@ async function applyMoc(query){
     return;
   }
   const result=z0MocCore.compileMoc(graph,query,{maxNodes:24,maxSeeds:8,maxDepth:2});
+  const receipt=(typeof z0CompressionCore!=="undefined")
+    ?z0CompressionCore.compressionReceipt(graph,result.nodeIds,{
+        query:query,
+        scores:result.scores,
+        highScoreThreshold:6
+      })
+    :null;
+  window.dispatchEvent(new CustomEvent("z0archy:compression-receipt",{detail:receipt}));
   if(!result.nodeIds.length){
     toast("no architecture concepts matched");
     return;
@@ -157,6 +165,7 @@ async function applyMoc(query){
 
 function clearMoc(){
   mocState.query=null;
+  window.dispatchEvent(new CustomEvent("z0archy:compression-receipt",{detail:null}));
   setMocURL(null);
   const before=(deck.slides||[]).length;
   deck.slides=(deck.slides||[]).filter(function(sl){return sl.id!==MOC_SCENE_ID;});
