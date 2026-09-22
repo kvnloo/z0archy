@@ -20,6 +20,7 @@ OPTIONAL_FILES = {
     "lifecycles": "registry/lifecycles.yaml",
     "representations": "registry/representations.yaml",
     "evidence_dependencies": "registry/evidence_dependencies.yaml",
+    "suite": "registry/suite.yaml",
 }
 
 
