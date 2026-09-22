@@ -174,6 +174,8 @@ logic
 
 Components and mechanism families survive the strongest compression. Harnesses, mechanisms, representations, interfaces, repositories, evidence claims, lifecycle states and source evidence appear progressively. Explicitly opening a focused scene or MOC overrides compression and shows that view in full.
 
+Whole-world semantic zoom now emits the same loss-aware compression receipt as a MOC. Importance is derived from abstraction depth, so a zoom level is marked insufficient if a concept that should survive at that level is hidden. This turns semantic zoom into an auditable information bottleneck rather than an opaque visibility rule.
+
 ## Dynamic Maps of Content
 
 The canonical world model can be recompiled into a purpose-specific map in the browser. Enter a question such as `context compression`, `provider routing`, or `why is this evidence trusted`. The MOC compiler scores conceptual matches and then expands through typed graph proximity under a bounded node budget, preserving nearby mechanisms, representations, contracts and evidence instead of returning a flat search list.
