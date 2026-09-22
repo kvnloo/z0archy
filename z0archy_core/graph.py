@@ -11,13 +11,6 @@ def zid(kind: str, value: str) -> str:
     return f"z0://{kind}/{quote(value, safe='/.@:-')}"
 
 
-def endpoint_zid(endpoint: str) -> str:
-    kind, sep, ident = str(endpoint).partition(":")
-    if not sep or not ident:
-        raise ValueError(f"invalid semantic endpoint: {endpoint!r}")
-    return zid(kind, ident)
-
-
 def compile_graph(
     components_doc: dict[str, Any],
     interfaces_doc: dict[str, Any],
@@ -25,9 +18,9 @@ def compile_graph(
     maturity_doc: dict[str, Any] | None = None,
     harnesses_doc: dict[str, Any] | None = None,
     mechanisms_doc: dict[str, Any] | None = None,
+    lifecycles_doc: dict[str, Any] | None = None,
     representations_doc: dict[str, Any] | None = None,
     evidence_dependencies_doc: dict[str, Any] | None = None,
-    lifecycles_doc: dict[str, Any] | None = None,
     *,
     source_repo: str = "kvnloo/z0",
     source_ref: str = "main",
@@ -39,11 +32,11 @@ def compile_graph(
     profiles = (profiles_doc or {}).get("profiles") or {}
     harnesses = (harnesses_doc or {}).get("harnesses") or {}
     mechanisms = (mechanisms_doc or {}).get("mechanisms") or {}
+    lifecycles = (lifecycles_doc or {}).get("lifecycles") or {}
     representations = (representations_doc or {}).get("representations") or {}
     evidence_dependencies = (evidence_dependencies_doc or {}).get("evidence_dependencies") or {}
-    lifecycles = (lifecycles_doc or {}).get("lifecycles") or {}
 
-    nodes: list[dict[str, Any]] = []
+    node_map: dict[str, dict[str, Any]] = {}
     edges: list[dict[str, Any]] = []
 
     def provenance(path: str, field: str) -> list[dict[str, Any]]:
@@ -55,161 +48,450 @@ def compile_graph(
             "field": field,
         }]
 
-    def add_node(kind: str, ident: str, label: str, attributes: dict[str, Any], path: str, field: str) -> None:
-        nodes.append({
-            "id": zid(kind, ident),
-            "type": kind,
+    def add_node(
+        node_id: str,
+        node_type: str,
+        label: str,
+        attributes: dict[str, Any],
+        *,
+        path: str,
+        field: str,
+    ) -> None:
+        existing = node_map.get(node_id)
+        prov = provenance(path, field)
+        if existing:
+            existing["provenance"].extend(
+                p for p in prov if p not in existing["provenance"]
+            )
+            return
+        node_map[node_id] = {
+            "id": node_id,
+            "type": node_type,
             "label": label,
             "attributes": attributes,
+            "provenance": prov,
+        }
+
+    def add_repo(repo_name: str | None, *, path: str, field: str) -> str | None:
+        if not repo_name:
+            return None
+        rid = zid("repo", repo_name)
+        add_node(
+            rid,
+            "repository",
+            repo_name,
+            {"repo": repo_name},
+            path=path,
+            field=field,
+        )
+        return rid
+
+    def add_edge(
+        kind: str,
+        source: str,
+        target: str,
+        source_key: str,
+        target_key: str,
+        *,
+        path: str,
+        field: str,
+        attributes: dict[str, Any] | None = None,
+    ) -> None:
+        edges.append({
+            "id": zid("edge", f"{kind}:{source_key}->{target_key}"),
+            "type": kind,
+            "source": source,
+            "target": target,
+            "attributes": attributes or {},
             "provenance": provenance(path, field),
         })
 
-    repo_seen: set[str] = set()
+    def endpoint_id(endpoint: str) -> str:
+        kind, sep, ident = str(endpoint).partition(":")
+        if not sep or not ident:
+            raise ValueError(f"invalid semantic endpoint: {endpoint!r}")
+        return zid(kind, ident)
 
-    def add_repo(repo_name: str, path: str, field: str) -> None:
-        if not repo_name or repo_name in repo_seen:
-            return
-        repo_seen.add(repo_name)
-        add_node("repo", repo_name, repo_name, {"repo": repo_name}, path, field)
-
+    # Installable product/service layer.
     for cid, raw in components.items():
         c = dict(raw or {})
-        repo_name = c.get("repo")
+        cpath = "registry/components.yaml"
         add_node(
-            "component", cid, c.get("name") or cid, {"component_id": cid, **c},
-            "registry/components.yaml", f"components.{cid}",
+            zid("component", cid),
+            "component",
+            c.get("name") or cid,
+            {"component_id": cid, **c},
+            path=cpath,
+            field=f"components.{cid}",
         )
-        if repo_name:
-            add_repo(repo_name, "registry/components.yaml", f"components.{cid}.repo")
-            edges.append(_edge(
-                "implemented_by", zid("component", cid), zid("repo", repo_name), cid, repo_name,
-                provenance("registry/components.yaml", f"components.{cid}.repo"),
-            ))
+        repo_name = c.get("repo")
+        repo_id = add_repo(repo_name, path=cpath, field=f"components.{cid}.repo")
+        if repo_id:
+            add_edge(
+                "implemented_by",
+                zid("component", cid),
+                repo_id,
+                cid,
+                repo_name,
+                path=cpath,
+                field=f"components.{cid}.repo",
+            )
 
+    # Contract layer.
     for name, raw in interfaces.items():
         spec = dict(raw or {})
+        ipath = "registry/interfaces.yaml"
         add_node(
-            "interface", name, name, {"interface": name, **spec},
-            "registry/interfaces.yaml", f"interfaces.{name}",
+            zid("interface", name),
+            "interface",
+            name,
+            {"interface": name, **spec},
+            path=ipath,
+            field=f"interfaces.{name}",
         )
+        owner = spec.get("owner")
+        if owner in components:
+            add_edge(
+                "owned_by",
+                zid("interface", name),
+                zid("component", owner),
+                name,
+                owner,
+                path=ipath,
+                field=f"interfaces.{name}.owner",
+            )
 
+    # Install profile layer.
     for pid, raw in profiles.items():
         spec = dict(raw or {})
+        ppath = "registry/profiles.yaml"
         add_node(
-            "profile", pid, pid, {"profile_id": pid, **spec},
-            "registry/profiles.yaml", f"profiles.{pid}",
+            zid("profile", pid),
+            "profile",
+            pid,
+            {"profile_id": pid, **spec},
+            path=ppath,
+            field=f"profiles.{pid}",
         )
         if spec.get("extends"):
-            edges.append(_edge(
-                "extends", zid("profile", pid), zid("profile", spec["extends"]), pid, spec["extends"],
-                provenance("registry/profiles.yaml", f"profiles.{pid}.extends"),
-            ))
+            parent = spec["extends"]
+            add_edge(
+                "extends",
+                zid("profile", pid),
+                zid("profile", parent),
+                pid,
+                parent,
+                path=ppath,
+                field=f"profiles.{pid}.extends",
+            )
         for cid in spec.get("components") or []:
             if cid in components:
-                edges.append(_edge(
-                    "includes", zid("profile", pid), zid("component", cid), pid, cid,
-                    provenance("registry/profiles.yaml", f"profiles.{pid}.components"),
-                ))
+                add_edge(
+                    "includes",
+                    zid("profile", pid),
+                    zid("component", cid),
+                    pid,
+                    cid,
+                    path=ppath,
+                    field=f"profiles.{pid}.components",
+                )
 
+    # Execution/harness layer.
     for hid, raw in harnesses.items():
-        h = dict(raw or {})
-        repo_name = h.get("repo")
+        spec = dict(raw or {})
+        hpath = "registry/harnesses.yaml"
         add_node(
-            "harness", hid, h.get("name") or hid, {"harness_id": hid, **h},
-            "registry/harnesses.yaml", f"harnesses.{hid}",
+            zid("harness", hid),
+            "harness",
+            spec.get("name") or hid,
+            {"harness_id": hid, **spec},
+            path=hpath,
+            field=f"harnesses.{hid}",
         )
-        if repo_name:
-            add_repo(repo_name, "registry/harnesses.yaml", f"harnesses.{hid}.repo")
-            edges.append(_edge(
-                "implemented_by", zid("harness", hid), zid("repo", repo_name), hid, repo_name,
-                provenance("registry/harnesses.yaml", f"harnesses.{hid}.repo"),
-            ))
-        component = h.get("component")
+        repo_name = spec.get("repo")
+        repo_id = add_repo(repo_name, path=hpath, field=f"harnesses.{hid}.repo")
+        if repo_id:
+            add_edge(
+                "implemented_by",
+                zid("harness", hid),
+                repo_id,
+                hid,
+                repo_name,
+                path=hpath,
+                field=f"harnesses.{hid}.repo",
+            )
+        component = spec.get("component")
         if component in components:
-            edges.append(_edge(
-                "runtime_surface_for", zid("harness", hid), zid("component", component), hid, component,
-                provenance("registry/harnesses.yaml", f"harnesses.{hid}.component"),
-            ))
-        for ext in h.get("extensions") or []:
-            add_repo(ext, "registry/harnesses.yaml", f"harnesses.{hid}.extensions")
-            edges.append(_edge(
-                "extended_by", zid("harness", hid), zid("repo", ext), hid, ext,
-                provenance("registry/harnesses.yaml", f"harnesses.{hid}.extensions"),
-            ))
+            add_edge(
+                "runtime_surface_of",
+                zid("harness", hid),
+                zid("component", component),
+                hid,
+                component,
+                path=hpath,
+                field=f"harnesses.{hid}.component",
+            )
 
+    # Cross-cutting mechanism layer.
     for mid, raw in mechanisms.items():
-        m = dict(raw or {})
+        spec = dict(raw or {})
+        mpath = "registry/mechanisms.yaml"
         add_node(
-            "mechanism", mid, m.get("name") or mid, {"mechanism_id": mid, **m},
-            "registry/mechanisms.yaml", f"mechanisms.{mid}",
+            zid("mechanism", mid),
+            "mechanism",
+            spec.get("name") or mid,
+            {"mechanism_id": mid, **spec},
+            path=mpath,
+            field=f"mechanisms.{mid}",
         )
-        for impl in m.get("implemented_by") or []:
-            component = impl.get("component")
-            repo_name = impl.get("repo")
+        family = spec.get("family")
+        if family:
+            add_node(
+                zid("mechanism-family", family),
+                "mechanism_family",
+                family,
+                {"family_id": family},
+                path=mpath,
+                field=f"mechanisms.{mid}.family",
+            )
+            add_edge(
+                "member_of",
+                zid("mechanism", mid),
+                zid("mechanism-family", family),
+                mid,
+                family,
+                path=mpath,
+                field=f"mechanisms.{mid}.family",
+            )
+
+        rows = list(spec.get("implemented_by") or []) + list(spec.get("implementations") or [])
+        for i, row in enumerate(rows):
+            if not isinstance(row, dict):
+                continue
+            component = row.get("component")
+            harness = row.get("harness")
+            repo_name = row.get("repo")
+            field = f"mechanisms.{mid}.implementation[{i}]"
             if component in components:
-                edges.append(_edge(
-                    "implements", zid("component", component), zid("mechanism", mid), component, mid,
-                    provenance("registry/mechanisms.yaml", f"mechanisms.{mid}.implemented_by"),
-                ))
-            if repo_name:
-                add_repo(repo_name, "registry/mechanisms.yaml", f"mechanisms.{mid}.implemented_by")
-        for impl in m.get("implementations") or []:
-            harness = impl.get("harness")
-            repo_name = impl.get("repo")
+                add_edge(
+                    "implemented_by",
+                    zid("mechanism", mid),
+                    zid("component", component),
+                    mid,
+                    component,
+                    path=mpath,
+                    field=field,
+                )
             if harness in harnesses:
-                edges.append(_edge(
-                    "implements", zid("harness", harness), zid("mechanism", mid), harness, mid,
-                    provenance("registry/mechanisms.yaml", f"mechanisms.{mid}.implementations"),
-                ))
-            if repo_name:
-                add_repo(repo_name, "registry/mechanisms.yaml", f"mechanisms.{mid}.implementations")
-                edges.append(_edge(
-                    "implements", zid("repo", repo_name), zid("mechanism", mid), repo_name, mid,
-                    provenance("registry/mechanisms.yaml", f"mechanisms.{mid}.implementations"),
-                ))
+                add_edge(
+                    "implemented_by",
+                    zid("mechanism", mid),
+                    zid("harness", harness),
+                    mid,
+                    harness,
+                    path=mpath,
+                    field=field,
+                )
+            repo_id = add_repo(repo_name, path=mpath, field=field)
+            if repo_id:
+                add_edge(
+                    "implemented_in_repo",
+                    zid("mechanism", mid),
+                    repo_id,
+                    mid,
+                    repo_name,
+                    path=mpath,
+                    field=field,
+                )
 
-    for rid, raw in representations.items():
-        r = dict(raw or {})
-        add_node(
-            "representation", rid, r.get("name") or rid, {"representation_id": rid, **r},
-            "registry/representations.yaml", f"representations.{rid}",
-        )
-        for mid in r.get("produced_by") or []:
-            if mid in mechanisms:
-                edges.append(_edge(
-                    "produces", zid("mechanism", mid), zid("representation", rid), mid, rid,
-                    provenance("registry/representations.yaml", f"representations.{rid}.produced_by"),
-                ))
-        iface = r.get("interface")
-        if iface in interfaces:
-            edges.append(_edge(
-                "represented_by", zid("representation", rid), zid("interface", iface), rid, iface,
-                provenance("registry/representations.yaml", f"representations.{rid}.interface"),
-            ))
-
+    # Promotion/history/state-machine layer.
     for lid, raw in lifecycles.items():
-        lifecycle = dict(raw or {})
+        spec = dict(raw or {})
+        lpath = "registry/lifecycles.yaml"
         add_node(
-            "lifecycle", lid, lifecycle.get("name") or lid, {"lifecycle_id": lid, **lifecycle},
-            "registry/lifecycles.yaml", f"lifecycles.{lid}",
+            zid("lifecycle", lid),
+            "lifecycle",
+            spec.get("name") or lid,
+            {"lifecycle_id": lid, **spec},
+            path=lpath,
+            field=f"lifecycles.{lid}",
         )
-        owner_repo = lifecycle.get("owner_repo")
-        if owner_repo:
-            add_repo(owner_repo, "registry/lifecycles.yaml", f"lifecycles.{lid}.owner_repo")
-            edges.append(_edge(
-                "owned_by", zid("lifecycle", lid), zid("repo", owner_repo), lid, owner_repo,
-                provenance("registry/lifecycles.yaml", f"lifecycles.{lid}.owner_repo"),
-            ))
+        owner_repo = spec.get("owner_repo")
+        repo_id = add_repo(owner_repo, path=lpath, field=f"lifecycles.{lid}.owner_repo")
+        if repo_id:
+            add_edge(
+                "owned_by",
+                zid("lifecycle", lid),
+                repo_id,
+                lid,
+                owner_repo,
+                path=lpath,
+                field=f"lifecycles.{lid}.owner_repo",
+            )
+        previous_id: str | None = None
+        previous_stage: str | None = None
+        for stage in spec.get("stages") or []:
+            sid = zid("lifecycle-state", f"{lid}:{stage}")
+            add_node(
+                sid,
+                "lifecycle_state",
+                stage,
+                {"lifecycle": lid, "stage": stage},
+                path=lpath,
+                field=f"lifecycles.{lid}.stages",
+            )
+            add_edge(
+                "has_stage",
+                zid("lifecycle", lid),
+                sid,
+                lid,
+                stage,
+                path=lpath,
+                field=f"lifecycles.{lid}.stages",
+            )
+            if previous_id is not None and previous_stage is not None:
+                add_edge(
+                    "next",
+                    previous_id,
+                    sid,
+                    f"{lid}:{previous_stage}",
+                    f"{lid}:{stage}",
+                    path=lpath,
+                    field=f"lifecycles.{lid}.stages",
+                )
+            previous_id = sid
+            previous_stage = stage
 
+    # Information/data-plane representations.
+    for rid, raw in representations.items():
+        spec = dict(raw or {})
+        rpath = "registry/representations.yaml"
+        add_node(
+            zid("representation", rid),
+            "representation",
+            spec.get("name") or rid,
+            {"representation_id": rid, **spec},
+            path=rpath,
+            field=f"representations.{rid}",
+        )
+        for mid in spec.get("produced_by") or []:
+            if mid in mechanisms:
+                add_edge(
+                    "produces_representation",
+                    zid("mechanism", mid),
+                    zid("representation", rid),
+                    mid,
+                    rid,
+                    path=rpath,
+                    field=f"representations.{rid}.produced_by",
+                )
+        iface = spec.get("interface")
+        if iface in interfaces:
+            add_edge(
+                "encoded_as",
+                zid("representation", rid),
+                zid("interface", iface),
+                rid,
+                iface,
+                path=rpath,
+                field=f"representations.{rid}.interface",
+            )
+
+    # Epistemic evidence layer. EvidenceDependency is a first-class claim node,
+    # while a direct source→target edge preserves the relation for graph queries.
+    for eid, raw in evidence_dependencies.items():
+        spec = dict(raw or {})
+        epath = "registry/evidence_dependencies.yaml"
+        dep_id = zid("evidence-dependency", eid)
+        add_node(
+            dep_id,
+            "evidence_dependency",
+            spec.get("relation") or eid,
+            {"evidence_dependency_id": eid, **spec},
+            path=epath,
+            field=f"evidence_dependencies.{eid}",
+        )
+        source = endpoint_id(spec["from"])
+        target = endpoint_id(spec["to"])
+        add_edge(
+            "evidence_subject",
+            dep_id,
+            source,
+            eid,
+            spec["from"],
+            path=epath,
+            field=f"evidence_dependencies.{eid}.from",
+            attributes={"epistemic": True},
+        )
+        add_edge(
+            "evidence_object",
+            dep_id,
+            target,
+            eid,
+            spec["to"],
+            path=epath,
+            field=f"evidence_dependencies.{eid}.to",
+            attributes={"epistemic": True},
+        )
+        add_edge(
+            spec.get("relation") or "evidence_dependency",
+            source,
+            target,
+            spec["from"],
+            spec["to"],
+            path=epath,
+            field=f"evidence_dependencies.{eid}.relation",
+            attributes={"epistemic": True, "evidenceDependency": eid},
+        )
+        via = spec.get("via")
+        if via:
+            add_edge(
+                "verified_via",
+                dep_id,
+                endpoint_id(via),
+                eid,
+                via,
+                path=epath,
+                field=f"evidence_dependencies.{eid}.via",
+                attributes={"epistemic": True},
+            )
+        for ref in spec.get("required_evidence") or []:
+            ref_id = zid("evidence", str(ref))
+            add_node(
+                ref_id,
+                "evidence_reference",
+                str(ref),
+                {"reference": str(ref)},
+                path=epath,
+                field=f"evidence_dependencies.{eid}.required_evidence",
+            )
+            add_edge(
+                "requires_evidence",
+                dep_id,
+                ref_id,
+                eid,
+                str(ref),
+                path=epath,
+                field=f"evidence_dependencies.{eid}.required_evidence",
+                attributes={"epistemic": True},
+            )
+
+    # Declared component relationships.
     seen_integrations: set[tuple[str, str]] = set()
     for cid, raw in components.items():
         c = raw or {}
+        cpath = "registry/components.yaml"
         for dep in c.get("depends_on") or []:
             if dep in components:
-                edges.append(_edge(
-                    "depends_on", zid("component", cid), zid("component", dep), cid, dep,
-                    provenance("registry/components.yaml", f"components.{cid}.depends_on"),
-                ))
+                add_edge(
+                    "depends_on",
+                    zid("component", cid),
+                    zid("component", dep),
+                    cid,
+                    dep,
+                    path=cpath,
+                    field=f"components.{cid}.depends_on",
+                )
         for other in c.get("integrates_with") or []:
             if other not in components:
                 continue
@@ -218,49 +500,39 @@ def compile_graph(
                 continue
             seen_integrations.add(key)
             a, b = key
-            edges.append(_edge(
-                "integrates_with", zid("component", a), zid("component", b), a, b,
-                provenance("registry/components.yaml", f"components.{cid}.integrates_with"),
-            ))
+            add_edge(
+                "integrates_with",
+                zid("component", a),
+                zid("component", b),
+                a,
+                b,
+                path=cpath,
+                field=f"components.{cid}.integrates_with",
+            )
         for iface in c.get("provides") or []:
             if iface in interfaces:
-                edges.append(_edge(
-                    "provides", zid("component", cid), zid("interface", iface), cid, iface,
-                    provenance("registry/components.yaml", f"components.{cid}.provides"),
-                ))
+                add_edge(
+                    "provides",
+                    zid("component", cid),
+                    zid("interface", iface),
+                    cid,
+                    iface,
+                    path=cpath,
+                    field=f"components.{cid}.provides",
+                )
         for iface in c.get("consumes") or []:
             if iface in interfaces:
-                edges.append(_edge(
-                    "consumes", zid("interface", iface), zid("component", cid), iface, cid,
-                    provenance("registry/components.yaml", f"components.{cid}.consumes"),
-                ))
+                add_edge(
+                    "consumes",
+                    zid("interface", iface),
+                    zid("component", cid),
+                    iface,
+                    cid,
+                    path=cpath,
+                    field=f"components.{cid}.consumes",
+                )
 
-    for eid, raw in evidence_dependencies.items():
-        dep = dict(raw or {})
-        source = endpoint_zid(dep["from"])
-        target = endpoint_zid(dep["to"])
-        attrs = {"evidence_dependency_id": eid, **dep}
-        edges.append(_edge(
-            dep.get("relation") or "evidence_dependency",
-            source,
-            target,
-            eid,
-            f"{dep['from']}->{dep['to']}",
-            provenance("registry/evidence_dependencies.yaml", f"evidence_dependencies.{eid}"),
-            attributes=attrs,
-            edge_class="evidence",
-        ))
-        via = dep.get("via")
-        if via:
-            via_id = endpoint_zid(via)
-            edges.append(_edge(
-                "via", source, via_id, eid, via,
-                provenance("registry/evidence_dependencies.yaml", f"evidence_dependencies.{eid}.via"),
-                attributes={"evidence_dependency_id": eid},
-                edge_class="evidence",
-            ))
-
-    nodes.sort(key=lambda n: n["id"])
+    nodes = sorted(node_map.values(), key=lambda n: n["id"])
     edges.sort(key=lambda e: e["id"])
     return {
         "schemaVersion": SCHEMA_VERSION,
@@ -279,32 +551,10 @@ def compile_graph(
             "profiles": len(profiles),
             "harnesses": len(harnesses),
             "mechanisms": len(mechanisms),
+            "lifecycles": len(lifecycles),
             "representations": len(representations),
             "evidenceDependencies": len(evidence_dependencies),
-            "lifecycles": len(lifecycles),
         },
         "nodes": nodes,
         "edges": edges,
-    }
-
-
-def _edge(
-    kind: str,
-    source: str,
-    target: str,
-    source_key: str,
-    target_key: str,
-    provenance: list[dict[str, Any]] | None = None,
-    *,
-    attributes: dict[str, Any] | None = None,
-    edge_class: str = "semantic",
-) -> dict[str, Any]:
-    return {
-        "id": zid("edge", f"{kind}:{source_key}->{target_key}"),
-        "type": kind,
-        "class": edge_class,
-        "source": source,
-        "target": target,
-        "attributes": attributes or {},
-        "provenance": provenance or [],
     }
