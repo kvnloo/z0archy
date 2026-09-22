@@ -21,6 +21,9 @@ jobs:
       - run: python -m compileall -q z0archy_core scripts
       - run: node --check sourcebar.js
       - run: node --check historybar.js
+      - run: node --check moc_core.js
+      - run: node --check mocbar.js
+      - run: node tests/test_moc.js
       - run: python scripts/validate_deck.py deck.json
       - name: Offline end-to-end projection
         run: |
