@@ -255,7 +255,14 @@ function installEvidenceScene(component,row,source,pack){
       pos:pos,
       w:width,
       kind:kind,
-      tip:evidenceTip(n,pack,row,source)
+      tip:evidenceTip(n,pack,row,source),
+      meta:{
+        graphType:n.type,
+        graphId:n.id,
+        semanticLevel:(typeof z0SemanticZoomCore!=="undefined"
+          ?z0SemanticZoomCore.semanticLevelForType(n.type):5),
+        truthClass:"implemented"
+      }
     });
   });
 
