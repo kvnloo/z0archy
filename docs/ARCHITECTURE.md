@@ -41,6 +41,14 @@ Nodes **and edges** contain provenance. Relations include component dependencies
 The browser's graphcon-deck document is generated from this IR. Spatial positions and
 camera scenes are presentation concerns and are not architecture facts.
 
+## Information and epistemic layers
+
+Information representations are semantic forms, not storage engines. They let z0archy show what information becomes as it crosses compression, retrieval, planning, observation and measurement boundaries.
+
+EvidenceDependency claims are separate from ordinary dependency/data-flow edges. A claim carries its verification recipe: required evidence, invariants, invalidators, abstention conditions, confidence and retrieval strategy. z0archy materializes the claim itself, the subject/object relationship and each required evidence reference with declared provenance.
+
+This enables architecture linting to ask whether a relationship is currently verifiable rather than merely whether an edge exists.
+
 ## Source providers
 
 ### Canonical registry
@@ -111,4 +119,4 @@ Pages build depend on a runtime service.
 
 ## Next layers
 
-Current introspection is deliberately bounded to explicit Zer0 manifests, architecture/readme/agent documents and package metadata. Next analyzers should add repository tree/package structure, imports, schemas, tests and runtime adapters without changing the repo/ref identity contract. Above that sit EvidenceDependency semantics, architecture linting, semantic/fractal zoom, question-conditioned MOCs, Tokenomics/AODL/AgentTrace runtime overlays and ActiveGraph-backed historical replay.
+Current introspection is deliberately bounded to explicit Zer0 manifests, architecture/readme/agent documents and package metadata. Next analyzers should add repository tree/package structure, imports, schemas, tests and runtime adapters without changing the repo/ref identity contract. Above that sit semantic/fractal zoom, question-conditioned MOCs, Tokenomics/AODL/AgentTrace runtime overlays, slow hierarchy reorganization and ActiveGraph-backed historical replay.
