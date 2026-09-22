@@ -22,8 +22,11 @@ jobs:
       - run: node --check sourcebar.js
       - run: node --check historybar.js
       - run: node --check moc_core.js
+      - run: node --check compression_core.js
+      - run: node --check compressionbar.js
       - run: node --check mocbar.js
       - run: node tests/test_moc.js
+      - run: node tests/test_compression.js
       - run: node --check semantic_zoom_core.js
       - run: node --check semantic_zoom.js
       - run: node tests/test_semantic_zoom.js
