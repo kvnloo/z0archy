@@ -47,6 +47,57 @@ def grid_pos(i: int, n: int) -> list[int]:
     step = width / max(cols - 1, 1)
     return [round(x0 + col * step), row * 260]
 
+def deck_id_for_graph_node(node: dict) -> str:
+    ntype = node.get("type")
+    attrs = node.get("attributes") or {}
+    if ntype == "component":
+        return attrs.get("component_id") or node["id"]
+    if ntype == "interface":
+        return f"iface:{attrs.get('interface') or node['label']}"
+    if ntype == "profile":
+        return f"profile:{attrs.get('profile_id') or node['label']}"
+    return node["id"]
+
+
+def semantic_kind(node: dict) -> str:
+    ntype = node.get("type")
+    attrs = node.get("attributes") or {}
+    if ntype == "harness":
+        return "hub runtime"
+    if ntype == "mechanism":
+        kind = attrs.get("kind")
+        if kind in {"context", "compression", "efficiency"}:
+            return "hub compute"
+        if kind in {"decision", "contract"}:
+            return "hub decision"
+        return "hub research"
+    if ntype == "mechanism_family":
+        return "hub contract"
+    if ntype == "lifecycle":
+        return "hub research"
+    if ntype == "lifecycle_state":
+        return "tiny contract"
+    if ntype == "profile":
+        return "hub environment"
+    if ntype == "repository":
+        return "tiny contract"
+    return "default"
+
+
+def semantic_tip(node: dict) -> str:
+    attrs = node.get("attributes") or {}
+    parts = [str(node.get("label", node.get("id", ""))), "", f"type: {node.get('type','')}"]
+    for key in ("kind", "adoption", "stage", "purpose", "repo", "rule"):
+        value = attrs.get(key)
+        if value:
+            parts.append(f"{key}: {' '.join(str(value).split())}")
+    prov = node.get("provenance") or []
+    if prov:
+        p = prov[0]
+        parts.extend(["", f"declared: {p.get('source','')}@{p.get('ref','')}", f"path: {p.get('path','')}"])
+    return "\n".join(parts)
+
+
 def build(graph: dict | None = None) -> dict:
     if graph is None:
         component_doc = fetch_yaml("registry/components.yaml")
@@ -64,6 +115,11 @@ def build(graph: dict | None = None) -> dict:
             for n in graph.get("nodes", [])
             if n.get("type") == "interface"
         }
+
+    graph_nodes = list((graph or {}).get("nodes", []))
+    graph_edges = list((graph or {}).get("edges", []))
+    graph_node_by_id = {n["id"]: n for n in graph_nodes}
+    graph_to_deck = {n["id"]: deck_id_for_graph_node(n) for n in graph_nodes}
 
     plane_of = {cid: PLANE_BY_KIND.get(c.get("kind"), "decision") for cid, c in components.items()}
     component_ids = list(components)
@@ -143,6 +199,44 @@ def build(graph: dict | None = None) -> dict:
         "layout": {"fitMargin": 160, "zoomMax": 0.86},
     })
 
+    semantic_specs = [
+        ("harnesses", "Execution harnesses", "The runtime surfaces Zer0 actually executes through. AODL owns portable harness ids; z0 records Zer0 adoption and role.", [5700, 1100], {"harness"}),
+        ("mechanisms", "Reusable mechanisms", "Cross-cutting mechanisms remain stable semantic identities even when they are implemented in multiple harnesses or repositories.", [5700, 2800], {"mechanism", "mechanism_family"}),
+        ("lifecycles", "Promotion + history", "Promotion ladders and truth states are architecture, not Git trivia. These nodes make evolution and authority explicit.", [5700, 4500], {"lifecycle", "lifecycle_state"}),
+        ("profiles", "Install profiles", "Profiles are lenses over installable components; they are not a second architecture hierarchy.", [3000, 6200], {"profile"}),
+        ("repositories", "Implementation repositories", "Repositories are implementation evidence containers. They remain distinct from components, harnesses and mechanisms.", [5700, 6500], {"repository"}),
+    ]
+    for sid, title, caption, anchor, types in semantic_specs:
+        members = [n for n in graph_nodes if n.get("type") in types]
+        if not members:
+            continue
+        members.sort(key=lambda n: str(n.get("label", n.get("id", ""))).lower())
+        slide_nodes = []
+        for i, node in enumerate(members):
+            attrs = node.get("attributes") or {}
+            body = attrs.get("repo") or attrs.get("purpose") or attrs.get("rule") or ""
+            body = " ".join(str(body).split())
+            if len(body) > 110:
+                body = body[:107] + "..."
+            slide_nodes.append({
+                "id": deck_id_for_graph_node(node),
+                "title": node.get("label", node["id"]),
+                "sub": node.get("type", "").replace("_", " "),
+                "body": body,
+                "pos": grid_pos(i, len(members)),
+                "w": 320,
+                "kind": semantic_kind(node),
+                "tip": semantic_tip(node),
+            })
+        slides.append({
+            "id": sid,
+            "title": title,
+            "caption": caption,
+            "anchor": anchor,
+            "nodes": slide_nodes,
+            "layout": {"fitMargin": 160, "zoomMax": 0.9},
+        })
+
     connections = []
     seen_integrations = set()
     for cid, c in components.items():
@@ -164,6 +258,44 @@ def build(graph: dict | None = None) -> dict:
             if iface in interfaces:
                 connections.append({"from": f"iface:{iface}", "to": cid, "kind": "consumes"})
 
+    # Add cross-dimension semantic relations directly from graph IR. Component/interface
+    # relations above keep the original presentation direction; this block focuses on
+    # relations involving the richer ontology.
+    existing_ids = {nd["id"] for sl in slides for nd in sl.get("nodes", [])}
+    seen_semantic = set()
+    for edge in graph_edges:
+        source_node = graph_node_by_id.get(edge.get("source"))
+        target_node = graph_node_by_id.get(edge.get("target"))
+        if not source_node or not target_node:
+            continue
+        if source_node.get("type") in {"component", "interface"} and target_node.get("type") in {"component", "interface"}:
+            continue
+        src = graph_to_deck.get(edge["source"])
+        dst = graph_to_deck.get(edge["target"])
+        if src not in existing_ids or dst not in existing_ids:
+            continue
+        key = (src, dst, edge.get("type"))
+        if key in seen_semantic:
+            continue
+        seen_semantic.add(key)
+        edge_kind = {
+            "depends_on": "depends",
+            "runtime_surface_of": "depends",
+            "next": "depends",
+            "implemented_by": "integrates",
+            "implemented_in_repo": "integrates",
+            "member_of": "integrates",
+            "owned_by": "integrates",
+            "has_stage": "integrates",
+            "includes": "integrates",
+        }.get(edge.get("type"), "default")
+        connections.append({
+            "from": src,
+            "to": dst,
+            "kind": edge_kind,
+            "label": edge.get("type", "").replace("_", " "),
+        })
+
     return {
         "meta": {
             "title": "z0archy",
@@ -173,7 +305,7 @@ def build(graph: dict | None = None) -> dict:
             "source": "https://github.com/kvnloo/z0",
             "overview": {
                 "title": "Whole Zer0 graph",
-                "caption": "Every registered component and contract in one spatial map. Use the arrow keys for guided plane-by-plane navigation.",
+                "caption": "Components, contracts, harnesses, mechanisms, lifecycles, profiles and implementation repositories in one spatial world.",
             },
         },
         "styling": {
