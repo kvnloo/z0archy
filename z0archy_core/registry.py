@@ -18,6 +18,8 @@ OPTIONAL_FILES = {
     "harnesses": "registry/harnesses.yaml",
     "mechanisms": "registry/mechanisms.yaml",
     "lifecycles": "registry/lifecycles.yaml",
+    "representations": "registry/representations.yaml",
+    "evidence_dependencies": "registry/evidence_dependencies.yaml",
 }
 
 
