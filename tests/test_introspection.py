@@ -9,6 +9,24 @@ class FakeTreeSource:
 
     def __init__(self):
         self.files = {
+            "zer0.repo.yaml": """version: 1
+repo: demo/repo
+kind: suite
+architecture:
+  subsystems:
+    - id: compiler
+      name: Compiler
+      kind: compiler
+      paths: [src/]
+    - id: ui
+      name: UI
+      kind: presentation
+      paths: [packages/ui/]
+      depends_on: [compiler]
+  implements_mechanisms: [demo-mechanism]
+  provides_interfaces: [demo.event.v1]
+  produces_representations: [demo-receipt]
+""",
             "README.md": "# Demo\n",
             "ARCHITECTURE.md": "# Architecture\n",
             "package.json": '{"name":"@demo/root","workspaces":["packages/*"],"dependencies":{"@demo/core":"workspace:*"}}',
@@ -87,6 +105,22 @@ class IntrospectionTests(unittest.TestCase):
         self.assertEqual(attrs["workflowCount"], 1)
         self.assertEqual(attrs["testFileCount"], 1)
         self.assertGreater(attrs["semanticCompressionRatio"], 0)
+
+        compiler = zid("subsystem", "demo/repo:compiler")
+        ui = zid("subsystem", "demo/repo:ui")
+        self.assertIn(compiler, nodes)
+        self.assertIn(ui, nodes)
+        subsystem_edges = {
+            (edge["source"], edge["target"])
+            for edge in edges
+            if edge["type"] == "subsystem_depends_on"
+        }
+        self.assertIn((ui, compiler), subsystem_edges)
+        manifest_node = next(
+            node for node in nodes.values()
+            if node["type"] == "implementation_manifest"
+        )
+        self.assertEqual(manifest_node["attributes"]["manifestPath"], "zer0.repo.yaml")
 
         summary = pack["summary"]["tree"]
         self.assertTrue(summary["available"])
