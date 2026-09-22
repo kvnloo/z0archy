@@ -144,6 +144,70 @@ class VirtualSnapshotTests(unittest.TestCase):
         codes = {row["code"] for row in lint_graph(graph)}
         self.assertNotIn("drift.cross_repo_package_dependency_undeclared", codes)
 
+
+    def test_repo_manifest_resolves_only_existing_canonical_semantics(self):
+        base = self.base_graph()
+        base["nodes"].extend([
+            {
+                "id": zid("mechanism", "demo-mechanism"),
+                "type": "mechanism",
+                "label": "Demo mechanism",
+                "attributes": {"mechanism_id": "demo-mechanism"},
+                "provenance": [{"class": "declared", "source": "z0", "ref": "main", "path": "registry/mechanisms.yaml", "field": "demo"}],
+            },
+            {
+                "id": zid("interface", "demo.event.v1"),
+                "type": "interface",
+                "label": "demo.event.v1",
+                "attributes": {"interface": "demo.event.v1"},
+                "provenance": [{"class": "declared", "source": "z0", "ref": "main", "path": "registry/interfaces.yaml", "field": "demo"}],
+            },
+            {
+                "id": zid("representation", "demo-receipt"),
+                "type": "representation",
+                "label": "Demo receipt",
+                "attributes": {"representation_id": "demo-receipt"},
+                "provenance": [{"class": "declared", "source": "z0", "ref": "main", "path": "registry/representations.yaml", "field": "demo"}],
+            },
+        ])
+        base["nodes"].sort(key=lambda row: row["id"])
+        provider = FakeSource({
+            "main": {
+                "zer0.repo.yaml": """version: 1
+repo: o/a
+kind: suite
+architecture:
+  subsystems:
+    - id: compiler
+      kind: compiler
+      paths: [src/]
+  implements_mechanisms: [demo-mechanism, missing-mechanism]
+  provides_interfaces: [demo.event.v1]
+  produces_representations: [demo-receipt]
+""",
+                "README.md": "# A\n",
+            }
+        })
+        graph = compile_virtual_snapshot(
+            base,
+            {"version": 1, "repos": {"o/a": {"source": "github", "ref": "main"}}},
+            {"github": provider},
+            generated_at="2026-01-01T00:00:01Z",
+        )
+        implemented = [
+            edge for edge in graph["edges"]
+            if (edge.get("attributes") or {}).get("manifestDeclared")
+        ]
+        edge_types = {edge["type"] for edge in implemented}
+        self.assertIn("implements_mechanism", edge_types)
+        self.assertIn("provides_interface", edge_types)
+        self.assertIn("produces_representation", edge_types)
+        self.assertTrue(all(edge["provenance"][0]["class"] == "implemented" for edge in implemented))
+        unresolved = graph["derivedEvidence"]["unresolvedManifestReferences"]
+        self.assertEqual(len(unresolved), 1)
+        self.assertEqual(unresolved[0]["target"], "missing-mechanism")
+        self.assertNotIn(zid("mechanism", "missing-mechanism"), {n["id"] for n in graph["nodes"]})
+
     def test_ref_change_has_structural_diff(self):
         provider = FakeSource({
             "main": {"README.md": "# main\n"},
