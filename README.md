@@ -190,6 +190,30 @@ python scripts/record_history.py generated/graph.json
 
 The build keeps the ActiveGraph SQLite event store under `.cache/`, stores the complete semantic graph in ActiveGraph's snapshot sidecar, and exports static replayable snapshots to `generated/history/` plus `generated/history-index.json`. Historical graphcon-deck documents are precompiled into `generated/history-decks/`, and the top-bar history selector can jump between live and prior semantic states without a backend. Live Git/ref controls are locked while viewing history so present-day observations cannot contaminate an older architecture state.
 
+## Counterfactual architecture worlds
+
+Historical architecture is now branchable, not only replayable.
+
+Compile any virtual ref selection, then fork a recorded architecture run into that alternative world:
+
+```bash
+python scripts/compile_snapshot.py \
+  --selection selection.json \
+  --output generated/virtual-graph.json
+
+python scripts/fork_counterfactual.py \
+  generated/virtual-graph.json \
+  --label "alternative routing world"
+
+python scripts/generate_history_decks.py
+```
+
+The fork uses ActiveGraph's durable SQLite lineage. The parent event prefix is copied at the fork point, then z0archy reconciles the fork's semantic objects/relations toward the target graph as ordinary ActiveGraph events. ActiveGraph's native structural diff reports divergent objects, relations and event tails.
+
+Counterfactual runs store the complete target graph in the same snapshot sidecar but use a distinct history `viewKey`. The history selector labels these entries as **fork**. Canonical history deliberately ignores counterfactual runs when choosing its next predecessor, so an experiment can never silently become architecture truth.
+
+Re-running the exact same parent + target selection reuses the same counterfactual run instead of duplicating history.
+
 ## GitHub API budget
 
 The GitHub layer builds on GraphQL pagination + SQLite ingestion ideas previously used in `kvnloo/gh-contrib-archive`, adding deterministic query cache keys, batching, explicit rate-limit accounting, stale fallback, immutable commit-keyed evidence, one-call-per-new-SHA Git tree inventories, and Actions cache persistence.

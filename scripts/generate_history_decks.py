@@ -37,9 +37,10 @@ def main() -> None:
     compiled = 0
     for entry in index.get("entries") or []:
         digest = entry.get("hash")
-        if not digest:
+        view_key = entry.get("viewKey") or digest
+        if not digest or not view_key:
             continue
-        graph_path = history_dir / f"{digest}.json"
+        graph_path = history_dir / f"{view_key}.json"
         if not graph_path.is_file():
             continue
         graph = json.loads(graph_path.read_text(encoding="utf-8"))
@@ -47,9 +48,12 @@ def main() -> None:
         deck.setdefault("meta", {})["event"] = "architecture history"
         deck["meta"]["date"] = entry.get("createdAt") or digest[:12]
         deck["meta"]["historyHash"] = digest
-        target = output_dir / f"{digest}.json"
+        deck["meta"]["historyViewKey"] = view_key
+        deck["meta"]["historyKind"] = entry.get("kind") or "canonical"
+        deck["meta"]["historyParentRunId"] = entry.get("parentRunId")
+        target = output_dir / f"{view_key}.json"
         target.write_text(json.dumps(deck, indent=2) + "\n", encoding="utf-8")
-        entry["deckPath"] = f"generated/history-decks/{digest}.json"
+        entry["deckPath"] = f"generated/history-decks/{view_key}.json"
         compiled += 1
 
     index_path.write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")
