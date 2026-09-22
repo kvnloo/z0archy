@@ -273,7 +273,7 @@ function installEvidenceScene(component,row,source,pack){
     id:EVIDENCE_SCENE_ID,
     title:(component.title||component.id)+" · "+(row.branch||row.value||"ref"),
     caption:"Implemented evidence compiled from the exact selected "+source+" source. Declared z0 architecture remains separate.",
-    anchor:[6500,4500],
+    anchor:[8000,4500],
     nodes:defs,
     include:[component.id],
     edges:edges,
