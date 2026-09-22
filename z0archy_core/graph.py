@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from typing import Any
 from urllib.parse import quote
 
-SCHEMA_VERSION = "0.2.0"
+SCHEMA_VERSION = "0.3.0"
 
 
 def zid(kind: str, value: str) -> str:
@@ -19,6 +19,8 @@ def compile_graph(
     harnesses_doc: dict[str, Any] | None = None,
     mechanisms_doc: dict[str, Any] | None = None,
     lifecycles_doc: dict[str, Any] | None = None,
+    representations_doc: dict[str, Any] | None = None,
+    evidence_dependencies_doc: dict[str, Any] | None = None,
     *,
     source_repo: str = "kvnloo/z0",
     source_ref: str = "main",
@@ -31,6 +33,8 @@ def compile_graph(
     harnesses = (harnesses_doc or {}).get("harnesses") or {}
     mechanisms = (mechanisms_doc or {}).get("mechanisms") or {}
     lifecycles = (lifecycles_doc or {}).get("lifecycles") or {}
+    representations = (representations_doc or {}).get("representations") or {}
+    evidence_dependencies = (evidence_dependencies_doc or {}).get("evidence_dependencies") or {}
 
     node_map: dict[str, dict[str, Any]] = {}
     edges: list[dict[str, Any]] = []
@@ -350,6 +354,128 @@ def compile_graph(
             previous_id = sid
             previous_stage = stage
 
+    # Information representation layer.
+    for rid, raw in representations.items():
+        spec = dict(raw or {})
+        rpath = "registry/representations.yaml"
+        add_node(
+            zid("representation", rid),
+            "representation",
+            spec.get("name") or rid,
+            {"representation_id": rid, **spec},
+            path=rpath,
+            field=f"representations.{rid}",
+        )
+        iface = spec.get("interface")
+        if iface in interfaces:
+            add_edge(
+                "materializes_interface",
+                zid("representation", rid),
+                zid("interface", iface),
+                rid,
+                iface,
+                path=rpath,
+                field=f"representations.{rid}.interface",
+            )
+        for mid in spec.get("produced_by") or []:
+            if mid in mechanisms:
+                add_edge(
+                    "produced_by",
+                    zid("representation", rid),
+                    zid("mechanism", mid),
+                    rid,
+                    mid,
+                    path=rpath,
+                    field=f"representations.{rid}.produced_by",
+                )
+
+    # Epistemic/evidence dependency layer.
+    endpoint_maps = {
+        "component": components,
+        "harness": harnesses,
+        "mechanism": mechanisms,
+        "interface": interfaces,
+        "lifecycle": lifecycles,
+        "representation": representations,
+    }
+
+    def endpoint_id(value: str | None) -> str | None:
+        if not value:
+            return None
+        kind, sep, ident = str(value).partition(":")
+        if not sep or not ident:
+            return None
+        if kind == "repo":
+            return zid("repo", ident)
+        if kind in endpoint_maps and ident in endpoint_maps[kind]:
+            return zid(kind, ident)
+        return None
+
+    for eid, raw in evidence_dependencies.items():
+        spec = dict(raw or {})
+        epath = "registry/evidence_dependencies.yaml"
+        source = endpoint_id(spec.get("from"))
+        target = endpoint_id(spec.get("to"))
+        if source is None or target is None:
+            continue
+
+        via = endpoint_id(spec.get("via"))
+        claim_id = zid("evidence-dependency", eid)
+        add_node(
+            claim_id,
+            "evidence_dependency",
+            spec.get("name") or eid,
+            {"evidence_dependency_id": eid, **spec},
+            path=epath,
+            field=f"evidence_dependencies.{eid}",
+        )
+        add_edge(
+            "claims_from",
+            claim_id,
+            source,
+            eid,
+            spec.get("from"),
+            path=epath,
+            field=f"evidence_dependencies.{eid}.from",
+        )
+        add_edge(
+            "claims_to",
+            claim_id,
+            target,
+            eid,
+            spec.get("to"),
+            path=epath,
+            field=f"evidence_dependencies.{eid}.to",
+        )
+        if via:
+            add_edge(
+                "mediated_by",
+                claim_id,
+                via,
+                eid,
+                spec.get("via"),
+                path=epath,
+                field=f"evidence_dependencies.{eid}.via",
+            )
+
+        edge_attrs = {
+            "evidence_dependency_id": eid,
+            "required_evidence": list(spec.get("required_evidence") or []),
+            "invariants": list(spec.get("invariants") or []),
+            "invalidators": list(spec.get("invalidators") or []),
+            "retrieval": dict(spec.get("retrieval") or {}),
+            "confidence": spec.get("confidence"),
+            "abstain_if": list(spec.get("abstain_if") or []),
+            "via": spec.get("via"),
+        }
+        edges.append({
+            "id": zid("edge", f"evidence:{eid}"),
+            "type": spec.get("relation") or "evidence_dependency",
+            "source": source,
+            "target": target,
+            "attributes": edge_attrs,
+            "provenance": provenance(epath, f"evidence_dependencies.{eid}"),
+        })
     # Declared component relationships.
     seen_integrations: set[tuple[str, str]] = set()
     for cid, raw in components.items():
