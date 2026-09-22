@@ -37,7 +37,13 @@ jobs:
             z0archy-source-v2-${{ runner.os }}-
       - run: python -m pip install -r requirements.txt
       - run: python -m unittest discover -s tests -v
-      - run: python scripts/generate_graph.py
+      - name: Resolve canonical z0 commit
+        id: z0
+        run: |
+          sha="$(git ls-remote https://github.com/kvnloo/z0.git refs/heads/main | cut -f1)"
+          test -n "$sha"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+      - run: python scripts/generate_graph.py --ref ${{ steps.z0.outputs.sha }}
       - run: python scripts/validate_graph.py generated/graph.json
       - run: python scripts/generate_github_index.py --cache-ttl 10800
         env:
