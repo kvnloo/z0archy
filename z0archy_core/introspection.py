@@ -6,6 +6,7 @@ from typing import Any
 
 import yaml
 
+from .evidence import attach_evidence_dependencies
 from .graph import zid
 from .sources import SourceProvider, content_sha256
 
@@ -157,6 +158,8 @@ def inspect_repository(
             "target": pid,
             "provenance": nodes[-1]["provenance"],
         })
+
+    attach_evidence_dependencies(edges, verified_at=None)
 
     return {
         "repo": repo,
