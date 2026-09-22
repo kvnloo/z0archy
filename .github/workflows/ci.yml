@@ -25,5 +25,6 @@ jobs:
         run: |
           python scripts/generate_graph.py --z0-root tests/fixtures/z0 --output /tmp/graph.json
           python scripts/validate_graph.py /tmp/graph.json
+          python scripts/lint_architecture.py /tmp/graph.json --fail-on error
           python scripts/generate_deck.py --graph /tmp/graph.json --output /tmp/deck.json
           python scripts/validate_deck.py /tmp/deck.json
