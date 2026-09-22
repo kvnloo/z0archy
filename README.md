@@ -89,6 +89,16 @@ python scripts/lint_graph.py generated/graph.json --fail-on error
 
 The linter fails unresolved evidence endpoints and structurally unverifiable claims while reporting weaker architecture-quality warnings separately.
 
+## Virtual multi-repo architecture
+
+The **ref matrix** composes one derived Zer0 world from immutable Git refs across every repository represented in the graph.
+
+For installable components, “canonical” means the exact commit SHA declared by `kvnloo/z0`, even when the configured branch has advanced. Repositories that z0 references semantically but does not pin are labeled **un-pinned** and use the GitHub default branch only as an observational fallback.
+
+Applying the matrix loads the precompiled evidence pack for every selected immutable commit, merges those packs over the declared world model, and compares selected implementation evidence against canonical evidence where a declared pin exists. The resulting virtual graph becomes the active world for question-conditioned MOCs.
+
+The selection can be copied as a portable JSON manifest. Applied GitHub selections are URL-addressable with `virtual=1` and `v.<repo>=<ref>` parameters.
+
 ## Semantic zoom
 
 The whole-world view uses semantic zoom rather than geometric scaling alone. Each graph node carries an abstraction depth. As the camera moves closer, z0archy progressively reveals:

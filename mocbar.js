@@ -61,6 +61,13 @@ function mocTip(node,result){
 }
 
 async function graphForCurrentWorld(){
+  if(
+    typeof historyState!=="undefined" &&
+    historyState.active==="live" &&
+    window.z0VirtualGraph
+  ){
+    return window.z0VirtualGraph;
+  }
   let path="./generated/graph.json";
   if(typeof historyState!=="undefined" && historyState.active && historyState.active!=="live"){
     path="./generated/history/"+encodeURIComponent(historyState.active)+".json";
