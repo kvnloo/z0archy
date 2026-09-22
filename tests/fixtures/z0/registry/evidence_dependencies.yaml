@@ -1,0 +1,16 @@
+evidence_dependencies:
+  fixture-compresses:
+    from: representation:raw-context
+    to: representation:compact-state
+    relation: compresses_to
+    via: mechanism:fixture-compression
+    required_evidence:
+      - registry/mechanisms.yaml#mechanisms.fixture-compression
+    invariants:
+      - Compact state remains traceable to source.
+    invalidators:
+      - Traceability is lost.
+    retrieval:
+      fastest: registry
+      fallback: source-search
+    confidence: declared
