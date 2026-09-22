@@ -20,5 +20,10 @@ assert.strictEqual(zoom.shouldShow(1,1,false),true);
 assert.strictEqual(zoom.shouldShow(2,1,false),false);
 assert.strictEqual(zoom.shouldShow(5,1,true),true);
 assert.strictEqual(zoom.labelForDetail(3),"important detail");
+assert.strictEqual(zoom.semanticImportanceForType("component"),8);
+assert.strictEqual(zoom.semanticImportanceForType("representation"),6);
+assert.strictEqual(zoom.semanticImportanceForType("source_artifact"),0);
+assert.strictEqual(zoom.sufficiencyThresholdForDetail(2),6);
+assert.strictEqual(zoom.sufficiencyThresholdForDetail(5),1);
 
 console.log("ok: semantic zoom core");
