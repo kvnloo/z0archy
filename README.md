@@ -97,7 +97,7 @@ Canonical semantic states are content-addressed before being recorded. Rebuildin
 python scripts/record_history.py generated/graph.json
 ```
 
-The build keeps the ActiveGraph SQLite event store under `.cache/`, stores the complete semantic graph in ActiveGraph's snapshot sidecar, and exports static replayable snapshots to `generated/history/` plus `generated/history-index.json`. This gives the browser a durable time axis without making GitHub Pages depend on a long-running backend.
+The build keeps the ActiveGraph SQLite event store under `.cache/`, stores the complete semantic graph in ActiveGraph's snapshot sidecar, and exports static replayable snapshots to `generated/history/` plus `generated/history-index.json`. Historical graphcon-deck documents are precompiled into `generated/history-decks/`, and the top-bar history selector can jump between live and prior semantic states without a backend. Live Git/ref controls are locked while viewing history so present-day observations cannot contaminate an older architecture state.
 
 ## GitHub API budget
 
