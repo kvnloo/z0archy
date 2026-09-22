@@ -217,7 +217,7 @@ function evidencePath(repo,key){
 function evidenceFingerprint(pack){
   return JSON.stringify((pack.nodes||[]).map(function(n){
     const a=n.attributes||{};
-    return [n.id,a.sha256,a.version,a.bytes,a.resolvedRef];
+    return [n.id,a.sha256,a.gitBlobOid,a.version,a.bytes,a.resolvedRef,a.fileCount,a.packageCount,a.schemaCount,a.workflowCount,a.testFileCount];
   }));
 }
 
@@ -236,14 +236,20 @@ function installEvidenceScene(component,row,source,pack){
       pos=[-420+col*420,300+r*250];
       if(n.type==="package") kind="hub decision";
       if(n.type==="implementation_manifest") kind="hub research";
+      if(n.type==="repo_structure") kind="hub measurement";
+      if(n.type==="test_surface") kind="hub research";
     }
     let body="";
     if(n.type==="source_artifact"){
-      body=(a.role||"artifact")+" · "+String(a.sha256||"").slice(0,12);
+      body=(a.role||"artifact")+" · "+String(a.sha256||a.gitBlobOid||"").slice(0,12);
     } else if(n.type==="package"){
       body=(a.ecosystem||"package")+(a.version?" · "+a.version:"");
     } else if(n.type==="repo_ref"){
       body=source+" · "+String(row.head||a.resolvedRef||"").slice(0,12);
+    } else if(n.type==="repo_structure"){
+      body=(a.fileCount||0)+" files · "+(a.packageCount||0)+" packages · "+(a.schemaCount||0)+" schemas";
+    } else if(n.type==="test_surface"){
+      body=(a.fileCount||0)+" test files";
     } else {
       body=String(a.path||a.repo||"");
     }
@@ -310,7 +316,16 @@ function evidenceTip(node,pack,row,source){
   ];
   if(a.path) lines.push("path: "+a.path);
   if(a.sha256) lines.push("sha256: "+a.sha256.slice(0,16));
+  if(a.gitBlobOid) lines.push("git blob: "+String(a.gitBlobOid).slice(0,16));
   if(a.bytes!=null) lines.push("bytes: "+a.bytes);
+  if(node.type==="repo_structure"){
+    lines.push("files: "+(a.fileCount||0));
+    lines.push("packages: "+(a.packageCount||0));
+    lines.push("schemas: "+(a.schemaCount||0));
+    lines.push("workflows: "+(a.workflowCount||0));
+    lines.push("tests: "+(a.testFileCount||0));
+    lines.push("compression: "+(a.semanticCompressionRatio||0)+" source files / semantic node");
+  }
   return lines.join("\n");
 }
 

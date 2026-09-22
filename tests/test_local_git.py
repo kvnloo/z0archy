@@ -57,6 +57,37 @@ class LocalGitTests(unittest.TestCase):
             self.assertGreater(artifact["attributes"]["bytes"], len("# committed\n"))
             self.assertEqual(artifact["provenance"][0]["class"], "implemented")
 
+    def test_worktree_tree_inventory_includes_untracked_architecture_files(self):
+        with tempfile.TemporaryDirectory() as td:
+            repo = Path(td) / "repo"
+            subprocess.run(["git", "init", "-q", "-b", "main", str(repo)], check=True)
+            subprocess.run(["git", "-C", str(repo), "config", "user.email", "test@example.com"], check=True)
+            subprocess.run(["git", "-C", str(repo), "config", "user.name", "Test"], check=True)
+            (repo / "README.md").write_text("# demo\n")
+            subprocess.run(["git", "-C", str(repo), "add", "README.md"], check=True)
+            subprocess.run(["git", "-C", str(repo), "commit", "-qm", "init"], check=True)
+            (repo / "pyproject.toml").write_text('[project]\nname = "demo"\n')
+            (repo / "schemas").mkdir()
+            (repo / "schemas" / "event.schema.json").write_text('{"type":"object"}\n')
+
+            source = LocalGitSource({"kvnloo/demo": repo})
+            tree = source.list_tree("kvnloo/demo", "WORKTREE")
+            paths = {row["path"] for row in tree["entries"]}
+            self.assertIn("README.md", paths)
+            self.assertIn("pyproject.toml", paths)
+            self.assertIn("schemas/event.schema.json", paths)
+
+            pack = inspect_repository(
+                source,
+                "kvnloo/demo",
+                "WORKTREE",
+                resolved_ref="worktree-untracked",
+            )
+            package = next(n for n in pack["nodes"] if n["type"] == "package")
+            self.assertEqual(package["label"], "demo")
+            structure = next(n for n in pack["nodes"] if n["type"] == "repo_structure")
+            self.assertEqual(structure["attributes"]["schemaCount"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()

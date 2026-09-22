@@ -15,6 +15,8 @@
     evidence_dependency:3,
     lifecycle_state:4,
     evidence_reference:4,
+    repo_structure:4,
+    test_surface:4,
     repo_ref:5,
     package:5,
     source_artifact:5,

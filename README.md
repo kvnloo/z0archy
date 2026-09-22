@@ -25,17 +25,21 @@ kvnloo/z0 -> declared semantics -> canonical graph IR
 
 ## Exact-ref architecture
 
-Branch/worktree selection is no longer tooltip-only. For each selected repository version, z0archy currently probes a bounded evidence-preserving surface:
+Branch/worktree selection is no longer tooltip-only. For each selected repository version, z0archy inventories the selected Git tree once and compiles a loss-aware structural projection rather than copying every file into the graph.
 
-- `zer0.component.yaml`
-- `ARCHITECTURE.md`
-- `README.md`
-- `AGENTS.md`
-- `package.json`, `pyproject.toml`, and `Cargo.toml`
+The projection materializes:
 
-Artifacts are hashed and attached to the exact repo-ref node with `implemented` provenance. Package identities and explicit Zer0 manifests become semantic nodes.
+- explicit `zer0.component.yaml` plus architecture/system/agent docs;
+- every bounded package manifest across npm, Python, Cargo and Go monorepos;
+- internal package-to-package dependency edges;
+- schemas and API-contract artifacts;
+- GitHub Actions workflows;
+- a compressed test surface; and
+- one repository-structure node retaining file counts, byte counts, top-level/extension distributions, tree truncation state and the source-files-per-semantic-node compression ratio.
 
-This first compiler intentionally does **not** claim to infer every package, import, schema, test, or runtime dependency yet. Those analyzers can append evidence onto the same stable repo/ref contract.
+GitHub tree inventories are keyed by immutable commit SHA and persisted under the same Actions cache as ref evidence. Raw file bodies still use `raw.githubusercontent.com`, so after the one tree inventory call, architecture-bearing content does not consume REST/GraphQL request budget.
+
+The compiler still refuses to pretend arbitrary source-code imports are architectural truth. Import/call-graph analyzers can be added as a lower-confidence representation on the same exact-ref contract rather than silently promoting inferred edges.
 
 ## Hosted mode
 
@@ -139,7 +143,7 @@ The build keeps the ActiveGraph SQLite event store under `.cache/`, stores the c
 
 ## GitHub API budget
 
-The GitHub layer builds on GraphQL pagination + SQLite ingestion ideas previously used in `kvnloo/gh-contrib-archive`, adding deterministic query cache keys, batching, explicit rate-limit accounting, stale fallback, immutable commit-keyed evidence, and Actions cache persistence.
+The GitHub layer builds on GraphQL pagination + SQLite ingestion ideas previously used in `kvnloo/gh-contrib-archive`, adding deterministic query cache keys, batching, explicit rate-limit accounting, stale fallback, immutable commit-keyed evidence, one-call-per-new-SHA Git tree inventories, and Actions cache persistence.
 
 ## Validation
 

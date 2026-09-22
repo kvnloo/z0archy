@@ -6,6 +6,8 @@ const zoom=require("../semantic_zoom_core.js");
 assert.strictEqual(zoom.semanticLevelForType("component"),1);
 assert.strictEqual(zoom.semanticLevelForType("representation"),2);
 assert.strictEqual(zoom.semanticLevelForType("evidence_dependency"),3);
+assert.strictEqual(zoom.semanticLevelForType("repo_structure"),4);
+assert.strictEqual(zoom.semanticLevelForType("test_surface"),4);
 assert.strictEqual(zoom.semanticLevelForType("source_artifact"),5);
 
 assert.strictEqual(zoom.detailLevelForScale(0.1),1);
