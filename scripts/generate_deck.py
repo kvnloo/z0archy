@@ -174,7 +174,12 @@ def build(graph: dict | None = None) -> dict:
             "w": 420,
             "kind": "mega indigo",
             "tip": "Source of truth for component boundaries, profiles and cross-system interfaces. z0archy renders it; it does not replace it.",
-            "meta": {"graphType": "root", "semanticLevel": 0},
+            "meta": {
+                "graphType": "root",
+                "graphId": "z0://root/zer0",
+                "semanticLevel": 0,
+                "truthClass": "declared",
+            },
         }],
         "include": component_ids,
         "layout": {"fitMargin": 180, "zoomMax": 0.72, "noCard": False},
@@ -207,7 +212,9 @@ def build(graph: dict | None = None) -> dict:
                     "canonicalBranch": (c.get("install") or {}).get("branch"),
                     "canonicalRef": (c.get("install") or {}).get("ref"),
                     "graphType": "component",
+                    "graphId": f"z0://component/{cid}",
                     "semanticLevel": semantic_level("component"),
+                    "truthClass": "declared",
                 },
             })
         slides.append({
@@ -234,7 +241,12 @@ def build(graph: dict | None = None) -> dict:
             "w": 285,
             "kind": "tiny contract",
             "tip": f"{spec.get('summary','')}\n\nowner: {spec.get('owner','unknown')}",
-            "meta": {"graphType": "interface", "semanticLevel": semantic_level("interface")},
+            "meta": {
+                "graphType": "interface",
+                "graphId": f"z0://interface/{name}",
+                "semanticLevel": semantic_level("interface"),
+                "truthClass": "declared",
+            },
         } for i, (name, spec) in enumerate(iface_items)],
         "layout": {"fitMargin": 160, "zoomMax": 0.86},
     })
@@ -282,6 +294,10 @@ def build(graph: dict | None = None) -> dict:
                     "graphType": node.get("type"),
                     "graphId": node.get("id"),
                     "semanticLevel": semantic_level(str(node.get("type") or "")),
+                    "truthClass": (
+                        ((node.get("provenance") or [{}])[0]).get("class")
+                        or "declared"
+                    ),
                 },
             })
         slides.append({
