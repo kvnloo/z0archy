@@ -93,6 +93,13 @@
     cursor:pointer; font:10px ui-monospace,Menlo,Consolas,monospace;}
   #mocbar button:hover{border-color:#574CE3; color:#574CE3;}
 
+
+  .node.semhid{opacity:0 !important; pointer-events:none;}
+  .edge.semhid,.elabel.semhid{opacity:0 !important;}
+  #semanticbadge{position:fixed; top:58px; right:22px; z-index:12; padding:5px 9px;
+    border:1px solid #E7E3D9; border-radius:999px; background:rgba(255,255,255,.92);
+    color:#62666F; font:9px ui-monospace,Menlo,Consolas,monospace; pointer-events:none;}
+
   #panel{position:fixed; top:0; right:0; bottom:0; width:270px; background:rgba(255,255,255,.94);
     border-left:1px solid #E7E3D9; z-index:20; padding:18px 18px 90px; overflow-y:auto;
     transform:translateX(100%); transition:transform .35s ease;
@@ -130,6 +137,7 @@
     #sourcebar .state{width:100%;}
     #mocbar{top:126px; left:12px; right:12px; transform:none;}
     #mocbar input{width:auto; flex:1;}
+    #semanticbadge{top:172px; right:12px;}
     #caption{bottom:86px; max-width:calc(100vw - 44px);}
     #caption .tt{font-size:16px;} #caption .cc{font-size:11.5px;}
     #nav{left:22px; right:22px; justify-content:flex-end;}
@@ -164,6 +172,7 @@ window.addEventListener("unhandledrejection", function(e){
 <div id="legend"><i style="background:#574CE3"></i>runtime<i style="background:#2D7DD2"></i>decision<i style="background:#A87B3E"></i>measurement<i style="background:#5E9430"></i>research<i style="background:#8B5CF6"></i>compute</div>
 <div id="tip"></div>
 <div id="hint">← → scenes · drag pan · scroll/pinch zoom<br>e edit · o whole graph · click dim node to travel · hover for detail</div>
+<div id="semanticbadge">L1 · logic</div>
 <div id="sourcebar">
   <select id="sourcesel" aria-label="evidence source">
     <option value="canonical">canonical</option>
@@ -874,5 +883,7 @@ loadZ0Deck();
 <script src="./historybar.js"></script>
 <script src="./moc_core.js"></script>
 <script src="./mocbar.js"></script>
+<script src="./semantic_zoom_core.js"></script>
+<script src="./semantic_zoom.js"></script>
 </body>
 </html>

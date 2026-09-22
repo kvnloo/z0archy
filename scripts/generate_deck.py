@@ -59,6 +59,31 @@ def deck_id_for_graph_node(node: dict) -> str:
     return node["id"]
 
 
+SEMANTIC_LEVEL_BY_TYPE = {
+    "root": 0,
+    "component": 1,
+    "mechanism_family": 1,
+    "harness": 2,
+    "mechanism": 2,
+    "representation": 2,
+    "lifecycle": 2,
+    "interface": 3,
+    "profile": 3,
+    "repository": 3,
+    "evidence_dependency": 3,
+    "lifecycle_state": 4,
+    "evidence_reference": 4,
+    "repo_ref": 5,
+    "package": 5,
+    "source_artifact": 5,
+    "implementation_manifest": 5,
+}
+
+
+def semantic_level(node_type: str) -> int:
+    return SEMANTIC_LEVEL_BY_TYPE.get(node_type, 3)
+
+
 def semantic_kind(node: dict) -> str:
     ntype = node.get("type")
     attrs = node.get("attributes") or {}
@@ -149,6 +174,7 @@ def build(graph: dict | None = None) -> dict:
             "w": 420,
             "kind": "mega indigo",
             "tip": "Source of truth for component boundaries, profiles and cross-system interfaces. z0archy renders it; it does not replace it.",
+            "meta": {"graphType": "root", "semanticLevel": 0},
         }],
         "include": component_ids,
         "layout": {"fitMargin": 180, "zoomMax": 0.72, "noCard": False},
@@ -180,6 +206,8 @@ def build(graph: dict | None = None) -> dict:
                     "repo": c.get("repo"),
                     "canonicalBranch": (c.get("install") or {}).get("branch"),
                     "canonicalRef": (c.get("install") or {}).get("ref"),
+                    "graphType": "component",
+                    "semanticLevel": semantic_level("component"),
                 },
             })
         slides.append({
@@ -206,6 +234,7 @@ def build(graph: dict | None = None) -> dict:
             "w": 285,
             "kind": "tiny contract",
             "tip": f"{spec.get('summary','')}\n\nowner: {spec.get('owner','unknown')}",
+            "meta": {"graphType": "interface", "semanticLevel": semantic_level("interface")},
         } for i, (name, spec) in enumerate(iface_items)],
         "layout": {"fitMargin": 160, "zoomMax": 0.86},
     })
@@ -249,6 +278,11 @@ def build(graph: dict | None = None) -> dict:
                 "w": 320,
                 "kind": semantic_kind(node),
                 "tip": semantic_tip(node),
+                "meta": {
+                    "graphType": node.get("type"),
+                    "graphId": node.get("id"),
+                    "semanticLevel": semantic_level(str(node.get("type") or "")),
+                },
             })
         slides.append({
             "id": sid,
@@ -336,7 +370,16 @@ def build(graph: dict | None = None) -> dict:
             "source": "https://github.com/kvnloo/z0",
             "overview": {
                 "title": "Whole Zer0 graph",
-                "caption": "Components, contracts, harnesses, mechanisms, lifecycles, profiles and implementation repositories in one spatial world.",
+                "caption": "Semantic zoom compresses the world into logic first, then reveals concepts, important detail and source evidence as you move closer.",
+            },
+            "semanticZoom": {
+                "levels": [
+                    {"level": 1, "label": "logic"},
+                    {"level": 2, "label": "concepts"},
+                    {"level": 3, "label": "important detail"},
+                    {"level": 4, "label": "deep detail"},
+                    {"level": 5, "label": "source evidence"},
+                ]
             },
         },
         "styling": {

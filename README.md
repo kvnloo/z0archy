@@ -89,6 +89,20 @@ python scripts/lint_graph.py generated/graph.json --fail-on error
 
 The linter fails unresolved evidence endpoints and structurally unverifiable claims while reporting weaker architecture-quality warnings separately.
 
+## Semantic zoom
+
+The whole-world view uses semantic zoom rather than geometric scaling alone. Each graph node carries an abstraction depth. As the camera moves closer, z0archy progressively reveals:
+
+```text
+logic
+  → concepts
+    → important detail
+      → deep detail
+        → source evidence
+```
+
+Components and mechanism families survive the strongest compression. Harnesses, mechanisms, representations, interfaces, repositories, evidence claims, lifecycle states and source evidence appear progressively. Explicitly opening a focused scene or MOC overrides compression and shows that view in full.
+
 ## Dynamic Maps of Content
 
 The canonical world model can be recompiled into a purpose-specific map in the browser. Enter a question such as `context compression`, `provider routing`, or `why is this evidence trusted`. The MOC compiler scores conceptual matches and then expands through typed graph proximity under a bounded node budget, preserving nearby mechanisms, representations, contracts and evidence instead of returning a flat search list.
