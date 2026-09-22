@@ -30,9 +30,10 @@ async function initHistoryBar(){
   entries.forEach(function(entry){
     if(!entry.deckPath) return;
     const option=document.createElement("option");
-    option.value=entry.hash;
+    option.value=entry.viewKey||entry.hash;
     const date=entry.createdAt?String(entry.createdAt).replace("T"," ").replace("Z",""):"";
-    option.textContent=(date?date+" · ":"")+String(entry.hash).slice(0,8);
+    const prefix=entry.kind==="counterfactual"?"fork · ":"";
+    option.textContent=prefix+(date?date+" · ":"")+String(entry.hash).slice(0,8);
     option.dataset.entry=JSON.stringify(entry);
     select.appendChild(option);
   });
@@ -83,7 +84,7 @@ async function switchHistory(value){
   historyState.active=value;
   setHistoryURL(value);
   boot(historical);
-  toast("history · "+String(value).slice(0,8));
+  toast((entry.kind==="counterfactual"?"fork":"history")+" · "+String(entry.hash||value).slice(0,8));
 }
 
 function updateHistoryLock(){
