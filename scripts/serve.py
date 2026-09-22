@@ -12,6 +12,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from z0archy_core.hierarchy import analyze_hierarchy_wave, episodes_from_runtime_graph, merge_episode_documents
 from z0archy_core.introspection import inspect_repository
 from z0archy_core.local_git import build_local_snapshot_from_git_roots, discover_git_roots
 from z0archy_core.runtime_evidence import compile_runtime_evidence, runtime_input_fingerprint
@@ -108,6 +109,58 @@ def _refresh_runtime(
     state["fingerprint"] = fingerprint
 
 
+def _refresh_hierarchy(
+    *,
+    graph_path: Path,
+    episode_paths: list[str],
+    runtime_path: Path,
+    output: Path,
+    state: dict[str, str | None],
+) -> None:
+    if not graph_path.is_file():
+        return
+    tracked = [str(graph_path), *episode_paths]
+    if runtime_path.is_file():
+        tracked.append(str(runtime_path))
+    fingerprint = runtime_input_fingerprint(tracked)
+    if fingerprint == state.get("fingerprint") and output.is_file():
+        return
+
+    documents: list[dict[str, Any]] = []
+    source_errors: list[dict[str, str]] = []
+    for raw in episode_paths:
+        path = Path(raw).expanduser()
+        if not path.is_file():
+            source_errors.append({"path": str(path), "error": "missing"})
+            continue
+        try:
+            value = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            source_errors.append({"path": str(path), "error": f"{type(exc).__name__}: {exc}"})
+            continue
+        if isinstance(value, dict):
+            documents.append(value)
+
+    if runtime_path.is_file():
+        try:
+            runtime_graph = json.loads(runtime_path.read_text(encoding="utf-8"))
+            if isinstance(runtime_graph, dict):
+                documents.append(episodes_from_runtime_graph(runtime_graph))
+        except (OSError, json.JSONDecodeError) as exc:
+            source_errors.append({"path": str(runtime_path), "error": f"{type(exc).__name__}: {exc}"})
+
+    graph = json.loads(graph_path.read_text(encoding="utf-8"))
+    episodes = merge_episode_documents(*documents)
+    result = analyze_hierarchy_wave(graph, episodes)
+    result["episodeSources"] = {
+        "files": [str(Path(path).expanduser()) for path in episode_paths],
+        "runtimeEvidence": str(runtime_path) if runtime_path.is_file() else None,
+        "errors": source_errors,
+    }
+    _atomic_json(output, result)
+    state["fingerprint"] = fingerprint
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description="Serve z0archy with live read-only Git and runtime overlays")
     p.add_argument("--workspace", action="append", required=True, help="workspace root to scan; repeatable")
@@ -121,6 +174,9 @@ def main() -> None:
     p.add_argument("--tokenomics-events", action="append", default=[])
     p.add_argument("--agenttrace-report", action="append", default=[])
     p.add_argument("--aodl-document", action="append", default=[])
+    p.add_argument("--hierarchy-episodes", action="append", default=[])
+    p.add_argument("--hierarchy-output", default="generated/hierarchy-wave.json")
+    p.add_argument("--graph", default="generated/graph.json")
     args = p.parse_args()
 
     output = Path(args.output)
@@ -132,6 +188,9 @@ def main() -> None:
         if candidate.is_file():
             tokenomics_paths.append(str(candidate))
     runtime_state: dict[str, str | None] = {"fingerprint": None}
+    hierarchy_state: dict[str, str | None] = {"fingerprint": None}
+    hierarchy_output = Path(args.hierarchy_output)
+    graph_path = Path(args.graph)
 
     git_roots = discover_git_roots(args.workspace)
     refresh(git_roots, output, evidence_root)
@@ -141,6 +200,13 @@ def main() -> None:
         aodl_paths=args.aodl_document,
         output=runtime_output,
         state=runtime_state,
+    )
+    _refresh_hierarchy(
+        graph_path=graph_path,
+        episode_paths=args.hierarchy_episodes,
+        runtime_path=runtime_output,
+        output=hierarchy_output,
+        state=hierarchy_state,
     )
 
     stop = threading.Event()
@@ -161,6 +227,13 @@ def main() -> None:
                     aodl_paths=args.aodl_document,
                     output=runtime_output,
                     state=runtime_state,
+                )
+                _refresh_hierarchy(
+                    graph_path=graph_path,
+                    episode_paths=args.hierarchy_episodes,
+                    runtime_path=runtime_output,
+                    output=hierarchy_output,
+                    state=hierarchy_state,
                 )
             except Exception as exc:
                 print(f"local scan failed: {exc}")
