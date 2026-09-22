@@ -420,6 +420,44 @@ def compile_graph(
             continue
 
         via = endpoint_id(spec.get("via"))
+        claim_id = zid("evidence-dependency", eid)
+        add_node(
+            claim_id,
+            "evidence_dependency",
+            spec.get("name") or eid,
+            {"evidence_dependency_id": eid, **spec},
+            path=epath,
+            field=f"evidence_dependencies.{eid}",
+        )
+        add_edge(
+            "claims_from",
+            claim_id,
+            source,
+            eid,
+            spec.get("from"),
+            path=epath,
+            field=f"evidence_dependencies.{eid}.from",
+        )
+        add_edge(
+            "claims_to",
+            claim_id,
+            target,
+            eid,
+            spec.get("to"),
+            path=epath,
+            field=f"evidence_dependencies.{eid}.to",
+        )
+        if via:
+            add_edge(
+                "mediated_by",
+                claim_id,
+                via,
+                eid,
+                spec.get("via"),
+                path=epath,
+                field=f"evidence_dependencies.{eid}.via",
+            )
+
         edge_attrs = {
             "evidence_dependency_id": eid,
             "required_evidence": list(spec.get("required_evidence") or []),
