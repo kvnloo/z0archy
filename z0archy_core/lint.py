@@ -35,6 +35,63 @@ def lint_graph(graph: dict[str, Any]) -> list[dict[str, Any]]:
         if target and edge.get("type"):
             incoming[(target, edge["type"])] += 1
 
+    component_repo: dict[str, str] = {}
+    repo_components: dict[str, set[str]] = {}
+    for node in nodes:
+        if node.get("type") != "component":
+            continue
+        attrs = node.get("attributes") or {}
+        repo = attrs.get("repo")
+        if not repo:
+            continue
+        component_repo[node["id"]] = str(repo)
+        repo_components.setdefault(str(repo), set()).add(node["id"])
+
+    declared_depends = {
+        (edge.get("source"), edge.get("target"))
+        for edge in edges
+        if edge.get("type") == "depends_on"
+    }
+    declared_integrations = {
+        frozenset((edge.get("source"), edge.get("target")))
+        for edge in edges
+        if edge.get("type") == "integrates_with"
+    }
+
+    for edge in edges:
+        if edge.get("type") != "package_depends_on":
+            continue
+        attrs = edge.get("attributes") or {}
+        if not attrs.get("derivedCrossRepo"):
+            continue
+        source_node = node_by_id.get(edge.get("source")) or {}
+        target_node = node_by_id.get(edge.get("target")) or {}
+        source_repo = (source_node.get("attributes") or {}).get("repo") or attrs.get("sourceRepo")
+        target_repo = (target_node.get("attributes") or {}).get("repo") or attrs.get("targetRepo")
+        source_components = repo_components.get(str(source_repo), set())
+        target_components = repo_components.get(str(target_repo), set())
+        if not source_components or not target_components:
+            finding(
+                "info",
+                "drift.package_dependency_unmapped",
+                f"Cross-repo package dependency {source_repo} -> {target_repo} cannot be mapped to registered components.",
+                subject=edge.get("id"),
+            )
+            continue
+        declared = any(
+            (source_component, target_component) in declared_depends
+            or frozenset((source_component, target_component)) in declared_integrations
+            for source_component in source_components
+            for target_component in target_components
+        )
+        if not declared:
+            finding(
+                "warning",
+                "drift.cross_repo_package_dependency_undeclared",
+                f"Implementation package dependency {source_repo} -> {target_repo} has no matching z0 depends_on/integrates_with declaration.",
+                subject=edge.get("id"),
+            )
+
     for node in nodes:
         ntype = node.get("type")
         attrs = node.get("attributes") or {}
