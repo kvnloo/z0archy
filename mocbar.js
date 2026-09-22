@@ -119,7 +119,8 @@ async function applyMoc(query){
         graphId:node.id,
         semanticLevel:(typeof z0SemanticZoomCore!=="undefined"
           ?z0SemanticZoomCore.semanticLevelForType(node.type)
-          :3)
+          :3),
+        truthClass:((node.provenance||[])[0]||{}).class||"derived"
       }
     };
   });
