@@ -74,6 +74,47 @@ class SuiteRegistryTests(unittest.TestCase):
         )
         self.assertEqual(graph["stats"]["suiteRepositories"], 1)
 
+
+    def test_suite_repository_dependencies_are_order_independent(self):
+        graph = apply_suite_registry(
+            self.base_graph(),
+            {"repositories": {
+                "projection": {
+                    "name": "Projection",
+                    "repo": "o/projection",
+                    "role": "architecture_projection",
+                    "authority": "derived",
+                    "status": "active",
+                    "depends_on_repositories": ["substrate"],
+                    "evidence": ["o/projection:README.md"],
+                },
+                "substrate": {
+                    "name": "Substrate",
+                    "repo": "o/substrate",
+                    "upstream": "upstream/substrate",
+                    "role": "temporal_graph_substrate",
+                    "authority": "external_substrate",
+                    "status": "active",
+                    "evidence": ["o/substrate:README.md"],
+                },
+            }},
+        )
+        projection = zid("repo", "o/projection")
+        substrate = zid("repo", "o/substrate")
+        edges = [
+            e for e in graph["edges"]
+            if e["type"] == "uses_repository"
+        ]
+        self.assertEqual(len(edges), 1)
+        self.assertEqual(edges[0]["source"], projection)
+        self.assertEqual(edges[0]["target"], substrate)
+        nodes = {n["id"]: n for n in graph["nodes"]}
+        self.assertEqual(
+            nodes[substrate]["attributes"]["suiteUpstream"],
+            "upstream/substrate",
+        )
+        self.assertNotIn(zid("repo", "upstream/substrate"), nodes)
+
     def test_suite_enriches_existing_repository_without_duplicate(self):
         graph = apply_suite_registry(
             self.base_graph(),
