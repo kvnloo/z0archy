@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kvnloo/z0archy/schema/evidence-dependency.schema.json",
+  "title": "EvidenceDependency",
+  "type": "object",
+  "required": [
+    "requiredEvidence",
+    "invariants",
+    "invalidators",
+    "abstainWhen",
+    "retrieval",
+    "confidence",
+    "lastVerified"
+  ],
+  "properties": {
+    "requiredEvidence": {"type": "array", "minItems": 1},
+    "invariants": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "invalidators": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "abstainWhen": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "retrieval": {"type": "array"},
+    "confidence": {
+      "type": "object",
+      "required": ["basis", "level", "numericScore"],
+      "properties": {
+        "basis": {"const": "authority"},
+        "level": {"type": "string"},
+        "numericScore": {"type": "null"}
+      }
+    },
+    "lastVerified": {"type": ["string", "null"]}
+  }
+}
