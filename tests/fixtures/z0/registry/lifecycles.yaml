@@ -1,0 +1,7 @@
+lifecycles:
+  fixture-promotion:
+    name: Fixture Promotion
+    kind: promotion
+    owner_repo: example/runtime
+    stages: [candidate, main]
+    rule: Promote only after fixture evidence.
