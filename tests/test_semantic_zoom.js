@@ -7,6 +7,7 @@ assert.strictEqual(zoom.semanticLevelForType("component"),1);
 assert.strictEqual(zoom.semanticLevelForType("representation"),2);
 assert.strictEqual(zoom.semanticLevelForType("evidence_dependency"),3);
 assert.strictEqual(zoom.semanticLevelForType("repo_structure"),4);
+assert.strictEqual(zoom.semanticLevelForType("subsystem"),4);
 assert.strictEqual(zoom.semanticLevelForType("test_surface"),4);
 assert.strictEqual(zoom.semanticLevelForType("source_artifact"),5);
 
