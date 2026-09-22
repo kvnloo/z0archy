@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from typing import Any
 from urllib.parse import quote
 
-SCHEMA_VERSION = "0.2.0"
+SCHEMA_VERSION = "0.3.0"
 
 
 def zid(kind: str, value: str) -> str:
@@ -438,17 +438,6 @@ def compile_graph(
             "attributes": edge_attrs,
             "provenance": provenance(epath, f"evidence_dependencies.{eid}"),
         })
-        if via:
-            add_edge(
-                "mediated_by",
-                zid("edge", f"evidence:{eid}"),
-                via,
-                eid,
-                spec.get("via"),
-                path=epath,
-                field=f"evidence_dependencies.{eid}.via",
-            )
-
     # Declared component relationships.
     seen_integrations: set[tuple[str, str]] = set()
     for cid, raw in components.items():
