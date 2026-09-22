@@ -54,6 +54,7 @@ def apply_suite_registry(
             "suiteStatus": spec.get("status"),
             "suiteSummary": spec.get("summary"),
             "suiteEvidence": spec.get("evidence") or [],
+            "suiteUpstream": spec.get("upstream"),
         }
         if existing is None:
             node_map[repo_id] = {
@@ -113,6 +114,27 @@ def apply_suite_registry(
                     target,
                     f"{sid}:lifecycle:{lifecycle}",
                     f"repositories.{sid}.lifecycle",
+                )
+
+    # Resolve suite-to-suite repository relations only after every suite repo node
+    # has been materialized, so YAML ordering cannot change graph semantics.
+    for sid, raw in repositories.items():
+        spec = dict(raw or {})
+        source_repo_name = str(spec.get("repo") or "")
+        if not source_repo_name:
+            continue
+        source_id = zid("repo", source_repo_name)
+        for target_sid in spec.get("depends_on_repositories") or []:
+            target_spec = repositories.get(target_sid) or {}
+            target_repo_name = str(target_spec.get("repo") or "")
+            target_id = zid("repo", target_repo_name) if target_repo_name else ""
+            if target_id and target_id in node_map:
+                add_edge(
+                    "uses_repository",
+                    source_id,
+                    target_id,
+                    f"{sid}:repo:{target_sid}",
+                    f"repositories.{sid}.depends_on_repositories",
                 )
 
     graph["nodes"] = sorted(node_map.values(), key=lambda node: node["id"])
