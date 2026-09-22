@@ -12,55 +12,37 @@ FILES = {
     "interfaces": "registry/interfaces.yaml",
     "profiles": "registry/profiles.yaml",
     "maturity": "registry/maturity.yaml",
-    "harnesses": "registry/harnesses.yaml",
-    "mechanisms": "registry/mechanisms.yaml",
-    "representations": "registry/representations.yaml",
-    "evidence_dependencies": "registry/evidence_dependencies.yaml",
-    "lifecycles": "registry/lifecycles.yaml",
 }
-
 OPTIONAL_FILES = {
     "harnesses": "registry/harnesses.yaml",
     "mechanisms": "registry/mechanisms.yaml",
-    "lifecycles": "registry/lifecycles.yaml",
     "representations": "registry/representations.yaml",
     "evidence_dependencies": "registry/evidence_dependencies.yaml",
+    "lifecycles": "registry/lifecycles.yaml",
 }
 
 
-def _read_yaml(text: str) -> dict[str, Any]:
-    return yaml.safe_load(text) or {}
-
-
-def load_registry(
-    *,
-    repo: str = "kvnloo/z0",
-    ref: str = "main",
-    local_root: str | Path | None = None,
-) -> dict[str, dict[str, Any]]:
-    """Load canonical z0 registries.
-
-    New semantic dimensions are optional so z0archy can inspect historical z0 refs
-    created before the richer ontology existed.
-    """
+def load_registry(*, repo: str = "kvnloo/z0", ref: str = "main", local_root: str | Path | None = None) -> dict[str, dict[str, Any]]:
     out: dict[str, dict[str, Any]] = {}
+    all_files = {**FILES, **OPTIONAL_FILES}
     if local_root is not None:
         root = Path(local_root)
-        for key, rel in FILES.items():
-            out[key] = _read_yaml((root / rel).read_text(encoding="utf-8"))
-        for key, rel in OPTIONAL_FILES.items():
+        for key, rel in all_files.items():
             path = root / rel
-            out[key] = _read_yaml(path.read_text(encoding="utf-8")) if path.is_file() else {}
+            if not path.exists() and key in OPTIONAL_FILES:
+                out[key] = {}
+                continue
+            out[key] = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
         return out
 
-    for key, rel in {**FILES, **OPTIONAL_FILES}.items():
+    for key, rel in all_files.items():
         url = f"https://raw.githubusercontent.com/{repo}/{ref}/{rel}"
         req = urllib.request.Request(url, headers={"User-Agent": "z0archy"})
         try:
             with urllib.request.urlopen(req, timeout=30) as response:
-                out[key] = _read_yaml(response.read().decode("utf-8"))
+                out[key] = yaml.safe_load(response.read().decode("utf-8")) or {}
         except urllib.error.HTTPError as exc:
-            if key in OPTIONAL_FILES and exc.code == 404:
+            if exc.code == 404 and key in OPTIONAL_FILES:
                 out[key] = {}
                 continue
             raise
