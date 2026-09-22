@@ -38,6 +38,7 @@ function renderCompressionReceipt(){
   }
 
   const cards=[
+    ["view", receipt.query||"compressed world", "The receipt is tied to this exact question or semantic zoom level."],
     ["compression",
       (receipt.compression.nodeRatio==null?"n/a":receipt.compression.nodeRatio+"×")+" node compression",
       compressionPercent(receipt.compression.retainedNodeFraction)+" nodes · "+
