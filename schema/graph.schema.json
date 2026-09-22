@@ -40,12 +40,13 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "type", "source", "target"],
+        "required": ["id", "type", "source", "target", "provenance"],
         "properties": {
           "id": {"type": "string", "pattern": "^z0://edge/"},
           "type": {"type": "string"},
           "source": {"type": "string", "pattern": "^z0://"},
-          "target": {"type": "string", "pattern": "^z0://"}
+          "target": {"type": "string", "pattern": "^z0://"},
+          "provenance": {"type": "array", "minItems": 1}
         }
       }
     }
