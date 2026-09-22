@@ -383,6 +383,23 @@ def compile_graph(
                 path=cpath,
                 field=f"components.{cid}.integrates_with",
             )
+        # Federated registry (z0 audit branch): `relationships` is a list of
+        # {type, to}, where `to` is either another component or a contract id.
+        # The pre-federation registry (z0 main) authors no `relationships`, so
+        # both shapes are read and neither generation is privileged -- a
+        # projection has to survive the schema change it is projecting across.
+        for rel in c.get("relationships") or []:
+            rtype = str((rel or {}).get("type") or "")
+            target = (rel or {}).get("to")
+            if not rtype or not target:
+                continue
+            field = f"components.{cid}.relationships.{rtype}"
+            if target in components:
+                add_edge(rtype, zid("component", cid), zid("component", target),
+                         cid, target, path=cpath, field=field)
+            elif target in interfaces:
+                add_edge(rtype, zid("component", cid), zid("interface", target),
+                         cid, target, path=cpath, field=field)
         for iface in c.get("provides") or []:
             if iface in interfaces:
                 add_edge(

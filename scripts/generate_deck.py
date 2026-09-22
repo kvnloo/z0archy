@@ -24,6 +24,38 @@ PLANE_BY_KIND = {
     "research": "learning",
     "memory": "memory",
 }
+
+# The federated registry (z0 audit branch) authors `plane` directly; the
+# pre-federation registry (z0 main) authors `kind` instead. Reading only `kind`
+# against a federated registry returned None for every component, so all 20
+# collapsed into the single fallback plane and every tooltip read
+# "unknown / unknown". A projection must survive the schema change it projects
+# across, so `plane` is read first and `kind` remains the fallback.
+PLANE_BY_REGISTRY_PLANE = {
+    "interaction": "interaction",
+    "execution": "interaction",
+    "product": "interaction",
+    "contracts": "decision",
+    "cognition": "decision",
+    "architecture": "decision",
+    "governance": "decision",
+    "legacy": "decision",
+    "measurement": "measurement",
+    "resources": "compute",
+    "evaluation": "learning",
+    "research": "learning",
+    "context": "environment",
+    "memory": "memory",
+}
+
+
+def resolve_plane(component: dict) -> str:
+    """Map a registry entry onto a z0archy plane, tolerating both schema generations."""
+    plane = (component or {}).get("plane")
+    if plane in PLANE_BY_REGISTRY_PLANE:
+        return PLANE_BY_REGISTRY_PLANE[plane]
+    return PLANE_BY_KIND.get((component or {}).get("kind"), "decision")
+
 PLANES = [
     ("interaction", "Interaction + runtime", "Where users and agents actually act. OMP owns execution; learned policy does not bypass runtime authority.", [900, 1100], "runtime"),
     ("decision", "Decision + contracts", "Typed intent, bounded scorers and learned routing live here. Legal actions are filtered before learned selection.", [2500, 1100], "decision"),
@@ -157,7 +189,7 @@ def build(graph: dict | None = None) -> dict:
     graph_node_by_id = {n["id"]: n for n in graph_nodes}
     graph_to_deck = {n["id"]: deck_id_for_graph_node(n) for n in graph_nodes}
 
-    plane_of = {cid: PLANE_BY_KIND.get(c.get("kind"), "decision") for cid, c in components.items()}
+    plane_of = {cid: resolve_plane(c) for cid, c in components.items()}
     component_ids = list(components)
 
     slides = [{
