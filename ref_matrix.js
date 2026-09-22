@@ -262,7 +262,12 @@ function installVirtualScene(packs,diffs){
       w:390,
       kind:diff&&diff.count?"hub research":"hub compute",
       tip:virtualTip(repo,target,canonical,diff,packs[repo]),
-      meta:{graphType:"repo_ref",semanticLevel:5}
+      meta:{
+        graphType:"repo_ref",
+        graphId:"z0://repo/"+repo,
+        semanticLevel:5,
+        truthClass:"derived"
+      }
     });
     componentIdsForRepo(repo).forEach(function(componentId){
       if(!includes.includes(componentId)) includes.push(componentId);
