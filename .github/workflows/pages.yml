@@ -32,6 +32,7 @@ jobs:
           path: |
             .cache/github.sqlite3
             .cache/ref-evidence
+            .cache/activegraph-history.sqlite3*
           key: z0archy-source-v2-${{ runner.os }}-${{ github.run_id }}
           restore-keys: |
             z0archy-source-v2-${{ runner.os }}-
@@ -40,6 +41,7 @@ jobs:
       - run: python scripts/generate_graph.py
       - run: python scripts/validate_graph.py generated/graph.json
       - run: python scripts/lint_graph.py generated/graph.json --fail-on error
+      - run: python scripts/record_history.py generated/graph.json
       - run: python scripts/generate_github_index.py --cache-ttl 10800
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

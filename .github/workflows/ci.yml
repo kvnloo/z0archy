@@ -26,5 +26,6 @@ jobs:
           python scripts/generate_graph.py --z0-root tests/fixtures/z0 --output /tmp/graph.json
           python scripts/validate_graph.py /tmp/graph.json
           python scripts/lint_graph.py /tmp/graph.json --fail-on error
+          python scripts/record_history.py /tmp/graph.json --store /tmp/history.sqlite3 --index /tmp/history-index.json --history-dir /tmp/history
           python scripts/generate_deck.py --graph /tmp/graph.json --output /tmp/deck.json
           python scripts/validate_deck.py /tmp/deck.json

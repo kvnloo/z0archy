@@ -91,22 +91,13 @@ Both modes feed the same semantic graph and differ only in evidence providers:
 
 A branch selector therefore selects and renders implementation evidence for an exact repository version rather than mutating or checking out that branch. Portable selection manifests can compose multiple repo refs into one derived virtual snapshot, and `diff_graphs` compares those snapshots by stable semantic identity.
 
-## ActiveGraph seam
+## ActiveGraph temporal substrate
 
-ActiveGraph is the intended temporal substrate, not the authority for Zer0 architecture.
+ActiveGraph now persists canonical semantic architecture states as event-sourced runs. The adapter preserves z0archy stable identities in object/relation data while allowing ActiveGraph to own its own event, object and relation ids.
 
-The z0archy ontology maps naturally to ActiveGraph objects and relations:
+The semantic graph hash excludes build timestamps. An unchanged state therefore reuses the same run, while a changed state receives a new content-addressed run linked to the previous architecture run. Each z0archy node becomes a typed `z0.<type>` ActiveGraph object, each relation becomes a `z0.<relation>` ActiveGraph relation, and declared source references are passed into ActiveGraph object evidence.
 
-- graph IR nodes → typed objects;
-- graph IR edges → typed relations;
-- Git/ref/worktree discoveries → observation events;
-- canonical rebuilds → architecture snapshot events; and
-- later runtime overlays → custom events carrying originating-system provenance.
-
-This repository deliberately does not require ActiveGraph in the first source-provider
-slice. The graph/source contracts are deterministic first, so an ActiveGraph adapter can
-event-source the same observations without changing their meaning or making the static
-Pages build depend on a runtime service.
+The SQLite event store remains an operational build cache rather than an architecture authority. The complete semantic graph is also stored in ActiveGraph's snapshot sidecar and exported as static JSON, so Pages can eventually provide time travel and fork/diff UX without a server process.
 
 ## Failure boundaries
 

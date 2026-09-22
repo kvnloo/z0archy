@@ -5,7 +5,7 @@ A dynamic, zoomable architecture explorer and semantic world model for the Zer0 
 **Canonical architecture declarations live in [`kvnloo/z0`](https://github.com/kvnloo/z0).**
 z0archy compiles those declarations together with implementation evidence from exact Git refs and local worktrees. It does not silently promote observations into canonical truth.
 
-The presentation engine is adapted from Yohei Nakajima's MIT-licensed [`graphcon-deck`](https://github.com/kvnloo/graphcon-deck). ActiveGraph remains the planned temporal/event substrate for historical reconstruction and fork/diff once the source model is stable.
+The presentation engine is adapted from Yohei Nakajima's MIT-licensed [`graphcon-deck`](https://github.com/kvnloo/graphcon-deck). ActiveGraph is the temporal substrate for content-addressed architecture history: semantic graph states are persisted as event-sourced runs while z0archy's stable `z0://` identities remain canonical within each run.
 
 ## World model
 
@@ -88,6 +88,16 @@ python scripts/lint_graph.py generated/graph.json --fail-on error
 ```
 
 The linter fails unresolved evidence endpoints and structurally unverifiable claims while reporting weaker architecture-quality warnings separately.
+
+## ActiveGraph architecture history
+
+Canonical semantic states are content-addressed before being recorded. Rebuilding an unchanged graph reuses the same ActiveGraph run; a changed graph creates a new run linked to the previous architecture state.
+
+```bash
+python scripts/record_history.py generated/graph.json
+```
+
+The build keeps the ActiveGraph SQLite event store under `.cache/`, stores the complete semantic graph in ActiveGraph's snapshot sidecar, and exports static replayable snapshots to `generated/history/` plus `generated/history-index.json`. This gives the browser a durable time axis without making GitHub Pages depend on a long-running backend.
 
 ## GitHub API budget
 
