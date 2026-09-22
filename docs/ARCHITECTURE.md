@@ -36,8 +36,7 @@ z0://interface/tokenomics.event.v0
 z0://profile/core
 ```
 
-Nodes contain provenance. Edges represent typed relationships such as
-`depends_on`, `integrates_with`, `provides`, `consumes`, and `includes`.
+Nodes **and edges** contain provenance. Relations include component dependencies and contracts plus runtime surfaces, mechanism implementations, lifecycle stages, repository ownership and exact-ref evidence.
 
 The browser's graphcon-deck document is generated from this IR. Spatial positions and
 camera scenes are presentation concerns and are not architecture facts.
@@ -46,8 +45,7 @@ camera scenes are presentation concerns and are not architecture facts.
 
 ### Canonical registry
 
-`z0archy_core.registry` reads the four canonical z0 registries from either a local z0
-checkout or a Git ref.
+`z0archy_core.registry` reads canonical z0 components, interfaces, profiles and maturity plus the newer harness, mechanism and lifecycle dimensions. The latter remain optional when reconstructing historical z0 refs that predate the richer ontology.
 
 ### GitHub
 
@@ -55,8 +53,7 @@ checkout or a Git ref.
 into one query in the common case. Pagination is per-repository only when a repository
 has more than 100 branches.
 
-The query cache is SQLite-backed and keyed by normalized query + variables. Scheduled
-Pages builds restore that cache through GitHub Actions cache.
+The query cache is SQLite-backed and keyed by normalized query + variables. Branches are resolved to immutable commit SHAs. `generate_ref_evidence.py` then introspects those immutable commits through raw GitHub content and stores commit-keyed evidence packs in a second Actions-restored cache. Unchanged commits therefore do not need to be recompiled.
 
 ### Local Git
 
@@ -64,8 +61,7 @@ Pages builds restore that cache through GitHub Actions cache.
 A repository and a checkout/worktree are separate concepts. All worktrees reported by
 `git worktree list --porcelain` remain attached to the same normalized remote identity.
 
-The local web server updates known Git state frequently but re-runs filesystem discovery
-less often.
+The local web server updates known Git state frequently but re-runs filesystem discovery less often. It also compiles the same evidence-pack shape for every worktree. `WORKTREE` reads come from the live filesystem, so dirty architecture/package evidence is visible without mutating Git.
 
 ## Cloud and local parity
 
@@ -76,15 +72,16 @@ Both modes feed the same semantic graph and differ only in evidence providers:
                      /            \
               local Git          GitHub
                   \                /
-                   observation model
+                 implemented evidence
                          |
                   canonical graph IR
+                         |
+               virtual architecture
                          |
                   graphcon-deck view
 ```
 
-A branch selector therefore selects evidence for a repository rather than mutating or
-checking out that branch.
+A branch selector therefore selects and renders implementation evidence for an exact repository version rather than mutating or checking out that branch. Portable selection manifests can compose multiple repo refs into one derived virtual snapshot, and `diff_graphs` compares those snapshots by stable semantic identity.
 
 ## ActiveGraph seam
 
@@ -114,7 +111,4 @@ Pages build depend on a runtime service.
 
 ## Next layers
 
-The source model is designed to accept deeper implemented evidence from selected refs,
-semantic zoom from system → component → interface → repository, architecture diffs
-between ref sets, and ActiveGraph-backed historical replay without changing the canonical
-ownership boundary.
+Current introspection is deliberately bounded to explicit Zer0 manifests, architecture/readme/agent documents and package metadata. Next analyzers should add repository tree/package structure, imports, schemas, tests and runtime adapters without changing the repo/ref identity contract. Above that sit EvidenceDependency semantics, architecture linting, semantic/fractal zoom, question-conditioned MOCs, Tokenomics/AODL/AgentTrace runtime overlays and ActiveGraph-backed historical replay.
