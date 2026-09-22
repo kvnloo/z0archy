@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from z0archy_core.introspection import inspect_repository
 from z0archy_core.local_git import build_local_snapshot_from_git_roots, discover_git_roots
+from z0archy_core.runtime_evidence import compile_runtime_evidence, runtime_input_fingerprint
 from z0archy_core.sources import LocalGitSource
 
 
@@ -81,8 +82,34 @@ def refresh(
     return snapshot
 
 
+def _refresh_runtime(
+    *,
+    tokenomics_paths: list[str],
+    agenttrace_paths: list[str],
+    aodl_paths: list[str],
+    output: Path,
+    state: dict[str, str | None],
+) -> None:
+    all_paths = [*tokenomics_paths, *agenttrace_paths, *aodl_paths]
+    if not all_paths:
+        if output.exists():
+            output.unlink()
+        state["fingerprint"] = None
+        return
+    fingerprint = runtime_input_fingerprint(all_paths)
+    if fingerprint == state.get("fingerprint") and output.is_file():
+        return
+    graph = compile_runtime_evidence(
+        tokenomics_paths=tokenomics_paths,
+        agenttrace_paths=agenttrace_paths,
+        aodl_paths=aodl_paths,
+    )
+    _atomic_json(output, graph)
+    state["fingerprint"] = fingerprint
+
+
 def main() -> None:
-    p = argparse.ArgumentParser(description="Serve z0archy with a live read-only local Git overlay")
+    p = argparse.ArgumentParser(description="Serve z0archy with live read-only Git and runtime overlays")
     p.add_argument("--workspace", action="append", required=True, help="workspace root to scan; repeatable")
     p.add_argument("--host", default="127.0.0.1")
     p.add_argument("--port", type=int, default=8000)
@@ -90,12 +117,31 @@ def main() -> None:
     p.add_argument("--rediscover-interval", type=float, default=30.0)
     p.add_argument("--output", default="generated/local-state.json")
     p.add_argument("--evidence-dir", default="generated/ref-evidence")
+    p.add_argument("--runtime-output", default="generated/runtime-evidence.json")
+    p.add_argument("--tokenomics-events", action="append", default=[])
+    p.add_argument("--agenttrace-report", action="append", default=[])
+    p.add_argument("--aodl-document", action="append", default=[])
     args = p.parse_args()
 
     output = Path(args.output)
     evidence_root = Path(args.evidence_dir)
+    runtime_output = Path(args.runtime_output)
+    tokenomics_paths = list(args.tokenomics_events)
+    if not tokenomics_paths:
+        candidate = Path("~/.local/share/tokenomics/events.jsonl").expanduser()
+        if candidate.is_file():
+            tokenomics_paths.append(str(candidate))
+    runtime_state: dict[str, str | None] = {"fingerprint": None}
+
     git_roots = discover_git_roots(args.workspace)
     refresh(git_roots, output, evidence_root)
+    _refresh_runtime(
+        tokenomics_paths=tokenomics_paths,
+        agenttrace_paths=args.agenttrace_report,
+        aodl_paths=args.aodl_document,
+        output=runtime_output,
+        state=runtime_state,
+    )
 
     stop = threading.Event()
 
@@ -109,6 +155,13 @@ def main() -> None:
                     roots = discover_git_roots(args.workspace)
                     last_discovery = now
                 refresh(roots, output, evidence_root)
+                _refresh_runtime(
+                    tokenomics_paths=tokenomics_paths,
+                    agenttrace_paths=args.agenttrace_report,
+                    aodl_paths=args.aodl_document,
+                    output=runtime_output,
+                    state=runtime_state,
+                )
             except Exception as exc:
                 print(f"local scan failed: {exc}")
 
