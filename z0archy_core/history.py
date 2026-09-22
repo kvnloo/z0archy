@@ -9,6 +9,7 @@ from typing import Any
 from activegraph import Graph, SQLiteEventStore
 
 RUN_PREFIX = "z0archy_"
+COUNTERFACTUAL_PREFIX = "z0archy_cf_"
 
 
 def semantic_graph_hash(graph: dict[str, Any]) -> str:
@@ -79,9 +80,7 @@ def record_architecture_snapshot(
             "eventCount": event_count,
         }
 
-    previous = SQLiteEventStore.most_recent_run_id(path)
-    if previous == run_id:
-        previous = None
+    previous = _latest_canonical_run_id(path, exclude=run_id)
 
     store.upsert_run(
         parent_run_id=previous,
@@ -167,20 +166,48 @@ def history_index(store_path: str | Path) -> dict[str, Any]:
     for run in runs:
         if not run.run_id.startswith(RUN_PREFIX):
             continue
+        kind = "canonical"
         digest = run.run_id.removeprefix(RUN_PREFIX)
+        snapshot_hash = digest
+        lineage = None
+        view_key = digest
+        if run.run_id.startswith(COUNTERFACTUAL_PREFIX):
+            value = run.run_id.removeprefix(COUNTERFACTUAL_PREFIX)
+            target_hash, sep, lineage_value = value.rpartition("_")
+            if not sep or len(target_hash) != 64:
+                continue
+            kind = "counterfactual"
+            digest = target_hash
+            snapshot_hash = target_hash
+            lineage = lineage_value
+            view_key = f"cf-{lineage_value}-{target_hash[:16]}"
+
         store = SQLiteEventStore(path, run.run_id)
         event_count = store.count()
-        has_snapshot = store.get_snapshot(digest) is not None
+        blob = store.get_snapshot(snapshot_hash)
         store.close()
+        has_snapshot = blob is not None
+        selection = None
+        if blob is not None:
+            try:
+                selection = (json.loads(blob).get("snapshot") or {}).get("selection")
+            except (TypeError, json.JSONDecodeError):
+                selection = None
         entries.append({
             "runId": run.run_id,
             "hash": digest,
+            "snapshotHash": snapshot_hash,
+            "viewKey": view_key,
+            "kind": kind,
+            "lineage": lineage,
             "parentRunId": run.parent_run_id,
+            "forkedAtEventId": run.forked_at_event_id,
             "label": run.label,
             "createdAt": run.created_at,
             "eventCount": event_count,
             "hasSnapshot": has_snapshot,
-            "snapshotPath": f"generated/history/{digest}.json" if has_snapshot else None,
+            "selection": selection,
+            "snapshotPath": f"generated/history/{view_key}.json" if has_snapshot else None,
         })
     return {
         "version": 1,
@@ -198,12 +225,29 @@ def export_history_snapshots(
     out.mkdir(parents=True, exist_ok=True)
     index = history_index(path)
     for entry in index["entries"]:
-        digest = entry["hash"]
+        snapshot_hash = entry.get("snapshotHash") or entry["hash"]
+        view_key = entry.get("viewKey") or entry["hash"]
         store = SQLiteEventStore(path, entry["runId"])
-        blob = store.get_snapshot(digest)
+        blob = store.get_snapshot(snapshot_hash)
         store.close()
         if blob is None:
             continue
-        target = out / f"{digest}.json"
+        target = out / f"{view_key}.json"
         target.write_text(json.dumps(json.loads(blob), indent=2) + "\n", encoding="utf-8")
     return index
+
+
+
+def _latest_canonical_run_id(path: str, *, exclude: str | None = None) -> str | None:
+    if not Path(path).exists():
+        return None
+    runs = SQLiteEventStore.list_runs(path)
+    for run in reversed(runs):
+        if run.run_id == exclude:
+            continue
+        if not run.run_id.startswith(RUN_PREFIX):
+            continue
+        if run.run_id.startswith(COUNTERFACTUAL_PREFIX):
+            continue
+        return run.run_id
+    return None
