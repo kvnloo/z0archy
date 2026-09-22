@@ -198,6 +198,20 @@ python scripts/record_history.py generated/graph.json
 
 The build keeps the ActiveGraph SQLite event store under `.cache/`, stores the complete semantic graph in ActiveGraph's snapshot sidecar, and exports static replayable snapshots to `generated/history/` plus `generated/history-index.json`. Historical graphcon-deck documents are precompiled into `generated/history-decks/`, and the top-bar history selector can jump between live and prior semantic states without a backend. Live Git/ref controls are locked while viewing history so present-day observations cannot contaminate an older architecture state.
 
+## Slow hierarchy meta-learning
+
+z0archy now analyzes architecture history for conservative **keep / merge / split / prune / no-update** proposals.
+
+```bash
+python scripts/propose_hierarchy.py generated/graph.json \
+  --history-dir generated/history \
+  --output generated/hierarchy-proposals.json
+```
+
+This is deliberately advisory. It never edits `kvnloo/z0`, and a declared node is never an automatic prune candidate. Historical persistence, graph degree, relation-type entropy, neighbor-type diversity, semantic grouping, and neighborhood overlap are exposed as evidence for each suggestion. Weak evidence resolves to `no_update` rather than forcing a taxonomy change.
+
+Pages publishes the proposal artifact and the **hierarchy** inspector shows the reasoning and confidence behind each suggestion. Merge/split/prune proposals are surfaced first so a person can decide whether the canonical ontology should change.
+
 ## Counterfactual architecture worlds
 
 Historical architecture is now branchable, not only replayable.
