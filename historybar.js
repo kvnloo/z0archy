@@ -50,6 +50,8 @@ async function initHistoryBar(){
 
   select.onchange=function(){ void switchHistory(select.value); };
 
+  updateHistoryLock();
+
   if(!historyState.initialSelectionApplied){
     historyState.initialSelectionApplied=true;
     if(select.value!=="live") void switchHistory(select.value);
@@ -82,6 +84,16 @@ async function switchHistory(value){
   setHistoryURL(value);
   boot(historical);
   toast("history · "+String(value).slice(0,8));
+}
+
+function updateHistoryLock(){
+  const locked=historyState.active!=="live";
+  ["#sourcesel","#componentselect","#refselect"].forEach(function(selector){
+    const element=$(selector);
+    if(element) element.disabled=locked;
+  });
+  const state=$("#refstate");
+  if(locked && state) state.textContent="historical · "+String(historyState.active).slice(0,8);
 }
 
 function setHistoryURL(value){
