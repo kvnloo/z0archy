@@ -72,7 +72,7 @@
 
 
   #sourcebar{position:fixed; top:14px; left:50%; transform:translateX(-50%); z-index:16;
-    display:flex; align-items:center; gap:6px; max-width:min(940px,78vw); padding:6px 8px;
+    display:flex; align-items:center; gap:6px; max-width:min(1220px,92vw); padding:6px 8px;
     background:rgba(255,255,255,.94); border:1px solid #E7E3D9; border-radius:11px;
     box-shadow:0 2px 8px rgba(90,80,60,.06); font-family:ui-monospace,Menlo,Consolas,monospace;}
   #sourcebar select{min-width:105px; max-width:240px; border:1px solid #E7E3D9; background:#fff;
@@ -126,6 +126,29 @@
   .matrix-row select{min-width:0; width:100%; border:1px solid #E7E3D9; background:#fff; border-radius:7px;
     padding:6px; font:10px ui-monospace,Menlo,Consolas,monospace;}
   .matrix-diff{font:10px ui-monospace,Menlo,Consolas,monospace; color:#62666F; text-align:right;}
+
+
+  .node.lensdim{opacity:.08 !important; pointer-events:none;}
+  .edge.lensdim,.elabel.lensdim{opacity:.025 !important;}
+  #sourcebar #profilelens{min-width:92px; max-width:130px;}
+  #sourcebar #truthlens{min-width:92px; max-width:120px;}
+  #lintbtn.has-errors{border-color:#C84A4A !important; color:#C84A4A !important;}
+  #lintbtn.has-warnings{border-color:#A87B3E !important; color:#A87B3E !important;}
+  #lintpanel{position:fixed; top:0; right:0; bottom:0; width:min(520px,92vw); z-index:36;
+    background:rgba(252,251,247,.99); border-left:1px solid #E7E3D9; box-shadow:-8px 0 30px rgba(40,35,25,.08);
+    transform:translateX(100%); transition:transform .28s ease; overflow:auto; padding:20px;}
+  #lintpanel.open{transform:translateX(0);}
+  #lintpanel .lint-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;}
+  #lintpanel h2{font-size:18px;}
+  #lintpanel button{border:1px solid #E7E3D9; background:#fff; border-radius:7px; padding:7px 10px;
+    cursor:pointer; font:10px ui-monospace,Menlo,Consolas,monospace;}
+  #lintrows{display:flex; flex-direction:column; gap:7px;}
+  .lint-row{padding:9px 10px; background:#fff; border:1px solid #E7E3D9; border-radius:8px;}
+  .lint-row.error{border-color:#E1B3B3;} .lint-row.warning{border-color:#D9C69A;}
+  .lint-code{font:9px ui-monospace,Menlo,Consolas,monospace; color:#62666F;}
+  .lint-subject{font:9px ui-monospace,Menlo,Consolas,monospace; color:#574CE3; margin-top:4px; word-break:break-all;}
+  .lint-message{font-size:11px; color:#1D1F23; line-height:1.45; margin-top:5px;}
+  .lint-empty{font-size:12px; color:#62666F; padding:12px;}
 
   #panel{position:fixed; top:0; right:0; bottom:0; width:270px; background:rgba(255,255,255,.94);
     border-left:1px solid #E7E3D9; z-index:20; padding:18px 18px 90px; overflow-y:auto;
@@ -210,6 +233,14 @@ window.addEventListener("unhandledrejection", function(e){
   <select id="refselect" aria-label="branch or worktree"></select>
   <select id="historyselect" aria-label="architecture history"><option value="live">live</option></select>
   <button id="matrixbtn" type="button">ref matrix</button>
+  <select id="profilelens" aria-label="profile lens"><option value="all">all profiles</option></select>
+  <select id="truthlens" aria-label="truth lens">
+    <option value="all">all truth</option>
+    <option value="declared">declared</option>
+    <option value="implemented">implemented</option>
+    <option value="derived">derived</option>
+  </select>
+  <button id="lintbtn" type="button">lint</button>
   <span class="state" id="refstate"></span>
 </div>
 <div id="mocbar">
@@ -231,6 +262,10 @@ window.addEventListener("unhandledrejection", function(e){
     <button id="matrixclear" type="button">clear virtual world</button>
   </div>
   <div id="matrixrows"></div>
+</aside>
+<aside id="lintpanel" aria-label="architecture lint">
+  <div class="lint-head"><h2>Architecture lint</h2><button id="lintclose" type="button">close</button></div>
+  <div id="lintrows"></div>
 </aside>
 <div id="caption"><div class="num"></div><div class="tt"></div><div class="cc"></div></div>
 <div id="dots"></div>
@@ -930,5 +965,7 @@ loadZ0Deck();
 <script src="./semantic_zoom.js"></script>
 <script src="./virtual_core.js"></script>
 <script src="./ref_matrix.js"></script>
+<script src="./lens_core.js"></script>
+<script src="./lensbar.js"></script>
 </body>
 </html>
