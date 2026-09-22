@@ -54,11 +54,22 @@
     return Number(semanticLevel)<=Number(detailLevel);
   }
 
+  function semanticImportanceForType(type){
+    const level=semanticLevelForType(type);
+    return Math.max(0,10-level*2);
+  }
+
+  function sufficiencyThresholdForDetail(detailLevel){
+    return Math.max(1,10-Number(detailLevel||0)*2);
+  }
+
   const api={
     semanticLevelForType:semanticLevelForType,
     detailLevelForScale:detailLevelForScale,
     labelForDetail:labelForDetail,
-    shouldShow:shouldShow
+    shouldShow:shouldShow,
+    semanticImportanceForType:semanticImportanceForType,
+    sufficiencyThresholdForDetail:sufficiencyThresholdForDetail
   };
   root.z0SemanticZoomCore=api;
   if(typeof module!=="undefined"&&module.exports) module.exports=api;
