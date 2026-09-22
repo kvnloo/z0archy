@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import sys
 import json
+import subprocess
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -19,6 +20,16 @@ def main() -> None:
     p.add_argument("--z0-root", help="Read a local z0 checkout instead of GitHub")
     p.add_argument("--output", default="generated/graph.json")
     args = p.parse_args()
+    source_ref = args.ref
+    if args.z0_root:
+        proc = subprocess.run(
+            ["git", "-C", str(Path(args.z0_root)), "rev-parse", "HEAD"],
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        if proc.returncode == 0 and proc.stdout.strip():
+            source_ref = proc.stdout.strip()
     docs = load_registry(repo=args.repo, ref=args.ref, local_root=args.z0_root)
     graph = compile_graph(
         docs["components"],
@@ -29,7 +40,7 @@ def main() -> None:
         docs.get("mechanisms"),
         docs.get("lifecycles"),
         source_repo=args.repo,
-        source_ref=args.ref,
+        source_ref=source_ref,
     )
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
