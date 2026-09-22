@@ -79,6 +79,17 @@ def semantic_kind(node: dict) -> str:
         return "tiny contract"
     if ntype == "profile":
         return "hub environment"
+    if ntype == "representation":
+        kind = attrs.get("kind")
+        if kind in {"measurement", "observation"}:
+            return "hub measurement"
+        if kind in {"decision", "decision_state", "intent", "plan"}:
+            return "hub decision"
+        return "hub compute"
+    if ntype == "evidence_dependency":
+        return "hub research"
+    if ntype == "evidence_reference":
+        return "tiny contract"
     if ntype == "repository":
         return "tiny contract"
     return "default"
@@ -87,7 +98,7 @@ def semantic_kind(node: dict) -> str:
 def semantic_tip(node: dict) -> str:
     attrs = node.get("attributes") or {}
     parts = [str(node.get("label", node.get("id", ""))), "", f"type: {node.get('type','')}"]
-    for key in ("kind", "adoption", "stage", "purpose", "repo", "rule"):
+    for key in ("kind", "adoption", "stage", "purpose", "repo", "rule", "scale", "sensitivity", "relation", "confidence"):
         value = attrs.get(key)
         if value:
             parts.append(f"{key}: {' '.join(str(value).split())}")
@@ -205,6 +216,8 @@ def build(graph: dict | None = None) -> dict:
         ("lifecycles", "Promotion + history", "Promotion ladders and truth states are architecture, not Git trivia. These nodes make evolution and authority explicit.", [5700, 4500], {"lifecycle", "lifecycle_state"}),
         ("profiles", "Install profiles", "Profiles are lenses over installable components; they are not a second architecture hierarchy.", [3000, 6200], {"profile"}),
         ("repositories", "Implementation repositories", "Repositories are implementation evidence containers. They remain distinct from components, harnesses and mechanisms.", [5700, 6500], {"repository"}),
+        ("representations", "Information representations", "The forms information takes as it is addressed, compressed, compiled, observed and measured. This is the semantic data plane.", [900, 7900], {"representation"}),
+        ("epistemic", "Evidence + belief", "EvidenceDependency nodes preserve why a relationship is believed, what would invalidate it, and the fastest path to re-verify it.", [4100, 7900], {"evidence_dependency", "evidence_reference"}),
     ]
     for sid, title, caption, anchor, types in semantic_specs:
         members = [n for n in graph_nodes if n.get("type") in types]
@@ -214,7 +227,16 @@ def build(graph: dict | None = None) -> dict:
         slide_nodes = []
         for i, node in enumerate(members):
             attrs = node.get("attributes") or {}
-            body = attrs.get("repo") or attrs.get("purpose") or attrs.get("rule") or ""
+            retrieval = attrs.get("retrieval") or {}
+            body = (
+                attrs.get("repo")
+                or attrs.get("purpose")
+                or attrs.get("rule")
+                or attrs.get("summary")
+                or attrs.get("relation")
+                or retrieval.get("fastest")
+                or ""
+            )
             body = " ".join(str(body).split())
             if len(body) > 110:
                 body = body[:107] + "..."
@@ -278,17 +300,26 @@ def build(graph: dict | None = None) -> dict:
         if key in seen_semantic:
             continue
         seen_semantic.add(key)
-        edge_kind = {
-            "depends_on": "depends",
-            "runtime_surface_of": "depends",
-            "next": "depends",
-            "implemented_by": "integrates",
-            "implemented_in_repo": "integrates",
-            "member_of": "integrates",
-            "owned_by": "integrates",
-            "has_stage": "integrates",
-            "includes": "integrates",
-        }.get(edge.get("type"), "default")
+        if (edge.get("attributes") or {}).get("epistemic"):
+            edge_kind = "epistemic"
+        else:
+            edge_kind = {
+                "depends_on": "depends",
+                "runtime_surface_of": "depends",
+                "next": "depends",
+                "implemented_by": "integrates",
+                "implemented_in_repo": "integrates",
+                "member_of": "integrates",
+                "owned_by": "integrates",
+                "has_stage": "integrates",
+                "includes": "integrates",
+                "produces_representation": "provides",
+                "encoded_as": "integrates",
+                "evidence_subject": "epistemic",
+                "evidence_object": "epistemic",
+                "requires_evidence": "epistemic",
+                "verified_via": "epistemic",
+            }.get(edge.get("type"), "default")
         connections.append({
             "from": src,
             "to": dst,
@@ -331,6 +362,7 @@ def build(graph: dict | None = None) -> dict:
                 "integrates": {"stroke": "#C9C4B8", "width": 1.2, "dash": "5 7", "labelColor": "#9BA0A8"},
                 "provides": {"stroke": "#2D7DD2", "width": 1.4, "labelColor": "#2D7DD2"},
                 "consumes": {"stroke": "#A87B3E", "width": 1.2, "dash": "3 6", "labelColor": "#A87B3E"},
+                "epistemic": {"stroke": "#118A7E", "width": 1.5, "dash": "2 5", "labelColor": "#118A7E"},
             },
         },
         "layoutDefaults": {"floatAmp": 2.5, "fitMargin": 150, "pushMargin": 170, "zoomMax": 1.05},

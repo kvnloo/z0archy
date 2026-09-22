@@ -1,0 +1,15 @@
+representations:
+  raw-context:
+    name: Raw context
+    kind: source
+    scale: large
+    sensitivity: inherited
+    evidence: [registry/components.yaml#components.runtime]
+  compact-state:
+    name: Compact state
+    kind: decision_state
+    scale: compact
+    sensitivity: inherited
+    produced_by: [fixture-compression]
+    interface: runtime.event.v1
+    evidence: [registry/mechanisms.yaml#mechanisms.fixture-compression]
