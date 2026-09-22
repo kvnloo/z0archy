@@ -180,6 +180,12 @@ The canonical world model can be recompiled into a purpose-specific map in the b
 
 MOCs are URL-addressable through `?moc=...`. When architecture history is active, the MOC is compiled from that historical graph snapshot rather than the current graph.
 
+### Semantic compression receipts
+
+Every question-conditioned MOC now emits a deterministic compression receipt instead of silently hiding the rest of the world model. The receipt records source/retained node and relation counts, cut-boundary relations, hidden epistemic evidence, high-scoring omissions, provenance reconstructability, and node/edge-type Shannon entropy before and after compression.
+
+The entropy values are deliberately labeled **structural entropy**. They describe diversity in the graph's type distribution and are not presented as a measurement of semantic information. A map is marked insufficient when a hidden concept still exceeds the configured high-relevance threshold, so compression can fail open rather than presenting an aggressively reduced view as complete.
+
 ## ActiveGraph architecture history
 
 Canonical semantic states are content-addressed before being recorded. Rebuilding an unchanged graph reuses the same ActiveGraph run; a changed graph creates a new run linked to the previous architecture state.
