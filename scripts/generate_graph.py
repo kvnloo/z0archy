@@ -8,6 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from z0archy_core.epistemic import apply_epistemic_registry
 from z0archy_core.graph import compile_graph
 from z0archy_core.registry import load_registry
 
@@ -28,6 +29,13 @@ def main() -> None:
         docs.get("harnesses"),
         docs.get("mechanisms"),
         docs.get("lifecycles"),
+        source_repo=args.repo,
+        source_ref=args.ref,
+    )
+    graph = apply_epistemic_registry(
+        graph,
+        docs.get("representations"),
+        docs.get("evidence_dependencies"),
         source_repo=args.repo,
         source_ref=args.ref,
     )
