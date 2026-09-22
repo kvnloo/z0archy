@@ -1,6 +1,6 @@
 "use strict";
 
-let lensState={graph:null,worldKey:null,lint:null,profile:"all",truth:"all",initialized:false};
+let lensState={graph:null,worldKey:null,canonicalLint:null,lint:null,profile:"all",truth:"all",initialized:false};
 
 async function lensFetchJSON(path){
   try{
@@ -28,7 +28,16 @@ async function ensureLensData(){
     lensState.worldKey=world.key;
     lensState.graph=world.graph;
   }
-  if(!lensState.lint) lensState.lint=await lensFetchJSON("./generated/lint.json");
+  if(!lensState.canonicalLint) lensState.canonicalLint=await lensFetchJSON("./generated/lint.json");
+  lensState.lint=lensState.canonicalLint||{summary:{},findings:[]};
+  if(world.key.startsWith("virtual:") && typeof z0VirtualCore!=="undefined" && z0VirtualCore.driftFindings){
+    const drift=z0VirtualCore.driftFindings(lensState.graph);
+    const baseFindings=(lensState.canonicalLint&&lensState.canonicalLint.findings||[]).slice();
+    const findings=baseFindings.concat(drift);
+    const summary={error:0,warning:0,info:0};
+    findings.forEach(function(row){summary[row.level]=(summary[row.level]||0)+1;});
+    lensState.lint={summary:summary,findings:findings};
+  }
   return !!lensState.graph;
 }
 
@@ -147,7 +156,6 @@ async function initLensBar(){
     const lintButton=$("#lintbtn"),close=$("#lintclose");
     if(lintButton) lintButton.onclick=function(){$("#lintpanel").classList.toggle("open");};
     if(close) close.onclick=function(){$("#lintpanel").classList.remove("open");};
-    renderLint();
   } else {
     const p=$("#profilelens");
     if(p && ![...p.options].some(function(o){return o.value===lensState.profile;})){
@@ -155,6 +163,7 @@ async function initLensBar(){
       p.value="all";
     }
   }
+  renderLint();
   requestAnimationFrame(applyLens);
 }
 

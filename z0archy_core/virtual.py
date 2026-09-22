@@ -62,6 +62,7 @@ def compile_virtual_snapshot(
 
     graph["nodes"] = sorted(node_map.values(), key=lambda n: n["id"])
     graph["edges"] = sorted(edge_map.values(), key=lambda e: e["id"])
+    _derive_cross_repo_package_edges(graph)
     graph["snapshot"] = {
         "generatedAt": generated_at or datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "truthClass": "derived",
@@ -98,3 +99,76 @@ def _diff_maps(base: dict[str, Any], head: dict[str, Any]) -> dict[str, Any]:
             if base[x] != head[x]
         ],
     }
+
+
+def _package_key(value: Any) -> str:
+    return str(value or "").strip().lower().replace("_", "-")
+
+
+def _derive_cross_repo_package_edges(graph: dict[str, Any]) -> None:
+    """Add derived package edges only when a dependency resolves uniquely in-world.
+
+    Package manifests are implementation evidence. Matching one package dependency to
+    another selected package is a derived observation, never a canonical architecture
+    declaration. Ambiguous names produce no edge.
+    """
+    nodes = graph.get("nodes") or []
+    edges = graph.get("edges") or []
+    packages = [node for node in nodes if node.get("type") == "package"]
+    by_name: dict[str, list[dict[str, Any]]] = {}
+    for node in packages:
+        attrs = node.get("attributes") or {}
+        key = _package_key(attrs.get("name") or node.get("label"))
+        if key:
+            by_name.setdefault(key, []).append(node)
+
+    existing = {edge.get("id") for edge in edges}
+    derived: list[dict[str, Any]] = []
+    ambiguous: set[str] = set()
+    for source in packages:
+        attrs = source.get("attributes") or {}
+        source_repo = attrs.get("repo")
+        for dependency in attrs.get("dependencies") or []:
+            key = _package_key(dependency)
+            targets = by_name.get(key) or []
+            if len(targets) != 1:
+                if len(targets) > 1:
+                    ambiguous.add(str(dependency))
+                continue
+            target = targets[0]
+            target_attrs = target.get("attributes") or {}
+            target_repo = target_attrs.get("repo")
+            if not source_repo or not target_repo or source_repo == target_repo:
+                continue
+            edge_id = zid("edge", f"derived:package:{source['id']}->{target['id']}")
+            if edge_id in existing:
+                continue
+            source_prov = (source.get("provenance") or [{}])[0]
+            derived.append({
+                "id": edge_id,
+                "type": "package_depends_on",
+                "source": source["id"],
+                "target": target["id"],
+                "attributes": {
+                    "derivedCrossRepo": True,
+                    "dependencyName": dependency,
+                    "sourceRepo": source_repo,
+                    "targetRepo": target_repo,
+                    "confidence": "manifest-match",
+                },
+                "provenance": [{
+                    "class": "derived",
+                    "source": "z0archy",
+                    "ref": "virtual",
+                    "path": source_prov.get("path") or attrs.get("sourcePath") or "package-manifest",
+                    "field": f"dependency:{dependency}",
+                    "evidenceRef": source_prov,
+                }],
+            })
+            existing.add(edge_id)
+
+    if derived:
+        edges.extend(derived)
+        edges.sort(key=lambda edge: edge["id"])
+    graph.setdefault("derivedEvidence", {})["crossRepoPackageEdges"] = len(derived)
+    graph["derivedEvidence"]["ambiguousPackageNames"] = sorted(ambiguous)
