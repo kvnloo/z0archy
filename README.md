@@ -58,6 +58,39 @@ python scripts/serve.py --workspace ~/src/zer0
 
 The server discovers repositories and Git worktrees read-only. Each worktree has a content-addressed evidence identity derived from HEAD, path, upstream state and the actual bytes of dirty/untracked files. Unchanged worktrees reuse their compiled evidence pack instead of being re-introspected every poll. Dirty edits create a new evidence key immediately, including repeated edits while Git status remains simply "modified". The browser polls local state and swaps to the new exact worktree evidence when that key changes.
 
+## Observed runtime world
+
+Local z0archy can overlay runtime evidence without making runtime logs part of canonical architecture truth.
+
+```bash
+python scripts/serve.py --workspace ~/src/zer0 \
+  --tokenomics-events ~/.local/share/tokenomics/events.jsonl \
+  --agenttrace-report ~/tmp/agenttrace-overview.json \
+  --aodl-document ~/tmp/orchestration.json
+```
+
+If `~/.local/share/tokenomics/events.jsonl` exists, `serve.py` discovers it automatically. Runtime inputs are fingerprinted and recompiled only when their files change.
+
+The runtime compiler is intentionally **metadata-only**:
+
+- Tokenomics events preserve trace/span identity, harness/model, tokens, measured economics, latency, context pressure and verification outcome.
+- AgentTrace reports preserve session/source/model/health/time/token/cost metadata.
+- AODL keeps intent graph, compiled plan and observed graph as separate objects and preserves structural topology/authority metadata.
+- prompt/completion text, arbitrary message/content fields, tool arguments/results, secrets and arbitrary free-form payloads are excluded from the generated graph.
+
+The browser exposes an **runtime** scene only when local runtime evidence exists. Trace/session/orchestration summaries are the high-level compression layer; individual operations and topology nodes live at deeper semantic levels. Observed nodes link back to canonical harnesses and information representations when those identities exist.
+
+Standalone compilation is also available:
+
+```bash
+python scripts/compile_runtime_evidence.py \
+  --tokenomics-events events.jsonl \
+  --agenttrace-report agenttrace-overview.json \
+  --aodl-document orchestration.json
+```
+
+`generated/runtime-evidence.json` is gitignored and is never produced by the public Pages workflow.
+
 ## Virtual multi-repo snapshots
 
 Selections are portable JSON:

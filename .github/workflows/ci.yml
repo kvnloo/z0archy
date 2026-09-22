@@ -32,6 +32,7 @@ jobs:
       - run: node tests/test_virtual_core.js
       - run: node --check lens_core.js
       - run: node --check lensbar.js
+      - run: node --check runtime_overlay.js
       - run: node tests/test_lens.js
       - run: python scripts/validate_deck.py deck.json
       - name: Offline end-to-end projection
