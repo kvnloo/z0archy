@@ -1,0 +1,113 @@
+version: 1
+repo: kvnloo/z0archy
+id: z0archy
+kind: projection
+summary: Dynamic architecture world model, exact-ref implementation evidence, temporal history, counterfactuals, and loss-aware semantic compression.
+
+architecture:
+  subsystems:
+    - id: semantic-compiler
+      name: Semantic compiler
+      kind: compiler
+      summary: Compiles canonical z0 registries into stable semantic graph identities and typed relations.
+      paths:
+        - z0archy_core/graph.py
+        - z0archy_core/epistemic.py
+        - z0archy_core/suite.py
+        - z0archy_core/registry.py
+
+    - id: source-introspection
+      name: Exact-ref source introspection
+      kind: evidence
+      summary: Reads GitHub refs or local worktrees and compiles reconstructable implementation evidence.
+      paths:
+        - z0archy_core/sources.py
+        - z0archy_core/introspection.py
+        - z0archy_core/virtual.py
+      depends_on: [semantic-compiler]
+
+    - id: temporal-worlds
+      name: Temporal and counterfactual worlds
+      kind: history
+      summary: Records semantic worlds in ActiveGraph, replays history, forks prior states, and structurally diffs alternate worlds.
+      paths:
+        - z0archy_core/history.py
+        - z0archy_core/counterfactual.py
+      depends_on: [semantic-compiler]
+
+    - id: runtime-evidence
+      name: Runtime evidence projection
+      kind: observability
+      summary: Compiles privacy-bounded Tokenomics, AgentTrace, and AODL runtime observations as non-canonical evidence.
+      paths:
+        - z0archy_core/runtime_evidence.py
+        - runtime_overlay.js
+      depends_on: [semantic-compiler]
+
+    - id: semantic-presentation
+      name: Semantic presentation
+      kind: presentation
+      summary: Projects one semantic world through graphcon-deck scenes, semantic zoom, dynamic MOCs, compression receipts, lenses, and ref selectors.
+      paths:
+        - scripts/generate_deck.py
+        - index.html
+        - sourcebar.js
+        - ref_matrix.js
+        - semantic_zoom_core.js
+        - semantic_zoom.js
+        - moc_core.js
+        - mocbar.js
+        - compression_core.js
+        - compressionbar.js
+      depends_on: [semantic-compiler, source-introspection, temporal-worlds]
+
+    - id: architecture-governance
+      name: Architecture governance
+      kind: governance
+      summary: Detects architecture drift and proposes conservative hierarchy changes without mutating canonical z0.
+      paths:
+        - z0archy_core/lint.py
+        - z0archy_core/hierarchy.py
+        - lens_core.js
+        - lensbar.js
+        - hierarchybar.js
+      depends_on: [semantic-compiler, temporal-worlds]
+
+  implements_mechanisms:
+    - z0archy-semantic-compression
+    - z0archy-history-fork-diff
+    - z0archy-hierarchy-meta-learning
+
+  provides_interfaces: []
+  consumes_interfaces: []
+
+  produces_representations:
+    - architecture-snapshot
+    - semantic-compression-receipt
+    - hierarchy-proposal
+
+  consumes_representations:
+    - architecture-snapshot
+    - observed-topology
+    - tokenomics-event
+
+  boundaries:
+    owns:
+      - semantic graph compilation and projection
+      - exact-ref implementation evidence
+      - architecture history and counterfactual worlds
+      - architecture lint and hierarchy proposals
+      - loss-aware semantic compression views
+    not_here:
+      - canonical cross-system architecture declarations
+      - runtime measurement authority
+      - component implementation ownership
+
+  evidence:
+    docs:
+      - README.md
+      - docs/ARCHITECTURE.md
+    tests:
+      - tests/
+    schemas:
+      - schema/
