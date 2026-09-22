@@ -236,6 +236,7 @@ function installEvidenceScene(component,row,source,pack){
       pos=[-420+col*420,300+r*250];
       if(n.type==="package") kind="hub decision";
       if(n.type==="implementation_manifest") kind="hub research";
+      if(n.type==="subsystem") kind="hub compute";
       if(n.type==="repo_structure") kind="hub measurement";
       if(n.type==="test_surface") kind="hub research";
     }
@@ -248,6 +249,8 @@ function installEvidenceScene(component,row,source,pack){
       body=source+" · "+String(row.head||a.resolvedRef||"").slice(0,12);
     } else if(n.type==="repo_structure"){
       body=(a.fileCount||0)+" files · "+(a.packageCount||0)+" packages · "+(a.schemaCount||0)+" schemas";
+    } else if(n.type==="subsystem"){
+      body=(a.kind||"subsystem")+" · "+((a.paths||[]).slice(0,2).join(", ")||"manifest");
     } else if(n.type==="test_surface"){
       body=(a.fileCount||0)+" test files";
     } else {
