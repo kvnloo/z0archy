@@ -53,7 +53,7 @@ function shortSha(value){return String(value||"").slice(0,9);}
 
 function optionForTarget(target,label){
   const option=document.createElement("option");
-  option.value=target.evidenceKey||target.ref||"";
+  option.value=(target.declared?"canonical":"ref")+":"+(target.ref||"")+":"+(target.evidenceKey||"");
   option.textContent=label;
   option.dataset.target=JSON.stringify(target);
   return option;
@@ -135,8 +135,7 @@ function buildMatrixPanel(){
     select.onchange=function(){
       const target=rowTarget(select);
       matrixState.rows[repo]=target;
-      updateMatrixURL(false);
-      diff.textContent="";
+      diff.textContent=matrixState.active?"pending":"";
     };
     matrixState.rows[repo]=rowTarget(select);
 
@@ -170,14 +169,17 @@ function setMatrixMode(mode){
 
     for(const option of select.options){
       const candidate=option.dataset.target?JSON.parse(option.dataset.target):null;
-      if(candidate&&candidate.evidenceKey===target.evidenceKey){
+      if(
+        candidate &&
+        candidate.evidenceKey===target.evidenceKey &&
+        (mode!=="defaults" || (candidate.kind==="branch" && candidate.ref===target.ref))
+      ){
         select.value=option.value;
         matrixState.rows[repo]=candidate;
         break;
       }
     }
   });
-  updateMatrixURL(false);
 }
 
 async function loadPack(repo,key){
@@ -208,6 +210,9 @@ async function applyMatrix(){
       }
     }));
 
+    if(typeof clearMoc==="function" && typeof mocState!=="undefined" && mocState.query){
+      clearMoc();
+    }
     const manifest=z0VirtualCore.selectionManifest(matrixState.rows);
     const virtual=z0VirtualCore.mergeEvidence(matrixState.graph,selectedPacks,manifest);
     window.z0VirtualGraph=virtual;
@@ -325,6 +330,9 @@ async function copyMatrixManifest(){
 }
 
 function clearMatrix(){
+  if(typeof clearMoc==="function" && typeof mocState!=="undefined" && mocState.query){
+    clearMoc();
+  }
   matrixState.active=false;
   window.z0VirtualGraph=null;
   window.z0VirtualSelection=null;
@@ -343,6 +351,7 @@ function updateMatrixURL(active,clear){
     params.delete("virtual");
   }else{
     if(active) params.set("virtual","1");
+    else params.delete("virtual");
     Object.keys(matrixState.rows).sort().forEach(function(repo){
       const target=matrixState.rows[repo];
       if(target&&target.ref) params.set("v."+repo,target.ref);
@@ -373,3 +382,8 @@ async function initRefMatrix(){
 }
 
 addEventListener("z0archy:boot",function(){void initRefMatrix();});
+
+
+if(typeof deck!=="undefined" && deck){
+  void initRefMatrix();
+}
