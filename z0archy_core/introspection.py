@@ -13,6 +13,7 @@ from .graph import zid
 from .sources import SourceProvider, content_sha256
 
 ROOT_PROBE_PATHS = (
+    "zer0.repo.yaml",
     "zer0.component.yaml",
     "ARCHITECTURE.md",
     "README.md",
@@ -183,20 +184,70 @@ def inspect_repository(
             continue
         add_artifact(path, _artifact_role(path))
 
-    manifest = _parse_manifest(root_docs.get("zer0.component.yaml"))
+    manifest_path = next(
+        (path for path in ("zer0.repo.yaml", "zer0.component.yaml") if root_docs.get(path)),
+        None,
+    )
+    manifest = _parse_manifest(root_docs.get(manifest_path)) if manifest_path else None
     if manifest:
         mid = zid("implementation-manifest", f"{repo}@{resolved}")
+        manifest_attrs = dict(manifest)
+        manifest_attrs["manifestPath"] = manifest_path
         add_node({
             "id": mid,
             "type": "implementation_manifest",
             "label": manifest.get("name") or manifest.get("id") or repo,
-            "attributes": manifest,
-            "provenance": prov("zer0.component.yaml", "document"),
+            "attributes": manifest_attrs,
+            "provenance": prov(manifest_path, "document"),
         })
         add_edge(
             "declares", repo_ref_id, mid, f"{resolved}:manifest",
-            path="zer0.component.yaml", field="document",
+            path=manifest_path, field="document",
         )
+
+        architecture = manifest.get("architecture") or {}
+        if isinstance(architecture, dict):
+            subsystem_ids: dict[str, str] = {}
+            for subsystem in architecture.get("subsystems") or []:
+                if not isinstance(subsystem, dict) or not subsystem.get("id"):
+                    continue
+                subsystem_key = str(subsystem["id"])
+                subsystem_id = zid("subsystem", f"{repo}:{subsystem_key}")
+                subsystem_ids[subsystem_key] = subsystem_id
+                attrs = {
+                    "repo": repo,
+                    "ref": ref,
+                    "resolvedRef": resolved,
+                    **subsystem,
+                }
+                add_node({
+                    "id": subsystem_id,
+                    "type": "subsystem",
+                    "label": subsystem.get("name") or subsystem_key,
+                    "attributes": attrs,
+                    "provenance": prov(manifest_path, f"architecture.subsystems.{subsystem_key}"),
+                })
+                add_edge(
+                    "contains_subsystem", repo_ref_id, subsystem_id,
+                    f"{resolved}:subsystem:{subsystem_key}",
+                    path=manifest_path, field=f"architecture.subsystems.{subsystem_key}",
+                )
+            for subsystem in architecture.get("subsystems") or []:
+                if not isinstance(subsystem, dict) or not subsystem.get("id"):
+                    continue
+                source_key = str(subsystem["id"])
+                source_id = subsystem_ids.get(source_key)
+                if not source_id:
+                    continue
+                for dependency in subsystem.get("depends_on") or []:
+                    target_id = subsystem_ids.get(str(dependency))
+                    if target_id:
+                        add_edge(
+                            "subsystem_depends_on", source_id, target_id,
+                            f"{resolved}:subsystem:{source_key}->{dependency}",
+                            path=manifest_path,
+                            field=f"architecture.subsystems.{source_key}.depends_on",
+                        )
 
     package_paths = sorted(
         path for path in by_path if PurePosixPath(path).name in PACKAGE_BASENAMES
@@ -488,7 +539,7 @@ def _extension_key(path: str) -> str:
 
 def _artifact_role(path: str) -> str:
     base = PurePosixPath(path).name
-    if base == "zer0.component.yaml":
+    if base in {"zer0.repo.yaml", "zer0.component.yaml"}:
         return "manifest"
     if base == "ARCHITECTURE.md":
         return "architecture"
