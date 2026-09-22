@@ -27,6 +27,9 @@ jobs:
       - run: node --check semantic_zoom_core.js
       - run: node --check semantic_zoom.js
       - run: node tests/test_semantic_zoom.js
+      - run: node --check virtual_core.js
+      - run: node --check ref_matrix.js
+      - run: node tests/test_virtual_core.js
       - run: python scripts/validate_deck.py deck.json
       - name: Offline end-to-end projection
         run: |
