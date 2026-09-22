@@ -20,6 +20,7 @@ function mocNodeKind(node){
   if(node.type==="evidence_dependency") return "hub research";
   if(node.type==="evidence_reference") return "tiny contract";
   if(node.type==="repository") return "tiny contract";
+  if(node.type==="subsystem") return "hub compute";
   if(node.type==="lifecycle"||node.type==="lifecycle_state") return "hub environment";
   return "default";
 }
@@ -29,7 +30,7 @@ function mocColumn(node){
     component:-720,harness:-720,repository:-720,
     mechanism:-360,mechanism_family:-360,
     representation:0,profile:0,lifecycle:0,lifecycle_state:0,
-    interface:360,
+    interface:360,subsystem:360,
     evidence_dependency:720,evidence_reference:720
   }[node.type]??0;
 }

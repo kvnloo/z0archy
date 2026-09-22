@@ -31,7 +31,10 @@ Branch/worktree selection is no longer tooltip-only. For each selected repositor
 
 The projection materializes:
 
-- explicit `zer0.component.yaml` plus architecture/system/agent docs;
+- explicit `zer0.repo.yaml` implementation architecture, with legacy `zer0.component.yaml` fallback;
+- stable subsystem nodes and subsystem dependency edges from the selected ref;
+- manifest-declared canonical mechanism/interface/representation links, resolved fail-open only when the canonical identity exists;
+- architecture/system/agent docs;
 - every bounded package manifest across npm, Python, Cargo and Go monorepos;
 - internal package-to-package dependency edges;
 - schemas and API-contract artifacts;
@@ -42,6 +45,12 @@ The projection materializes:
 GitHub tree inventories are keyed by immutable commit SHA and persisted under the same Actions cache as ref evidence. Raw file bodies still use `raw.githubusercontent.com`, so after the one tree inventory call, architecture-bearing content does not consume REST/GraphQL request budget.
 
 The compiler still refuses to pretend arbitrary source-code imports are architectural truth. Import/call-graph analyzers can be added as a lower-confidence representation on the same exact-ref contract rather than silently promoting inferred edges.
+
+`zer0.repo.yaml` is deliberately asymmetric with central z0: the repo owns exact-ref
+implementation structure, while z0 owns cross-system semantic identities. A manifest
+can say “this ref implements mechanism X” but cannot create mechanism X. Unknown IDs
+become `unresolvedManifestReferences` in the virtual-world diagnostics instead of
+new graph nodes.
 
 ## Hosted mode
 
