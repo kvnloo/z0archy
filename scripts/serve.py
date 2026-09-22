@@ -45,6 +45,9 @@ def refresh(
             key = worktree.get("evidenceKey")
             if not path or not key:
                 continue
+            evidence_path = _evidence_path(evidence_root, repo, key)
+            if evidence_path.is_file():
+                continue
             provider = LocalGitSource({repo: path})
             try:
                 pack = inspect_repository(
@@ -61,10 +64,10 @@ def refresh(
                     "ahead": worktree.get("ahead", 0),
                     "behind": worktree.get("behind", 0),
                 }
-                _atomic_json(_evidence_path(evidence_root, repo, key), pack)
+                _atomic_json(evidence_path, pack)
             except Exception as exc:
                 _atomic_json(
-                    _evidence_path(evidence_root, repo, key),
+                    evidence_path,
                     {
                         "repo": repo,
                         "ref": "WORKTREE",

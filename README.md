@@ -56,7 +56,7 @@ python scripts/generate_deck.py
 python scripts/serve.py --workspace ~/src/zer0
 ```
 
-The server discovers repositories and Git worktrees read-only. Each worktree has its own evidence identity even when worktrees share a HEAD. The compiler reads live filesystem files, so dirty architecture/package documents are represented without committing them. The browser polls local state and rebuilds selected evidence when hashes change.
+The server discovers repositories and Git worktrees read-only. Each worktree has a content-addressed evidence identity derived from HEAD, path, upstream state and the actual bytes of dirty/untracked files. Unchanged worktrees reuse their compiled evidence pack instead of being re-introspected every poll. Dirty edits create a new evidence key immediately, including repeated edits while Git status remains simply "modified". The browser polls local state and swaps to the new exact worktree evidence when that key changes.
 
 ## Virtual multi-repo snapshots
 

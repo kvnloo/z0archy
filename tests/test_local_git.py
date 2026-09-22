@@ -88,6 +88,32 @@ class LocalGitTests(unittest.TestCase):
             structure = next(n for n in pack["nodes"] if n["type"] == "repo_structure")
             self.assertEqual(structure["attributes"]["schemaCount"], 1)
 
+    def test_worktree_evidence_key_changes_only_when_observed_state_changes(self):
+        with tempfile.TemporaryDirectory() as td:
+            repo = Path(td) / "repo"
+            subprocess.run(["git", "init", "-q", "-b", "main", str(repo)], check=True)
+            subprocess.run(["git", "-C", str(repo), "config", "user.email", "test@example.com"], check=True)
+            subprocess.run(["git", "-C", str(repo), "config", "user.name", "Test"], check=True)
+            (repo / "README.md").write_text("# one\n")
+            subprocess.run(["git", "-C", str(repo), "add", "README.md"], check=True)
+            subprocess.run(["git", "-C", str(repo), "commit", "-qm", "init"], check=True)
+            subprocess.run(["git", "-C", str(repo), "remote", "add", "origin", "git@github.com:kvnloo/demo.git"], check=True)
+
+            first = build_local_snapshot([td])["repositories"]["kvnloo/demo"]["worktrees"][0]
+            second = build_local_snapshot([td])["repositories"]["kvnloo/demo"]["worktrees"][0]
+            self.assertEqual(first["evidenceKey"], second["evidenceKey"])
+
+            (repo / "README.md").write_text("# two\n")
+            dirty = build_local_snapshot([td])["repositories"]["kvnloo/demo"]["worktrees"][0]
+            self.assertNotEqual(first["evidenceKey"], dirty["evidenceKey"])
+
+            (repo / "README.md").write_text("# three\n")
+            dirtier = build_local_snapshot([td])["repositories"]["kvnloo/demo"]["worktrees"][0]
+            self.assertNotEqual(dirty["evidenceKey"], dirtier["evidenceKey"])
+
+            unchanged = build_local_snapshot([td])["repositories"]["kvnloo/demo"]["worktrees"][0]
+            self.assertEqual(dirtier["evidenceKey"], unchanged["evidenceKey"])
+
 
 if __name__ == "__main__":
     unittest.main()
