@@ -1,0 +1,5970 @@
+{
+  "schemaVersion": "0.2.0",
+  "snapshot": {
+    "generatedAt": "2026-09-22T11:38:05.641018Z",
+    "truthClass": "declared",
+    "source": {
+      "repo": "kvnloo/z0",
+      "ref": "main"
+    }
+  },
+  "vocabulary": {
+    "maturity": {
+      "status": {
+        "idea": "Concept or design note only; no install target.",
+        "prototype": "Works in demos; APIs unstable; may lack tests.",
+        "experimental": "Usable with caveats; breaking changes likely.",
+        "canary": "Default for active integration branches; dogfooded internally.",
+        "stable": "Semver-ish stability; documented upgrade path.",
+        "deprecated": "Still present; do not start new work here.",
+        "reference": "Illustrative or historical; not a product surface."
+      },
+      "execution": {
+        "shadow": "Emits side-channel telemetry only; no user-visible effect.",
+        "log_only": "Records decisions; does not act on them.",
+        "canary": "Partial live path; gated or opt-in.",
+        "live": "Default production path when installed."
+      }
+    },
+    "truthClasses": [
+      "declared",
+      "implemented",
+      "observed",
+      "historical",
+      "derived"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "z0://component/agenttrace",
+      "type": "component",
+      "label": "AgentTrace",
+      "attributes": {
+        "component_id": "agenttrace",
+        "name": "AgentTrace",
+        "repo": "kvnloo/agenttrace",
+        "kind": "observability",
+        "status": "experimental",
+        "execution": "log_only",
+        "owner": "Observability",
+        "summary": "Historical agent TUI and span export for debugging and audit.\n",
+        "required": false,
+        "profiles": [
+          "full"
+        ],
+        "depends_on": [],
+        "integrates_with": [
+          "oh-my-pi",
+          "tokenomics"
+        ],
+        "provides": [
+          "agenttrace.span.v0"
+        ],
+        "consumes": [
+          "tokenomics.event.v0"
+        ],
+        "install": {
+          "clone": "https://github.com/kvnloo/agenttrace.git",
+          "branch": "master",
+          "ref": "a34dea2b6ff7e2133b9e548b93d30bfe6ccf6ff5",
+          "command": "pip install -e ."
+        },
+        "boundaries": {
+          "owns": [
+            "agent span history",
+            "TUI"
+          ],
+          "not_here": [
+            "live runtime",
+            "measurement kernel"
+          ]
+        }
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.agenttrace"
+        }
+      ]
+    },
+    {
+      "id": "z0://component/aodl",
+      "type": "component",
+      "label": "AODL",
+      "attributes": {
+        "component_id": "aodl",
+        "name": "AODL",
+        "repo": "kvnloo/aodl",
+        "kind": "contract",
+        "status": "experimental",
+        "execution": "shadow",
+        "owner": "Contracts",
+        "summary": "Typed intent and plan schema \u2014 contracts only, not runtime execution.\n",
+        "required": false,
+        "profiles": [
+          "full"
+        ],
+        "depends_on": [],
+        "integrates_with": [
+          "oh-my-pi",
+          "kerdoios"
+        ],
+        "provides": [
+          "aodl.intent.v1"
+        ],
+        "consumes": [],
+        "install": {
+          "clone": "https://github.com/kvnloo/aodl.git",
+          "branch": "main",
+          "ref": "8e41ef024262339d28a968d71113fc52819d4bd4",
+          "command": "pip install -e ."
+        },
+        "boundaries": {
+          "owns": [
+            "typed intent/plan contracts"
+          ],
+          "not_here": [
+            "runtime implementation",
+            "provider execution"
+          ]
+        }
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.aodl"
+        }
+      ]
+    },
+    {
+      "id": "z0://component/evolution-lab",
+      "type": "component",
+      "label": "Evolution Lab",
+      "attributes": {
+        "component_id": "evolution-lab",
+        "name": "Evolution Lab",
+        "repo": "kvnloo/evolution-lab",
+        "kind": "research",
+        "status": "experimental",
+        "execution": "shadow",
+        "owner": "Research",
+        "summary": "Automatic AI research loop: hypothesis search, experiment runners, and verified candidate promotion.\n",
+        "required": false,
+        "profiles": [
+          "research",
+          "full"
+        ],
+        "depends_on": [
+          "z0intelligence",
+          "tokenomics"
+        ],
+        "integrates_with": [
+          "frontier-kb",
+          "z0intelligence"
+        ],
+        "provides": [],
+        "consumes": [
+          "tokenomics.report.v1",
+          "z0int.decision_receipt.v1"
+        ],
+        "install": {
+          "clone": "https://github.com/kvnloo/evolution-lab.git",
+          "branch": "main",
+          "ref": "8cf7acff719470b74f20c90fd6e5f7cdb11c134a",
+          "command": "pip install -e ."
+        },
+        "boundaries": {
+          "owns": [
+            "experiment search",
+            "autoresearch orchestration"
+          ],
+          "not_here": [
+            "production runtime",
+            "personal traces"
+          ]
+        }
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.evolution-lab"
+        }
+      ]
+    },
+    {
+      "id": "z0://component/flow",
+      "type": "component",
+      "label": "Flow",
+      "attributes": {
+        "component_id": "flow",
+        "name": "Flow",
+        "repo": "kvnloo/.files",
+        "kind": "desktop",
+        "status": "experimental",
+        "execution": "shadow",
+        "owner": "Desktop",
+        "summary": "Predictive desktop UX: context episodes, prediction horizons, prepare cache, and routine suggestion miner (workspace copilot).\n",
+        "required": false,
+        "profiles": [
+          "desktop",
+          "full"
+        ],
+        "depends_on": [
+          "oh-my-pi"
+        ],
+        "integrates_with": [
+          "tokenomics",
+          "z0intelligence"
+        ],
+        "provides": [
+          "flow_prediction.v1",
+          "os.next_context.v0"
+        ],
+        "consumes": [
+          "tokenomics.event.v0",
+          "z0int.decision_receipt.v1"
+        ],
+        "install": {
+          "clone": "https://github.com/kvnloo/.files.git",
+          "branch": "feat/workspace-copilot-flow",
+          "ref": "5259013185d97422022fc225fa70245595b046ea",
+          "command": "echo 'Flow scripts live in scripts/workspace_flow.py \u2014 see component README'"
+        },
+        "verify": {
+          "command": "python3 scripts/workspace_flow.py --help"
+        },
+        "docs": {
+          "readme": "scripts/workspace_flow.py"
+        },
+        "boundaries": {
+          "owns": [
+            "OS prediction",
+            "prepare",
+            "routine mining"
+          ],
+          "not_here": [
+            "agent runtime",
+            "token accounting",
+            "training loops"
+          ]
+        }
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.flow"
+        }
+      ]
+    },
+    {
+      "id": "z0://component/frontier-kb",
+      "type": "component",
+      "label": "frontier-kb",
+      "attributes": {
+        "component_id": "frontier-kb",
+        "name": "frontier-kb",
+        "repo": "kvnloo/frontier-kb",
+        "kind": "research",
+        "status": "experimental",
+        "execution": "shadow",
+        "owner": "Research",
+        "summary": "Research knowledge base: papers, external systems, hypotheses, and kill criteria \u2014 not private user traces.\n",
+        "required": false,
+        "profiles": [
+          "research",
+          "full"
+        ],
+        "depends_on": [],
+        "integrates_with": [
+          "evolution-lab"
+        ],
+        "provides": [],
+        "consumes": [],
+        "install": {
+          "clone": "https://github.com/kvnloo/frontier-kb.git",
+          "branch": "main",
+          "ref": "aac71e8f73cbfe78118d2dd399ecceece2e42e71",
+          "command": "echo 'Knowledge base \u2014 see README for ingest workflow'"
+        },
+        "boundaries": {
+          "owns": [
+            "research evidence",
+            "external references"
+          ],
+          "not_here": [
+            "private user traces",
+            "runtime code"
+          ]
+        }
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.frontier-kb"
+        }
+      ]
+    },
+    {
+      "id": "z0://component/kerdoios",
+      "type": "component",
+      "label": "Kerdoios",
+      "attributes": {
+        "component_id": "kerdoios",
+        "name": "Kerdoios",
+        "repo": "kvnloo/kerdoios",
+        "kind": "compute",
+        "status": "experimental",
+        "execution": "live",
+        "owner": "Compute",
+        "summary": "Compute and provider allocation \u2014 routes work to frontier vs local models with cost/latency awareness.\n",
+        "required": false,
+        "profiles": [
+          "compute",
+          "full"
+        ],
+        "depends_on": [
+          "tokenomics"
+        ],
+        "integrates_with": [
+          "oh-my-pi",
+          "z0intelligence",
+          "aodl",
+          "tokenomics"
+        ],
+        "provides": [
+          "kerdoios.route.v1"
+        ],
+        "consumes": [
+          "tokenomics.event.v0",
+          "z0int.decision_receipt.v1"
+        ],
+        "install": {
+          "clone": "https://github.com/kvnloo/kerdoios.git",
+          "branch": "main",
+          "ref": "e3100ae4b779253c3ff3e9a95cc79f0321edb784",
+          "command": "pip install -e ."
+        },
+        "boundaries": {
+          "owns": [
+            "provider routing",
+            "allocation policy"
+          ],
+          "not_here": [
+            "provider execution",
+            "token measurement",
+            "agent runtime"
+          ]
+        }
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.kerdoios"
+        }
+      ]
+    },
+    {
+      "id": "z0://component/memento",
+      "type": "component",
+      "label": "Memento",
+      "attributes": {
+        "component_id": "memento",
+        "name": "Memento",
+        "repo": "kvnloo/Memento",
+        "kind": "memory",
+        "status": "idea",
+        "execution": "shadow",
+        "owner": "Memory",
+        "summary": "Visual private history and episodic recall (design stage).\n",
+        "required": false,
+        "profiles": [],
+        "depends_on": [
+          "z0intelligence"
+        ],
+        "integrates_with": [
+          "flow"
+        ],
+        "provides": [],
+        "consumes": [],
+        "install": {
+          "clone": "https://github.com/kvnloo/Memento.git",
+          "branch": "main",
+          "ref": "513a80c2ba155115dfcea0bc808b0c41a1fd4380",
+          "command": "echo 'Not yet installable \u2014 status idea'"
+        },
+        "boundaries": {
+          "owns": [
+            "visual private history"
+          ],
+          "not_here": [
+            "research KB",
+            "agent runtime"
+          ]
+        }
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.memento"
+        }
+      ]
+    },
+    {
+      "id": "z0://component/oh-my-pi",
+      "type": "component",
+      "label": "OMP (Oh My Pi)",
+      "attributes": {
+        "component_id": "oh-my-pi",
+        "name": "OMP (Oh My Pi)",
+        "repo": "kvnloo/oh-my-pi",
+        "kind": "runtime",
+        "status": "canary",
+        "execution": "canary",
+        "owner": "Runtime",
+        "summary": "Coding agent runtime: CLI, RPC, RLM context spill, Jev decisions, Handsfree HUD, Live voice, and computer-use stage manager.\n",
+        "required": true,
+        "profiles": [
+          "minimal",
+          "core",
+          "personal",
+          "desktop",
+          "compute",
+          "full"
+        ],
+        "depends_on": [],
+        "integrates_with": [
+          "tokenomics",
+          "z0intelligence",
+          "aodl",
+          "kerdoios",
+          "agenttrace"
+        ],
+        "provides": [
+          "omp.session.aggregate",
+          "cu.stage_intent.v0"
+        ],
+        "consumes": [
+          "tokenomics.event.v0",
+          "z0int.decision_receipt.v1",
+          "aodl.intent.v1",
+          "kerdoios.route.v1"
+        ],
+        "install": {
+          "clone": "https://github.com/kvnloo/oh-my-pi.git",
+          "branch": "rfc/interactive-performance-stack",
+          "ref": "d707478d4c5c72784c058a0163b616988f559230",
+          "command": "bun install && bun run build"
+        },
+        "verify": {
+          "command": "bun test packages/coding-agent/test/rlm-tokenomics-bridge.test.ts"
+        },
+        "docs": {
+          "readme": "README.md",
+          "architecture": "docs/rfc-interactive-performance-stack.md"
+        },
+        "boundaries": {
+          "owns": [
+            "coding agent runtime",
+            "voice/stage/CU",
+            "RLM spill",
+            "Jev hotpath"
+          ],
+          "not_here": [
+            "token measurement",
+            "routing policy store",
+            "research KB"
+          ]
+        }
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.oh-my-pi"
+        }
+      ]
+    },
+    {
+      "id": "z0://component/tokenomics",
+      "type": "component",
+      "label": "Tokenomics",
+      "attributes": {
+        "component_id": "tokenomics",
+        "name": "Tokenomics",
+        "repo": "kvnloo/tokenomics",
+        "kind": "measurement",
+        "status": "experimental",
+        "execution": "live",
+        "owner": "Measurement",
+        "summary": "Vendor-neutral measurement kernel for token, cost, latency, and verified-task economics with reconciliation reports.\n",
+        "required": false,
+        "profiles": [
+          "core",
+          "personal",
+          "desktop",
+          "compute",
+          "research",
+          "full"
+        ],
+        "depends_on": [],
+        "integrates_with": [
+          "oh-my-pi",
+          "z0intelligence",
+          "kerdoios",
+          "agenttrace",
+          "flow"
+        ],
+        "provides": [
+          "tokenomics.event.v0",
+          "tokenomics.report.v1"
+        ],
+        "consumes": [
+          "z0int.decision_receipt.v1",
+          "flow_prediction.v1"
+        ],
+        "install": {
+          "clone": "https://github.com/kvnloo/tokenomics.git",
+          "branch": "master",
+          "ref": "e67d76fe2f1d52a5911abc8974489a10e89bb431",
+          "command": "pip install -e packages/python && npm install -w packages/typescript"
+        },
+        "verify": {
+          "command": "tokenomics report --range today"
+        },
+        "docs": {
+          "architecture": "packages/python/src/tokenomics/report.py",
+          "integration": "docs/MIGRATION.md"
+        },
+        "boundaries": {
+          "owns": [
+            "usage attribution",
+            "savings reports",
+            "reconciliation"
+          ],
+          "not_here": [
+            "routing policy",
+            "provider execution",
+            "agent runtime"
+          ]
+        }
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.tokenomics"
+        }
+      ]
+    },
+    {
+      "id": "z0://component/z0intelligence",
+      "type": "component",
+      "label": "z0intelligence",
+      "attributes": {
+        "component_id": "z0intelligence",
+        "name": "z0intelligence",
+        "repo": "kvnloo/z0intelligence",
+        "kind": "intelligence",
+        "status": "experimental",
+        "execution": "log_only",
+        "owner": "Personal Intelligence",
+        "summary": "Personal learned policy: specialists, routines, autoresearch, and decision receipts for routing and promotion.\n",
+        "required": false,
+        "profiles": [
+          "personal",
+          "research",
+          "full"
+        ],
+        "depends_on": [
+          "tokenomics"
+        ],
+        "integrates_with": [
+          "oh-my-pi",
+          "kerdoios",
+          "evolution-lab",
+          "tokenomics"
+        ],
+        "provides": [
+          "z0int.decision_receipt.v1"
+        ],
+        "consumes": [
+          "tokenomics.report.v1",
+          "flow_prediction.v1"
+        ],
+        "install": {
+          "clone": "https://github.com/kvnloo/z0intelligence.git",
+          "branch": "master",
+          "ref": "5e7cf4a2d6faf6e537dbfbb52d90bf50410cea63",
+          "command": "pip install -e ."
+        },
+        "verify": {
+          "command": "python3 -m z0int --help"
+        },
+        "boundaries": {
+          "owns": [
+            "personal policy",
+            "routine promotion",
+            "specialists"
+          ],
+          "not_here": [
+            "coding agent runtime",
+            "OS prediction",
+            "measurement kernel"
+          ]
+        }
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.z0intelligence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-dependency/aodl-intent-to-plan",
+      "type": "evidence_dependency",
+      "label": "aodl-intent-to-plan",
+      "attributes": {
+        "evidence_dependency_id": "aodl-intent-to-plan",
+        "from": "representation:aodl-intent",
+        "to": "representation:compiled-plan",
+        "relation": "compiles_to",
+        "via": "mechanism:aodl-intent-plan-observed",
+        "required_evidence": [
+          "registry/mechanisms.yaml#mechanisms.aodl-intent-plan-observed",
+          "registry/interfaces.yaml#interfaces.aodl.intent.v1"
+        ],
+        "invariants": [
+          "Desired intent and runtime-safe plan remain distinguishable."
+        ],
+        "invalidators": [
+          "Runtime executes an uncompiled intent while claiming compiled-plan semantics."
+        ],
+        "retrieval": {
+          "fastest": "registry",
+          "fallback": "implementation-doc"
+        },
+        "confidence": "declared"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.aodl-intent-to-plan"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-dependency/decision-state-to-receipt",
+      "type": "evidence_dependency",
+      "label": "decision-state-to-receipt",
+      "attributes": {
+        "evidence_dependency_id": "decision-state-to-receipt",
+        "from": "representation:compiled-decision-state",
+        "to": "representation:decision-receipt",
+        "relation": "decides_to",
+        "via": "mechanism:jev-typed-decision",
+        "required_evidence": [
+          "registry/mechanisms.yaml#mechanisms.jev-typed-decision",
+          "registry/interfaces.yaml#interfaces.z0int.decision_receipt.v1"
+        ],
+        "invariants": [
+          "Decision space is explicit and bounded before typed scoring/readout.",
+          "Receipt identifies enough context to audit the decision."
+        ],
+        "invalidators": [
+          "Free-form generation substitutes for the bounded decision while retaining the same semantic label."
+        ],
+        "retrieval": {
+          "fastest": "decision-receipt",
+          "fallback": "implementation-doc"
+        },
+        "confidence": "declared"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.decision-state-to-receipt"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-dependency/evidence-reducer-preserves-verifiability",
+      "type": "evidence_dependency",
+      "label": "evidence-reducer-preserves-verifiability",
+      "attributes": {
+        "evidence_dependency_id": "evidence-reducer-preserves-verifiability",
+        "from": "representation:raw-context",
+        "to": "representation:evidence-receipt",
+        "relation": "compresses_to",
+        "via": "mechanism:sol-pi-evidence-reducer",
+        "required_evidence": [
+          "registry/mechanisms.yaml#mechanisms.sol-pi-evidence-reducer"
+        ],
+        "invariants": [
+          "Compressed evidence remains quote-verifiable.",
+          "Verification failure falls open rather than silently inventing evidence."
+        ],
+        "invalidators": [
+          "Verification failure is accepted as valid compressed evidence."
+        ],
+        "retrieval": {
+          "fastest": "implementation-doc",
+          "fallback": "source-search"
+        },
+        "confidence": "declared"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.evidence-reducer-preserves-verifiability"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-dependency/execution-to-tokenomics",
+      "type": "evidence_dependency",
+      "label": "execution-to-tokenomics",
+      "attributes": {
+        "evidence_dependency_id": "execution-to-tokenomics",
+        "from": "representation:observed-topology",
+        "to": "representation:tokenomics-event",
+        "relation": "measured_as",
+        "required_evidence": [
+          "registry/interfaces.yaml#interfaces.tokenomics.event.v0",
+          "registry/mechanisms.yaml#mechanisms.agenttrace-cross-harness-observation"
+        ],
+        "invariants": [
+          "Cost/token/latency claims come from measurement evidence rather than architecture inference."
+        ],
+        "invalidators": [
+          "Economic metrics are reconstructed solely from model/provider assumptions."
+        ],
+        "retrieval": {
+          "fastest": "tokenomics-event",
+          "fallback": "reconciliation-report"
+        },
+        "confidence": "declared"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.execution-to-tokenomics"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-dependency/observation-pack-compresses-context",
+      "type": "evidence_dependency",
+      "label": "observation-pack-compresses-context",
+      "attributes": {
+        "evidence_dependency_id": "observation-pack-compresses-context",
+        "from": "representation:raw-context",
+        "to": "representation:observation-pack",
+        "relation": "compresses_to",
+        "via": "mechanism:sol-pi-observation-pack",
+        "required_evidence": [
+          "registry/mechanisms.yaml#mechanisms.sol-pi-observation-pack"
+        ],
+        "invariants": [
+          "Original observation remains exactly recallable through the stable handle."
+        ],
+        "invalidators": [
+          "Compaction destroys exact recall."
+        ],
+        "retrieval": {
+          "fastest": "registry",
+          "fallback": "implementation-doc"
+        },
+        "confidence": "declared"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.observation-pack-compresses-context"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-dependency/omp-rlm-context-spill",
+      "type": "evidence_dependency",
+      "label": "omp-rlm-context-spill",
+      "attributes": {
+        "evidence_dependency_id": "omp-rlm-context-spill",
+        "from": "component:oh-my-pi",
+        "to": "mechanism:rlm-context-spill",
+        "relation": "implements",
+        "required_evidence": [
+          "kvnloo/oh-my-pi:README.md",
+          "registry/components.yaml#components.oh-my-pi"
+        ],
+        "invariants": [
+          "Large context remains externally addressable rather than being irreversibly discarded.",
+          "The coding-agent runtime remains authoritative for execution."
+        ],
+        "invalidators": [
+          "RLM/context-spill implementation is removed from OMP.",
+          "The mechanism moves to another authoritative runtime without the registry being updated."
+        ],
+        "retrieval": {
+          "fastest": "repo-doc",
+          "fallback": "source-search"
+        },
+        "confidence": "declared",
+        "abstain_if": [
+          "selected implementation ref cannot provide either architecture documentation or source evidence."
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.omp-rlm-context-spill"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-dependency/plan-to-observed-topology",
+      "type": "evidence_dependency",
+      "label": "plan-to-observed-topology",
+      "attributes": {
+        "evidence_dependency_id": "plan-to-observed-topology",
+        "from": "representation:compiled-plan",
+        "to": "representation:observed-topology",
+        "relation": "observed_as",
+        "via": "mechanism:aodl-intent-plan-observed",
+        "required_evidence": [
+          "registry/mechanisms.yaml#mechanisms.aodl-intent-plan-observed",
+          "registry/mechanisms.yaml#mechanisms.agenttrace-cross-harness-observation"
+        ],
+        "invariants": [
+          "Observed execution remains distinguishable from intended execution.",
+          "Missing trace evidence is represented as missing, not synthesized."
+        ],
+        "invalidators": [
+          "Observed topology is inferred without trace/runtime evidence and presented as fact."
+        ],
+        "retrieval": {
+          "fastest": "trace",
+          "fallback": "harness-log"
+        },
+        "confidence": "declared"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.plan-to-observed-topology"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/kvnloo/oh-my-pi:README.md",
+      "type": "evidence_reference",
+      "label": "kvnloo/oh-my-pi:README.md",
+      "attributes": {
+        "reference": "kvnloo/oh-my-pi:README.md"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.omp-rlm-context-spill.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/registry/components.yaml%23components.oh-my-pi",
+      "type": "evidence_reference",
+      "label": "registry/components.yaml#components.oh-my-pi",
+      "attributes": {
+        "reference": "registry/components.yaml#components.oh-my-pi"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.omp-rlm-context-spill.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.aodl.intent.v1",
+      "type": "evidence_reference",
+      "label": "registry/interfaces.yaml#interfaces.aodl.intent.v1",
+      "attributes": {
+        "reference": "registry/interfaces.yaml#interfaces.aodl.intent.v1"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.aodl-intent-to-plan.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.tokenomics.event.v0",
+      "type": "evidence_reference",
+      "label": "registry/interfaces.yaml#interfaces.tokenomics.event.v0",
+      "attributes": {
+        "reference": "registry/interfaces.yaml#interfaces.tokenomics.event.v0"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.execution-to-tokenomics.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.z0int.decision_receipt.v1",
+      "type": "evidence_reference",
+      "label": "registry/interfaces.yaml#interfaces.z0int.decision_receipt.v1",
+      "attributes": {
+        "reference": "registry/interfaces.yaml#interfaces.z0int.decision_receipt.v1"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.decision-state-to-receipt.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.agenttrace-cross-harness-observation",
+      "type": "evidence_reference",
+      "label": "registry/mechanisms.yaml#mechanisms.agenttrace-cross-harness-observation",
+      "attributes": {
+        "reference": "registry/mechanisms.yaml#mechanisms.agenttrace-cross-harness-observation"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.plan-to-observed-topology.required_evidence"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.execution-to-tokenomics.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.aodl-intent-plan-observed",
+      "type": "evidence_reference",
+      "label": "registry/mechanisms.yaml#mechanisms.aodl-intent-plan-observed",
+      "attributes": {
+        "reference": "registry/mechanisms.yaml#mechanisms.aodl-intent-plan-observed"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.aodl-intent-to-plan.required_evidence"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.plan-to-observed-topology.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.jev-typed-decision",
+      "type": "evidence_reference",
+      "label": "registry/mechanisms.yaml#mechanisms.jev-typed-decision",
+      "attributes": {
+        "reference": "registry/mechanisms.yaml#mechanisms.jev-typed-decision"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.decision-state-to-receipt.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.sol-pi-evidence-reducer",
+      "type": "evidence_reference",
+      "label": "registry/mechanisms.yaml#mechanisms.sol-pi-evidence-reducer",
+      "attributes": {
+        "reference": "registry/mechanisms.yaml#mechanisms.sol-pi-evidence-reducer"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.evidence-reducer-preserves-verifiability.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.sol-pi-observation-pack",
+      "type": "evidence_reference",
+      "label": "registry/mechanisms.yaml#mechanisms.sol-pi-observation-pack",
+      "attributes": {
+        "reference": "registry/mechanisms.yaml#mechanisms.sol-pi-observation-pack"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.observation-pack-compresses-context.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://harness/codex",
+      "type": "harness",
+      "label": "Codex",
+      "attributes": {
+        "harness_id": "codex",
+        "name": "Codex",
+        "repo": "openai/codex",
+        "aodl_id": "codex",
+        "kind": "executor",
+        "adoption": "active",
+        "summary": "External executor used in the multi-harness Zer0 workflow.",
+        "evidence": [
+          "kvnloo/aodl:harnesses/catalog.json#codex"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.codex"
+        }
+      ]
+    },
+    {
+      "id": "z0://harness/deepseek",
+      "type": "harness",
+      "label": "DeepSeek Harness",
+      "attributes": {
+        "harness_id": "deepseek",
+        "name": "DeepSeek Harness",
+        "repo": "kvnloo/deepseek-harness",
+        "upstream": "deepseek-ai/deepseek-harness",
+        "aodl_id": null,
+        "kind": "executor",
+        "adoption": "active",
+        "catalog_gap": true,
+        "summary": "Plugin-tree harness used as a Zer0 execution and inspection surface. Cordis plugins provide models, tools, session log and agent loop as replaceable services. Not yet present in AODL's fail-closed harness catalog.\n",
+        "evidence": [
+          "kvnloo/deepseek-harness:README.md",
+          "kvnloo/deepseek-harness:docs/architecture.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.deepseek"
+        }
+      ]
+    },
+    {
+      "id": "z0://harness/hermes",
+      "type": "harness",
+      "label": "Hermes Agent",
+      "attributes": {
+        "harness_id": "hermes",
+        "name": "Hermes Agent",
+        "repo": "kvnloo/hermes-agent",
+        "upstream": "NousResearch/hermes-agent",
+        "aodl_id": "hermes",
+        "kind": "executor",
+        "adoption": "primary",
+        "summary": "Cross-platform agent/runtime surface with gateway, memory/skills, subagents, scheduled automation and trajectory generation/compression.\n",
+        "extensions": [
+          "kvnloo/sol-pi-hermes"
+        ],
+        "evidence": [
+          "kvnloo/aodl:harnesses/catalog.json#hermes",
+          "kvnloo/hermes-agent:README.md",
+          "kvnloo/sol-pi-hermes:README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.hermes"
+        }
+      ]
+    },
+    {
+      "id": "z0://harness/omp",
+      "type": "harness",
+      "label": "Oh My Pi",
+      "attributes": {
+        "harness_id": "omp",
+        "name": "Oh My Pi",
+        "repo": "kvnloo/oh-my-pi",
+        "aodl_id": "omp",
+        "component": "oh-my-pi",
+        "kind": "executor",
+        "adoption": "primary",
+        "summary": "Zer0's canary coding-agent runtime. Owns the live coding loop and hosts RLM/context-spill and Jev hotpath integrations.\n",
+        "evidence": [
+          "registry/components.yaml#components.oh-my-pi",
+          "kvnloo/aodl:harnesses/catalog.json#omp"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.omp"
+        }
+      ]
+    },
+    {
+      "id": "z0://harness/pi",
+      "type": "harness",
+      "label": "Pi",
+      "attributes": {
+        "harness_id": "pi",
+        "name": "Pi",
+        "repo": "earendil-works/pi",
+        "aodl_id": "pi",
+        "kind": "executor",
+        "adoption": "research",
+        "summary": "External harness and the upstream extension surface from which SoL-Pi's reusable efficiency mechanisms were derived.\n",
+        "evidence": [
+          "kvnloo/aodl:harnesses/catalog.json#pi",
+          "kvnloo/SoL-Pi:README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.pi"
+        }
+      ]
+    },
+    {
+      "id": "z0://interface/agenttrace.span.v0",
+      "type": "interface",
+      "label": "agenttrace.span.v0",
+      "attributes": {
+        "interface": "agenttrace.span.v0",
+        "owner": "agenttrace",
+        "summary": "Historical agent span for observability export."
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.agenttrace.span.v0"
+        }
+      ]
+    },
+    {
+      "id": "z0://interface/aodl.intent.v1",
+      "type": "interface",
+      "label": "aodl.intent.v1",
+      "attributes": {
+        "interface": "aodl.intent.v1",
+        "owner": "aodl",
+        "summary": "Typed intent / plan contract (not runtime execution)."
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.aodl.intent.v1"
+        }
+      ]
+    },
+    {
+      "id": "z0://interface/cu.stage_intent.v0",
+      "type": "interface",
+      "label": "cu.stage_intent.v0",
+      "attributes": {
+        "interface": "cu.stage_intent.v0",
+        "owner": "oh-my-pi",
+        "summary": "Handsfree / computer-use window and layout intent."
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.cu.stage_intent.v0"
+        }
+      ]
+    },
+    {
+      "id": "z0://interface/flow_prediction.v1",
+      "type": "interface",
+      "label": "flow_prediction.v1",
+      "attributes": {
+        "interface": "flow_prediction.v1",
+        "owner": "flow",
+        "summary": "OS-context prediction with horizon metadata and gates."
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.flow_prediction.v1"
+        }
+      ]
+    },
+    {
+      "id": "z0://interface/kerdoios.route.v1",
+      "type": "interface",
+      "label": "kerdoios.route.v1",
+      "attributes": {
+        "interface": "kerdoios.route.v1",
+        "owner": "kerdoios",
+        "summary": "Model/provider routing decision with cost estimate."
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.kerdoios.route.v1"
+        }
+      ]
+    },
+    {
+      "id": "z0://interface/omp.session.aggregate",
+      "type": "interface",
+      "label": "omp.session.aggregate",
+      "attributes": {
+        "interface": "omp.session.aggregate",
+        "owner": "oh-my-pi",
+        "summary": "Session-level token rollup for Tokenomics reconciliation."
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.omp.session.aggregate"
+        }
+      ]
+    },
+    {
+      "id": "z0://interface/os.next_context.v0",
+      "type": "interface",
+      "label": "os.next_context.v0",
+      "attributes": {
+        "interface": "os.next_context.v0",
+        "owner": "flow",
+        "summary": "Shadow prediction of next desktop context episode."
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.os.next_context.v0"
+        }
+      ]
+    },
+    {
+      "id": "z0://interface/tokenomics.event.v0",
+      "type": "interface",
+      "label": "tokenomics.event.v0",
+      "attributes": {
+        "interface": "tokenomics.event.v0",
+        "owner": "tokenomics",
+        "summary": "Vendor-neutral usage / cost / latency event envelope."
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.tokenomics.event.v0"
+        }
+      ]
+    },
+    {
+      "id": "z0://interface/tokenomics.report.v1",
+      "type": "interface",
+      "label": "tokenomics.report.v1",
+      "attributes": {
+        "interface": "tokenomics.report.v1",
+        "owner": "tokenomics",
+        "summary": "Aggregated savings, reconciliation, and coverage report."
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.tokenomics.report.v1"
+        }
+      ]
+    },
+    {
+      "id": "z0://interface/z0int.decision_receipt.v1",
+      "type": "interface",
+      "label": "z0int.decision_receipt.v1",
+      "attributes": {
+        "interface": "z0int.decision_receipt.v1",
+        "owner": "z0intelligence",
+        "summary": "Structured decision receipt for routing and policy audit."
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.z0int.decision_receipt.v1"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle-state/architecture-truth:declared",
+      "type": "lifecycle_state",
+      "label": "declared",
+      "attributes": {
+        "lifecycle": "architecture-truth",
+        "stage": "declared"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle-state/architecture-truth:derived",
+      "type": "lifecycle_state",
+      "label": "derived",
+      "attributes": {
+        "lifecycle": "architecture-truth",
+        "stage": "derived"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle-state/architecture-truth:historical",
+      "type": "lifecycle_state",
+      "label": "historical",
+      "attributes": {
+        "lifecycle": "architecture-truth",
+        "stage": "historical"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle-state/architecture-truth:implemented",
+      "type": "lifecycle_state",
+      "label": "implemented",
+      "attributes": {
+        "lifecycle": "architecture-truth",
+        "stage": "implemented"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle-state/architecture-truth:observed",
+      "type": "lifecycle_state",
+      "label": "observed",
+      "attributes": {
+        "lifecycle": "architecture-truth",
+        "stage": "observed"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle-state/evolution-lab-promotion:promoted",
+      "type": "lifecycle_state",
+      "label": "promoted",
+      "attributes": {
+        "lifecycle": "evolution-lab-promotion",
+        "stage": "promoted"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.evolution-lab-promotion.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle-state/evolution-lab-promotion:replay",
+      "type": "lifecycle_state",
+      "label": "replay",
+      "attributes": {
+        "lifecycle": "evolution-lab-promotion",
+        "stage": "replay"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.evolution-lab-promotion.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle-state/evolution-lab-promotion:sanity",
+      "type": "lifecycle_state",
+      "label": "sanity",
+      "attributes": {
+        "lifecycle": "evolution-lab-promotion",
+        "stage": "sanity"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.evolution-lab-promotion.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle-state/evolution-lab-promotion:shadow",
+      "type": "lifecycle_state",
+      "label": "shadow",
+      "attributes": {
+        "lifecycle": "evolution-lab-promotion",
+        "stage": "shadow"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.evolution-lab-promotion.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle-state/verified-oss-rolling:candidate",
+      "type": "lifecycle_state",
+      "label": "candidate",
+      "attributes": {
+        "lifecycle": "verified-oss-rolling",
+        "stage": "candidate"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle-state/verified-oss-rolling:dev",
+      "type": "lifecycle_state",
+      "label": "dev",
+      "attributes": {
+        "lifecycle": "verified-oss-rolling",
+        "stage": "dev"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle-state/verified-oss-rolling:main",
+      "type": "lifecycle_state",
+      "label": "main",
+      "attributes": {
+        "lifecycle": "verified-oss-rolling",
+        "stage": "main"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle-state/verified-oss-rolling:nightly",
+      "type": "lifecycle_state",
+      "label": "nightly",
+      "attributes": {
+        "lifecycle": "verified-oss-rolling",
+        "stage": "nightly"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle-state/verified-oss-rolling:preview",
+      "type": "lifecycle_state",
+      "label": "preview",
+      "attributes": {
+        "lifecycle": "verified-oss-rolling",
+        "stage": "preview"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle/architecture-truth",
+      "type": "lifecycle",
+      "label": "Zer0 architecture truth classes",
+      "attributes": {
+        "lifecycle_id": "architecture-truth",
+        "name": "Zer0 architecture truth classes",
+        "owner_repo": "kvnloo/z0",
+        "kind": "epistemic",
+        "stages": [
+          "declared",
+          "implemented",
+          "observed",
+          "historical",
+          "derived"
+        ],
+        "rule": "Lower-authority observations may expose drift but never silently overwrite declared architecture.\n",
+        "evidence": [
+          "kvnloo/z0archy:docs/ARCHITECTURE.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle/evolution-lab-promotion",
+      "type": "lifecycle",
+      "label": "Evolution Lab candidate promotion",
+      "attributes": {
+        "lifecycle_id": "evolution-lab-promotion",
+        "name": "Evolution Lab candidate promotion",
+        "owner_repo": "kvnloo/evolution-lab",
+        "kind": "experiment",
+        "stages": [
+          "sanity",
+          "replay",
+          "shadow",
+          "promoted"
+        ],
+        "rule": "Experiment genomes are eliminated cheaply and promoted only after measured replay/verifier evidence; preview/nightly branches carry rolling candidates.\n",
+        "evidence": [
+          "kvnloo/evolution-lab:README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.evolution-lab-promotion"
+        }
+      ]
+    },
+    {
+      "id": "z0://lifecycle/verified-oss-rolling",
+      "type": "lifecycle",
+      "label": "Verified OSS rolling promotion",
+      "attributes": {
+        "lifecycle_id": "verified-oss-rolling",
+        "name": "Verified OSS rolling promotion",
+        "owner_repo": "kvnloo/verified-oss-loop",
+        "kind": "promotion",
+        "stages": [
+          "candidate",
+          "preview",
+          "nightly",
+          "dev",
+          "main"
+        ],
+        "rule": "Evidence-gated work moves through increasingly authoritative surfaces; workers do not merge main.\n",
+        "evidence": [
+          "kvnloo/verified-oss-loop:README.md",
+          "kvnloo/verified-oss-loop:SPEC.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism-family/sol-pi",
+      "type": "mechanism_family",
+      "label": "sol-pi",
+      "attributes": {
+        "family_id": "sol-pi"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-action-fusion.family"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-observation-pack.family"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-evidence-reducer.family"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-online-context-compact.family"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/agenttrace-cross-harness-observation",
+      "type": "mechanism",
+      "label": "Cross-harness trace normalization",
+      "attributes": {
+        "mechanism_id": "agenttrace-cross-harness-observation",
+        "name": "Cross-harness trace normalization",
+        "kind": "observability",
+        "stage": "experimental",
+        "purpose": "Normalize session/cost/token/time evidence from heterogeneous harness logs without pretending missing event-level evidence exists.\n",
+        "implemented_by": [
+          {
+            "component": "agenttrace",
+            "repo": "kvnloo/agenttrace"
+          }
+        ],
+        "evidence": [
+          "kvnloo/agenttrace:README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.agenttrace-cross-harness-observation"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/aodl-intent-plan-observed",
+      "type": "mechanism",
+      "label": "AODL intent \u2192 compiled plan \u2192 observed topology",
+      "attributes": {
+        "mechanism_id": "aodl-intent-plan-observed",
+        "name": "AODL intent \u2192 compiled plan \u2192 observed topology",
+        "kind": "contract",
+        "stage": "experimental",
+        "purpose": "Keep desired orchestration, runtime-safe compiled plan and observed topology distinct so intended and actual execution can be compared.\n",
+        "implemented_by": [
+          {
+            "component": "aodl",
+            "repo": "kvnloo/aodl"
+          }
+        ],
+        "evidence": [
+          "kvnloo/aodl:README.md#why"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.aodl-intent-plan-observed"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/jev-typed-decision",
+      "type": "mechanism",
+      "label": "Jev / typed bounded decision",
+      "attributes": {
+        "mechanism_id": "jev-typed-decision",
+        "name": "Jev / typed bounded decision",
+        "kind": "decision",
+        "stage": "experimental",
+        "purpose": "Replace autoregressive choice generation with bounded typed scoring/readout when the decision space is explicit.\n",
+        "implemented_by": [
+          {
+            "component": "z0intelligence",
+            "repo": "kvnloo/z0intelligence"
+          },
+          {
+            "component": "oh-my-pi",
+            "repo": "kvnloo/oh-my-pi"
+          }
+        ],
+        "evidence": [
+          "kvnloo/z0intelligence:README.md#current-foundation-openjev-runtime",
+          "registry/components.yaml#components.oh-my-pi"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.jev-typed-decision"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/rlm-context-spill",
+      "type": "mechanism",
+      "label": "RLM context spill",
+      "attributes": {
+        "mechanism_id": "rlm-context-spill",
+        "name": "RLM context spill",
+        "kind": "context",
+        "stage": "production",
+        "purpose": "Keep large context addressable outside the frontier model's active window.",
+        "implemented_by": [
+          {
+            "component": "oh-my-pi",
+            "repo": "kvnloo/oh-my-pi"
+          }
+        ],
+        "evidence": [
+          "registry/components.yaml#components.oh-my-pi"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.rlm-context-spill"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/sol-pi-action-fusion",
+      "type": "mechanism",
+      "label": "SoL-Pi Action Fusion",
+      "attributes": {
+        "mechanism_id": "sol-pi-action-fusion",
+        "name": "SoL-Pi Action Fusion",
+        "kind": "efficiency",
+        "stage": "experimental",
+        "purpose": "Fuse an edit/write and its predictable validation into one tool action.",
+        "family": "sol-pi",
+        "implementations": [
+          {
+            "repo": "kvnloo/SoL-Pi",
+            "harness": "pi"
+          },
+          {
+            "repo": "kvnloo/sol-pi-hermes",
+            "harness": "hermes"
+          }
+        ],
+        "evidence": [
+          "kvnloo/SoL-Pi:README.md#what-sol-pi-adds",
+          "kvnloo/sol-pi-hermes:README.md#mapping"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-action-fusion"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/sol-pi-evidence-reducer",
+      "type": "mechanism",
+      "label": "SoL-Pi Evidence-Preserving Reducer",
+      "attributes": {
+        "mechanism_id": "sol-pi-evidence-reducer",
+        "name": "SoL-Pi Evidence-Preserving Reducer",
+        "kind": "compression",
+        "stage": "experimental",
+        "purpose": "Compress long diagnostic observations into receipts while retaining quote-verifiable evidence and falling open on verification failure.\n",
+        "family": "sol-pi",
+        "implementations": [
+          {
+            "repo": "kvnloo/SoL-Pi",
+            "harness": "pi"
+          },
+          {
+            "repo": "kvnloo/sol-pi-hermes",
+            "harness": "hermes"
+          }
+        ],
+        "evidence": [
+          "kvnloo/SoL-Pi:README.md#what-sol-pi-adds",
+          "kvnloo/sol-pi-hermes:README.md#mapping"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-evidence-reducer"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/sol-pi-observation-pack",
+      "type": "mechanism",
+      "label": "SoL-Pi ObservationPack",
+      "attributes": {
+        "mechanism_id": "sol-pi-observation-pack",
+        "name": "SoL-Pi ObservationPack",
+        "kind": "context",
+        "stage": "experimental",
+        "purpose": "Replace repeated large observations with stable handles and exact recall.",
+        "family": "sol-pi",
+        "implementations": [
+          {
+            "repo": "kvnloo/SoL-Pi",
+            "harness": "pi"
+          },
+          {
+            "repo": "kvnloo/sol-pi-hermes",
+            "harness": "hermes"
+          }
+        ],
+        "evidence": [
+          "kvnloo/SoL-Pi:README.md#what-sol-pi-adds",
+          "kvnloo/sol-pi-hermes:README.md#mapping"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-observation-pack"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/sol-pi-online-context-compact",
+      "type": "mechanism",
+      "label": "SoL-Pi Online Context Compact",
+      "attributes": {
+        "mechanism_id": "sol-pi-online-context-compact",
+        "name": "SoL-Pi Online Context Compact",
+        "kind": "compression",
+        "stage": "experimental",
+        "purpose": "Trigger bounded context compaction at completed plan boundaries using economics/window pressure rather than replaying completed work indefinitely.\n",
+        "family": "sol-pi",
+        "implementations": [
+          {
+            "repo": "kvnloo/SoL-Pi",
+            "harness": "pi"
+          },
+          {
+            "repo": "kvnloo/sol-pi-hermes",
+            "harness": "hermes"
+          }
+        ],
+        "evidence": [
+          "kvnloo/SoL-Pi:README.md#what-sol-pi-adds",
+          "kvnloo/sol-pi-hermes:README.md#mapping"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-online-context-compact"
+        }
+      ]
+    },
+    {
+      "id": "z0://profile/compute",
+      "type": "profile",
+      "label": "compute",
+      "attributes": {
+        "profile_id": "compute",
+        "summary": "Model/provider routing and cost optimization.",
+        "extends": "core",
+        "components": [
+          "kerdoios"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.compute"
+        }
+      ]
+    },
+    {
+      "id": "z0://profile/core",
+      "type": "profile",
+      "label": "core",
+      "attributes": {
+        "profile_id": "core",
+        "summary": "Normal Zer0 user \u2014 agent + measurement.",
+        "components": [
+          "oh-my-pi",
+          "tokenomics"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.core"
+        }
+      ]
+    },
+    {
+      "id": "z0://profile/desktop",
+      "type": "profile",
+      "label": "desktop",
+      "attributes": {
+        "profile_id": "desktop",
+        "summary": "Predictive desktop + Handsfree voice (OMP subsystems).",
+        "extends": "core",
+        "components": [
+          "flow"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.desktop"
+        }
+      ]
+    },
+    {
+      "id": "z0://profile/full",
+      "type": "profile",
+      "label": "full",
+      "attributes": {
+        "profile_id": "full",
+        "summary": "All stable/canary components (excludes idea/reference-only).",
+        "components": [
+          "oh-my-pi",
+          "tokenomics",
+          "z0intelligence",
+          "flow",
+          "kerdoios",
+          "evolution-lab",
+          "frontier-kb",
+          "aodl",
+          "agenttrace"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.full"
+        }
+      ]
+    },
+    {
+      "id": "z0://profile/minimal",
+      "type": "profile",
+      "label": "minimal",
+      "attributes": {
+        "profile_id": "minimal",
+        "summary": "OMP only \u2014 the coding agent runtime.",
+        "components": [
+          "oh-my-pi"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.minimal"
+        }
+      ]
+    },
+    {
+      "id": "z0://profile/personal",
+      "type": "profile",
+      "label": "personal",
+      "attributes": {
+        "profile_id": "personal",
+        "summary": "Personalization and learned policy.",
+        "extends": "core",
+        "components": [
+          "z0intelligence"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.personal"
+        }
+      ]
+    },
+    {
+      "id": "z0://profile/research",
+      "type": "profile",
+      "label": "research",
+      "attributes": {
+        "profile_id": "research",
+        "summary": "Autonomous optimization and research knowledge.",
+        "components": [
+          "z0intelligence",
+          "tokenomics",
+          "evolution-lab",
+          "frontier-kb"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.research"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/earendil-works/pi",
+      "type": "repository",
+      "label": "earendil-works/pi",
+      "attributes": {
+        "repo": "earendil-works/pi"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.pi.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/.files",
+      "type": "repository",
+      "label": "kvnloo/.files",
+      "attributes": {
+        "repo": "kvnloo/.files"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.flow.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/Memento",
+      "type": "repository",
+      "label": "kvnloo/Memento",
+      "attributes": {
+        "repo": "kvnloo/Memento"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.memento.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/SoL-Pi",
+      "type": "repository",
+      "label": "kvnloo/SoL-Pi",
+      "attributes": {
+        "repo": "kvnloo/SoL-Pi"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-action-fusion.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-observation-pack.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-evidence-reducer.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-online-context-compact.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/agenttrace",
+      "type": "repository",
+      "label": "kvnloo/agenttrace",
+      "attributes": {
+        "repo": "kvnloo/agenttrace"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.agenttrace.repo"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.agenttrace-cross-harness-observation.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/aodl",
+      "type": "repository",
+      "label": "kvnloo/aodl",
+      "attributes": {
+        "repo": "kvnloo/aodl"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.aodl.repo"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.aodl-intent-plan-observed.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/deepseek-harness",
+      "type": "repository",
+      "label": "kvnloo/deepseek-harness",
+      "attributes": {
+        "repo": "kvnloo/deepseek-harness"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.deepseek.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/evolution-lab",
+      "type": "repository",
+      "label": "kvnloo/evolution-lab",
+      "attributes": {
+        "repo": "kvnloo/evolution-lab"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.evolution-lab.repo"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.evolution-lab-promotion.owner_repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/frontier-kb",
+      "type": "repository",
+      "label": "kvnloo/frontier-kb",
+      "attributes": {
+        "repo": "kvnloo/frontier-kb"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.frontier-kb.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/hermes-agent",
+      "type": "repository",
+      "label": "kvnloo/hermes-agent",
+      "attributes": {
+        "repo": "kvnloo/hermes-agent"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.hermes.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/kerdoios",
+      "type": "repository",
+      "label": "kvnloo/kerdoios",
+      "attributes": {
+        "repo": "kvnloo/kerdoios"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.kerdoios.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/oh-my-pi",
+      "type": "repository",
+      "label": "kvnloo/oh-my-pi",
+      "attributes": {
+        "repo": "kvnloo/oh-my-pi"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.oh-my-pi.repo"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.omp.repo"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.rlm-context-spill.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.jev-typed-decision.implementation[1]"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/sol-pi-hermes",
+      "type": "repository",
+      "label": "kvnloo/sol-pi-hermes",
+      "attributes": {
+        "repo": "kvnloo/sol-pi-hermes"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-action-fusion.implementation[1]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-observation-pack.implementation[1]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-evidence-reducer.implementation[1]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-online-context-compact.implementation[1]"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/tokenomics",
+      "type": "repository",
+      "label": "kvnloo/tokenomics",
+      "attributes": {
+        "repo": "kvnloo/tokenomics"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.tokenomics.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/verified-oss-loop",
+      "type": "repository",
+      "label": "kvnloo/verified-oss-loop",
+      "attributes": {
+        "repo": "kvnloo/verified-oss-loop"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.owner_repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/z0",
+      "type": "repository",
+      "label": "kvnloo/z0",
+      "attributes": {
+        "repo": "kvnloo/z0"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.owner_repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/z0intelligence",
+      "type": "repository",
+      "label": "kvnloo/z0intelligence",
+      "attributes": {
+        "repo": "kvnloo/z0intelligence"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.z0intelligence.repo"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.jev-typed-decision.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/openai/codex",
+      "type": "repository",
+      "label": "openai/codex",
+      "attributes": {
+        "repo": "openai/codex"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.codex.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/aodl-intent",
+      "type": "representation",
+      "label": "AODL intent",
+      "attributes": {
+        "representation_id": "aodl-intent",
+        "name": "AODL intent",
+        "kind": "intent",
+        "scale": "compact",
+        "summary": "Typed desired orchestration before runtime-safe compilation.",
+        "sensitivity": "inherited",
+        "interface": "aodl.intent.v1",
+        "evidence": [
+          "registry/interfaces.yaml#interfaces.aodl.intent.v1"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.aodl-intent"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/compiled-decision-state",
+      "type": "representation",
+      "label": "Compiled decision state",
+      "attributes": {
+        "representation_id": "compiled-decision-state",
+        "name": "Compiled decision state",
+        "kind": "decision_state",
+        "scale": "compact",
+        "summary": "Decision-relevant state after retrieval, filtering, and bounded context compilation.",
+        "sensitivity": "inherited",
+        "evidence": [
+          "kvnloo/z0intelligence:README.md",
+          "kvnloo/oh-my-pi:README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.compiled-decision-state"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/compiled-plan",
+      "type": "representation",
+      "label": "Compiled orchestration plan",
+      "attributes": {
+        "representation_id": "compiled-plan",
+        "name": "Compiled orchestration plan",
+        "kind": "plan",
+        "scale": "compact",
+        "summary": "Runtime-safe plan compiled from typed intent before execution.",
+        "sensitivity": "inherited",
+        "produced_by": [
+          "aodl-intent-plan-observed"
+        ],
+        "evidence": [
+          "registry/mechanisms.yaml#mechanisms.aodl-intent-plan-observed"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.compiled-plan"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/decision-receipt",
+      "type": "representation",
+      "label": "Decision receipt",
+      "attributes": {
+        "representation_id": "decision-receipt",
+        "name": "Decision receipt",
+        "kind": "decision",
+        "scale": "tiny",
+        "summary": "Structured audit record of a routing or policy decision.",
+        "sensitivity": "inherited",
+        "interface": "z0int.decision_receipt.v1",
+        "evidence": [
+          "registry/interfaces.yaml#interfaces.z0int.decision_receipt.v1"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.decision-receipt"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/evidence-receipt",
+      "type": "representation",
+      "label": "Evidence receipt",
+      "attributes": {
+        "representation_id": "evidence-receipt",
+        "name": "Evidence receipt",
+        "kind": "evidence_bundle",
+        "scale": "compact",
+        "summary": "Quote-verifiable compressed diagnostic evidence with a fall-open path when verification fails.",
+        "sensitivity": "inherited",
+        "produced_by": [
+          "sol-pi-evidence-reducer"
+        ],
+        "evidence": [
+          "registry/mechanisms.yaml#mechanisms.sol-pi-evidence-reducer"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.evidence-receipt"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/observation-pack",
+      "type": "representation",
+      "label": "ObservationPack",
+      "attributes": {
+        "representation_id": "observation-pack",
+        "name": "ObservationPack",
+        "kind": "evidence_bundle",
+        "scale": "bounded",
+        "summary": "Stable compact handle plus exact recall path for large observations.",
+        "sensitivity": "inherited",
+        "produced_by": [
+          "sol-pi-observation-pack"
+        ],
+        "evidence": [
+          "registry/mechanisms.yaml#mechanisms.sol-pi-observation-pack"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.observation-pack"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/observed-topology",
+      "type": "representation",
+      "label": "Observed execution topology",
+      "attributes": {
+        "representation_id": "observed-topology",
+        "name": "Observed execution topology",
+        "kind": "observation",
+        "scale": "bounded",
+        "summary": "What actually ran, kept distinct from desired intent and compiled plan.",
+        "sensitivity": "inherited",
+        "produced_by": [
+          "aodl-intent-plan-observed",
+          "agenttrace-cross-harness-observation"
+        ],
+        "evidence": [
+          "registry/mechanisms.yaml#mechanisms.aodl-intent-plan-observed",
+          "registry/mechanisms.yaml#mechanisms.agenttrace-cross-harness-observation"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.observed-topology"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/raw-context",
+      "type": "representation",
+      "label": "Raw context",
+      "attributes": {
+        "representation_id": "raw-context",
+        "name": "Raw context",
+        "kind": "source",
+        "scale": "large",
+        "summary": "Uncompressed source text, logs, files, observations, or conversation state.",
+        "sensitivity": "inherited",
+        "evidence": [
+          "kvnloo/oh-my-pi:README.md",
+          "kvnloo/SoL-Pi:README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.raw-context"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/rlm-address",
+      "type": "representation",
+      "label": "RLM address",
+      "attributes": {
+        "representation_id": "rlm-address",
+        "name": "RLM address",
+        "kind": "address",
+        "scale": "tiny",
+        "summary": "Stable handle that keeps large context externally addressable instead of replaying it into the frontier window.",
+        "sensitivity": "inherited",
+        "produced_by": [
+          "rlm-context-spill"
+        ],
+        "evidence": [
+          "registry/mechanisms.yaml#mechanisms.rlm-context-spill"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.rlm-address"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/tokenomics-event",
+      "type": "representation",
+      "label": "Tokenomics event",
+      "attributes": {
+        "representation_id": "tokenomics-event",
+        "name": "Tokenomics event",
+        "kind": "measurement",
+        "scale": "small",
+        "summary": "Vendor-neutral token, cost, latency, and execution measurement envelope.",
+        "sensitivity": "inherited",
+        "interface": "tokenomics.event.v0",
+        "evidence": [
+          "registry/interfaces.yaml#interfaces.tokenomics.event.v0"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.tokenomics-event"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/trace-span",
+      "type": "representation",
+      "label": "Agent trace span",
+      "attributes": {
+        "representation_id": "trace-span",
+        "name": "Agent trace span",
+        "kind": "observation",
+        "scale": "small",
+        "summary": "Historical normalized execution span for cross-harness observability.",
+        "sensitivity": "inherited",
+        "interface": "agenttrace.span.v0",
+        "evidence": [
+          "registry/interfaces.yaml#interfaces.agenttrace.span.v0"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.trace-span"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "z0://edge/consumes:aodl.intent.v1-%3Eoh-my-pi",
+      "type": "consumes",
+      "source": "z0://interface/aodl.intent.v1",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.oh-my-pi.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/consumes:flow_prediction.v1-%3Etokenomics",
+      "type": "consumes",
+      "source": "z0://interface/flow_prediction.v1",
+      "target": "z0://component/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.tokenomics.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/consumes:flow_prediction.v1-%3Ez0intelligence",
+      "type": "consumes",
+      "source": "z0://interface/flow_prediction.v1",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.z0intelligence.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/consumes:kerdoios.route.v1-%3Eoh-my-pi",
+      "type": "consumes",
+      "source": "z0://interface/kerdoios.route.v1",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.oh-my-pi.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/consumes:tokenomics.event.v0-%3Eagenttrace",
+      "type": "consumes",
+      "source": "z0://interface/tokenomics.event.v0",
+      "target": "z0://component/agenttrace",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.agenttrace.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/consumes:tokenomics.event.v0-%3Eflow",
+      "type": "consumes",
+      "source": "z0://interface/tokenomics.event.v0",
+      "target": "z0://component/flow",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.flow.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/consumes:tokenomics.event.v0-%3Ekerdoios",
+      "type": "consumes",
+      "source": "z0://interface/tokenomics.event.v0",
+      "target": "z0://component/kerdoios",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.kerdoios.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/consumes:tokenomics.event.v0-%3Eoh-my-pi",
+      "type": "consumes",
+      "source": "z0://interface/tokenomics.event.v0",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.oh-my-pi.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/consumes:tokenomics.report.v1-%3Eevolution-lab",
+      "type": "consumes",
+      "source": "z0://interface/tokenomics.report.v1",
+      "target": "z0://component/evolution-lab",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.evolution-lab.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/consumes:tokenomics.report.v1-%3Ez0intelligence",
+      "type": "consumes",
+      "source": "z0://interface/tokenomics.report.v1",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.z0intelligence.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/consumes:z0int.decision_receipt.v1-%3Eevolution-lab",
+      "type": "consumes",
+      "source": "z0://interface/z0int.decision_receipt.v1",
+      "target": "z0://component/evolution-lab",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.evolution-lab.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/consumes:z0int.decision_receipt.v1-%3Eflow",
+      "type": "consumes",
+      "source": "z0://interface/z0int.decision_receipt.v1",
+      "target": "z0://component/flow",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.flow.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/consumes:z0int.decision_receipt.v1-%3Ekerdoios",
+      "type": "consumes",
+      "source": "z0://interface/z0int.decision_receipt.v1",
+      "target": "z0://component/kerdoios",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.kerdoios.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/consumes:z0int.decision_receipt.v1-%3Eoh-my-pi",
+      "type": "consumes",
+      "source": "z0://interface/z0int.decision_receipt.v1",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.oh-my-pi.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/consumes:z0int.decision_receipt.v1-%3Etokenomics",
+      "type": "consumes",
+      "source": "z0://interface/z0int.decision_receipt.v1",
+      "target": "z0://component/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.tokenomics.consumes"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/depends_on:evolution-lab-%3Etokenomics",
+      "type": "depends_on",
+      "source": "z0://component/evolution-lab",
+      "target": "z0://component/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.evolution-lab.depends_on"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/depends_on:evolution-lab-%3Ez0intelligence",
+      "type": "depends_on",
+      "source": "z0://component/evolution-lab",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.evolution-lab.depends_on"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/depends_on:flow-%3Eoh-my-pi",
+      "type": "depends_on",
+      "source": "z0://component/flow",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.flow.depends_on"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/depends_on:kerdoios-%3Etokenomics",
+      "type": "depends_on",
+      "source": "z0://component/kerdoios",
+      "target": "z0://component/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.kerdoios.depends_on"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/depends_on:memento-%3Ez0intelligence",
+      "type": "depends_on",
+      "source": "z0://component/memento",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.memento.depends_on"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/depends_on:z0intelligence-%3Etokenomics",
+      "type": "depends_on",
+      "source": "z0://component/z0intelligence",
+      "target": "z0://component/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.z0intelligence.depends_on"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/encoded-as:aodl-intent-%3Eaodl.intent.v1",
+      "type": "encoded_as",
+      "source": "z0://representation/aodl-intent",
+      "target": "z0://interface/aodl.intent.v1",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.aodl-intent.interface"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/encoded-as:decision-receipt-%3Ez0int.decision_receipt.v1",
+      "type": "encoded_as",
+      "source": "z0://representation/decision-receipt",
+      "target": "z0://interface/z0int.decision_receipt.v1",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.decision-receipt.interface"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/encoded-as:tokenomics-event-%3Etokenomics.event.v0",
+      "type": "encoded_as",
+      "source": "z0://representation/tokenomics-event",
+      "target": "z0://interface/tokenomics.event.v0",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.tokenomics-event.interface"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/encoded-as:trace-span-%3Eagenttrace.span.v0",
+      "type": "encoded_as",
+      "source": "z0://representation/trace-span",
+      "target": "z0://interface/agenttrace.span.v0",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.trace-span.interface"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/epistemic:aodl-intent-to-plan",
+      "type": "compiles_to",
+      "source": "z0://representation/aodl-intent",
+      "target": "z0://representation/compiled-plan",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.aodl-intent-to-plan"
+        }
+      ],
+      "attributes": {
+        "epistemic": true,
+        "evidenceDependency": "z0://evidence-dependency/aodl-intent-to-plan",
+        "confidence": "declared"
+      }
+    },
+    {
+      "id": "z0://edge/epistemic:decision-state-to-receipt",
+      "type": "decides_to",
+      "source": "z0://representation/compiled-decision-state",
+      "target": "z0://representation/decision-receipt",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.decision-state-to-receipt"
+        }
+      ],
+      "attributes": {
+        "epistemic": true,
+        "evidenceDependency": "z0://evidence-dependency/decision-state-to-receipt",
+        "confidence": "declared"
+      }
+    },
+    {
+      "id": "z0://edge/epistemic:evidence-reducer-preserves-verifiability",
+      "type": "compresses_to",
+      "source": "z0://representation/raw-context",
+      "target": "z0://representation/evidence-receipt",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.evidence-reducer-preserves-verifiability"
+        }
+      ],
+      "attributes": {
+        "epistemic": true,
+        "evidenceDependency": "z0://evidence-dependency/evidence-reducer-preserves-verifiability",
+        "confidence": "declared"
+      }
+    },
+    {
+      "id": "z0://edge/epistemic:execution-to-tokenomics",
+      "type": "measured_as",
+      "source": "z0://representation/observed-topology",
+      "target": "z0://representation/tokenomics-event",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.execution-to-tokenomics"
+        }
+      ],
+      "attributes": {
+        "epistemic": true,
+        "evidenceDependency": "z0://evidence-dependency/execution-to-tokenomics",
+        "confidence": "declared"
+      }
+    },
+    {
+      "id": "z0://edge/epistemic:observation-pack-compresses-context",
+      "type": "compresses_to",
+      "source": "z0://representation/raw-context",
+      "target": "z0://representation/observation-pack",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.observation-pack-compresses-context"
+        }
+      ],
+      "attributes": {
+        "epistemic": true,
+        "evidenceDependency": "z0://evidence-dependency/observation-pack-compresses-context",
+        "confidence": "declared"
+      }
+    },
+    {
+      "id": "z0://edge/epistemic:omp-rlm-context-spill",
+      "type": "implements",
+      "source": "z0://component/oh-my-pi",
+      "target": "z0://mechanism/rlm-context-spill",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.omp-rlm-context-spill"
+        }
+      ],
+      "attributes": {
+        "epistemic": true,
+        "evidenceDependency": "z0://evidence-dependency/omp-rlm-context-spill",
+        "confidence": "declared"
+      }
+    },
+    {
+      "id": "z0://edge/epistemic:plan-to-observed-topology",
+      "type": "observed_as",
+      "source": "z0://representation/compiled-plan",
+      "target": "z0://representation/observed-topology",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.plan-to-observed-topology"
+        }
+      ],
+      "attributes": {
+        "epistemic": true,
+        "evidenceDependency": "z0://evidence-dependency/plan-to-observed-topology",
+        "confidence": "declared"
+      }
+    },
+    {
+      "id": "z0://edge/evidence-object:aodl-intent-to-plan",
+      "type": "evidence_object",
+      "source": "z0://evidence-dependency/aodl-intent-to-plan",
+      "target": "z0://representation/compiled-plan",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.aodl-intent-to-plan.to"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-object:decision-state-to-receipt",
+      "type": "evidence_object",
+      "source": "z0://evidence-dependency/decision-state-to-receipt",
+      "target": "z0://representation/decision-receipt",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.decision-state-to-receipt.to"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-object:evidence-reducer-preserves-verifiability",
+      "type": "evidence_object",
+      "source": "z0://evidence-dependency/evidence-reducer-preserves-verifiability",
+      "target": "z0://representation/evidence-receipt",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.evidence-reducer-preserves-verifiability.to"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-object:execution-to-tokenomics",
+      "type": "evidence_object",
+      "source": "z0://evidence-dependency/execution-to-tokenomics",
+      "target": "z0://representation/tokenomics-event",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.execution-to-tokenomics.to"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-object:observation-pack-compresses-context",
+      "type": "evidence_object",
+      "source": "z0://evidence-dependency/observation-pack-compresses-context",
+      "target": "z0://representation/observation-pack",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.observation-pack-compresses-context.to"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-object:omp-rlm-context-spill",
+      "type": "evidence_object",
+      "source": "z0://evidence-dependency/omp-rlm-context-spill",
+      "target": "z0://mechanism/rlm-context-spill",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.omp-rlm-context-spill.to"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-object:plan-to-observed-topology",
+      "type": "evidence_object",
+      "source": "z0://evidence-dependency/plan-to-observed-topology",
+      "target": "z0://representation/observed-topology",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.plan-to-observed-topology.to"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-subject:aodl-intent-to-plan",
+      "type": "evidence_subject",
+      "source": "z0://representation/aodl-intent",
+      "target": "z0://evidence-dependency/aodl-intent-to-plan",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.aodl-intent-to-plan.from"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-subject:decision-state-to-receipt",
+      "type": "evidence_subject",
+      "source": "z0://representation/compiled-decision-state",
+      "target": "z0://evidence-dependency/decision-state-to-receipt",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.decision-state-to-receipt.from"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-subject:evidence-reducer-preserves-verifiability",
+      "type": "evidence_subject",
+      "source": "z0://representation/raw-context",
+      "target": "z0://evidence-dependency/evidence-reducer-preserves-verifiability",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.evidence-reducer-preserves-verifiability.from"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-subject:execution-to-tokenomics",
+      "type": "evidence_subject",
+      "source": "z0://representation/observed-topology",
+      "target": "z0://evidence-dependency/execution-to-tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.execution-to-tokenomics.from"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-subject:observation-pack-compresses-context",
+      "type": "evidence_subject",
+      "source": "z0://representation/raw-context",
+      "target": "z0://evidence-dependency/observation-pack-compresses-context",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.observation-pack-compresses-context.from"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-subject:omp-rlm-context-spill",
+      "type": "evidence_subject",
+      "source": "z0://component/oh-my-pi",
+      "target": "z0://evidence-dependency/omp-rlm-context-spill",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.omp-rlm-context-spill.from"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-subject:plan-to-observed-topology",
+      "type": "evidence_subject",
+      "source": "z0://representation/compiled-plan",
+      "target": "z0://evidence-dependency/plan-to-observed-topology",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.plan-to-observed-topology.from"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/extends:compute-%3Ecore",
+      "type": "extends",
+      "source": "z0://profile/compute",
+      "target": "z0://profile/core",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.compute.extends"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/extends:desktop-%3Ecore",
+      "type": "extends",
+      "source": "z0://profile/desktop",
+      "target": "z0://profile/core",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.desktop.extends"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/extends:personal-%3Ecore",
+      "type": "extends",
+      "source": "z0://profile/personal",
+      "target": "z0://profile/core",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.personal.extends"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/has_stage:architecture-truth-%3Edeclared",
+      "type": "has_stage",
+      "source": "z0://lifecycle/architecture-truth",
+      "target": "z0://lifecycle-state/architecture-truth:declared",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/has_stage:architecture-truth-%3Ederived",
+      "type": "has_stage",
+      "source": "z0://lifecycle/architecture-truth",
+      "target": "z0://lifecycle-state/architecture-truth:derived",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/has_stage:architecture-truth-%3Ehistorical",
+      "type": "has_stage",
+      "source": "z0://lifecycle/architecture-truth",
+      "target": "z0://lifecycle-state/architecture-truth:historical",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/has_stage:architecture-truth-%3Eimplemented",
+      "type": "has_stage",
+      "source": "z0://lifecycle/architecture-truth",
+      "target": "z0://lifecycle-state/architecture-truth:implemented",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/has_stage:architecture-truth-%3Eobserved",
+      "type": "has_stage",
+      "source": "z0://lifecycle/architecture-truth",
+      "target": "z0://lifecycle-state/architecture-truth:observed",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/has_stage:evolution-lab-promotion-%3Epromoted",
+      "type": "has_stage",
+      "source": "z0://lifecycle/evolution-lab-promotion",
+      "target": "z0://lifecycle-state/evolution-lab-promotion:promoted",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.evolution-lab-promotion.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/has_stage:evolution-lab-promotion-%3Ereplay",
+      "type": "has_stage",
+      "source": "z0://lifecycle/evolution-lab-promotion",
+      "target": "z0://lifecycle-state/evolution-lab-promotion:replay",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.evolution-lab-promotion.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/has_stage:evolution-lab-promotion-%3Esanity",
+      "type": "has_stage",
+      "source": "z0://lifecycle/evolution-lab-promotion",
+      "target": "z0://lifecycle-state/evolution-lab-promotion:sanity",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.evolution-lab-promotion.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/has_stage:evolution-lab-promotion-%3Eshadow",
+      "type": "has_stage",
+      "source": "z0://lifecycle/evolution-lab-promotion",
+      "target": "z0://lifecycle-state/evolution-lab-promotion:shadow",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.evolution-lab-promotion.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/has_stage:verified-oss-rolling-%3Ecandidate",
+      "type": "has_stage",
+      "source": "z0://lifecycle/verified-oss-rolling",
+      "target": "z0://lifecycle-state/verified-oss-rolling:candidate",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/has_stage:verified-oss-rolling-%3Edev",
+      "type": "has_stage",
+      "source": "z0://lifecycle/verified-oss-rolling",
+      "target": "z0://lifecycle-state/verified-oss-rolling:dev",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/has_stage:verified-oss-rolling-%3Emain",
+      "type": "has_stage",
+      "source": "z0://lifecycle/verified-oss-rolling",
+      "target": "z0://lifecycle-state/verified-oss-rolling:main",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/has_stage:verified-oss-rolling-%3Enightly",
+      "type": "has_stage",
+      "source": "z0://lifecycle/verified-oss-rolling",
+      "target": "z0://lifecycle-state/verified-oss-rolling:nightly",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/has_stage:verified-oss-rolling-%3Epreview",
+      "type": "has_stage",
+      "source": "z0://lifecycle/verified-oss-rolling",
+      "target": "z0://lifecycle-state/verified-oss-rolling:preview",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:agenttrace-%3Ekvnloo/agenttrace",
+      "type": "implemented_by",
+      "source": "z0://component/agenttrace",
+      "target": "z0://repo/kvnloo/agenttrace",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.agenttrace.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:agenttrace-cross-harness-observation-%3Eagenttrace",
+      "type": "implemented_by",
+      "source": "z0://mechanism/agenttrace-cross-harness-observation",
+      "target": "z0://component/agenttrace",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.agenttrace-cross-harness-observation.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:aodl-%3Ekvnloo/aodl",
+      "type": "implemented_by",
+      "source": "z0://component/aodl",
+      "target": "z0://repo/kvnloo/aodl",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.aodl.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:aodl-intent-plan-observed-%3Eaodl",
+      "type": "implemented_by",
+      "source": "z0://mechanism/aodl-intent-plan-observed",
+      "target": "z0://component/aodl",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.aodl-intent-plan-observed.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:codex-%3Eopenai/codex",
+      "type": "implemented_by",
+      "source": "z0://harness/codex",
+      "target": "z0://repo/openai/codex",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.codex.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:deepseek-%3Ekvnloo/deepseek-harness",
+      "type": "implemented_by",
+      "source": "z0://harness/deepseek",
+      "target": "z0://repo/kvnloo/deepseek-harness",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.deepseek.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:evolution-lab-%3Ekvnloo/evolution-lab",
+      "type": "implemented_by",
+      "source": "z0://component/evolution-lab",
+      "target": "z0://repo/kvnloo/evolution-lab",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.evolution-lab.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:flow-%3Ekvnloo/.files",
+      "type": "implemented_by",
+      "source": "z0://component/flow",
+      "target": "z0://repo/kvnloo/.files",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.flow.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:frontier-kb-%3Ekvnloo/frontier-kb",
+      "type": "implemented_by",
+      "source": "z0://component/frontier-kb",
+      "target": "z0://repo/kvnloo/frontier-kb",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.frontier-kb.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:hermes-%3Ekvnloo/hermes-agent",
+      "type": "implemented_by",
+      "source": "z0://harness/hermes",
+      "target": "z0://repo/kvnloo/hermes-agent",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.hermes.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:jev-typed-decision-%3Eoh-my-pi",
+      "type": "implemented_by",
+      "source": "z0://mechanism/jev-typed-decision",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.jev-typed-decision.implementation[1]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:jev-typed-decision-%3Ez0intelligence",
+      "type": "implemented_by",
+      "source": "z0://mechanism/jev-typed-decision",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.jev-typed-decision.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:kerdoios-%3Ekvnloo/kerdoios",
+      "type": "implemented_by",
+      "source": "z0://component/kerdoios",
+      "target": "z0://repo/kvnloo/kerdoios",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.kerdoios.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:memento-%3Ekvnloo/Memento",
+      "type": "implemented_by",
+      "source": "z0://component/memento",
+      "target": "z0://repo/kvnloo/Memento",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.memento.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:oh-my-pi-%3Ekvnloo/oh-my-pi",
+      "type": "implemented_by",
+      "source": "z0://component/oh-my-pi",
+      "target": "z0://repo/kvnloo/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.oh-my-pi.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:omp-%3Ekvnloo/oh-my-pi",
+      "type": "implemented_by",
+      "source": "z0://harness/omp",
+      "target": "z0://repo/kvnloo/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.omp.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:pi-%3Eearendil-works/pi",
+      "type": "implemented_by",
+      "source": "z0://harness/pi",
+      "target": "z0://repo/earendil-works/pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.pi.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:rlm-context-spill-%3Eoh-my-pi",
+      "type": "implemented_by",
+      "source": "z0://mechanism/rlm-context-spill",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.rlm-context-spill.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:sol-pi-action-fusion-%3Ehermes",
+      "type": "implemented_by",
+      "source": "z0://mechanism/sol-pi-action-fusion",
+      "target": "z0://harness/hermes",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-action-fusion.implementation[1]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:sol-pi-action-fusion-%3Epi",
+      "type": "implemented_by",
+      "source": "z0://mechanism/sol-pi-action-fusion",
+      "target": "z0://harness/pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-action-fusion.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:sol-pi-evidence-reducer-%3Ehermes",
+      "type": "implemented_by",
+      "source": "z0://mechanism/sol-pi-evidence-reducer",
+      "target": "z0://harness/hermes",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-evidence-reducer.implementation[1]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:sol-pi-evidence-reducer-%3Epi",
+      "type": "implemented_by",
+      "source": "z0://mechanism/sol-pi-evidence-reducer",
+      "target": "z0://harness/pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-evidence-reducer.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:sol-pi-observation-pack-%3Ehermes",
+      "type": "implemented_by",
+      "source": "z0://mechanism/sol-pi-observation-pack",
+      "target": "z0://harness/hermes",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-observation-pack.implementation[1]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:sol-pi-observation-pack-%3Epi",
+      "type": "implemented_by",
+      "source": "z0://mechanism/sol-pi-observation-pack",
+      "target": "z0://harness/pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-observation-pack.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:sol-pi-online-context-compact-%3Ehermes",
+      "type": "implemented_by",
+      "source": "z0://mechanism/sol-pi-online-context-compact",
+      "target": "z0://harness/hermes",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-online-context-compact.implementation[1]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:sol-pi-online-context-compact-%3Epi",
+      "type": "implemented_by",
+      "source": "z0://mechanism/sol-pi-online-context-compact",
+      "target": "z0://harness/pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-online-context-compact.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:tokenomics-%3Ekvnloo/tokenomics",
+      "type": "implemented_by",
+      "source": "z0://component/tokenomics",
+      "target": "z0://repo/kvnloo/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.tokenomics.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:z0intelligence-%3Ekvnloo/z0intelligence",
+      "type": "implemented_by",
+      "source": "z0://component/z0intelligence",
+      "target": "z0://repo/kvnloo/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.z0intelligence.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:agenttrace-cross-harness-observation-%3Ekvnloo/agenttrace",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/agenttrace-cross-harness-observation",
+      "target": "z0://repo/kvnloo/agenttrace",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.agenttrace-cross-harness-observation.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:aodl-intent-plan-observed-%3Ekvnloo/aodl",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/aodl-intent-plan-observed",
+      "target": "z0://repo/kvnloo/aodl",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.aodl-intent-plan-observed.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:jev-typed-decision-%3Ekvnloo/oh-my-pi",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/jev-typed-decision",
+      "target": "z0://repo/kvnloo/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.jev-typed-decision.implementation[1]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:jev-typed-decision-%3Ekvnloo/z0intelligence",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/jev-typed-decision",
+      "target": "z0://repo/kvnloo/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.jev-typed-decision.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:rlm-context-spill-%3Ekvnloo/oh-my-pi",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/rlm-context-spill",
+      "target": "z0://repo/kvnloo/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.rlm-context-spill.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:sol-pi-action-fusion-%3Ekvnloo/SoL-Pi",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/sol-pi-action-fusion",
+      "target": "z0://repo/kvnloo/SoL-Pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-action-fusion.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:sol-pi-action-fusion-%3Ekvnloo/sol-pi-hermes",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/sol-pi-action-fusion",
+      "target": "z0://repo/kvnloo/sol-pi-hermes",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-action-fusion.implementation[1]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:sol-pi-evidence-reducer-%3Ekvnloo/SoL-Pi",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/sol-pi-evidence-reducer",
+      "target": "z0://repo/kvnloo/SoL-Pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-evidence-reducer.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:sol-pi-evidence-reducer-%3Ekvnloo/sol-pi-hermes",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/sol-pi-evidence-reducer",
+      "target": "z0://repo/kvnloo/sol-pi-hermes",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-evidence-reducer.implementation[1]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:sol-pi-observation-pack-%3Ekvnloo/SoL-Pi",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/sol-pi-observation-pack",
+      "target": "z0://repo/kvnloo/SoL-Pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-observation-pack.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:sol-pi-observation-pack-%3Ekvnloo/sol-pi-hermes",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/sol-pi-observation-pack",
+      "target": "z0://repo/kvnloo/sol-pi-hermes",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-observation-pack.implementation[1]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:sol-pi-online-context-compact-%3Ekvnloo/SoL-Pi",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/sol-pi-online-context-compact",
+      "target": "z0://repo/kvnloo/SoL-Pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-online-context-compact.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:sol-pi-online-context-compact-%3Ekvnloo/sol-pi-hermes",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/sol-pi-online-context-compact",
+      "target": "z0://repo/kvnloo/sol-pi-hermes",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-online-context-compact.implementation[1]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:compute-%3Ekerdoios",
+      "type": "includes",
+      "source": "z0://profile/compute",
+      "target": "z0://component/kerdoios",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.compute.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:core-%3Eoh-my-pi",
+      "type": "includes",
+      "source": "z0://profile/core",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.core.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:core-%3Etokenomics",
+      "type": "includes",
+      "source": "z0://profile/core",
+      "target": "z0://component/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.core.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:desktop-%3Eflow",
+      "type": "includes",
+      "source": "z0://profile/desktop",
+      "target": "z0://component/flow",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.desktop.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:full-%3Eagenttrace",
+      "type": "includes",
+      "source": "z0://profile/full",
+      "target": "z0://component/agenttrace",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.full.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:full-%3Eaodl",
+      "type": "includes",
+      "source": "z0://profile/full",
+      "target": "z0://component/aodl",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.full.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:full-%3Eevolution-lab",
+      "type": "includes",
+      "source": "z0://profile/full",
+      "target": "z0://component/evolution-lab",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.full.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:full-%3Eflow",
+      "type": "includes",
+      "source": "z0://profile/full",
+      "target": "z0://component/flow",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.full.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:full-%3Efrontier-kb",
+      "type": "includes",
+      "source": "z0://profile/full",
+      "target": "z0://component/frontier-kb",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.full.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:full-%3Ekerdoios",
+      "type": "includes",
+      "source": "z0://profile/full",
+      "target": "z0://component/kerdoios",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.full.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:full-%3Eoh-my-pi",
+      "type": "includes",
+      "source": "z0://profile/full",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.full.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:full-%3Etokenomics",
+      "type": "includes",
+      "source": "z0://profile/full",
+      "target": "z0://component/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.full.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:full-%3Ez0intelligence",
+      "type": "includes",
+      "source": "z0://profile/full",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.full.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:minimal-%3Eoh-my-pi",
+      "type": "includes",
+      "source": "z0://profile/minimal",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.minimal.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:personal-%3Ez0intelligence",
+      "type": "includes",
+      "source": "z0://profile/personal",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.personal.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:research-%3Eevolution-lab",
+      "type": "includes",
+      "source": "z0://profile/research",
+      "target": "z0://component/evolution-lab",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.research.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:research-%3Efrontier-kb",
+      "type": "includes",
+      "source": "z0://profile/research",
+      "target": "z0://component/frontier-kb",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.research.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:research-%3Etokenomics",
+      "type": "includes",
+      "source": "z0://profile/research",
+      "target": "z0://component/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.research.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/includes:research-%3Ez0intelligence",
+      "type": "includes",
+      "source": "z0://profile/research",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/profiles.yaml",
+          "field": "profiles.research.components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:agenttrace-%3Eoh-my-pi",
+      "type": "integrates_with",
+      "source": "z0://component/agenttrace",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.oh-my-pi.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:agenttrace-%3Etokenomics",
+      "type": "integrates_with",
+      "source": "z0://component/agenttrace",
+      "target": "z0://component/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.tokenomics.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:aodl-%3Ekerdoios",
+      "type": "integrates_with",
+      "source": "z0://component/aodl",
+      "target": "z0://component/kerdoios",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.kerdoios.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:aodl-%3Eoh-my-pi",
+      "type": "integrates_with",
+      "source": "z0://component/aodl",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.oh-my-pi.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:evolution-lab-%3Efrontier-kb",
+      "type": "integrates_with",
+      "source": "z0://component/evolution-lab",
+      "target": "z0://component/frontier-kb",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.evolution-lab.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:evolution-lab-%3Ez0intelligence",
+      "type": "integrates_with",
+      "source": "z0://component/evolution-lab",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.z0intelligence.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:flow-%3Ememento",
+      "type": "integrates_with",
+      "source": "z0://component/flow",
+      "target": "z0://component/memento",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.memento.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:flow-%3Etokenomics",
+      "type": "integrates_with",
+      "source": "z0://component/flow",
+      "target": "z0://component/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.tokenomics.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:flow-%3Ez0intelligence",
+      "type": "integrates_with",
+      "source": "z0://component/flow",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.flow.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:kerdoios-%3Eoh-my-pi",
+      "type": "integrates_with",
+      "source": "z0://component/kerdoios",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.oh-my-pi.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:kerdoios-%3Etokenomics",
+      "type": "integrates_with",
+      "source": "z0://component/kerdoios",
+      "target": "z0://component/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.tokenomics.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:kerdoios-%3Ez0intelligence",
+      "type": "integrates_with",
+      "source": "z0://component/kerdoios",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.z0intelligence.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:oh-my-pi-%3Etokenomics",
+      "type": "integrates_with",
+      "source": "z0://component/oh-my-pi",
+      "target": "z0://component/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.oh-my-pi.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:oh-my-pi-%3Ez0intelligence",
+      "type": "integrates_with",
+      "source": "z0://component/oh-my-pi",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.oh-my-pi.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:tokenomics-%3Ez0intelligence",
+      "type": "integrates_with",
+      "source": "z0://component/tokenomics",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.tokenomics.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/member_of:sol-pi-action-fusion-%3Esol-pi",
+      "type": "member_of",
+      "source": "z0://mechanism/sol-pi-action-fusion",
+      "target": "z0://mechanism-family/sol-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-action-fusion.family"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/member_of:sol-pi-evidence-reducer-%3Esol-pi",
+      "type": "member_of",
+      "source": "z0://mechanism/sol-pi-evidence-reducer",
+      "target": "z0://mechanism-family/sol-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-evidence-reducer.family"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/member_of:sol-pi-observation-pack-%3Esol-pi",
+      "type": "member_of",
+      "source": "z0://mechanism/sol-pi-observation-pack",
+      "target": "z0://mechanism-family/sol-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-observation-pack.family"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/member_of:sol-pi-online-context-compact-%3Esol-pi",
+      "type": "member_of",
+      "source": "z0://mechanism/sol-pi-online-context-compact",
+      "target": "z0://mechanism-family/sol-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.sol-pi-online-context-compact.family"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/next:architecture-truth:declared-%3Earchitecture-truth:implemented",
+      "type": "next",
+      "source": "z0://lifecycle-state/architecture-truth:declared",
+      "target": "z0://lifecycle-state/architecture-truth:implemented",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/next:architecture-truth:historical-%3Earchitecture-truth:derived",
+      "type": "next",
+      "source": "z0://lifecycle-state/architecture-truth:historical",
+      "target": "z0://lifecycle-state/architecture-truth:derived",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/next:architecture-truth:implemented-%3Earchitecture-truth:observed",
+      "type": "next",
+      "source": "z0://lifecycle-state/architecture-truth:implemented",
+      "target": "z0://lifecycle-state/architecture-truth:observed",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/next:architecture-truth:observed-%3Earchitecture-truth:historical",
+      "type": "next",
+      "source": "z0://lifecycle-state/architecture-truth:observed",
+      "target": "z0://lifecycle-state/architecture-truth:historical",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/next:evolution-lab-promotion:replay-%3Eevolution-lab-promotion:shadow",
+      "type": "next",
+      "source": "z0://lifecycle-state/evolution-lab-promotion:replay",
+      "target": "z0://lifecycle-state/evolution-lab-promotion:shadow",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.evolution-lab-promotion.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/next:evolution-lab-promotion:sanity-%3Eevolution-lab-promotion:replay",
+      "type": "next",
+      "source": "z0://lifecycle-state/evolution-lab-promotion:sanity",
+      "target": "z0://lifecycle-state/evolution-lab-promotion:replay",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.evolution-lab-promotion.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/next:evolution-lab-promotion:shadow-%3Eevolution-lab-promotion:promoted",
+      "type": "next",
+      "source": "z0://lifecycle-state/evolution-lab-promotion:shadow",
+      "target": "z0://lifecycle-state/evolution-lab-promotion:promoted",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.evolution-lab-promotion.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/next:verified-oss-rolling:candidate-%3Everified-oss-rolling:preview",
+      "type": "next",
+      "source": "z0://lifecycle-state/verified-oss-rolling:candidate",
+      "target": "z0://lifecycle-state/verified-oss-rolling:preview",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/next:verified-oss-rolling:dev-%3Everified-oss-rolling:main",
+      "type": "next",
+      "source": "z0://lifecycle-state/verified-oss-rolling:dev",
+      "target": "z0://lifecycle-state/verified-oss-rolling:main",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/next:verified-oss-rolling:nightly-%3Everified-oss-rolling:dev",
+      "type": "next",
+      "source": "z0://lifecycle-state/verified-oss-rolling:nightly",
+      "target": "z0://lifecycle-state/verified-oss-rolling:dev",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/next:verified-oss-rolling:preview-%3Everified-oss-rolling:nightly",
+      "type": "next",
+      "source": "z0://lifecycle-state/verified-oss-rolling:preview",
+      "target": "z0://lifecycle-state/verified-oss-rolling:nightly",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.stages"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/owned_by:agenttrace.span.v0-%3Eagenttrace",
+      "type": "owned_by",
+      "source": "z0://interface/agenttrace.span.v0",
+      "target": "z0://component/agenttrace",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.agenttrace.span.v0.owner"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/owned_by:aodl.intent.v1-%3Eaodl",
+      "type": "owned_by",
+      "source": "z0://interface/aodl.intent.v1",
+      "target": "z0://component/aodl",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.aodl.intent.v1.owner"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/owned_by:architecture-truth-%3Ekvnloo/z0",
+      "type": "owned_by",
+      "source": "z0://lifecycle/architecture-truth",
+      "target": "z0://repo/kvnloo/z0",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.architecture-truth.owner_repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/owned_by:cu.stage_intent.v0-%3Eoh-my-pi",
+      "type": "owned_by",
+      "source": "z0://interface/cu.stage_intent.v0",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.cu.stage_intent.v0.owner"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/owned_by:evolution-lab-promotion-%3Ekvnloo/evolution-lab",
+      "type": "owned_by",
+      "source": "z0://lifecycle/evolution-lab-promotion",
+      "target": "z0://repo/kvnloo/evolution-lab",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.evolution-lab-promotion.owner_repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/owned_by:flow_prediction.v1-%3Eflow",
+      "type": "owned_by",
+      "source": "z0://interface/flow_prediction.v1",
+      "target": "z0://component/flow",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.flow_prediction.v1.owner"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/owned_by:kerdoios.route.v1-%3Ekerdoios",
+      "type": "owned_by",
+      "source": "z0://interface/kerdoios.route.v1",
+      "target": "z0://component/kerdoios",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.kerdoios.route.v1.owner"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/owned_by:omp.session.aggregate-%3Eoh-my-pi",
+      "type": "owned_by",
+      "source": "z0://interface/omp.session.aggregate",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.omp.session.aggregate.owner"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/owned_by:os.next_context.v0-%3Eflow",
+      "type": "owned_by",
+      "source": "z0://interface/os.next_context.v0",
+      "target": "z0://component/flow",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.os.next_context.v0.owner"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/owned_by:tokenomics.event.v0-%3Etokenomics",
+      "type": "owned_by",
+      "source": "z0://interface/tokenomics.event.v0",
+      "target": "z0://component/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.tokenomics.event.v0.owner"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/owned_by:tokenomics.report.v1-%3Etokenomics",
+      "type": "owned_by",
+      "source": "z0://interface/tokenomics.report.v1",
+      "target": "z0://component/tokenomics",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.tokenomics.report.v1.owner"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/owned_by:verified-oss-rolling-%3Ekvnloo/verified-oss-loop",
+      "type": "owned_by",
+      "source": "z0://lifecycle/verified-oss-rolling",
+      "target": "z0://repo/kvnloo/verified-oss-loop",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/lifecycles.yaml",
+          "field": "lifecycles.verified-oss-rolling.owner_repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/owned_by:z0int.decision_receipt.v1-%3Ez0intelligence",
+      "type": "owned_by",
+      "source": "z0://interface/z0int.decision_receipt.v1",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.z0int.decision_receipt.v1.owner"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/produces-representation:agenttrace-cross-harness-observation-%3Eobserved-topology",
+      "type": "produces_representation",
+      "source": "z0://mechanism/agenttrace-cross-harness-observation",
+      "target": "z0://representation/observed-topology",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.observed-topology.produced_by"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/produces-representation:aodl-intent-plan-observed-%3Ecompiled-plan",
+      "type": "produces_representation",
+      "source": "z0://mechanism/aodl-intent-plan-observed",
+      "target": "z0://representation/compiled-plan",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.compiled-plan.produced_by"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/produces-representation:aodl-intent-plan-observed-%3Eobserved-topology",
+      "type": "produces_representation",
+      "source": "z0://mechanism/aodl-intent-plan-observed",
+      "target": "z0://representation/observed-topology",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.observed-topology.produced_by"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/produces-representation:rlm-context-spill-%3Erlm-address",
+      "type": "produces_representation",
+      "source": "z0://mechanism/rlm-context-spill",
+      "target": "z0://representation/rlm-address",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.rlm-address.produced_by"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/produces-representation:sol-pi-evidence-reducer-%3Eevidence-receipt",
+      "type": "produces_representation",
+      "source": "z0://mechanism/sol-pi-evidence-reducer",
+      "target": "z0://representation/evidence-receipt",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.evidence-receipt.produced_by"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/produces-representation:sol-pi-observation-pack-%3Eobservation-pack",
+      "type": "produces_representation",
+      "source": "z0://mechanism/sol-pi-observation-pack",
+      "target": "z0://representation/observation-pack",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.observation-pack.produced_by"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/provides:agenttrace-%3Eagenttrace.span.v0",
+      "type": "provides",
+      "source": "z0://component/agenttrace",
+      "target": "z0://interface/agenttrace.span.v0",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.agenttrace.provides"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/provides:aodl-%3Eaodl.intent.v1",
+      "type": "provides",
+      "source": "z0://component/aodl",
+      "target": "z0://interface/aodl.intent.v1",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.aodl.provides"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/provides:flow-%3Eflow_prediction.v1",
+      "type": "provides",
+      "source": "z0://component/flow",
+      "target": "z0://interface/flow_prediction.v1",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.flow.provides"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/provides:flow-%3Eos.next_context.v0",
+      "type": "provides",
+      "source": "z0://component/flow",
+      "target": "z0://interface/os.next_context.v0",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.flow.provides"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/provides:kerdoios-%3Ekerdoios.route.v1",
+      "type": "provides",
+      "source": "z0://component/kerdoios",
+      "target": "z0://interface/kerdoios.route.v1",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.kerdoios.provides"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/provides:oh-my-pi-%3Ecu.stage_intent.v0",
+      "type": "provides",
+      "source": "z0://component/oh-my-pi",
+      "target": "z0://interface/cu.stage_intent.v0",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.oh-my-pi.provides"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/provides:oh-my-pi-%3Eomp.session.aggregate",
+      "type": "provides",
+      "source": "z0://component/oh-my-pi",
+      "target": "z0://interface/omp.session.aggregate",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.oh-my-pi.provides"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/provides:tokenomics-%3Etokenomics.event.v0",
+      "type": "provides",
+      "source": "z0://component/tokenomics",
+      "target": "z0://interface/tokenomics.event.v0",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.tokenomics.provides"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/provides:tokenomics-%3Etokenomics.report.v1",
+      "type": "provides",
+      "source": "z0://component/tokenomics",
+      "target": "z0://interface/tokenomics.report.v1",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.tokenomics.provides"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/provides:z0intelligence-%3Ez0int.decision_receipt.v1",
+      "type": "provides",
+      "source": "z0://component/z0intelligence",
+      "target": "z0://interface/z0int.decision_receipt.v1",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.z0intelligence.provides"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:aodl-intent-to-plan-%3Eregistry/interfaces.yaml%23interfaces.aodl.intent.v1",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/aodl-intent-to-plan",
+      "target": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.aodl.intent.v1",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.aodl-intent-to-plan.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:aodl-intent-to-plan-%3Eregistry/mechanisms.yaml%23mechanisms.aodl-intent-plan-observed",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/aodl-intent-to-plan",
+      "target": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.aodl-intent-plan-observed",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.aodl-intent-to-plan.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:decision-state-to-receipt-%3Eregistry/interfaces.yaml%23interfaces.z0int.decision_receipt.v1",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/decision-state-to-receipt",
+      "target": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.z0int.decision_receipt.v1",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.decision-state-to-receipt.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:decision-state-to-receipt-%3Eregistry/mechanisms.yaml%23mechanisms.jev-typed-decision",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/decision-state-to-receipt",
+      "target": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.jev-typed-decision",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.decision-state-to-receipt.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:evidence-reducer-preserves-verifiability-%3Eregistry/mechanisms.yaml%23mechanisms.sol-pi-evidence-reducer",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/evidence-reducer-preserves-verifiability",
+      "target": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.sol-pi-evidence-reducer",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.evidence-reducer-preserves-verifiability.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:execution-to-tokenomics-%3Eregistry/interfaces.yaml%23interfaces.tokenomics.event.v0",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/execution-to-tokenomics",
+      "target": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.tokenomics.event.v0",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.execution-to-tokenomics.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:execution-to-tokenomics-%3Eregistry/mechanisms.yaml%23mechanisms.agenttrace-cross-harness-observation",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/execution-to-tokenomics",
+      "target": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.agenttrace-cross-harness-observation",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.execution-to-tokenomics.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:observation-pack-compresses-context-%3Eregistry/mechanisms.yaml%23mechanisms.sol-pi-observation-pack",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/observation-pack-compresses-context",
+      "target": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.sol-pi-observation-pack",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.observation-pack-compresses-context.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:omp-rlm-context-spill-%3Ekvnloo/oh-my-pi:README.md",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/omp-rlm-context-spill",
+      "target": "z0://evidence-ref/kvnloo/oh-my-pi:README.md",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.omp-rlm-context-spill.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:omp-rlm-context-spill-%3Eregistry/components.yaml%23components.oh-my-pi",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/omp-rlm-context-spill",
+      "target": "z0://evidence-ref/registry/components.yaml%23components.oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.omp-rlm-context-spill.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:plan-to-observed-topology-%3Eregistry/mechanisms.yaml%23mechanisms.agenttrace-cross-harness-observation",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/plan-to-observed-topology",
+      "target": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.agenttrace-cross-harness-observation",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.plan-to-observed-topology.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:plan-to-observed-topology-%3Eregistry/mechanisms.yaml%23mechanisms.aodl-intent-plan-observed",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/plan-to-observed-topology",
+      "target": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.aodl-intent-plan-observed",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.plan-to-observed-topology.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/runtime_surface_of:omp-%3Eoh-my-pi",
+      "type": "runtime_surface_of",
+      "source": "z0://harness/omp",
+      "target": "z0://component/oh-my-pi",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/harnesses.yaml",
+          "field": "harnesses.omp.component"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/verified-via:aodl-intent-to-plan-%3Emechanism:aodl-intent-plan-observed",
+      "type": "verified_via",
+      "source": "z0://evidence-dependency/aodl-intent-to-plan",
+      "target": "z0://mechanism/aodl-intent-plan-observed",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.aodl-intent-to-plan.via"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/verified-via:decision-state-to-receipt-%3Emechanism:jev-typed-decision",
+      "type": "verified_via",
+      "source": "z0://evidence-dependency/decision-state-to-receipt",
+      "target": "z0://mechanism/jev-typed-decision",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.decision-state-to-receipt.via"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/verified-via:evidence-reducer-preserves-verifiability-%3Emechanism:sol-pi-evidence-reducer",
+      "type": "verified_via",
+      "source": "z0://evidence-dependency/evidence-reducer-preserves-verifiability",
+      "target": "z0://mechanism/sol-pi-evidence-reducer",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.evidence-reducer-preserves-verifiability.via"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/verified-via:observation-pack-compresses-context-%3Emechanism:sol-pi-observation-pack",
+      "type": "verified_via",
+      "source": "z0://evidence-dependency/observation-pack-compresses-context",
+      "target": "z0://mechanism/sol-pi-observation-pack",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.observation-pack-compresses-context.via"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/verified-via:plan-to-observed-topology-%3Emechanism:aodl-intent-plan-observed",
+      "type": "verified_via",
+      "source": "z0://evidence-dependency/plan-to-observed-topology",
+      "target": "z0://mechanism/aodl-intent-plan-observed",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.plan-to-observed-topology.via"
+        }
+      ]
+    }
+  ]
+}

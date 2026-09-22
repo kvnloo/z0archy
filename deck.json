@@ -7,7 +7,31 @@
     "source": "https://github.com/kvnloo/z0",
     "overview": {
       "title": "Whole Zer0 graph",
-      "caption": "Every registered component and contract in one spatial map. Use the arrow keys for guided plane-by-plane navigation."
+      "caption": "Semantic zoom compresses the world into logic first, then reveals concepts, important detail and source evidence as you move closer."
+    },
+    "semanticZoom": {
+      "levels": [
+        {
+          "level": 1,
+          "label": "logic"
+        },
+        {
+          "level": 2,
+          "label": "concepts"
+        },
+        {
+          "level": 3,
+          "label": "important detail"
+        },
+        {
+          "level": 4,
+          "label": "deep detail"
+        },
+        {
+          "level": 5,
+          "label": "source evidence"
+        }
+      ]
     }
   },
   "styling": {
@@ -112,6 +136,12 @@
         "width": 1.2,
         "dash": "3 6",
         "labelColor": "#A87B3E"
+      },
+      "epistemic": {
+        "stroke": "#118A7E",
+        "width": 1.5,
+        "dash": "2 5",
+        "labelColor": "#118A7E"
       }
     }
   },
@@ -142,21 +172,26 @@
           ],
           "w": 420,
           "kind": "mega indigo",
-          "tip": "Source of truth for component boundaries, profiles and cross-system interfaces. z0archy renders it; it does not replace it."
+          "tip": "Source of truth for component boundaries, profiles and cross-system interfaces. z0archy renders it; it does not replace it.",
+          "meta": {
+            "graphType": "root",
+            "graphId": "z0://root/zer0",
+            "semanticLevel": 0,
+            "truthClass": "declared"
+          }
         }
       ],
       "include": [
-        "oh-my-pi",
-        "z0intelligence",
-        "openjev",
-        "aodl",
-        "tokenomics",
         "agenttrace",
-        "flow",
-        "kerdoios",
+        "aodl",
         "evolution-lab",
+        "flow",
         "frontier-kb",
-        "memento"
+        "kerdoios",
+        "memento",
+        "oh-my-pi",
+        "tokenomics",
+        "z0intelligence"
       ],
       "layout": {
         "fitMargin": 180,
@@ -176,7 +211,7 @@
         {
           "id": "oh-my-pi",
           "title": "OMP (Oh My Pi)",
-          "sub": "runtime · canary · canary",
+          "sub": "runtime \u00b7 canary \u00b7 canary",
           "body": "kvnloo/oh-my-pi",
           "pos": [
             -290,
@@ -184,12 +219,22 @@
           ],
           "w": 300,
           "kind": "hub runtime",
-          "tip": "Coding agent runtime: CLI, RPC, RLM context spill, Jev decisions, Handsfree HUD, Live voice, and computer-use stage manager.\\n\\nrepo: kvnloo/oh-my-pi\\nstatus: canary\\nexecution: canary"
+          "tip": "Coding agent runtime: CLI, RPC, RLM context spill, Jev decisions, Handsfree HUD, Live voice, and computer-use stage manager.\n\nrepo: kvnloo/oh-my-pi\nstatus: canary\nexecution: canary",
+          "meta": {
+            "component": "oh-my-pi",
+            "repo": "kvnloo/oh-my-pi",
+            "canonicalBranch": "rfc/interactive-performance-stack",
+            "canonicalRef": "d707478d4c5c72784c058a0163b616988f559230",
+            "graphType": "component",
+            "graphId": "z0://component/oh-my-pi",
+            "semanticLevel": 1,
+            "truthClass": "declared"
+          }
         }
       ],
       "layout": {
         "fitMargin": 150,
-        "zoomMax": 1
+        "zoomMax": 1.0
       }
     },
     {
@@ -202,48 +247,55 @@
       ],
       "nodes": [
         {
-          "id": "z0intelligence",
-          "title": "z0intelligence",
-          "sub": "intelligence · experimental · log_only",
-          "body": "kvnloo/z0intelligence",
-          "pos": [
-            -380,
-            0
-          ],
-          "w": 300,
-          "kind": "hub decision",
-          "tip": "Personal learned policy: specialists, routines, autoresearch, decision receipts, model/tool routing and promotion.\\n\\nrepo: kvnloo/z0intelligence\\nstatus: experimental\\nexecution: log_only"
-        },
-        {
-          "id": "openjev",
-          "title": "OpenJev",
-          "sub": "decision · experimental · shadow",
-          "body": "kvnloo/openjev",
-          "pos": [
-            0,
-            0
-          ],
-          "w": 300,
-          "kind": "hub decision",
-          "tip": "Local typed decision heads for fast bounded routing and hotpath choices.\\n\\nrepo: kvnloo/openjev\\nstatus: experimental\\nexecution: shadow"
-        },
-        {
           "id": "aodl",
           "title": "AODL",
-          "sub": "contract · experimental · shadow",
+          "sub": "contract \u00b7 experimental \u00b7 shadow",
           "body": "kvnloo/aodl",
           "pos": [
-            380,
+            -290,
             0
           ],
           "w": 300,
           "kind": "hub decision",
-          "tip": "Typed intent and plan schema. Contracts only, not runtime execution.\\n\\nrepo: kvnloo/aodl\\nstatus: experimental\\nexecution: shadow"
+          "tip": "Typed intent and plan schema \u2014 contracts only, not runtime execution.\n\nrepo: kvnloo/aodl\nstatus: experimental\nexecution: shadow",
+          "meta": {
+            "component": "aodl",
+            "repo": "kvnloo/aodl",
+            "canonicalBranch": "main",
+            "canonicalRef": "8e41ef024262339d28a968d71113fc52819d4bd4",
+            "graphType": "component",
+            "graphId": "z0://component/aodl",
+            "semanticLevel": 1,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0intelligence",
+          "title": "z0intelligence",
+          "sub": "intelligence \u00b7 experimental \u00b7 log_only",
+          "body": "kvnloo/z0intelligence",
+          "pos": [
+            290,
+            0
+          ],
+          "w": 300,
+          "kind": "hub decision",
+          "tip": "Personal learned policy: specialists, routines, autoresearch, and decision receipts for routing and promotion.\n\nrepo: kvnloo/z0intelligence\nstatus: experimental\nexecution: log_only",
+          "meta": {
+            "component": "z0intelligence",
+            "repo": "kvnloo/z0intelligence",
+            "canonicalBranch": "master",
+            "canonicalRef": "5e7cf4a2d6faf6e537dbfbb52d90bf50410cea63",
+            "graphType": "component",
+            "graphId": "z0://component/z0intelligence",
+            "semanticLevel": 1,
+            "truthClass": "declared"
+          }
         }
       ],
       "layout": {
         "fitMargin": 150,
-        "zoomMax": 1
+        "zoomMax": 1.0
       }
     },
     {
@@ -256,35 +308,55 @@
       ],
       "nodes": [
         {
-          "id": "tokenomics",
-          "title": "Tokenomics",
-          "sub": "measurement · experimental · live",
-          "body": "kvnloo/tokenomics",
+          "id": "agenttrace",
+          "title": "AgentTrace",
+          "sub": "observability \u00b7 experimental \u00b7 log_only",
+          "body": "kvnloo/agenttrace",
           "pos": [
             -290,
             0
           ],
           "w": 300,
           "kind": "hub measurement",
-          "tip": "Vendor-neutral token, cost, latency and verified-task economics measurement kernel.\\n\\nrepo: kvnloo/tokenomics\\nstatus: experimental\\nexecution: live"
+          "tip": "Historical agent TUI and span export for debugging and audit.\n\nrepo: kvnloo/agenttrace\nstatus: experimental\nexecution: log_only",
+          "meta": {
+            "component": "agenttrace",
+            "repo": "kvnloo/agenttrace",
+            "canonicalBranch": "master",
+            "canonicalRef": "a34dea2b6ff7e2133b9e548b93d30bfe6ccf6ff5",
+            "graphType": "component",
+            "graphId": "z0://component/agenttrace",
+            "semanticLevel": 1,
+            "truthClass": "declared"
+          }
         },
         {
-          "id": "agenttrace",
-          "title": "AgentTrace",
-          "sub": "observability · experimental · log_only",
-          "body": "kvnloo/agenttrace",
+          "id": "tokenomics",
+          "title": "Tokenomics",
+          "sub": "measurement \u00b7 experimental \u00b7 live",
+          "body": "kvnloo/tokenomics",
           "pos": [
             290,
             0
           ],
           "w": 300,
           "kind": "hub measurement",
-          "tip": "Historical agent spans and observability export for debugging and audit.\\n\\nrepo: kvnloo/agenttrace\\nstatus: experimental\\nexecution: log_only"
+          "tip": "Vendor-neutral measurement kernel for token, cost, latency, and verified-task economics with reconciliation reports.\n\nrepo: kvnloo/tokenomics\nstatus: experimental\nexecution: live",
+          "meta": {
+            "component": "tokenomics",
+            "repo": "kvnloo/tokenomics",
+            "canonicalBranch": "master",
+            "canonicalRef": "e67d76fe2f1d52a5911abc8974489a10e89bb431",
+            "graphType": "component",
+            "graphId": "z0://component/tokenomics",
+            "semanticLevel": 1,
+            "truthClass": "declared"
+          }
         }
       ],
       "layout": {
         "fitMargin": 150,
-        "zoomMax": 1
+        "zoomMax": 1.0
       }
     },
     {
@@ -299,7 +371,7 @@
         {
           "id": "flow",
           "title": "Flow",
-          "sub": "desktop · experimental · shadow",
+          "sub": "desktop \u00b7 experimental \u00b7 shadow",
           "body": "kvnloo/.files",
           "pos": [
             -290,
@@ -307,12 +379,22 @@
           ],
           "w": 300,
           "kind": "hub environment",
-          "tip": "Predictive desktop UX: context episodes, prediction horizons, prepare cache and routine suggestion mining.\\n\\nrepo: kvnloo/.files\\nstatus: experimental\\nexecution: shadow"
+          "tip": "Predictive desktop UX: context episodes, prediction horizons, prepare cache, and routine suggestion miner (workspace copilot).\n\nrepo: kvnloo/.files\nstatus: experimental\nexecution: shadow",
+          "meta": {
+            "component": "flow",
+            "repo": "kvnloo/.files",
+            "canonicalBranch": "feat/workspace-copilot-flow",
+            "canonicalRef": "5259013185d97422022fc225fa70245595b046ea",
+            "graphType": "component",
+            "graphId": "z0://component/flow",
+            "semanticLevel": 1,
+            "truthClass": "declared"
+          }
         }
       ],
       "layout": {
         "fitMargin": 150,
-        "zoomMax": 1
+        "zoomMax": 1.0
       }
     },
     {
@@ -327,7 +409,7 @@
         {
           "id": "kerdoios",
           "title": "Kerdoios",
-          "sub": "compute · experimental · live",
+          "sub": "compute \u00b7 experimental \u00b7 live",
           "body": "kvnloo/kerdoios",
           "pos": [
             -290,
@@ -335,12 +417,22 @@
           ],
           "w": 300,
           "kind": "hub compute",
-          "tip": "Compute and provider allocation with cost, latency, residency and resource awareness.\\n\\nrepo: kvnloo/kerdoios\\nstatus: experimental\\nexecution: live"
+          "tip": "Compute and provider allocation \u2014 routes work to frontier vs local models with cost/latency awareness.\n\nrepo: kvnloo/kerdoios\nstatus: experimental\nexecution: live",
+          "meta": {
+            "component": "kerdoios",
+            "repo": "kvnloo/kerdoios",
+            "canonicalBranch": "main",
+            "canonicalRef": "e3100ae4b779253c3ff3e9a95cc79f0321edb784",
+            "graphType": "component",
+            "graphId": "z0://component/kerdoios",
+            "semanticLevel": 1,
+            "truthClass": "declared"
+          }
         }
       ],
       "layout": {
         "fitMargin": 150,
-        "zoomMax": 1
+        "zoomMax": 1.0
       }
     },
     {
@@ -355,7 +447,7 @@
         {
           "id": "evolution-lab",
           "title": "Evolution Lab",
-          "sub": "research · experimental · shadow",
+          "sub": "research \u00b7 experimental \u00b7 shadow",
           "body": "kvnloo/evolution-lab",
           "pos": [
             -290,
@@ -363,12 +455,22 @@
           ],
           "w": 300,
           "kind": "hub research",
-          "tip": "Automatic AI research loop: hypothesis search, experiments, distillation and verified candidate promotion.\\n\\nrepo: kvnloo/evolution-lab\\nstatus: experimental\\nexecution: shadow"
+          "tip": "Automatic AI research loop: hypothesis search, experiment runners, and verified candidate promotion.\n\nrepo: kvnloo/evolution-lab\nstatus: experimental\nexecution: shadow",
+          "meta": {
+            "component": "evolution-lab",
+            "repo": "kvnloo/evolution-lab",
+            "canonicalBranch": "main",
+            "canonicalRef": "8cf7acff719470b74f20c90fd6e5f7cdb11c134a",
+            "graphType": "component",
+            "graphId": "z0://component/evolution-lab",
+            "semanticLevel": 1,
+            "truthClass": "declared"
+          }
         },
         {
           "id": "frontier-kb",
           "title": "frontier-kb",
-          "sub": "research · experimental · shadow",
+          "sub": "research \u00b7 experimental \u00b7 shadow",
           "body": "kvnloo/frontier-kb",
           "pos": [
             290,
@@ -376,12 +478,22 @@
           ],
           "w": 300,
           "kind": "hub research",
-          "tip": "Research evidence base: papers, external systems, hypotheses, limits and kill criteria.\\n\\nrepo: kvnloo/frontier-kb\\nstatus: experimental\\nexecution: shadow"
+          "tip": "Research knowledge base: papers, external systems, hypotheses, and kill criteria \u2014 not private user traces.\n\nrepo: kvnloo/frontier-kb\nstatus: experimental\nexecution: shadow",
+          "meta": {
+            "component": "frontier-kb",
+            "repo": "kvnloo/frontier-kb",
+            "canonicalBranch": "main",
+            "canonicalRef": "aac71e8f73cbfe78118d2dd399ecceece2e42e71",
+            "graphType": "component",
+            "graphId": "z0://component/frontier-kb",
+            "semanticLevel": 1,
+            "truthClass": "declared"
+          }
         }
       ],
       "layout": {
         "fitMargin": 150,
-        "zoomMax": 1
+        "zoomMax": 1.0
       }
     },
     {
@@ -396,20 +508,30 @@
         {
           "id": "memento",
           "title": "Memento",
-          "sub": "memory · idea · shadow",
-          "body": "kvnloo/memento",
+          "sub": "memory \u00b7 idea \u00b7 shadow",
+          "body": "kvnloo/Memento",
           "pos": [
             -290,
             0
           ],
           "w": 300,
           "kind": "hub memory",
-          "tip": "Visual private history and episodic recall surface.\\n\\nrepo: kvnloo/memento\\nstatus: idea\\nexecution: shadow"
+          "tip": "Visual private history and episodic recall (design stage).\n\nrepo: kvnloo/Memento\nstatus: idea\nexecution: shadow",
+          "meta": {
+            "component": "memento",
+            "repo": "kvnloo/Memento",
+            "canonicalBranch": "main",
+            "canonicalRef": "513a80c2ba155115dfcea0bc808b0c41a1fd4380",
+            "graphType": "component",
+            "graphId": "z0://component/memento",
+            "semanticLevel": 1,
+            "truthClass": "declared"
+          }
         }
       ],
       "layout": {
         "fitMargin": 150,
-        "zoomMax": 1
+        "zoomMax": 1.0
       }
     },
     {
@@ -422,146 +544,1942 @@
       ],
       "nodes": [
         {
-          "id": "iface:tokenomics.event.v0",
-          "title": "tokenomics.event.v0",
-          "sub": "owner: Tokenomics",
-          "body": "usage / cost / latency event",
+          "id": "iface:agenttrace.span.v0",
+          "title": "agenttrace.span.v0",
+          "sub": "owner: agenttrace",
+          "body": "Historical agent span for observability export.",
           "pos": [
             -380,
             0
           ],
           "w": 285,
           "kind": "tiny contract",
-          "tip": "usage / cost / latency event\\n\\nowner: Tokenomics"
+          "tip": "Historical agent span for observability export.\n\nowner: agenttrace",
+          "meta": {
+            "graphType": "interface",
+            "graphId": "z0://interface/agenttrace.span.v0",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
         },
         {
-          "id": "iface:tokenomics.report.v1",
-          "title": "tokenomics.report.v1",
-          "sub": "owner: Tokenomics",
-          "body": "savings + reconciliation report",
+          "id": "iface:aodl.intent.v1",
+          "title": "aodl.intent.v1",
+          "sub": "owner: aodl",
+          "body": "Typed intent / plan contract (not runtime execution).",
           "pos": [
             0,
             0
           ],
           "w": 285,
           "kind": "tiny contract",
-          "tip": "savings + reconciliation report\\n\\nowner: Tokenomics"
+          "tip": "Typed intent / plan contract (not runtime execution).\n\nowner: aodl",
+          "meta": {
+            "graphType": "interface",
+            "graphId": "z0://interface/aodl.intent.v1",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "iface:cu.stage_intent.v0",
+          "title": "cu.stage_intent.v0",
+          "sub": "owner: oh-my-pi",
+          "body": "Handsfree / computer-use window and layout intent.",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "Handsfree / computer-use window and layout intent.\n\nowner: oh-my-pi",
+          "meta": {
+            "graphType": "interface",
+            "graphId": "z0://interface/cu.stage_intent.v0",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "iface:flow_prediction.v1",
+          "title": "flow_prediction.v1",
+          "sub": "owner: flow",
+          "body": "OS-context prediction with horizon metadata and gates.",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "OS-context prediction with horizon metadata and gates.\n\nowner: flow",
+          "meta": {
+            "graphType": "interface",
+            "graphId": "z0://interface/flow_prediction.v1",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "iface:kerdoios.route.v1",
+          "title": "kerdoios.route.v1",
+          "sub": "owner: kerdoios",
+          "body": "Model/provider routing decision with cost estimate.",
+          "pos": [
+            0,
+            260
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "Model/provider routing decision with cost estimate.\n\nowner: kerdoios",
+          "meta": {
+            "graphType": "interface",
+            "graphId": "z0://interface/kerdoios.route.v1",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "iface:omp.session.aggregate",
+          "title": "omp.session.aggregate",
+          "sub": "owner: oh-my-pi",
+          "body": "Session-level token rollup for Tokenomics reconciliation.",
+          "pos": [
+            380,
+            260
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "Session-level token rollup for Tokenomics reconciliation.\n\nowner: oh-my-pi",
+          "meta": {
+            "graphType": "interface",
+            "graphId": "z0://interface/omp.session.aggregate",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "iface:os.next_context.v0",
+          "title": "os.next_context.v0",
+          "sub": "owner: flow",
+          "body": "Shadow prediction of next desktop context episode.",
+          "pos": [
+            -380,
+            520
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "Shadow prediction of next desktop context episode.\n\nowner: flow",
+          "meta": {
+            "graphType": "interface",
+            "graphId": "z0://interface/os.next_context.v0",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "iface:tokenomics.event.v0",
+          "title": "tokenomics.event.v0",
+          "sub": "owner: tokenomics",
+          "body": "Vendor-neutral usage / cost / latency event envelope.",
+          "pos": [
+            0,
+            520
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "Vendor-neutral usage / cost / latency event envelope.\n\nowner: tokenomics",
+          "meta": {
+            "graphType": "interface",
+            "graphId": "z0://interface/tokenomics.event.v0",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "iface:tokenomics.report.v1",
+          "title": "tokenomics.report.v1",
+          "sub": "owner: tokenomics",
+          "body": "Aggregated savings, reconciliation, and coverage report.",
+          "pos": [
+            380,
+            520
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "Aggregated savings, reconciliation, and coverage report.\n\nowner: tokenomics",
+          "meta": {
+            "graphType": "interface",
+            "graphId": "z0://interface/tokenomics.report.v1",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
         },
         {
           "id": "iface:z0int.decision_receipt.v1",
           "title": "z0int.decision_receipt.v1",
           "sub": "owner: z0intelligence",
-          "body": "structured routing/policy receipt",
-          "pos": [
-            380,
-            0
-          ],
-          "w": 285,
-          "kind": "tiny contract",
-          "tip": "structured routing/policy receipt\\n\\nowner: z0intelligence"
-        },
-        {
-          "id": "iface:flow_prediction.v1",
-          "title": "flow_prediction.v1",
-          "sub": "owner: Flow",
-          "body": "desktop prediction + gates",
-          "pos": [
-            -380,
-            260
-          ],
-          "w": 285,
-          "kind": "tiny contract",
-          "tip": "desktop prediction + gates\\n\\nowner: Flow"
-        },
-        {
-          "id": "iface:os.next_context.v0",
-          "title": "os.next_context.v0",
-          "sub": "owner: Flow",
-          "body": "next desktop context prediction",
-          "pos": [
-            0,
-            260
-          ],
-          "w": 285,
-          "kind": "tiny contract",
-          "tip": "next desktop context prediction\\n\\nowner: Flow"
-        },
-        {
-          "id": "iface:aodl.intent.v1",
-          "title": "aodl.intent.v1",
-          "sub": "owner: AODL",
-          "body": "typed intent / plan contract",
-          "pos": [
-            380,
-            260
-          ],
-          "w": 285,
-          "kind": "tiny contract",
-          "tip": "typed intent / plan contract\\n\\nowner: AODL"
-        },
-        {
-          "id": "iface:omp.session.aggregate",
-          "title": "omp.session.aggregate",
-          "sub": "owner: OMP",
-          "body": "session token rollup",
-          "pos": [
-            -380,
-            520
-          ],
-          "w": 285,
-          "kind": "tiny contract",
-          "tip": "session token rollup\\n\\nowner: OMP"
-        },
-        {
-          "id": "iface:cu.stage_intent.v0",
-          "title": "cu.stage_intent.v0",
-          "sub": "owner: OMP",
-          "body": "computer-use stage intent",
-          "pos": [
-            0,
-            520
-          ],
-          "w": 285,
-          "kind": "tiny contract",
-          "tip": "computer-use stage intent\\n\\nowner: OMP"
-        },
-        {
-          "id": "iface:kerdoios.route.v1",
-          "title": "kerdoios.route.v1",
-          "sub": "owner: Kerdoios",
-          "body": "compute/model placement decision",
-          "pos": [
-            380,
-            520
-          ],
-          "w": 285,
-          "kind": "tiny contract",
-          "tip": "compute/model placement decision\\n\\nowner: Kerdoios"
-        },
-        {
-          "id": "iface:agenttrace.span.v0",
-          "title": "agenttrace.span.v0",
-          "sub": "owner: AgentTrace",
-          "body": "historical agent span",
+          "body": "Structured decision receipt for routing and policy audit.",
           "pos": [
             -380,
             780
           ],
           "w": 285,
           "kind": "tiny contract",
-          "tip": "historical agent span\\n\\nowner: AgentTrace"
+          "tip": "Structured decision receipt for routing and policy audit.\n\nowner: z0intelligence",
+          "meta": {
+            "graphType": "interface",
+            "graphId": "z0://interface/z0int.decision_receipt.v1",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
         }
       ],
       "layout": {
         "fitMargin": 160,
         "zoomMax": 0.86
       }
+    },
+    {
+      "id": "harnesses",
+      "title": "Execution harnesses",
+      "caption": "The runtime surfaces Zer0 actually executes through. AODL owns portable harness ids; z0 records Zer0 adoption and role.",
+      "anchor": [
+        5700,
+        1100
+      ],
+      "nodes": [
+        {
+          "id": "z0://harness/codex",
+          "title": "Codex",
+          "sub": "harness",
+          "body": "openai/codex",
+          "pos": [
+            -380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub runtime",
+          "tip": "Codex\n\ntype: harness\nkind: executor\nadoption: active\nrepo: openai/codex\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "harness",
+            "graphId": "z0://harness/codex",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://harness/deepseek",
+          "title": "DeepSeek Harness",
+          "sub": "harness",
+          "body": "kvnloo/deepseek-harness",
+          "pos": [
+            0,
+            0
+          ],
+          "w": 320,
+          "kind": "hub runtime",
+          "tip": "DeepSeek Harness\n\ntype: harness\nkind: executor\nadoption: active\nrepo: kvnloo/deepseek-harness\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "harness",
+            "graphId": "z0://harness/deepseek",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://harness/hermes",
+          "title": "Hermes Agent",
+          "sub": "harness",
+          "body": "kvnloo/hermes-agent",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub runtime",
+          "tip": "Hermes Agent\n\ntype: harness\nkind: executor\nadoption: primary\nrepo: kvnloo/hermes-agent\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "harness",
+            "graphId": "z0://harness/hermes",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://harness/omp",
+          "title": "Oh My Pi",
+          "sub": "harness",
+          "body": "kvnloo/oh-my-pi",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 320,
+          "kind": "hub runtime",
+          "tip": "Oh My Pi\n\ntype: harness\nkind: executor\nadoption: primary\nrepo: kvnloo/oh-my-pi\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "harness",
+            "graphId": "z0://harness/omp",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://harness/pi",
+          "title": "Pi",
+          "sub": "harness",
+          "body": "earendil-works/pi",
+          "pos": [
+            0,
+            260
+          ],
+          "w": 320,
+          "kind": "hub runtime",
+          "tip": "Pi\n\ntype: harness\nkind: executor\nadoption: research\nrepo: earendil-works/pi\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "harness",
+            "graphId": "z0://harness/pi",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        }
+      ],
+      "layout": {
+        "fitMargin": 160,
+        "zoomMax": 0.9
+      }
+    },
+    {
+      "id": "mechanisms",
+      "title": "Reusable mechanisms",
+      "caption": "Cross-cutting mechanisms remain stable semantic identities even when they are implemented in multiple harnesses or repositories.",
+      "anchor": [
+        5700,
+        2800
+      ],
+      "nodes": [
+        {
+          "id": "z0://mechanism/aodl-intent-plan-observed",
+          "title": "AODL intent \u2192 compiled plan \u2192 observed topology",
+          "sub": "mechanism",
+          "body": "Keep desired orchestration, runtime-safe compiled plan and observed topology distinct so intended and actua...",
+          "pos": [
+            -380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub decision",
+          "tip": "AODL intent \u2192 compiled plan \u2192 observed topology\n\ntype: mechanism\nkind: contract\nstage: experimental\npurpose: Keep desired orchestration, runtime-safe compiled plan and observed topology distinct so intended and actual execution can be compared.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/aodl-intent-plan-observed",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/agenttrace-cross-harness-observation",
+          "title": "Cross-harness trace normalization",
+          "sub": "mechanism",
+          "body": "Normalize session/cost/token/time evidence from heterogeneous harness logs without pretending missing event...",
+          "pos": [
+            0,
+            0
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "Cross-harness trace normalization\n\ntype: mechanism\nkind: observability\nstage: experimental\npurpose: Normalize session/cost/token/time evidence from heterogeneous harness logs without pretending missing event-level evidence exists.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/agenttrace-cross-harness-observation",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/jev-typed-decision",
+          "title": "Jev / typed bounded decision",
+          "sub": "mechanism",
+          "body": "Replace autoregressive choice generation with bounded typed scoring/readout when the decision space is expl...",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub decision",
+          "tip": "Jev / typed bounded decision\n\ntype: mechanism\nkind: decision\nstage: experimental\npurpose: Replace autoregressive choice generation with bounded typed scoring/readout when the decision space is explicit.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/jev-typed-decision",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/rlm-context-spill",
+          "title": "RLM context spill",
+          "sub": "mechanism",
+          "body": "Keep large context addressable outside the frontier model's active window.",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "RLM context spill\n\ntype: mechanism\nkind: context\nstage: production\npurpose: Keep large context addressable outside the frontier model's active window.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/rlm-context-spill",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism-family/sol-pi",
+          "title": "sol-pi",
+          "sub": "mechanism family",
+          "body": "",
+          "pos": [
+            0,
+            260
+          ],
+          "w": 320,
+          "kind": "hub contract",
+          "tip": "sol-pi\n\ntype: mechanism_family\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism_family",
+            "graphId": "z0://mechanism-family/sol-pi",
+            "semanticLevel": 1,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/sol-pi-action-fusion",
+          "title": "SoL-Pi Action Fusion",
+          "sub": "mechanism",
+          "body": "Fuse an edit/write and its predictable validation into one tool action.",
+          "pos": [
+            380,
+            260
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "SoL-Pi Action Fusion\n\ntype: mechanism\nkind: efficiency\nstage: experimental\npurpose: Fuse an edit/write and its predictable validation into one tool action.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/sol-pi-action-fusion",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/sol-pi-evidence-reducer",
+          "title": "SoL-Pi Evidence-Preserving Reducer",
+          "sub": "mechanism",
+          "body": "Compress long diagnostic observations into receipts while retaining quote-verifiable evidence and falling o...",
+          "pos": [
+            -380,
+            520
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "SoL-Pi Evidence-Preserving Reducer\n\ntype: mechanism\nkind: compression\nstage: experimental\npurpose: Compress long diagnostic observations into receipts while retaining quote-verifiable evidence and falling open on verification failure.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/sol-pi-evidence-reducer",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/sol-pi-observation-pack",
+          "title": "SoL-Pi ObservationPack",
+          "sub": "mechanism",
+          "body": "Replace repeated large observations with stable handles and exact recall.",
+          "pos": [
+            0,
+            520
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "SoL-Pi ObservationPack\n\ntype: mechanism\nkind: context\nstage: experimental\npurpose: Replace repeated large observations with stable handles and exact recall.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/sol-pi-observation-pack",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/sol-pi-online-context-compact",
+          "title": "SoL-Pi Online Context Compact",
+          "sub": "mechanism",
+          "body": "Trigger bounded context compaction at completed plan boundaries using economics/window pressure rather than...",
+          "pos": [
+            380,
+            520
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "SoL-Pi Online Context Compact\n\ntype: mechanism\nkind: compression\nstage: experimental\npurpose: Trigger bounded context compaction at completed plan boundaries using economics/window pressure rather than replaying completed work indefinitely.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/sol-pi-online-context-compact",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        }
+      ],
+      "layout": {
+        "fitMargin": 160,
+        "zoomMax": 0.9
+      }
+    },
+    {
+      "id": "lifecycles",
+      "title": "Promotion + history",
+      "caption": "Promotion ladders and truth states are architecture, not Git trivia. These nodes make evolution and authority explicit.",
+      "anchor": [
+        5700,
+        4500
+      ],
+      "nodes": [
+        {
+          "id": "z0://lifecycle-state/verified-oss-rolling:candidate",
+          "title": "candidate",
+          "sub": "lifecycle state",
+          "body": "",
+          "pos": [
+            -380,
+            0
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "candidate\n\ntype: lifecycle_state\nstage: candidate\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle_state",
+            "graphId": "z0://lifecycle-state/verified-oss-rolling:candidate",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle-state/architecture-truth:declared",
+          "title": "declared",
+          "sub": "lifecycle state",
+          "body": "",
+          "pos": [
+            0,
+            0
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "declared\n\ntype: lifecycle_state\nstage: declared\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle_state",
+            "graphId": "z0://lifecycle-state/architecture-truth:declared",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle-state/architecture-truth:derived",
+          "title": "derived",
+          "sub": "lifecycle state",
+          "body": "",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "derived\n\ntype: lifecycle_state\nstage: derived\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle_state",
+            "graphId": "z0://lifecycle-state/architecture-truth:derived",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle-state/verified-oss-rolling:dev",
+          "title": "dev",
+          "sub": "lifecycle state",
+          "body": "",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "dev\n\ntype: lifecycle_state\nstage: dev\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle_state",
+            "graphId": "z0://lifecycle-state/verified-oss-rolling:dev",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle/evolution-lab-promotion",
+          "title": "Evolution Lab candidate promotion",
+          "sub": "lifecycle",
+          "body": "Experiment genomes are eliminated cheaply and promoted only after measured replay/verifier evidence; previe...",
+          "pos": [
+            0,
+            260
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "Evolution Lab candidate promotion\n\ntype: lifecycle\nkind: experiment\nrule: Experiment genomes are eliminated cheaply and promoted only after measured replay/verifier evidence; preview/nightly branches carry rolling candidates.\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle",
+            "graphId": "z0://lifecycle/evolution-lab-promotion",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle-state/architecture-truth:historical",
+          "title": "historical",
+          "sub": "lifecycle state",
+          "body": "",
+          "pos": [
+            380,
+            260
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "historical\n\ntype: lifecycle_state\nstage: historical\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle_state",
+            "graphId": "z0://lifecycle-state/architecture-truth:historical",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle-state/architecture-truth:implemented",
+          "title": "implemented",
+          "sub": "lifecycle state",
+          "body": "",
+          "pos": [
+            -380,
+            520
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "implemented\n\ntype: lifecycle_state\nstage: implemented\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle_state",
+            "graphId": "z0://lifecycle-state/architecture-truth:implemented",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle-state/verified-oss-rolling:main",
+          "title": "main",
+          "sub": "lifecycle state",
+          "body": "",
+          "pos": [
+            0,
+            520
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "main\n\ntype: lifecycle_state\nstage: main\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle_state",
+            "graphId": "z0://lifecycle-state/verified-oss-rolling:main",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle-state/verified-oss-rolling:nightly",
+          "title": "nightly",
+          "sub": "lifecycle state",
+          "body": "",
+          "pos": [
+            380,
+            520
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "nightly\n\ntype: lifecycle_state\nstage: nightly\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle_state",
+            "graphId": "z0://lifecycle-state/verified-oss-rolling:nightly",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle-state/architecture-truth:observed",
+          "title": "observed",
+          "sub": "lifecycle state",
+          "body": "",
+          "pos": [
+            -380,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "observed\n\ntype: lifecycle_state\nstage: observed\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle_state",
+            "graphId": "z0://lifecycle-state/architecture-truth:observed",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle-state/verified-oss-rolling:preview",
+          "title": "preview",
+          "sub": "lifecycle state",
+          "body": "",
+          "pos": [
+            0,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "preview\n\ntype: lifecycle_state\nstage: preview\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle_state",
+            "graphId": "z0://lifecycle-state/verified-oss-rolling:preview",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle-state/evolution-lab-promotion:promoted",
+          "title": "promoted",
+          "sub": "lifecycle state",
+          "body": "",
+          "pos": [
+            380,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "promoted\n\ntype: lifecycle_state\nstage: promoted\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle_state",
+            "graphId": "z0://lifecycle-state/evolution-lab-promotion:promoted",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle-state/evolution-lab-promotion:replay",
+          "title": "replay",
+          "sub": "lifecycle state",
+          "body": "",
+          "pos": [
+            -380,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "replay\n\ntype: lifecycle_state\nstage: replay\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle_state",
+            "graphId": "z0://lifecycle-state/evolution-lab-promotion:replay",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle-state/evolution-lab-promotion:sanity",
+          "title": "sanity",
+          "sub": "lifecycle state",
+          "body": "",
+          "pos": [
+            0,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "sanity\n\ntype: lifecycle_state\nstage: sanity\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle_state",
+            "graphId": "z0://lifecycle-state/evolution-lab-promotion:sanity",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle-state/evolution-lab-promotion:shadow",
+          "title": "shadow",
+          "sub": "lifecycle state",
+          "body": "",
+          "pos": [
+            380,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "shadow\n\ntype: lifecycle_state\nstage: shadow\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle_state",
+            "graphId": "z0://lifecycle-state/evolution-lab-promotion:shadow",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle/verified-oss-rolling",
+          "title": "Verified OSS rolling promotion",
+          "sub": "lifecycle",
+          "body": "Evidence-gated work moves through increasingly authoritative surfaces; workers do not merge main.",
+          "pos": [
+            -380,
+            1300
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "Verified OSS rolling promotion\n\ntype: lifecycle\nkind: promotion\nrule: Evidence-gated work moves through increasingly authoritative surfaces; workers do not merge main.\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle",
+            "graphId": "z0://lifecycle/verified-oss-rolling",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://lifecycle/architecture-truth",
+          "title": "Zer0 architecture truth classes",
+          "sub": "lifecycle",
+          "body": "Lower-authority observations may expose drift but never silently overwrite declared architecture.",
+          "pos": [
+            0,
+            1300
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "Zer0 architecture truth classes\n\ntype: lifecycle\nkind: epistemic\nrule: Lower-authority observations may expose drift but never silently overwrite declared architecture.\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "lifecycle",
+            "graphId": "z0://lifecycle/architecture-truth",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        }
+      ],
+      "layout": {
+        "fitMargin": 160,
+        "zoomMax": 0.9
+      }
+    },
+    {
+      "id": "profiles",
+      "title": "Install profiles",
+      "caption": "Profiles are lenses over installable components; they are not a second architecture hierarchy.",
+      "anchor": [
+        3000,
+        6200
+      ],
+      "nodes": [
+        {
+          "id": "profile:compute",
+          "title": "compute",
+          "sub": "profile",
+          "body": "Model/provider routing and cost optimization.",
+          "pos": [
+            -380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub environment",
+          "tip": "compute\n\ntype: profile\n\ndeclared: kvnloo/z0@main\npath: registry/profiles.yaml",
+          "meta": {
+            "graphType": "profile",
+            "graphId": "z0://profile/compute",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "profile:core",
+          "title": "core",
+          "sub": "profile",
+          "body": "Normal Zer0 user \u2014 agent + measurement.",
+          "pos": [
+            0,
+            0
+          ],
+          "w": 320,
+          "kind": "hub environment",
+          "tip": "core\n\ntype: profile\n\ndeclared: kvnloo/z0@main\npath: registry/profiles.yaml",
+          "meta": {
+            "graphType": "profile",
+            "graphId": "z0://profile/core",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "profile:desktop",
+          "title": "desktop",
+          "sub": "profile",
+          "body": "Predictive desktop + Handsfree voice (OMP subsystems).",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub environment",
+          "tip": "desktop\n\ntype: profile\n\ndeclared: kvnloo/z0@main\npath: registry/profiles.yaml",
+          "meta": {
+            "graphType": "profile",
+            "graphId": "z0://profile/desktop",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "profile:full",
+          "title": "full",
+          "sub": "profile",
+          "body": "All stable/canary components (excludes idea/reference-only).",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 320,
+          "kind": "hub environment",
+          "tip": "full\n\ntype: profile\n\ndeclared: kvnloo/z0@main\npath: registry/profiles.yaml",
+          "meta": {
+            "graphType": "profile",
+            "graphId": "z0://profile/full",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "profile:minimal",
+          "title": "minimal",
+          "sub": "profile",
+          "body": "OMP only \u2014 the coding agent runtime.",
+          "pos": [
+            0,
+            260
+          ],
+          "w": 320,
+          "kind": "hub environment",
+          "tip": "minimal\n\ntype: profile\n\ndeclared: kvnloo/z0@main\npath: registry/profiles.yaml",
+          "meta": {
+            "graphType": "profile",
+            "graphId": "z0://profile/minimal",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "profile:personal",
+          "title": "personal",
+          "sub": "profile",
+          "body": "Personalization and learned policy.",
+          "pos": [
+            380,
+            260
+          ],
+          "w": 320,
+          "kind": "hub environment",
+          "tip": "personal\n\ntype: profile\n\ndeclared: kvnloo/z0@main\npath: registry/profiles.yaml",
+          "meta": {
+            "graphType": "profile",
+            "graphId": "z0://profile/personal",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "profile:research",
+          "title": "research",
+          "sub": "profile",
+          "body": "Autonomous optimization and research knowledge.",
+          "pos": [
+            -380,
+            520
+          ],
+          "w": 320,
+          "kind": "hub environment",
+          "tip": "research\n\ntype: profile\n\ndeclared: kvnloo/z0@main\npath: registry/profiles.yaml",
+          "meta": {
+            "graphType": "profile",
+            "graphId": "z0://profile/research",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        }
+      ],
+      "layout": {
+        "fitMargin": 160,
+        "zoomMax": 0.9
+      }
+    },
+    {
+      "id": "repositories",
+      "title": "Implementation repositories",
+      "caption": "Repositories are implementation evidence containers. They remain distinct from components, harnesses and mechanisms.",
+      "anchor": [
+        5700,
+        6500
+      ],
+      "nodes": [
+        {
+          "id": "z0://repo/earendil-works/pi",
+          "title": "earendil-works/pi",
+          "sub": "repository",
+          "body": "earendil-works/pi",
+          "pos": [
+            -380,
+            0
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "earendil-works/pi\n\ntype: repository\nrepo: earendil-works/pi\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/earendil-works/pi",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/.files",
+          "title": "kvnloo/.files",
+          "sub": "repository",
+          "body": "kvnloo/.files",
+          "pos": [
+            0,
+            0
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/.files\n\ntype: repository\nrepo: kvnloo/.files\n\ndeclared: kvnloo/z0@main\npath: registry/components.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/.files",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/agenttrace",
+          "title": "kvnloo/agenttrace",
+          "sub": "repository",
+          "body": "kvnloo/agenttrace",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/agenttrace\n\ntype: repository\nrepo: kvnloo/agenttrace\n\ndeclared: kvnloo/z0@main\npath: registry/components.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/agenttrace",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/aodl",
+          "title": "kvnloo/aodl",
+          "sub": "repository",
+          "body": "kvnloo/aodl",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/aodl\n\ntype: repository\nrepo: kvnloo/aodl\n\ndeclared: kvnloo/z0@main\npath: registry/components.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/aodl",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/deepseek-harness",
+          "title": "kvnloo/deepseek-harness",
+          "sub": "repository",
+          "body": "kvnloo/deepseek-harness",
+          "pos": [
+            0,
+            260
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/deepseek-harness\n\ntype: repository\nrepo: kvnloo/deepseek-harness\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/deepseek-harness",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/evolution-lab",
+          "title": "kvnloo/evolution-lab",
+          "sub": "repository",
+          "body": "kvnloo/evolution-lab",
+          "pos": [
+            380,
+            260
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/evolution-lab\n\ntype: repository\nrepo: kvnloo/evolution-lab\n\ndeclared: kvnloo/z0@main\npath: registry/components.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/evolution-lab",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/frontier-kb",
+          "title": "kvnloo/frontier-kb",
+          "sub": "repository",
+          "body": "kvnloo/frontier-kb",
+          "pos": [
+            -380,
+            520
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/frontier-kb\n\ntype: repository\nrepo: kvnloo/frontier-kb\n\ndeclared: kvnloo/z0@main\npath: registry/components.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/frontier-kb",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/hermes-agent",
+          "title": "kvnloo/hermes-agent",
+          "sub": "repository",
+          "body": "kvnloo/hermes-agent",
+          "pos": [
+            0,
+            520
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/hermes-agent\n\ntype: repository\nrepo: kvnloo/hermes-agent\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/hermes-agent",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/kerdoios",
+          "title": "kvnloo/kerdoios",
+          "sub": "repository",
+          "body": "kvnloo/kerdoios",
+          "pos": [
+            380,
+            520
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/kerdoios\n\ntype: repository\nrepo: kvnloo/kerdoios\n\ndeclared: kvnloo/z0@main\npath: registry/components.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/kerdoios",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/Memento",
+          "title": "kvnloo/Memento",
+          "sub": "repository",
+          "body": "kvnloo/Memento",
+          "pos": [
+            -380,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/Memento\n\ntype: repository\nrepo: kvnloo/Memento\n\ndeclared: kvnloo/z0@main\npath: registry/components.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/Memento",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/oh-my-pi",
+          "title": "kvnloo/oh-my-pi",
+          "sub": "repository",
+          "body": "kvnloo/oh-my-pi",
+          "pos": [
+            0,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/oh-my-pi\n\ntype: repository\nrepo: kvnloo/oh-my-pi\n\ndeclared: kvnloo/z0@main\npath: registry/components.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/oh-my-pi",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/SoL-Pi",
+          "title": "kvnloo/SoL-Pi",
+          "sub": "repository",
+          "body": "kvnloo/SoL-Pi",
+          "pos": [
+            380,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/SoL-Pi\n\ntype: repository\nrepo: kvnloo/SoL-Pi\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/SoL-Pi",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/sol-pi-hermes",
+          "title": "kvnloo/sol-pi-hermes",
+          "sub": "repository",
+          "body": "kvnloo/sol-pi-hermes",
+          "pos": [
+            -380,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/sol-pi-hermes\n\ntype: repository\nrepo: kvnloo/sol-pi-hermes\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/sol-pi-hermes",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/tokenomics",
+          "title": "kvnloo/tokenomics",
+          "sub": "repository",
+          "body": "kvnloo/tokenomics",
+          "pos": [
+            0,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/tokenomics\n\ntype: repository\nrepo: kvnloo/tokenomics\n\ndeclared: kvnloo/z0@main\npath: registry/components.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/tokenomics",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/verified-oss-loop",
+          "title": "kvnloo/verified-oss-loop",
+          "sub": "repository",
+          "body": "kvnloo/verified-oss-loop",
+          "pos": [
+            380,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/verified-oss-loop\n\ntype: repository\nrepo: kvnloo/verified-oss-loop\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/verified-oss-loop",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/z0",
+          "title": "kvnloo/z0",
+          "sub": "repository",
+          "body": "kvnloo/z0",
+          "pos": [
+            -380,
+            1300
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/z0\n\ntype: repository\nrepo: kvnloo/z0\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/z0",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/z0intelligence",
+          "title": "kvnloo/z0intelligence",
+          "sub": "repository",
+          "body": "kvnloo/z0intelligence",
+          "pos": [
+            0,
+            1300
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/z0intelligence\n\ntype: repository\nrepo: kvnloo/z0intelligence\n\ndeclared: kvnloo/z0@main\npath: registry/components.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/z0intelligence",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/openai/codex",
+          "title": "openai/codex",
+          "sub": "repository",
+          "body": "openai/codex",
+          "pos": [
+            380,
+            1300
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "openai/codex\n\ntype: repository\nrepo: openai/codex\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/openai/codex",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        }
+      ],
+      "layout": {
+        "fitMargin": 160,
+        "zoomMax": 0.9
+      }
+    },
+    {
+      "id": "representations",
+      "title": "Information representations",
+      "caption": "The forms information takes as it is addressed, compressed, compiled, observed and measured. This is the semantic data plane.",
+      "anchor": [
+        900,
+        7900
+      ],
+      "nodes": [
+        {
+          "id": "z0://representation/trace-span",
+          "title": "Agent trace span",
+          "sub": "representation",
+          "body": "Historical normalized execution span for cross-harness observability.",
+          "pos": [
+            -380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub measurement",
+          "tip": "Agent trace span\n\ntype: representation\nkind: observation\nscale: small\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/trace-span",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://representation/aodl-intent",
+          "title": "AODL intent",
+          "sub": "representation",
+          "body": "Typed desired orchestration before runtime-safe compilation.",
+          "pos": [
+            0,
+            0
+          ],
+          "w": 320,
+          "kind": "hub decision",
+          "tip": "AODL intent\n\ntype: representation\nkind: intent\nscale: compact\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/aodl-intent",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://representation/compiled-decision-state",
+          "title": "Compiled decision state",
+          "sub": "representation",
+          "body": "Decision-relevant state after retrieval, filtering, and bounded context compilation.",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub decision",
+          "tip": "Compiled decision state\n\ntype: representation\nkind: decision_state\nscale: compact\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/compiled-decision-state",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://representation/compiled-plan",
+          "title": "Compiled orchestration plan",
+          "sub": "representation",
+          "body": "Runtime-safe plan compiled from typed intent before execution.",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 320,
+          "kind": "hub decision",
+          "tip": "Compiled orchestration plan\n\ntype: representation\nkind: plan\nscale: compact\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/compiled-plan",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://representation/decision-receipt",
+          "title": "Decision receipt",
+          "sub": "representation",
+          "body": "Structured audit record of a routing or policy decision.",
+          "pos": [
+            0,
+            260
+          ],
+          "w": 320,
+          "kind": "hub decision",
+          "tip": "Decision receipt\n\ntype: representation\nkind: decision\nscale: tiny\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/decision-receipt",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://representation/evidence-receipt",
+          "title": "Evidence receipt",
+          "sub": "representation",
+          "body": "Quote-verifiable compressed diagnostic evidence with a fall-open path when verification fails.",
+          "pos": [
+            380,
+            260
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "Evidence receipt\n\ntype: representation\nkind: evidence_bundle\nscale: compact\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/evidence-receipt",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://representation/observation-pack",
+          "title": "ObservationPack",
+          "sub": "representation",
+          "body": "Stable compact handle plus exact recall path for large observations.",
+          "pos": [
+            -380,
+            520
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "ObservationPack\n\ntype: representation\nkind: evidence_bundle\nscale: bounded\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/observation-pack",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://representation/observed-topology",
+          "title": "Observed execution topology",
+          "sub": "representation",
+          "body": "What actually ran, kept distinct from desired intent and compiled plan.",
+          "pos": [
+            0,
+            520
+          ],
+          "w": 320,
+          "kind": "hub measurement",
+          "tip": "Observed execution topology\n\ntype: representation\nkind: observation\nscale: bounded\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/observed-topology",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://representation/raw-context",
+          "title": "Raw context",
+          "sub": "representation",
+          "body": "Uncompressed source text, logs, files, observations, or conversation state.",
+          "pos": [
+            380,
+            520
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "Raw context\n\ntype: representation\nkind: source\nscale: large\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/raw-context",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://representation/rlm-address",
+          "title": "RLM address",
+          "sub": "representation",
+          "body": "Stable handle that keeps large context externally addressable instead of replaying it into the frontier win...",
+          "pos": [
+            -380,
+            780
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "RLM address\n\ntype: representation\nkind: address\nscale: tiny\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/rlm-address",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://representation/tokenomics-event",
+          "title": "Tokenomics event",
+          "sub": "representation",
+          "body": "Vendor-neutral token, cost, latency, and execution measurement envelope.",
+          "pos": [
+            0,
+            780
+          ],
+          "w": 320,
+          "kind": "hub measurement",
+          "tip": "Tokenomics event\n\ntype: representation\nkind: measurement\nscale: small\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/tokenomics-event",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        }
+      ],
+      "layout": {
+        "fitMargin": 160,
+        "zoomMax": 0.9
+      }
+    },
+    {
+      "id": "epistemic",
+      "title": "Evidence + belief",
+      "caption": "EvidenceDependency nodes preserve why a relationship is believed, what would invalidate it, and the fastest path to re-verify it.",
+      "anchor": [
+        4100,
+        7900
+      ],
+      "nodes": [
+        {
+          "id": "z0://evidence-dependency/aodl-intent-to-plan",
+          "title": "aodl-intent-to-plan",
+          "sub": "evidence dependency",
+          "body": "compiles_to",
+          "pos": [
+            -380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "aodl-intent-to-plan\n\ntype: evidence_dependency\nrelation: compiles_to\nconfidence: declared\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_dependency",
+            "graphId": "z0://evidence-dependency/aodl-intent-to-plan",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-dependency/decision-state-to-receipt",
+          "title": "decision-state-to-receipt",
+          "sub": "evidence dependency",
+          "body": "decides_to",
+          "pos": [
+            0,
+            0
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "decision-state-to-receipt\n\ntype: evidence_dependency\nrelation: decides_to\nconfidence: declared\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_dependency",
+            "graphId": "z0://evidence-dependency/decision-state-to-receipt",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-dependency/evidence-reducer-preserves-verifiability",
+          "title": "evidence-reducer-preserves-verifiability",
+          "sub": "evidence dependency",
+          "body": "compresses_to",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "evidence-reducer-preserves-verifiability\n\ntype: evidence_dependency\nrelation: compresses_to\nconfidence: declared\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_dependency",
+            "graphId": "z0://evidence-dependency/evidence-reducer-preserves-verifiability",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-dependency/execution-to-tokenomics",
+          "title": "execution-to-tokenomics",
+          "sub": "evidence dependency",
+          "body": "measured_as",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "execution-to-tokenomics\n\ntype: evidence_dependency\nrelation: measured_as\nconfidence: declared\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_dependency",
+            "graphId": "z0://evidence-dependency/execution-to-tokenomics",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/kvnloo/oh-my-pi:README.md",
+          "title": "kvnloo/oh-my-pi:README.md",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            0,
+            260
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/oh-my-pi:README.md\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/kvnloo/oh-my-pi:README.md",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-dependency/observation-pack-compresses-context",
+          "title": "observation-pack-compresses-context",
+          "sub": "evidence dependency",
+          "body": "compresses_to",
+          "pos": [
+            380,
+            260
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "observation-pack-compresses-context\n\ntype: evidence_dependency\nrelation: compresses_to\nconfidence: declared\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_dependency",
+            "graphId": "z0://evidence-dependency/observation-pack-compresses-context",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-dependency/omp-rlm-context-spill",
+          "title": "omp-rlm-context-spill",
+          "sub": "evidence dependency",
+          "body": "implements",
+          "pos": [
+            -380,
+            520
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "omp-rlm-context-spill\n\ntype: evidence_dependency\nrelation: implements\nconfidence: declared\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_dependency",
+            "graphId": "z0://evidence-dependency/omp-rlm-context-spill",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-dependency/plan-to-observed-topology",
+          "title": "plan-to-observed-topology",
+          "sub": "evidence dependency",
+          "body": "observed_as",
+          "pos": [
+            0,
+            520
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "plan-to-observed-topology\n\ntype: evidence_dependency\nrelation: observed_as\nconfidence: declared\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_dependency",
+            "graphId": "z0://evidence-dependency/plan-to-observed-topology",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/registry/components.yaml%23components.oh-my-pi",
+          "title": "registry/components.yaml#components.oh-my-pi",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            380,
+            520
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "registry/components.yaml#components.oh-my-pi\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/registry/components.yaml%23components.oh-my-pi",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.aodl.intent.v1",
+          "title": "registry/interfaces.yaml#interfaces.aodl.intent.v1",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            -380,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "registry/interfaces.yaml#interfaces.aodl.intent.v1\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.aodl.intent.v1",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.tokenomics.event.v0",
+          "title": "registry/interfaces.yaml#interfaces.tokenomics.event.v0",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            0,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "registry/interfaces.yaml#interfaces.tokenomics.event.v0\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.tokenomics.event.v0",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.z0int.decision_receipt.v1",
+          "title": "registry/interfaces.yaml#interfaces.z0int.decision_receipt.v1",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            380,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "registry/interfaces.yaml#interfaces.z0int.decision_receipt.v1\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.z0int.decision_receipt.v1",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.agenttrace-cross-harness-observation",
+          "title": "registry/mechanisms.yaml#mechanisms.agenttrace-cross-harness-observation",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            -380,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "registry/mechanisms.yaml#mechanisms.agenttrace-cross-harness-observation\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.agenttrace-cross-harness-observation",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.aodl-intent-plan-observed",
+          "title": "registry/mechanisms.yaml#mechanisms.aodl-intent-plan-observed",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            0,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "registry/mechanisms.yaml#mechanisms.aodl-intent-plan-observed\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.aodl-intent-plan-observed",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.jev-typed-decision",
+          "title": "registry/mechanisms.yaml#mechanisms.jev-typed-decision",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            380,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "registry/mechanisms.yaml#mechanisms.jev-typed-decision\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.jev-typed-decision",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.sol-pi-evidence-reducer",
+          "title": "registry/mechanisms.yaml#mechanisms.sol-pi-evidence-reducer",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            -380,
+            1300
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "registry/mechanisms.yaml#mechanisms.sol-pi-evidence-reducer\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.sol-pi-evidence-reducer",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.sol-pi-observation-pack",
+          "title": "registry/mechanisms.yaml#mechanisms.sol-pi-observation-pack",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            0,
+            1300
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "registry/mechanisms.yaml#mechanisms.sol-pi-observation-pack\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.sol-pi-observation-pack",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        }
+      ],
+      "layout": {
+        "fitMargin": 160,
+        "zoomMax": 0.9
+      }
     }
   ],
   "connections": [
     {
-      "from": "oh-my-pi",
-      "to": "flow",
+      "from": "agenttrace",
+      "to": "oh-my-pi",
+      "kind": "integrates"
+    },
+    {
+      "from": "agenttrace",
+      "to": "tokenomics",
+      "kind": "integrates"
+    },
+    {
+      "from": "agenttrace",
+      "to": "iface:agenttrace.span.v0",
+      "kind": "provides"
+    },
+    {
+      "from": "iface:tokenomics.event.v0",
+      "to": "agenttrace",
+      "kind": "consumes"
+    },
+    {
+      "from": "aodl",
+      "to": "oh-my-pi",
+      "kind": "integrates"
+    },
+    {
+      "from": "aodl",
+      "to": "kerdoios",
+      "kind": "integrates"
+    },
+    {
+      "from": "aodl",
+      "to": "iface:aodl.intent.v1",
+      "kind": "provides"
+    },
+    {
+      "from": "z0intelligence",
+      "to": "evolution-lab",
       "kind": "depends",
       "label": "depends"
     },
@@ -572,10 +2490,107 @@
       "label": "depends"
     },
     {
+      "from": "evolution-lab",
+      "to": "frontier-kb",
+      "kind": "integrates"
+    },
+    {
+      "from": "evolution-lab",
+      "to": "z0intelligence",
+      "kind": "integrates"
+    },
+    {
+      "from": "iface:tokenomics.report.v1",
+      "to": "evolution-lab",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:z0int.decision_receipt.v1",
+      "to": "evolution-lab",
+      "kind": "consumes"
+    },
+    {
+      "from": "oh-my-pi",
+      "to": "flow",
+      "kind": "depends",
+      "label": "depends"
+    },
+    {
+      "from": "flow",
+      "to": "tokenomics",
+      "kind": "integrates"
+    },
+    {
+      "from": "flow",
+      "to": "z0intelligence",
+      "kind": "integrates"
+    },
+    {
+      "from": "flow",
+      "to": "iface:flow_prediction.v1",
+      "kind": "provides"
+    },
+    {
+      "from": "flow",
+      "to": "iface:os.next_context.v0",
+      "kind": "provides"
+    },
+    {
+      "from": "iface:tokenomics.event.v0",
+      "to": "flow",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:z0int.decision_receipt.v1",
+      "to": "flow",
+      "kind": "consumes"
+    },
+    {
+      "from": "tokenomics",
+      "to": "kerdoios",
+      "kind": "depends",
+      "label": "depends"
+    },
+    {
+      "from": "kerdoios",
+      "to": "oh-my-pi",
+      "kind": "integrates"
+    },
+    {
+      "from": "kerdoios",
+      "to": "z0intelligence",
+      "kind": "integrates"
+    },
+    {
+      "from": "kerdoios",
+      "to": "tokenomics",
+      "kind": "integrates"
+    },
+    {
+      "from": "kerdoios",
+      "to": "iface:kerdoios.route.v1",
+      "kind": "provides"
+    },
+    {
+      "from": "iface:tokenomics.event.v0",
+      "to": "kerdoios",
+      "kind": "consumes"
+    },
+    {
+      "from": "iface:z0int.decision_receipt.v1",
+      "to": "kerdoios",
+      "kind": "consumes"
+    },
+    {
       "from": "z0intelligence",
       "to": "memento",
       "kind": "depends",
       "label": "depends"
+    },
+    {
+      "from": "memento",
+      "to": "flow",
+      "kind": "integrates"
     },
     {
       "from": "oh-my-pi",
@@ -589,127 +2604,12 @@
     },
     {
       "from": "oh-my-pi",
-      "to": "aodl",
-      "kind": "integrates"
-    },
-    {
-      "from": "oh-my-pi",
-      "to": "kerdoios",
-      "kind": "integrates"
-    },
-    {
-      "from": "oh-my-pi",
-      "to": "agenttrace",
-      "kind": "integrates"
-    },
-    {
-      "from": "tokenomics",
-      "to": "z0intelligence",
-      "kind": "integrates"
-    },
-    {
-      "from": "tokenomics",
-      "to": "kerdoios",
-      "kind": "integrates"
-    },
-    {
-      "from": "tokenomics",
-      "to": "agenttrace",
-      "kind": "integrates"
-    },
-    {
-      "from": "tokenomics",
-      "to": "flow",
-      "kind": "integrates"
-    },
-    {
-      "from": "flow",
-      "to": "z0intelligence",
-      "kind": "integrates"
-    },
-    {
-      "from": "z0intelligence",
-      "to": "kerdoios",
-      "kind": "integrates"
-    },
-    {
-      "from": "z0intelligence",
-      "to": "evolution-lab",
-      "kind": "integrates"
-    },
-    {
-      "from": "kerdoios",
-      "to": "aodl",
-      "kind": "integrates"
-    },
-    {
-      "from": "evolution-lab",
-      "to": "frontier-kb",
-      "kind": "integrates"
-    },
-    {
-      "from": "memento",
-      "to": "flow",
-      "kind": "integrates"
-    },
-    {
-      "from": "openjev",
-      "to": "oh-my-pi",
-      "kind": "integrates"
-    },
-    {
-      "from": "openjev",
-      "to": "z0intelligence",
-      "kind": "integrates"
-    },
-    {
-      "from": "tokenomics",
-      "to": "iface:tokenomics.event.v0",
-      "kind": "provides"
-    },
-    {
-      "from": "tokenomics",
-      "to": "iface:tokenomics.report.v1",
-      "kind": "provides"
-    },
-    {
-      "from": "z0intelligence",
-      "to": "iface:z0int.decision_receipt.v1",
-      "kind": "provides"
-    },
-    {
-      "from": "flow",
-      "to": "iface:flow_prediction.v1",
-      "kind": "provides"
-    },
-    {
-      "from": "flow",
-      "to": "iface:os.next_context.v0",
-      "kind": "provides"
-    },
-    {
-      "from": "aodl",
-      "to": "iface:aodl.intent.v1",
-      "kind": "provides"
-    },
-    {
-      "from": "oh-my-pi",
       "to": "iface:omp.session.aggregate",
       "kind": "provides"
     },
     {
       "from": "oh-my-pi",
       "to": "iface:cu.stage_intent.v0",
-      "kind": "provides"
-    },
-    {
-      "from": "kerdoios",
-      "to": "iface:kerdoios.route.v1",
-      "kind": "provides"
-    },
-    {
-      "from": "agenttrace",
-      "to": "iface:agenttrace.span.v0",
       "kind": "provides"
     },
     {
@@ -733,6 +2633,21 @@
       "kind": "consumes"
     },
     {
+      "from": "tokenomics",
+      "to": "z0intelligence",
+      "kind": "integrates"
+    },
+    {
+      "from": "tokenomics",
+      "to": "iface:tokenomics.event.v0",
+      "kind": "provides"
+    },
+    {
+      "from": "tokenomics",
+      "to": "iface:tokenomics.report.v1",
+      "kind": "provides"
+    },
+    {
       "from": "iface:z0int.decision_receipt.v1",
       "to": "tokenomics",
       "kind": "consumes"
@@ -743,14 +2658,15 @@
       "kind": "consumes"
     },
     {
-      "from": "iface:tokenomics.event.v0",
-      "to": "flow",
-      "kind": "consumes"
+      "from": "tokenomics",
+      "to": "z0intelligence",
+      "kind": "depends",
+      "label": "depends"
     },
     {
-      "from": "iface:z0int.decision_receipt.v1",
-      "to": "flow",
-      "kind": "consumes"
+      "from": "z0intelligence",
+      "to": "iface:z0int.decision_receipt.v1",
+      "kind": "provides"
     },
     {
       "from": "iface:tokenomics.report.v1",
@@ -763,29 +2679,868 @@
       "kind": "consumes"
     },
     {
-      "from": "iface:tokenomics.event.v0",
-      "to": "kerdoios",
-      "kind": "consumes"
+      "from": "z0://representation/aodl-intent",
+      "to": "iface:aodl.intent.v1",
+      "kind": "integrates",
+      "label": "encoded as"
     },
     {
-      "from": "iface:z0int.decision_receipt.v1",
-      "to": "kerdoios",
-      "kind": "consumes"
+      "from": "z0://representation/decision-receipt",
+      "to": "iface:z0int.decision_receipt.v1",
+      "kind": "integrates",
+      "label": "encoded as"
     },
     {
-      "from": "iface:tokenomics.report.v1",
-      "to": "evolution-lab",
-      "kind": "consumes"
+      "from": "z0://representation/tokenomics-event",
+      "to": "iface:tokenomics.event.v0",
+      "kind": "integrates",
+      "label": "encoded as"
     },
     {
-      "from": "iface:z0int.decision_receipt.v1",
-      "to": "evolution-lab",
-      "kind": "consumes"
+      "from": "z0://representation/trace-span",
+      "to": "iface:agenttrace.span.v0",
+      "kind": "integrates",
+      "label": "encoded as"
     },
     {
-      "from": "iface:tokenomics.event.v0",
+      "from": "z0://representation/aodl-intent",
+      "to": "z0://representation/compiled-plan",
+      "kind": "epistemic",
+      "label": "compiles to"
+    },
+    {
+      "from": "z0://representation/compiled-decision-state",
+      "to": "z0://representation/decision-receipt",
+      "kind": "epistemic",
+      "label": "decides to"
+    },
+    {
+      "from": "z0://representation/raw-context",
+      "to": "z0://representation/evidence-receipt",
+      "kind": "epistemic",
+      "label": "compresses to"
+    },
+    {
+      "from": "z0://representation/observed-topology",
+      "to": "z0://representation/tokenomics-event",
+      "kind": "epistemic",
+      "label": "measured as"
+    },
+    {
+      "from": "z0://representation/raw-context",
+      "to": "z0://representation/observation-pack",
+      "kind": "epistemic",
+      "label": "compresses to"
+    },
+    {
+      "from": "oh-my-pi",
+      "to": "z0://mechanism/rlm-context-spill",
+      "kind": "epistemic",
+      "label": "implements"
+    },
+    {
+      "from": "z0://representation/compiled-plan",
+      "to": "z0://representation/observed-topology",
+      "kind": "epistemic",
+      "label": "observed as"
+    },
+    {
+      "from": "z0://evidence-dependency/aodl-intent-to-plan",
+      "to": "z0://representation/compiled-plan",
+      "kind": "epistemic",
+      "label": "evidence object"
+    },
+    {
+      "from": "z0://evidence-dependency/decision-state-to-receipt",
+      "to": "z0://representation/decision-receipt",
+      "kind": "epistemic",
+      "label": "evidence object"
+    },
+    {
+      "from": "z0://evidence-dependency/evidence-reducer-preserves-verifiability",
+      "to": "z0://representation/evidence-receipt",
+      "kind": "epistemic",
+      "label": "evidence object"
+    },
+    {
+      "from": "z0://evidence-dependency/execution-to-tokenomics",
+      "to": "z0://representation/tokenomics-event",
+      "kind": "epistemic",
+      "label": "evidence object"
+    },
+    {
+      "from": "z0://evidence-dependency/observation-pack-compresses-context",
+      "to": "z0://representation/observation-pack",
+      "kind": "epistemic",
+      "label": "evidence object"
+    },
+    {
+      "from": "z0://evidence-dependency/omp-rlm-context-spill",
+      "to": "z0://mechanism/rlm-context-spill",
+      "kind": "epistemic",
+      "label": "evidence object"
+    },
+    {
+      "from": "z0://evidence-dependency/plan-to-observed-topology",
+      "to": "z0://representation/observed-topology",
+      "kind": "epistemic",
+      "label": "evidence object"
+    },
+    {
+      "from": "z0://representation/aodl-intent",
+      "to": "z0://evidence-dependency/aodl-intent-to-plan",
+      "kind": "epistemic",
+      "label": "evidence subject"
+    },
+    {
+      "from": "z0://representation/compiled-decision-state",
+      "to": "z0://evidence-dependency/decision-state-to-receipt",
+      "kind": "epistemic",
+      "label": "evidence subject"
+    },
+    {
+      "from": "z0://representation/raw-context",
+      "to": "z0://evidence-dependency/evidence-reducer-preserves-verifiability",
+      "kind": "epistemic",
+      "label": "evidence subject"
+    },
+    {
+      "from": "z0://representation/observed-topology",
+      "to": "z0://evidence-dependency/execution-to-tokenomics",
+      "kind": "epistemic",
+      "label": "evidence subject"
+    },
+    {
+      "from": "z0://representation/raw-context",
+      "to": "z0://evidence-dependency/observation-pack-compresses-context",
+      "kind": "epistemic",
+      "label": "evidence subject"
+    },
+    {
+      "from": "oh-my-pi",
+      "to": "z0://evidence-dependency/omp-rlm-context-spill",
+      "kind": "epistemic",
+      "label": "evidence subject"
+    },
+    {
+      "from": "z0://representation/compiled-plan",
+      "to": "z0://evidence-dependency/plan-to-observed-topology",
+      "kind": "epistemic",
+      "label": "evidence subject"
+    },
+    {
+      "from": "profile:compute",
+      "to": "profile:core",
+      "kind": "default",
+      "label": "extends"
+    },
+    {
+      "from": "profile:desktop",
+      "to": "profile:core",
+      "kind": "default",
+      "label": "extends"
+    },
+    {
+      "from": "profile:personal",
+      "to": "profile:core",
+      "kind": "default",
+      "label": "extends"
+    },
+    {
+      "from": "z0://lifecycle/architecture-truth",
+      "to": "z0://lifecycle-state/architecture-truth:declared",
+      "kind": "integrates",
+      "label": "has stage"
+    },
+    {
+      "from": "z0://lifecycle/architecture-truth",
+      "to": "z0://lifecycle-state/architecture-truth:derived",
+      "kind": "integrates",
+      "label": "has stage"
+    },
+    {
+      "from": "z0://lifecycle/architecture-truth",
+      "to": "z0://lifecycle-state/architecture-truth:historical",
+      "kind": "integrates",
+      "label": "has stage"
+    },
+    {
+      "from": "z0://lifecycle/architecture-truth",
+      "to": "z0://lifecycle-state/architecture-truth:implemented",
+      "kind": "integrates",
+      "label": "has stage"
+    },
+    {
+      "from": "z0://lifecycle/architecture-truth",
+      "to": "z0://lifecycle-state/architecture-truth:observed",
+      "kind": "integrates",
+      "label": "has stage"
+    },
+    {
+      "from": "z0://lifecycle/evolution-lab-promotion",
+      "to": "z0://lifecycle-state/evolution-lab-promotion:promoted",
+      "kind": "integrates",
+      "label": "has stage"
+    },
+    {
+      "from": "z0://lifecycle/evolution-lab-promotion",
+      "to": "z0://lifecycle-state/evolution-lab-promotion:replay",
+      "kind": "integrates",
+      "label": "has stage"
+    },
+    {
+      "from": "z0://lifecycle/evolution-lab-promotion",
+      "to": "z0://lifecycle-state/evolution-lab-promotion:sanity",
+      "kind": "integrates",
+      "label": "has stage"
+    },
+    {
+      "from": "z0://lifecycle/evolution-lab-promotion",
+      "to": "z0://lifecycle-state/evolution-lab-promotion:shadow",
+      "kind": "integrates",
+      "label": "has stage"
+    },
+    {
+      "from": "z0://lifecycle/verified-oss-rolling",
+      "to": "z0://lifecycle-state/verified-oss-rolling:candidate",
+      "kind": "integrates",
+      "label": "has stage"
+    },
+    {
+      "from": "z0://lifecycle/verified-oss-rolling",
+      "to": "z0://lifecycle-state/verified-oss-rolling:dev",
+      "kind": "integrates",
+      "label": "has stage"
+    },
+    {
+      "from": "z0://lifecycle/verified-oss-rolling",
+      "to": "z0://lifecycle-state/verified-oss-rolling:main",
+      "kind": "integrates",
+      "label": "has stage"
+    },
+    {
+      "from": "z0://lifecycle/verified-oss-rolling",
+      "to": "z0://lifecycle-state/verified-oss-rolling:nightly",
+      "kind": "integrates",
+      "label": "has stage"
+    },
+    {
+      "from": "z0://lifecycle/verified-oss-rolling",
+      "to": "z0://lifecycle-state/verified-oss-rolling:preview",
+      "kind": "integrates",
+      "label": "has stage"
+    },
+    {
+      "from": "agenttrace",
+      "to": "z0://repo/kvnloo/agenttrace",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/agenttrace-cross-harness-observation",
       "to": "agenttrace",
-      "kind": "consumes"
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "aodl",
+      "to": "z0://repo/kvnloo/aodl",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/aodl-intent-plan-observed",
+      "to": "aodl",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://harness/codex",
+      "to": "z0://repo/openai/codex",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://harness/deepseek",
+      "to": "z0://repo/kvnloo/deepseek-harness",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "evolution-lab",
+      "to": "z0://repo/kvnloo/evolution-lab",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "flow",
+      "to": "z0://repo/kvnloo/.files",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "frontier-kb",
+      "to": "z0://repo/kvnloo/frontier-kb",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://harness/hermes",
+      "to": "z0://repo/kvnloo/hermes-agent",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/jev-typed-decision",
+      "to": "oh-my-pi",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/jev-typed-decision",
+      "to": "z0intelligence",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "kerdoios",
+      "to": "z0://repo/kvnloo/kerdoios",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "memento",
+      "to": "z0://repo/kvnloo/Memento",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "oh-my-pi",
+      "to": "z0://repo/kvnloo/oh-my-pi",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://harness/omp",
+      "to": "z0://repo/kvnloo/oh-my-pi",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://harness/pi",
+      "to": "z0://repo/earendil-works/pi",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/rlm-context-spill",
+      "to": "oh-my-pi",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-action-fusion",
+      "to": "z0://harness/hermes",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-action-fusion",
+      "to": "z0://harness/pi",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-evidence-reducer",
+      "to": "z0://harness/hermes",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-evidence-reducer",
+      "to": "z0://harness/pi",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-observation-pack",
+      "to": "z0://harness/hermes",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-observation-pack",
+      "to": "z0://harness/pi",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-online-context-compact",
+      "to": "z0://harness/hermes",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-online-context-compact",
+      "to": "z0://harness/pi",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "tokenomics",
+      "to": "z0://repo/kvnloo/tokenomics",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0intelligence",
+      "to": "z0://repo/kvnloo/z0intelligence",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/agenttrace-cross-harness-observation",
+      "to": "z0://repo/kvnloo/agenttrace",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/aodl-intent-plan-observed",
+      "to": "z0://repo/kvnloo/aodl",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/jev-typed-decision",
+      "to": "z0://repo/kvnloo/oh-my-pi",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/jev-typed-decision",
+      "to": "z0://repo/kvnloo/z0intelligence",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/rlm-context-spill",
+      "to": "z0://repo/kvnloo/oh-my-pi",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-action-fusion",
+      "to": "z0://repo/kvnloo/SoL-Pi",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-action-fusion",
+      "to": "z0://repo/kvnloo/sol-pi-hermes",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-evidence-reducer",
+      "to": "z0://repo/kvnloo/SoL-Pi",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-evidence-reducer",
+      "to": "z0://repo/kvnloo/sol-pi-hermes",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-observation-pack",
+      "to": "z0://repo/kvnloo/SoL-Pi",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-observation-pack",
+      "to": "z0://repo/kvnloo/sol-pi-hermes",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-online-context-compact",
+      "to": "z0://repo/kvnloo/SoL-Pi",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-online-context-compact",
+      "to": "z0://repo/kvnloo/sol-pi-hermes",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "profile:compute",
+      "to": "kerdoios",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:core",
+      "to": "oh-my-pi",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:core",
+      "to": "tokenomics",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:desktop",
+      "to": "flow",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:full",
+      "to": "agenttrace",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:full",
+      "to": "aodl",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:full",
+      "to": "evolution-lab",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:full",
+      "to": "flow",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:full",
+      "to": "frontier-kb",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:full",
+      "to": "kerdoios",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:full",
+      "to": "oh-my-pi",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:full",
+      "to": "tokenomics",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:full",
+      "to": "z0intelligence",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:minimal",
+      "to": "oh-my-pi",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:personal",
+      "to": "z0intelligence",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:research",
+      "to": "evolution-lab",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:research",
+      "to": "frontier-kb",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:research",
+      "to": "tokenomics",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "profile:research",
+      "to": "z0intelligence",
+      "kind": "integrates",
+      "label": "includes"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-action-fusion",
+      "to": "z0://mechanism-family/sol-pi",
+      "kind": "integrates",
+      "label": "member of"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-evidence-reducer",
+      "to": "z0://mechanism-family/sol-pi",
+      "kind": "integrates",
+      "label": "member of"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-observation-pack",
+      "to": "z0://mechanism-family/sol-pi",
+      "kind": "integrates",
+      "label": "member of"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-online-context-compact",
+      "to": "z0://mechanism-family/sol-pi",
+      "kind": "integrates",
+      "label": "member of"
+    },
+    {
+      "from": "z0://lifecycle-state/architecture-truth:declared",
+      "to": "z0://lifecycle-state/architecture-truth:implemented",
+      "kind": "depends",
+      "label": "next"
+    },
+    {
+      "from": "z0://lifecycle-state/architecture-truth:historical",
+      "to": "z0://lifecycle-state/architecture-truth:derived",
+      "kind": "depends",
+      "label": "next"
+    },
+    {
+      "from": "z0://lifecycle-state/architecture-truth:implemented",
+      "to": "z0://lifecycle-state/architecture-truth:observed",
+      "kind": "depends",
+      "label": "next"
+    },
+    {
+      "from": "z0://lifecycle-state/architecture-truth:observed",
+      "to": "z0://lifecycle-state/architecture-truth:historical",
+      "kind": "depends",
+      "label": "next"
+    },
+    {
+      "from": "z0://lifecycle-state/evolution-lab-promotion:replay",
+      "to": "z0://lifecycle-state/evolution-lab-promotion:shadow",
+      "kind": "depends",
+      "label": "next"
+    },
+    {
+      "from": "z0://lifecycle-state/evolution-lab-promotion:sanity",
+      "to": "z0://lifecycle-state/evolution-lab-promotion:replay",
+      "kind": "depends",
+      "label": "next"
+    },
+    {
+      "from": "z0://lifecycle-state/evolution-lab-promotion:shadow",
+      "to": "z0://lifecycle-state/evolution-lab-promotion:promoted",
+      "kind": "depends",
+      "label": "next"
+    },
+    {
+      "from": "z0://lifecycle-state/verified-oss-rolling:candidate",
+      "to": "z0://lifecycle-state/verified-oss-rolling:preview",
+      "kind": "depends",
+      "label": "next"
+    },
+    {
+      "from": "z0://lifecycle-state/verified-oss-rolling:dev",
+      "to": "z0://lifecycle-state/verified-oss-rolling:main",
+      "kind": "depends",
+      "label": "next"
+    },
+    {
+      "from": "z0://lifecycle-state/verified-oss-rolling:nightly",
+      "to": "z0://lifecycle-state/verified-oss-rolling:dev",
+      "kind": "depends",
+      "label": "next"
+    },
+    {
+      "from": "z0://lifecycle-state/verified-oss-rolling:preview",
+      "to": "z0://lifecycle-state/verified-oss-rolling:nightly",
+      "kind": "depends",
+      "label": "next"
+    },
+    {
+      "from": "z0://lifecycle/architecture-truth",
+      "to": "z0://repo/kvnloo/z0",
+      "kind": "integrates",
+      "label": "owned by"
+    },
+    {
+      "from": "z0://lifecycle/evolution-lab-promotion",
+      "to": "z0://repo/kvnloo/evolution-lab",
+      "kind": "integrates",
+      "label": "owned by"
+    },
+    {
+      "from": "z0://lifecycle/verified-oss-rolling",
+      "to": "z0://repo/kvnloo/verified-oss-loop",
+      "kind": "integrates",
+      "label": "owned by"
+    },
+    {
+      "from": "z0://mechanism/agenttrace-cross-harness-observation",
+      "to": "z0://representation/observed-topology",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
+      "from": "z0://mechanism/aodl-intent-plan-observed",
+      "to": "z0://representation/compiled-plan",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
+      "from": "z0://mechanism/aodl-intent-plan-observed",
+      "to": "z0://representation/observed-topology",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
+      "from": "z0://mechanism/rlm-context-spill",
+      "to": "z0://representation/rlm-address",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-evidence-reducer",
+      "to": "z0://representation/evidence-receipt",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
+      "from": "z0://mechanism/sol-pi-observation-pack",
+      "to": "z0://representation/observation-pack",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
+      "from": "z0://evidence-dependency/aodl-intent-to-plan",
+      "to": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.aodl.intent.v1",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/aodl-intent-to-plan",
+      "to": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.aodl-intent-plan-observed",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/decision-state-to-receipt",
+      "to": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.z0int.decision_receipt.v1",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/decision-state-to-receipt",
+      "to": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.jev-typed-decision",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/evidence-reducer-preserves-verifiability",
+      "to": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.sol-pi-evidence-reducer",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/execution-to-tokenomics",
+      "to": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.tokenomics.event.v0",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/execution-to-tokenomics",
+      "to": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.agenttrace-cross-harness-observation",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/observation-pack-compresses-context",
+      "to": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.sol-pi-observation-pack",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/omp-rlm-context-spill",
+      "to": "z0://evidence-ref/kvnloo/oh-my-pi:README.md",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/omp-rlm-context-spill",
+      "to": "z0://evidence-ref/registry/components.yaml%23components.oh-my-pi",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/plan-to-observed-topology",
+      "to": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.agenttrace-cross-harness-observation",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/plan-to-observed-topology",
+      "to": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.aodl-intent-plan-observed",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://harness/omp",
+      "to": "oh-my-pi",
+      "kind": "depends",
+      "label": "runtime surface of"
+    },
+    {
+      "from": "z0://evidence-dependency/aodl-intent-to-plan",
+      "to": "z0://mechanism/aodl-intent-plan-observed",
+      "kind": "epistemic",
+      "label": "verified via"
+    },
+    {
+      "from": "z0://evidence-dependency/decision-state-to-receipt",
+      "to": "z0://mechanism/jev-typed-decision",
+      "kind": "epistemic",
+      "label": "verified via"
+    },
+    {
+      "from": "z0://evidence-dependency/evidence-reducer-preserves-verifiability",
+      "to": "z0://mechanism/sol-pi-evidence-reducer",
+      "kind": "epistemic",
+      "label": "verified via"
+    },
+    {
+      "from": "z0://evidence-dependency/observation-pack-compresses-context",
+      "to": "z0://mechanism/sol-pi-observation-pack",
+      "kind": "epistemic",
+      "label": "verified via"
+    },
+    {
+      "from": "z0://evidence-dependency/plan-to-observed-topology",
+      "to": "z0://mechanism/aodl-intent-plan-observed",
+      "kind": "epistemic",
+      "label": "verified via"
     }
   ]
 }
