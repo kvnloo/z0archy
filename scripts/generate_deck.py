@@ -81,16 +81,35 @@ def semantic_kind(node: dict) -> str:
         return "hub environment"
     if ntype == "repository":
         return "tiny contract"
+    if ntype == "representation":
+        kind = attrs.get("kind")
+        if kind in {"decision", "decision_state", "intent", "plan"}:
+            return "hub decision"
+        if kind in {"measurement", "observation"}:
+            return "hub measurement"
+        if kind in {"address", "evidence_bundle"}:
+            return "hub compute"
+        return "hub contract"
+    if ntype == "evidence_dependency":
+        return "hub research"
     return "default"
 
 
 def semantic_tip(node: dict) -> str:
     attrs = node.get("attributes") or {}
     parts = [str(node.get("label", node.get("id", ""))), "", f"type: {node.get('type','')}"]
-    for key in ("kind", "adoption", "stage", "purpose", "repo", "rule"):
+    for key in ("kind", "adoption", "stage", "purpose", "summary", "scale", "sensitivity", "repo", "rule", "relation", "confidence"):
         value = attrs.get(key)
         if value:
             parts.append(f"{key}: {' '.join(str(value).split())}")
+    if node.get("type") == "evidence_dependency":
+        for key in ("required_evidence", "invariants", "invalidators", "abstain_if"):
+            values = attrs.get(key) or []
+            if values:
+                parts.extend(["", key.replace("_", " ") + ":"] + [f"• {v}" for v in values])
+        retrieval = attrs.get("retrieval") or {}
+        if retrieval:
+            parts.extend(["", "retrieval: " + " → ".join(str(v) for v in retrieval.values())])
     prov = node.get("provenance") or []
     if prov:
         p = prov[0]
@@ -204,6 +223,8 @@ def build(graph: dict | None = None) -> dict:
         ("mechanisms", "Reusable mechanisms", "Cross-cutting mechanisms remain stable semantic identities even when they are implemented in multiple harnesses or repositories.", [5700, 2800], {"mechanism", "mechanism_family"}),
         ("lifecycles", "Promotion + history", "Promotion ladders and truth states are architecture, not Git trivia. These nodes make evolution and authority explicit.", [5700, 4500], {"lifecycle", "lifecycle_state"}),
         ("profiles", "Install profiles", "Profiles are lenses over installable components; they are not a second architecture hierarchy.", [3000, 6200], {"profile"}),
+        ("information-plane", "Information plane", "Information forms are first-class architecture. Follow how raw context becomes addressable evidence, bounded decision state, observed execution and measurements.", [7600, 1100], {"representation"}),
+        ("evidence-claims", "Evidence dependencies", "Architecture relationships are inspectable claims with evidence recipes, invariants, invalidators and abstention conditions.", [7600, 3500], {"evidence_dependency"}),
         ("repositories", "Implementation repositories", "Repositories are implementation evidence containers. They remain distinct from components, harnesses and mechanisms.", [5700, 6500], {"repository"}),
     ]
     for sid, title, caption, anchor, types in semantic_specs:
@@ -288,6 +309,15 @@ def build(graph: dict | None = None) -> dict:
             "owned_by": "integrates",
             "has_stage": "integrates",
             "includes": "integrates",
+            "claims_from": "evidence",
+            "claims_to": "evidence",
+            "mediated_by": "evidence",
+            "compresses_to": "evidence",
+            "compiles_to": "evidence",
+            "observed_as": "evidence",
+            "decides_to": "evidence",
+            "measured_as": "evidence",
+            "implements": "evidence",
         }.get(edge.get("type"), "default")
         connections.append({
             "from": src,
@@ -305,7 +335,7 @@ def build(graph: dict | None = None) -> dict:
             "source": "https://github.com/kvnloo/z0",
             "overview": {
                 "title": "Whole Zer0 graph",
-                "caption": "Components, contracts, harnesses, mechanisms, lifecycles, profiles and implementation repositories in one spatial world.",
+                "caption": "Components, contracts, harnesses, mechanisms, information representations, evidence claims, lifecycles, profiles and repositories in one spatial world.",
             },
         },
         "styling": {
@@ -331,6 +361,7 @@ def build(graph: dict | None = None) -> dict:
                 "integrates": {"stroke": "#C9C4B8", "width": 1.2, "dash": "5 7", "labelColor": "#9BA0A8"},
                 "provides": {"stroke": "#2D7DD2", "width": 1.4, "labelColor": "#2D7DD2"},
                 "consumes": {"stroke": "#A87B3E", "width": 1.2, "dash": "3 6", "labelColor": "#A87B3E"},
+                "evidence": {"stroke": "#118A7E", "width": 1.7, "dash": "8 5", "labelColor": "#118A7E"},
             },
         },
         "layoutDefaults": {"floatAmp": 2.5, "fitMargin": 150, "pushMargin": 170, "zoomMax": 1.05},
