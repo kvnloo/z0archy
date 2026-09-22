@@ -106,7 +106,14 @@ async function applyMoc(query){
       pos:positions[node.id],
       w:310,
       kind:mocNodeKind(node),
-      tip:mocTip(node,result)
+      tip:mocTip(node,result),
+      meta:{
+        graphType:node.type,
+        graphId:node.id,
+        semanticLevel:(typeof z0SemanticZoomCore!=="undefined"
+          ?z0SemanticZoomCore.semanticLevelForType(node.type)
+          :3)
+      }
     };
   });
 
