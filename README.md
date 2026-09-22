@@ -89,6 +89,12 @@ python scripts/lint_graph.py generated/graph.json --fail-on error
 
 The linter fails unresolved evidence endpoints and structurally unverifiable claims while reporting weaker architecture-quality warnings separately.
 
+## Dynamic Maps of Content
+
+The canonical world model can be recompiled into a purpose-specific map in the browser. Enter a question such as `context compression`, `provider routing`, or `why is this evidence trusted`. The MOC compiler scores conceptual matches and then expands through typed graph proximity under a bounded node budget, preserving nearby mechanisms, representations, contracts and evidence instead of returning a flat search list.
+
+MOCs are URL-addressable through `?moc=...`. When architecture history is active, the MOC is compiled from that historical graph snapshot rather than the current graph.
+
 ## ActiveGraph architecture history
 
 Canonical semantic states are content-addressed before being recorded. Rebuilding an unchanged graph reuses the same ActiveGraph run; a changed graph creates a new run linked to the previous architecture state.
