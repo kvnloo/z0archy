@@ -63,6 +63,18 @@ class LocalGitSource:
 
     def read_text(self, repo: str, ref: str, path: str) -> str | None:
         root = self._root(repo)
+        if ref == "WORKTREE":
+            candidate = (root / path).resolve()
+            try:
+                candidate.relative_to(root)
+            except ValueError:
+                return None
+            if not candidate.is_file():
+                return None
+            try:
+                return candidate.read_text(encoding="utf-8")
+            except UnicodeDecodeError:
+                return None
         proc = subprocess.run(
             ["git", "-C", str(root), "show", f"{ref}:{path}"],
             text=True,
@@ -75,8 +87,9 @@ class LocalGitSource:
 
     def resolve_ref(self, repo: str, ref: str) -> str:
         root = self._root(repo)
+        target = "HEAD" if ref == "WORKTREE" else ref
         proc = subprocess.run(
-            ["git", "-C", str(root), "rev-parse", ref],
+            ["git", "-C", str(root), "rev-parse", target],
             text=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
