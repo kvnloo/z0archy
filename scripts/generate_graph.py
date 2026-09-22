@@ -11,6 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from z0archy_core.epistemic import apply_epistemic_registry
 from z0archy_core.graph import compile_graph
 from z0archy_core.registry import load_registry
+from z0archy_core.suite import apply_suite_registry
 
 
 def main() -> None:
@@ -36,6 +37,12 @@ def main() -> None:
         graph,
         docs.get("representations"),
         docs.get("evidence_dependencies"),
+        source_repo=args.repo,
+        source_ref=args.ref,
+    )
+    graph = apply_suite_registry(
+        graph,
+        docs.get("suite"),
         source_repo=args.repo,
         source_ref=args.ref,
     )

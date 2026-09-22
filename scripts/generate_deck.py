@@ -123,7 +123,7 @@ def semantic_kind(node: dict) -> str:
 def semantic_tip(node: dict) -> str:
     attrs = node.get("attributes") or {}
     parts = [str(node.get("label", node.get("id", ""))), "", f"type: {node.get('type','')}"]
-    for key in ("kind", "adoption", "stage", "purpose", "repo", "rule", "scale", "sensitivity", "relation", "confidence"):
+    for key in ("kind", "adoption", "stage", "purpose", "repo", "suiteRole", "suiteAuthority", "suiteStatus", "suiteSummary", "rule", "scale", "sensitivity", "relation", "confidence"):
         value = attrs.get(key)
         if value:
             parts.append(f"{key}: {' '.join(str(value).split())}")
