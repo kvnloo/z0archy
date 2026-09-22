@@ -214,7 +214,7 @@ def inspect_repository(
         package = _parse_package(path, text)
         if not package:
             continue
-        package_id = zid("package", f"{repo}@{resolved}:{path}")
+        package_id = zid("package", f"{repo}:{package['name']}")
         package["repo"] = repo
         package["ref"] = ref
         package["sourcePath"] = path
