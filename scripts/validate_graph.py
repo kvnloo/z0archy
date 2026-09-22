@@ -22,6 +22,16 @@ def main() -> None:
     for e in edges:
         assert e["source"] in ids, f"edge source missing: {e['source']}"
         assert e["target"] in ids, f"edge target missing: {e['target']}"
+        assert e.get("provenance"), f"missing edge provenance: {e['id']}"
+        dep = e.get("evidenceDependency")
+        assert dep, f"missing EvidenceDependency: {e['id']}"
+        assert dep.get("requiredEvidence"), f"empty required evidence: {e['id']}"
+        assert dep.get("invariants"), f"empty invariants: {e['id']}"
+        assert dep.get("invalidators"), f"empty invalidators: {e['id']}"
+        assert dep.get("abstainWhen"), f"empty abstention conditions: {e['id']}"
+        confidence = dep.get("confidence") or {}
+        assert confidence.get("basis") == "authority", f"unsupported confidence basis: {e['id']}"
+        assert confidence.get("numericScore") is None, f"fabricated numeric confidence: {e['id']}"
     print(f"ok: {len(nodes)} graph nodes, {len(edges)} edges")
 
 
