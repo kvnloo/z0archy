@@ -65,11 +65,13 @@ def build_local_snapshot_from_git_roots(git_roots: Iterable[str | Path]) -> dict
             status = _status(wp)
             path_hash = hashlib.sha256(path.encode("utf-8")).hexdigest()[:10]
             head = wt.get("head") or "unknown"
+            dirty_fingerprint = _worktree_fingerprint(wp, head, status)
             entry["worktrees"].append({
                 **wt,
                 **status,
                 "path": path,
-                "evidenceKey": f"{head}-{path_hash}",
+                "dirtyFingerprint": dirty_fingerprint,
+                "evidenceKey": f"{head}-{path_hash}-{dirty_fingerprint[:12]}",
             })
 
     for entry in repos.values():
@@ -118,6 +120,72 @@ def _worktrees(root: Path) -> list[dict[str, Any]]:
         if row.get("path"):
             out.append(row)
     return out
+
+
+def _dirty_paths(path: Path) -> tuple[list[str], bytes]:
+    proc = subprocess.run(
+        ["git", "-C", str(path), "status", "--porcelain=v2", "-z", "--untracked-files=all"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    records = proc.stdout.split(b"\0")
+    paths: list[str] = []
+    skip_original = False
+    for raw in records:
+        if not raw:
+            continue
+        if skip_original:
+            skip_original = False
+            continue
+        record = raw.decode("utf-8", errors="surrogateescape")
+        if record.startswith("? "):
+            paths.append(record[2:])
+        elif record.startswith("1 "):
+            parts = record.split(" ", 8)
+            if len(parts) == 9:
+                paths.append(parts[8])
+        elif record.startswith("2 "):
+            parts = record.split(" ", 9)
+            if len(parts) == 10:
+                paths.append(parts[9])
+                skip_original = True
+        elif record.startswith("u "):
+            parts = record.split(" ", 10)
+            if len(parts) == 11:
+                paths.append(parts[10])
+    return sorted(set(paths)), proc.stdout
+
+
+def _worktree_fingerprint(path: Path, head: str, status: dict[str, Any]) -> str:
+    dirty_paths, raw_status = _dirty_paths(path)
+    digest = hashlib.sha256()
+    digest.update(head.encode("utf-8"))
+    digest.update(raw_status)
+    digest.update(str(status.get("upstream") or "").encode("utf-8"))
+    digest.update(str(status.get("ahead") or 0).encode("ascii"))
+    digest.update(str(status.get("behind") or 0).encode("ascii"))
+    for rel in dirty_paths:
+        digest.update(rel.encode("utf-8", errors="surrogateescape"))
+        candidate = path / rel
+        try:
+            stat = candidate.stat()
+        except OSError:
+            digest.update(b"<missing>")
+            continue
+        digest.update(str(stat.st_size).encode("ascii"))
+        digest.update(str(stat.st_mtime_ns).encode("ascii"))
+        if candidate.is_file() and stat.st_size <= 2 * 1024 * 1024:
+            try:
+                with candidate.open("rb") as handle:
+                    while True:
+                        chunk = handle.read(1024 * 1024)
+                        if not chunk:
+                            break
+                        digest.update(chunk)
+            except OSError:
+                pass
+    return digest.hexdigest()
 
 
 def _status(path: Path) -> dict[str, Any]:
