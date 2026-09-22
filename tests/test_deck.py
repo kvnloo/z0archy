@@ -62,6 +62,8 @@ class DeckTests(unittest.TestCase):
         self.assertIn("iface:evt.v1", ids)
         component = next(n for s in deck["slides"] for n in s["nodes"] if n["id"] == "a")
         self.assertEqual(component["meta"]["canonicalBranch"], "main")
+        self.assertEqual(component["meta"]["graphType"], "component")
+        self.assertEqual(component["meta"]["semanticLevel"], 1)
 
     def test_deck_exposes_semantic_architecture_planes(self):
         deck = mod.build(self.semantic_graph())
@@ -75,6 +77,17 @@ class DeckTests(unittest.TestCase):
         self.assertIn("z0://mechanism/m", node_ids)
         self.assertIn("z0://lifecycle/promotion", node_ids)
         self.assertIn("profile:core", node_ids)
+        harness = next(
+            n for s in deck["slides"] for n in s["nodes"]
+            if n["id"] == "z0://harness/h"
+        )
+        mechanism = next(
+            n for s in deck["slides"] for n in s["nodes"]
+            if n["id"] == "z0://mechanism/m"
+        )
+        self.assertEqual(harness["meta"]["semanticLevel"], 2)
+        self.assertEqual(mechanism["meta"]["semanticLevel"], 2)
+        self.assertIn("semanticZoom", deck["meta"])
 
         semantic_edges = {
             (e["from"], e["to"], e.get("label"))
