@@ -165,6 +165,28 @@
   .lint-subject{font:9px ui-monospace,Menlo,Consolas,monospace; color:#574CE3; margin-top:4px; word-break:break-all;}
   .lint-message{font-size:11px; color:#1D1F23; line-height:1.45; margin-top:5px;}
   .lint-empty{font-size:12px; color:#62666F; padding:12px;}
+  #hierarchybtn:disabled{opacity:.45; cursor:default;}
+  #hierarchypanel{position:fixed; top:0; right:0; bottom:0; width:min(560px,92vw); z-index:38;
+    background:rgba(252,251,247,.99); border-left:1px solid #E7E3D9; box-shadow:-8px 0 30px rgba(40,35,25,.08);
+    transform:translateX(100%); transition:transform .28s ease; overflow:auto; padding:20px;}
+  #hierarchypanel.open{transform:translateX(0);}
+  #hierarchypanel .hierarchy-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px;}
+  #hierarchypanel h2{font-size:18px;}
+  #hierarchypanel button{border:1px solid #E7E3D9; background:#fff; border-radius:7px; padding:7px 10px;
+    cursor:pointer; font:10px ui-monospace,Menlo,Consolas,monospace;}
+  #hierarchypanel .hierarchy-help{font-size:10px; color:#62666F; line-height:1.5; margin-bottom:8px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;}
+  #hierarchysummary{font:9px ui-monospace,Menlo,Consolas,monospace; color:#574CE3; margin-bottom:12px;}
+  #hierarchyrows{display:flex; flex-direction:column; gap:7px;}
+  .hierarchy-row{padding:9px 10px; background:#fff; border:1px solid #E7E3D9; border-radius:8px;}
+  .hierarchy-row.merge,.hierarchy-row.split{border-color:#B8B2E8;}
+  .hierarchy-row.prune{border-color:#E1B3B3;}
+  .hierarchy-top{display:flex; justify-content:space-between; gap:10px; align-items:center;}
+  .hierarchy-action{font:10px ui-monospace,Menlo,Consolas,monospace; text-transform:uppercase; color:#574CE3;}
+  .hierarchy-confidence{font:9px ui-monospace,Menlo,Consolas,monospace; color:#62666F;}
+  .hierarchy-subject{font:10px ui-monospace,Menlo,Consolas,monospace; margin-top:5px; word-break:break-all;}
+  .hierarchy-reason{font-size:11px; line-height:1.45; margin-top:5px;}
+  .hierarchy-evidence{font:9px ui-monospace,Menlo,Consolas,monospace; color:#62666F; line-height:1.45; margin-top:5px;}
 
   #panel{position:fixed; top:0; right:0; bottom:0; width:270px; background:rgba(255,255,255,.94);
     border-left:1px solid #E7E3D9; z-index:20; padding:18px 18px 90px; overflow-y:auto;
@@ -257,6 +279,7 @@ window.addEventListener("unhandledrejection", function(e){
     <option value="derived">derived</option>
   </select>
   <button id="lintbtn" type="button">lint</button>
+  <button id="hierarchybtn" type="button" disabled>hierarchy</button>
   <span class="state" id="refstate"></span>
 </div>
 <div id="mocbar">
@@ -288,6 +311,12 @@ window.addEventListener("unhandledrejection", function(e){
 <aside id="lintpanel" aria-label="architecture lint">
   <div class="lint-head"><h2>Architecture lint</h2><button id="lintclose" type="button">close</button></div>
   <div id="lintrows"></div>
+</aside>
+<aside id="hierarchypanel" aria-label="hierarchy meta-learning proposals">
+  <div class="hierarchy-head"><h2>Hierarchy proposals</h2><button id="hierarchyclose" type="button">close</button></div>
+  <div class="hierarchy-help">Slow meta-learning over architecture history. These are evidence-backed suggestions only. They never mutate canonical z0, and declared nodes are never automatic prune candidates.</div>
+  <div id="hierarchysummary"></div>
+  <div id="hierarchyrows"></div>
 </aside>
 <div id="caption"><div class="num"></div><div class="tt"></div><div class="cc"></div></div>
 <div id="dots"></div>
@@ -991,6 +1020,7 @@ loadZ0Deck();
 <script src="./ref_matrix.js"></script>
 <script src="./lens_core.js"></script>
 <script src="./lensbar.js"></script>
+<script src="./hierarchybar.js"></script>
 <script src="./runtime_overlay.js"></script>
 </body>
 </html>
