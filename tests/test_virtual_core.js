@@ -45,4 +45,66 @@ const graph=v.mergeEvidence(
 assert(graph.nodes.some(function(n){return n.id==="impl";}));
 assert.strictEqual(graph.snapshot.truthClass,"derived");
 
+const driftGraph=v.mergeEvidence(
+  {
+    snapshot:{},
+    nodes:[
+      {id:"z0://component/a",type:"component",attributes:{component_id:"a",repo:"o/a"}},
+      {id:"z0://component/b",type:"component",attributes:{component_id:"b",repo:"o/b"}}
+    ],
+    edges:[]
+  },
+  {
+    "o/a":{
+      nodes:[{
+        id:"z0://package/o/a:pkg-a",type:"package",label:"pkg-a",
+        attributes:{name:"pkg-a",repo:"o/a",dependencies:["pkg-b"]},
+        provenance:[{class:"implemented",path:"package.json"}]
+      }],
+      edges:[],summary:{}
+    },
+    "o/b":{
+      nodes:[{
+        id:"z0://package/o/b:pkg-b",type:"package",label:"pkg-b",
+        attributes:{name:"pkg-b",repo:"o/b",dependencies:[]},
+        provenance:[{class:"implemented",path:"package.json"}]
+      }],
+      edges:[],summary:{}
+    }
+  },
+  {version:1,repos:{}}
+);
+const derived=driftGraph.edges.filter(function(edge){
+  return edge.type==="package_depends_on"&&edge.attributes&&edge.attributes.derivedCrossRepo;
+});
+assert.strictEqual(derived.length,1);
+assert.strictEqual(derived[0].provenance[0].class,"derived");
+const findings=v.driftFindings(driftGraph);
+assert(findings.some(function(row){
+  return row.code==="drift.cross_repo_package_dependency_undeclared";
+}));
+
+const declaredBase={
+  snapshot:{},
+  nodes:[
+    {id:"z0://component/a",type:"component",attributes:{component_id:"a",repo:"o/a"}},
+    {id:"z0://component/b",type:"component",attributes:{component_id:"b",repo:"o/b"}}
+  ],
+  edges:[{
+    id:"declared-integration",type:"integrates_with",
+    source:"z0://component/a",target:"z0://component/b"
+  }]
+};
+const covered=v.mergeEvidence(declaredBase,{
+  "o/a":driftGraph.nodes.filter(function(n){return n.id==="z0://package/o/a:pkg-a";}).length?{
+    nodes:[driftGraph.nodes.find(function(n){return n.id==="z0://package/o/a:pkg-a";})],edges:[],summary:{}
+  }:{nodes:[],edges:[],summary:{}},
+  "o/b":{
+    nodes:[driftGraph.nodes.find(function(n){return n.id==="z0://package/o/b:pkg-b";})],edges:[],summary:{}
+  }
+},{version:1,repos:{}});
+assert(!v.driftFindings(covered).some(function(row){
+  return row.code==="drift.cross_repo_package_dependency_undeclared";
+}));
+
 console.log("ok: browser virtual architecture core");
