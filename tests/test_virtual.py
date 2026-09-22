@@ -14,7 +14,8 @@ class FakeSource:
         return f"sha-{ref}"
 
     def read_text(self, repo, ref, path):
-        return self.files_by_ref.get(ref, {}).get(path)
+        logical_ref = ref.removeprefix("sha-")
+        return self.files_by_ref.get(logical_ref, {}).get(path)
 
 
 class VirtualSnapshotTests(unittest.TestCase):
