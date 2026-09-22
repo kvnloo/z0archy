@@ -12,6 +12,11 @@ FILES = {
     "interfaces": "registry/interfaces.yaml",
     "profiles": "registry/profiles.yaml",
     "maturity": "registry/maturity.yaml",
+    "harnesses": "registry/harnesses.yaml",
+    "mechanisms": "registry/mechanisms.yaml",
+    "representations": "registry/representations.yaml",
+    "evidence_dependencies": "registry/evidence_dependencies.yaml",
+    "lifecycles": "registry/lifecycles.yaml",
 }
 
 OPTIONAL_FILES = {
