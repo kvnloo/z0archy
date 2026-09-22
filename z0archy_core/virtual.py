@@ -62,6 +62,7 @@ def compile_virtual_snapshot(
 
     graph["nodes"] = sorted(node_map.values(), key=lambda n: n["id"])
     graph["edges"] = sorted(edge_map.values(), key=lambda e: e["id"])
+    _derive_manifest_semantic_edges(graph)
     _derive_cross_repo_package_edges(graph)
     graph["snapshot"] = {
         "generatedAt": generated_at or datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
@@ -99,6 +100,107 @@ def _diff_maps(base: dict[str, Any], head: dict[str, Any]) -> dict[str, Any]:
             if base[x] != head[x]
         ],
     }
+
+
+def _derive_manifest_semantic_edges(graph: dict[str, Any]) -> None:
+    """Resolve exact-ref manifest declarations against canonical semantic identities.
+
+    Repo manifests are implemented evidence. Unknown canonical references fail open
+    into diagnostics rather than creating new semantic identities.
+    """
+    nodes = graph.get("nodes") or []
+    edges = graph.get("edges") or []
+    node_ids = {node["id"] for node in nodes}
+    repo_refs: dict[tuple[str, str], str] = {}
+    for node in nodes:
+        if node.get("type") != "repo_ref":
+            continue
+        attrs = node.get("attributes") or {}
+        repo = str(attrs.get("repo") or "")
+        resolved = str(attrs.get("resolvedRef") or "")
+        if repo and resolved:
+            repo_refs[(repo, resolved)] = node["id"]
+
+    existing = {edge.get("id") for edge in edges}
+    unresolved: list[dict[str, str]] = []
+    added: list[dict[str, Any]] = []
+
+    relation_specs = (
+        ("implements_mechanisms", "mechanism", "implements_mechanism", "out"),
+        ("provides_interfaces", "interface", "provides_interface", "out"),
+        ("consumes_interfaces", "interface", "consumes_interface", "in"),
+        ("produces_representations", "representation", "produces_representation", "out"),
+        ("consumes_representations", "representation", "consumes_representation", "in"),
+    )
+
+    for manifest in nodes:
+        if manifest.get("type") != "implementation_manifest":
+            continue
+        attrs = manifest.get("attributes") or {}
+        if attrs.get("manifestPath") != "zer0.repo.yaml":
+            continue
+        architecture = attrs.get("architecture") or {}
+        if not isinstance(architecture, dict):
+            continue
+        provenance = (manifest.get("provenance") or [{}])[0]
+        repo = str(attrs.get("repo") or provenance.get("source") or "")
+        resolved = str(provenance.get("ref") or "")
+        repo_ref = repo_refs.get((repo, resolved))
+        if not repo_ref:
+            continue
+
+        for field, target_kind, edge_type, direction in relation_specs:
+            for raw_target in architecture.get(field) or []:
+                target_key = str(raw_target)
+                target = zid(target_kind, target_key)
+                if target not in node_ids:
+                    unresolved.append({
+                        "repo": repo,
+                        "ref": resolved,
+                        "field": field,
+                        "target": target_key,
+                        "targetType": target_kind,
+                    })
+                    continue
+                source_id, target_id = (
+                    (repo_ref, target) if direction == "out" else (target, repo_ref)
+                )
+                edge_id = zid(
+                    "edge",
+                    f"manifest:{edge_type}:{repo}@{resolved}:{target_kind}:{target_key}",
+                )
+                if edge_id in existing:
+                    continue
+                added.append({
+                    "id": edge_id,
+                    "type": edge_type,
+                    "source": source_id,
+                    "target": target_id,
+                    "attributes": {
+                        "manifestDeclared": True,
+                        "confidence": "explicit-manifest",
+                        "manifest": manifest["id"],
+                    },
+                    "provenance": [{
+                        "class": "implemented",
+                        "source": repo,
+                        "ref": resolved,
+                        "path": str(attrs.get("manifestPath") or "zer0.repo.yaml"),
+                        "field": f"architecture.{field}",
+                    }],
+                })
+                existing.add(edge_id)
+
+    if added:
+        edges.extend(added)
+        edges.sort(key=lambda edge: edge["id"])
+    graph.setdefault("derivedEvidence", {})["manifestSemanticEdges"] = len(added)
+    graph["derivedEvidence"]["unresolvedManifestReferences"] = sorted(
+        unresolved,
+        key=lambda row: (
+            row["repo"], row["ref"], row["field"], row["targetType"], row["target"]
+        ),
+    )
 
 
 def _package_key(value: Any) -> str:
