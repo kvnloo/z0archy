@@ -47,6 +47,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: python scripts/generate_ref_evidence.py
       - run: python scripts/generate_deck.py --graph generated/graph.json
+      - run: python scripts/generate_history_decks.py
       - run: python scripts/validate_deck.py deck.json
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
