@@ -89,6 +89,14 @@ python scripts/lint_graph.py generated/graph.json --fail-on error
 
 The linter fails unresolved evidence endpoints and structurally unverifiable claims while reporting weaker architecture-quality warnings separately.
 
+## Profile, truth and lint lenses
+
+Install profiles are executable graph lenses rather than documentation labels. Selecting `minimal`, `core`, `personal`, `desktop`, `compute`, `research` or `full` keeps the selected components and their nearby contracts, harnesses, mechanisms, repositories and evidence legible while dimming unrelated topology. Profile inheritance is resolved from the current semantic world, including historical and virtual worlds.
+
+The truth lens can isolate **declared**, **implemented** or **derived** evidence. Dynamic exact-ref evidence is tagged implemented; virtual-composition nodes are tagged derived.
+
+Pages also publishes `generated/lint.json`. The lint panel surfaces canonical provenance, unresolved EvidenceDependency, interface-provider and implementation-quality findings directly in the explorer rather than leaving them only in CI output.
+
 ## Virtual multi-repo architecture
 
 The **ref matrix** composes one derived Zer0 world from immutable Git refs across every repository represented in the graph.
