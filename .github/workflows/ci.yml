@@ -35,6 +35,7 @@ jobs:
       - run: node tests/test_virtual_core.js
       - run: node --check lens_core.js
       - run: node --check lensbar.js
+      - run: node --check hierarchybar.js
       - run: node --check runtime_overlay.js
       - run: node tests/test_lens.js
       - run: python scripts/validate_deck.py deck.json
@@ -44,6 +45,8 @@ jobs:
           python scripts/validate_graph.py /tmp/graph.json
           python scripts/lint_graph.py /tmp/graph.json --fail-on error
           python scripts/record_history.py /tmp/graph.json --store /tmp/history.sqlite3 --index /tmp/history-index.json --history-dir /tmp/history
+          python scripts/propose_hierarchy.py /tmp/graph.json --history-dir /tmp/history --output /tmp/hierarchy-proposals.json
+          python -c "import json; d=json.load(open('/tmp/hierarchy-proposals.json')); assert d['policy']['mutatesCanonical'] is False"
           python scripts/generate_history_decks.py --index /tmp/history-index.json --history-dir /tmp/history --output-dir /tmp/history-decks
           test -n "$(find /tmp/history-decks -name '*.json' -print -quit)"
           python scripts/generate_deck.py --graph /tmp/graph.json --output /tmp/deck.json
