@@ -28,6 +28,8 @@ def main() -> None:
         docs.get("harnesses"),
         docs.get("mechanisms"),
         docs.get("lifecycles"),
+        docs.get("representations"),
+        docs.get("evidence_dependencies"),
         source_repo=args.repo,
         source_ref=args.ref,
     )
