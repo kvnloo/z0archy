@@ -85,6 +85,37 @@ class DeckTests(unittest.TestCase):
             semantic_edges,
         )
 
+    def test_deck_projects_information_and_evidence_scenes(self):
+        graph = compile_graph(
+            {"components": {
+                "runtime": {"name": "Runtime", "repo": "o/runtime", "kind": "runtime", "status": "canary", "execution": "live", "depends_on": [], "integrates_with": [], "provides": [], "consumes": []},
+            }},
+            {"interfaces": {}},
+            {"profiles": {}},
+            {},
+            {},
+            {"mechanisms": {"compress": {"name": "Compress", "kind": "compression"}}},
+            {},
+            {"representations": {"raw": {"name": "Raw context", "kind": "source"}}},
+            {"evidence_dependencies": {
+                "claim": {
+                    "from": "component:runtime",
+                    "to": "mechanism:compress",
+                    "relation": "implements",
+                    "required_evidence": ["doc"],
+                    "invariants": ["x"],
+                    "invalidators": ["y"],
+                }
+            }},
+            generated_at="2026-01-01T00:00:00Z",
+        )
+        deck = mod.build(graph)
+        by_id = {s["id"]: s for s in deck["slides"]}
+        self.assertIn("information-plane", by_id)
+        self.assertIn("evidence-claims", by_id)
+        self.assertTrue(any(n["title"] == "Raw context" for n in by_id["information-plane"]["nodes"]))
+        self.assertTrue(any(n["title"] == "claim" for n in by_id["evidence-claims"]["nodes"]))
+
 
 if __name__ == "__main__":
     unittest.main()
