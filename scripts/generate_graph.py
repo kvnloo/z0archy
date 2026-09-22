@@ -21,8 +21,15 @@ def main() -> None:
     args = p.parse_args()
     docs = load_registry(repo=args.repo, ref=args.ref, local_root=args.z0_root)
     graph = compile_graph(
-        docs["components"], docs["interfaces"], docs["profiles"], docs["maturity"],
-        source_repo=args.repo, source_ref=args.ref,
+        docs["components"],
+        docs["interfaces"],
+        docs["profiles"],
+        docs["maturity"],
+        docs.get("harnesses"),
+        docs.get("mechanisms"),
+        docs.get("lifecycles"),
+        source_repo=args.repo,
+        source_ref=args.ref,
     )
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)

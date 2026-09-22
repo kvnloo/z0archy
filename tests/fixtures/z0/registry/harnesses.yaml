@@ -1,0 +1,7 @@
+harnesses:
+  fixture-harness:
+    name: Fixture Harness
+    repo: example/runtime
+    component: runtime
+    kind: executor
+    adoption: primary

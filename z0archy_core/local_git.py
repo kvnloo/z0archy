@@ -63,7 +63,14 @@ def build_local_snapshot_from_git_roots(git_roots: Iterable[str | Path]) -> dict
             visited_worktrees.add(path)
             wp = Path(path)
             status = _status(wp)
-            entry["worktrees"].append({**wt, **status, "path": path})
+            path_hash = hashlib.sha256(path.encode("utf-8")).hexdigest()[:10]
+            head = wt.get("head") or "unknown"
+            entry["worktrees"].append({
+                **wt,
+                **status,
+                "path": path,
+                "evidenceKey": f"{head}-{path_hash}",
+            })
 
     for entry in repos.values():
         entry["roots"].sort()

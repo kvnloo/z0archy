@@ -3,7 +3,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from z0archy_core.introspection import inspect_repository
 from z0archy_core.local_git import build_local_snapshot, normalize_remote
+from z0archy_core.sources import LocalGitSource
 
 
 class LocalGitTests(unittest.TestCase):
@@ -28,6 +30,32 @@ class LocalGitTests(unittest.TestCase):
             self.assertIn("kvnloo/demo", data["repositories"])
             paths = {w["path"] for w in data["repositories"]["kvnloo/demo"]["worktrees"]}
             self.assertEqual(paths, {str(base.resolve()), str(wt.resolve())})
+
+
+    def test_worktree_introspection_reads_dirty_files(self):
+        with tempfile.TemporaryDirectory() as td:
+            repo = Path(td) / "repo"
+            subprocess.run(["git", "init", "-q", "-b", "main", str(repo)], check=True)
+            subprocess.run(["git", "-C", str(repo), "config", "user.email", "test@example.com"], check=True)
+            subprocess.run(["git", "-C", str(repo), "config", "user.name", "Test"], check=True)
+            (repo / "README.md").write_text("# committed\n")
+            subprocess.run(["git", "-C", str(repo), "add", "README.md"], check=True)
+            subprocess.run(["git", "-C", str(repo), "commit", "-qm", "init"], check=True)
+            (repo / "README.md").write_text("# dirty architecture evidence\n")
+
+            source = LocalGitSource({"kvnloo/demo": repo})
+            pack = inspect_repository(
+                source,
+                "kvnloo/demo",
+                "WORKTREE",
+                resolved_ref="worktree-fixture",
+            )
+            artifact = next(
+                n for n in pack["nodes"]
+                if n["type"] == "source_artifact" and n["attributes"]["path"] == "README.md"
+            )
+            self.assertGreater(artifact["attributes"]["bytes"], len("# committed\n"))
+            self.assertEqual(artifact["provenance"][0]["class"], "implemented")
 
 
 if __name__ == "__main__":

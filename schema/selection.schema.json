@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kvnloo/z0archy/schema/selection.schema.json",
+  "title": "z0archy virtual architecture selection",
+  "type": "object",
+  "required": ["version", "repos"],
+  "properties": {
+    "version": {"const": 1},
+    "repos": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["source", "ref"],
+        "properties": {
+          "source": {"enum": ["github", "local"]},
+          "ref": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+mechanisms:
+  fixture-compression:
+    name: Fixture Compression
+    kind: compression
+    stage: experimental
+    purpose: Compress fixture context.
+    family: fixture-family
+    implementations:
+      - repo: example/runtime
+        harness: fixture-harness
