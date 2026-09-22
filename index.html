@@ -92,6 +92,22 @@
   #mocbar button{border:1px solid #E7E3D9; background:#fff; border-radius:7px; padding:6px 9px;
     cursor:pointer; font:10px ui-monospace,Menlo,Consolas,monospace;}
   #mocbar button:hover{border-color:#574CE3; color:#574CE3;}
+  #mocreceipt:disabled{opacity:.45; cursor:default;}
+  #compressionpanel{position:fixed; top:0; right:0; bottom:0; width:min(520px,92vw); z-index:37;
+    background:rgba(252,251,247,.99); border-left:1px solid #E7E3D9; box-shadow:-8px 0 30px rgba(40,35,25,.08);
+    transform:translateX(100%); transition:transform .28s ease; overflow:auto; padding:20px;}
+  #compressionpanel.open{transform:translateX(0);}
+  #compressionpanel .compression-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;}
+  #compressionpanel h2{font-size:18px;}
+  #compressionpanel button{border:1px solid #E7E3D9; background:#fff; border-radius:7px; padding:7px 10px;
+    cursor:pointer; font:10px ui-monospace,Menlo,Consolas,monospace;}
+  #compressionpanel .compression-help{font-size:10px; color:#62666F; line-height:1.5; margin-bottom:12px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;}
+  #compressionrows{display:flex; flex-direction:column; gap:7px;}
+  .compression-row{padding:9px 10px; background:#fff; border:1px solid #E7E3D9; border-radius:8px;}
+  .compression-k{font:9px ui-monospace,Menlo,Consolas,monospace; color:#62666F; text-transform:uppercase; letter-spacing:.04em;}
+  .compression-v{font-size:12px; font-weight:600; color:#1D1F23; margin-top:3px;}
+  .compression-d{font-size:10px; color:#62666F; line-height:1.45; margin-top:4px;}
 
 
   .node.semhid{opacity:0 !important; pointer-events:none;}
@@ -246,8 +262,14 @@ window.addEventListener("unhandledrejection", function(e){
 <div id="mocbar">
   <input id="mocquery" type="text" aria-label="Map of Content question" placeholder="map: context compression, routing, evidence…">
   <button id="mocapply">map</button>
+  <button id="mocreceipt" type="button" disabled>receipt</button>
   <button id="mocclear" aria-label="clear Map of Content">×</button>
 </div>
+<aside id="compressionpanel" aria-label="semantic compression receipt">
+  <div class="compression-head"><h2>Compression receipt</h2><button id="compressionclose" type="button">close</button></div>
+  <div class="compression-help">Explains what the current question-conditioned map retained, what it hid, which relations cross the cut, and whether high-relevance concepts were omitted. Structural entropy is descriptive only, not a claim about semantic information content.</div>
+  <div id="compressionrows"></div>
+</aside>
 <aside id="matrixpanel" aria-label="virtual architecture ref matrix">
   <div class="matrix-head">
     <h2>Virtual architecture</h2>
@@ -960,6 +982,8 @@ loadZ0Deck();
 <script src="./sourcebar.js"></script>
 <script src="./historybar.js"></script>
 <script src="./moc_core.js"></script>
+<script src="./compression_core.js"></script>
+<script src="./compressionbar.js"></script>
 <script src="./mocbar.js"></script>
 <script src="./semantic_zoom_core.js"></script>
 <script src="./semantic_zoom.js"></script>
