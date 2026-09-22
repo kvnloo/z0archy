@@ -45,6 +45,7 @@ jobs:
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
       - run: python scripts/generate_graph.py --ref ${{ steps.z0.outputs.sha }}
       - run: python scripts/validate_graph.py generated/graph.json
+      - run: python scripts/lint_architecture.py generated/graph.json --fail-on error
       - run: python scripts/generate_github_index.py --cache-ttl 10800
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
