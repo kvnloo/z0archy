@@ -1,6 +1,6 @@
 "use strict";
 
-let lensState={graph:null,lint:null,profile:"all",truth:"all",initialized:false};
+let lensState={graph:null,worldKey:null,lint:null,profile:"all",truth:"all",initialized:false};
 
 async function lensFetchJSON(path){
   try{
@@ -9,8 +9,25 @@ async function lensFetchJSON(path){
   }catch(_){return null;}
 }
 
+async function currentLensWorld(){
+  if(typeof historyState!=="undefined"&&historyState.active&&historyState.active!=="live"){
+    return {
+      key:"history:"+historyState.active,
+      graph:await lensFetchJSON("./generated/history/"+encodeURIComponent(historyState.active)+".json")
+    };
+  }
+  if(window.z0VirtualGraph){
+    return {key:"virtual:"+JSON.stringify(window.z0VirtualSelection||{}),graph:window.z0VirtualGraph};
+  }
+  return {key:"canonical",graph:await lensFetchJSON("./generated/graph.json")};
+}
+
 async function ensureLensData(){
-  if(!lensState.graph) lensState.graph=await lensFetchJSON("./generated/graph.json");
+  const world=await currentLensWorld();
+  if(world.key!==lensState.worldKey || !lensState.graph){
+    lensState.worldKey=world.key;
+    lensState.graph=world.graph;
+  }
   if(!lensState.lint) lensState.lint=await lensFetchJSON("./generated/lint.json");
   return !!lensState.graph;
 }
@@ -107,13 +124,13 @@ function escapeLint(value){
 
 async function initLensBar(){
   if(!await ensureLensData()) return;
+  populateProfileLens();
   if(!lensState.initialized){
     lensState.initialized=true;
     const params=new URLSearchParams(location.search);
     lensState.profile=params.get("profile")||"all";
     lensState.truth=params.get("truth")||"all";
 
-    populateProfileLens();
     const p=$("#profilelens"),t=$("#truthlens");
     if(p){
       p.value=[...p.options].some(function(o){return o.value===lensState.profile;})
@@ -131,6 +148,12 @@ async function initLensBar(){
     if(lintButton) lintButton.onclick=function(){$("#lintpanel").classList.toggle("open");};
     if(close) close.onclick=function(){$("#lintpanel").classList.remove("open");};
     renderLint();
+  } else {
+    const p=$("#profilelens");
+    if(p && ![...p.options].some(function(o){return o.value===lensState.profile;})){
+      lensState.profile="all";
+      p.value="all";
+    }
   }
   requestAnimationFrame(applyLens);
 }
