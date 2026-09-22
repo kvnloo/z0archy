@@ -67,9 +67,11 @@ def inspect_repository(
         }],
     }]
 
+    read_ref = resolved if provider.kind == "github" and not resolved.startswith("github:") else ref
+
     docs: dict[str, str] = {}
     for path in PROBE_PATHS:
-        text = provider.read_text(repo, ref, path)
+        text = provider.read_text(repo, read_ref, path)
         if text is None:
             continue
         docs[path] = text
