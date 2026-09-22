@@ -144,6 +144,22 @@ Applying the matrix loads the precompiled evidence pack for every selected immut
 
 The selection can be copied as a portable JSON manifest. Applied GitHub selections are URL-addressable with `virtual=1` and `v.<repo>=<ref>` parameters.
 
+## Derived architecture drift
+
+Virtual worlds also reconcile implementation package manifests across selected repositories.
+
+When a package in repository A declares a dependency on a uniquely identified package in repository B, z0archy adds a **derived** `package_depends_on` edge. This never becomes canonical truth. It remains implementation evidence tied to the exact selected refs.
+
+The linter checks whether the owning z0 components have a corresponding `depends_on` or `integrates_with` declaration. Missing coverage produces:
+
+```text
+drift.cross_repo_package_dependency_undeclared
+```
+
+Ambiguous package names fail open: z0archy records the ambiguity and does not invent an edge. The browser ref matrix and Python virtual snapshot compiler use the same rule, and the lint panel recomputes against the active virtual world.
+
+This intentionally stops short of heuristic source-import promotion. Package manifests are stronger implementation evidence and already expose a useful class of hidden cross-repository coupling.
+
 ## Semantic zoom
 
 The whole-world view uses semantic zoom rather than geometric scaling alone. Each graph node carries an abstraction depth. As the camera moves closer, z0archy progressively reveals:
