@@ -897,13 +897,32 @@
           }
         },
         {
+          "id": "z0://mechanism/frozen-eval-publication",
+          "title": "Frozen evaluation publication",
+          "sub": "mechanism",
+          "body": "Turn pinned experiment inputs and independently inspectable outcomes into frozen datasets, analyses, figure...",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "Frozen evaluation publication\n\ntype: mechanism\nkind: evidence\nstage: active\npurpose: Turn pinned experiment inputs and independently inspectable outcomes into frozen datasets, analyses, figures, and public claims without becoming the experiment engine or verifier.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/frozen-eval-publication",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://mechanism/jev-typed-decision",
           "title": "Jev / typed bounded decision",
           "sub": "mechanism",
           "body": "Replace autoregressive choice generation with bounded typed scoring/readout when the decision space is expl...",
           "pos": [
-            380,
-            0
+            -380,
+            260
           ],
           "w": 320,
           "kind": "hub decision",
@@ -916,13 +935,127 @@
           }
         },
         {
+          "id": "z0://mechanism/keel-governed-execution",
+          "title": "Keel governed execution",
+          "sub": "mechanism",
+          "body": "Bound agent execution with explicit capability rules, evidence requirements, staged promotion, adversarial ...",
+          "pos": [
+            0,
+            260
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "Keel governed execution\n\ntype: mechanism\nkind: governance\nstage: bootstrap\npurpose: Bound agent execution with explicit capability rules, evidence requirements, staged promotion, adversarial verification, rollback, and non-self-authorizing evolution.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/keel-governed-execution",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/z0archy-semantic-compression",
+          "title": "Loss-aware semantic architecture compression",
+          "sub": "mechanism",
+          "body": "Compile a large architecture world into question- or zoom-conditioned maps while emitting receipts for reta...",
+          "pos": [
+            380,
+            260
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "Loss-aware semantic architecture compression\n\ntype: mechanism\nkind: compression\nstage: active\npurpose: Compile a large architecture world into question- or zoom-conditioned maps while emitting receipts for retained structure, hidden evidence, cut edges, provenance reconstructability, and high-relevance omissions.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/z0archy-semantic-compression",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/model-passport-identity",
+          "title": "Model passport identity",
+          "sub": "mechanism",
+          "body": "Keep maker, canonical model identity, verified capabilities, lifecycle, and serving route distinct while ex...",
+          "pos": [
+            -380,
+            520
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "Model passport identity\n\ntype: mechanism\nkind: metadata\nstage: design_seed\npurpose: Keep maker, canonical model identity, verified capabilities, lifecycle, and serving route distinct while exposing one portable descriptor to every UI.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/model-passport-identity",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/realtime-voice-orchestration",
+          "title": "Realtime voice orchestration",
+          "sub": "mechanism",
+          "body": "Keep a duplex voice session active while delegating durable background agent work, querying memory/tools, a...",
+          "pos": [
+            0,
+            520
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "Realtime voice orchestration\n\ntype: mechanism\nkind: interaction\nstage: experimental\npurpose: Keep a duplex voice session active while delegating durable background agent work, querying memory/tools, and speaking results when they arrive.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/realtime-voice-orchestration",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/hermes-lossless-context-dag",
+          "title": "Recoverable context DAG",
+          "sub": "mechanism",
+          "body": "Keep active context bounded while preserving raw-message lineage, hierarchical summaries, exact drill-down,...",
+          "pos": [
+            380,
+            520
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "Recoverable context DAG\n\ntype: mechanism\nkind: context\nstage: experimental\npurpose: Keep active context bounded while preserving raw-message lineage, hierarchical summaries, exact drill-down, and recoverable externalized payloads.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/hermes-lossless-context-dag",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/z0archy-history-fork-diff",
+          "title": "Replayable architecture fork and diff",
+          "sub": "mechanism",
+          "body": "Preserve content-addressed architecture history as event-sourced runs that can be replayed, forked at prior...",
+          "pos": [
+            -380,
+            780
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "Replayable architecture fork and diff\n\ntype: mechanism\nkind: history\nstage: active\npurpose: Preserve content-addressed architecture history as event-sourced runs that can be replayed, forked at prior states, reconciled to alternate ref selections, and structurally diffed without contaminating canonical truth.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/z0archy-history-fork-diff",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://mechanism/rlm-context-spill",
           "title": "RLM context spill",
           "sub": "mechanism",
           "body": "Keep large context addressable outside the frontier model's active window.",
           "pos": [
-            -380,
-            260
+            0,
+            780
           ],
           "w": 320,
           "kind": "hub compute",
@@ -935,13 +1068,51 @@
           }
         },
         {
+          "id": "z0://mechanism/mesh-signed-intent-transport",
+          "title": "Signed Mesh intent transport",
+          "sub": "mechanism",
+          "body": "Transport bounded signed execution intents between nodes while revalidating authority at the destination an...",
+          "pos": [
+            380,
+            780
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "Signed Mesh intent transport\n\ntype: mechanism\nkind: transport\nstage: experimental\npurpose: Transport bounded signed execution intents between nodes while revalidating authority at the destination and returning signed receipt/evidence without replacing the canonical task lifecycle.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/mesh-signed-intent-transport",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/z0archy-hierarchy-meta-learning",
+          "title": "Slow architecture hierarchy meta-learning",
+          "sub": "mechanism",
+          "body": "Analyze architecture history for conservative keep, merge, split, prune, or no-update proposals while keepi...",
+          "pos": [
+            -380,
+            1040
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "Slow architecture hierarchy meta-learning\n\ntype: mechanism\nkind: learning\nstage: experimental\npurpose: Analyze architecture history for conservative keep, merge, split, prune, or no-update proposals while keeping canonical ontology changes human-approved.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/z0archy-hierarchy-meta-learning",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://mechanism-family/sol-pi",
           "title": "sol-pi",
           "sub": "mechanism family",
           "body": "",
           "pos": [
             0,
-            260
+            1040
           ],
           "w": 320,
           "kind": "hub contract",
@@ -960,7 +1131,7 @@
           "body": "Fuse an edit/write and its predictable validation into one tool action.",
           "pos": [
             380,
-            260
+            1040
           ],
           "w": 320,
           "kind": "hub compute",
@@ -979,7 +1150,7 @@
           "body": "Compress long diagnostic observations into receipts while retaining quote-verifiable evidence and falling o...",
           "pos": [
             -380,
-            520
+            1300
           ],
           "w": 320,
           "kind": "hub compute",
@@ -998,7 +1169,7 @@
           "body": "Replace repeated large observations with stable handles and exact recall.",
           "pos": [
             0,
-            520
+            1300
           ],
           "w": 320,
           "kind": "hub compute",
@@ -1017,7 +1188,7 @@
           "body": "Trigger bounded context compaction at completed plan boundaries using economics/window pressure rather than...",
           "pos": [
             380,
-            520
+            1300
           ],
           "w": 320,
           "kind": "hub compute",
@@ -1025,6 +1196,25 @@
           "meta": {
             "graphType": "mechanism",
             "graphId": "z0://mechanism/sol-pi-online-context-compact",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/split-authority-privilege-broker",
+          "title": "Split-authority privilege broker",
+          "sub": "mechanism",
+          "body": "Separate request, operator approval, immutable grant, and bounded privileged execution so an agent cannot m...",
+          "pos": [
+            -380,
+            1560
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "Split-authority privilege broker\n\ntype: mechanism\nkind: security\nstage: development_candidate\npurpose: Separate request, operator approval, immutable grant, and bounded privileged execution so an agent cannot manufacture its own elevation authority.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/split-authority-privilege-broker",
             "semanticLevel": 2,
             "truthClass": "declared"
           }
@@ -1531,13 +1721,108 @@
       ],
       "nodes": [
         {
+          "id": "z0://repo/kvnloo/activegraph",
+          "title": "ActiveGraph",
+          "sub": "repository",
+          "body": "kvnloo/activegraph",
+          "pos": [
+            -380,
+            0
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "ActiveGraph\n\ntype: repository\nrepo: kvnloo/activegraph\nsuiteRole: temporal_graph_substrate\nsuiteAuthority: external_substrate\nsuiteStatus: active\nsuiteSummary: Event-sourced reactive graph runtime used by z0archy for resumable, forkable, diffable architecture history.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/activegraph",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/codex-router",
+          "title": "Codex Router",
+          "sub": "repository",
+          "body": "kvnloo/codex-router",
+          "pos": [
+            0,
+            0
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Codex Router\n\ntype: repository\nrepo: kvnloo/codex-router\nsuiteRole: provider_router\nsuiteAuthority: implementation\nsuiteStatus: experimental\nsuiteSummary: Local provider/model routing surface serving Codex and additional harnesses while keeping provider credentials local.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/codex-router",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/company-os",
+          "title": "Company OS",
+          "sub": "repository",
+          "body": "kvnloo/company-os",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Company OS\n\ntype: repository\nrepo: kvnloo/company-os\nsuiteRole: operational_projection\nsuiteAuthority: read_only_projection\nsuiteStatus: experimental\nsuiteSummary: Thin Hermes HUD that projects live host state without becoming a second control plane or execution authority.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/company-os",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/deepseek-harness",
+          "title": "DeepSeek Harness",
+          "sub": "repository",
+          "body": "kvnloo/deepseek-harness",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "DeepSeek Harness\n\ntype: repository\nrepo: kvnloo/deepseek-harness\nsuiteRole: execution_runtime\nsuiteAuthority: implementation\nsuiteStatus: developer_preview\nsuiteSummary: Plugin-tree agent harness used as a Zer0 execution and inspection surface.\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/deepseek-harness",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/ds4",
+          "title": "DwarfStar",
+          "sub": "repository",
+          "body": "kvnloo/ds4",
+          "pos": [
+            0,
+            260
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "DwarfStar\n\ntype: repository\nrepo: kvnloo/ds4\nsuiteRole: local_inference_engine\nsuiteAuthority: implementation\nsuiteStatus: beta\nsuiteSummary: Narrow native inference engine for capable open-weight models on consumer hardware across Metal, CUDA, and ROCm.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/ds4",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://repo/earendil-works/pi",
           "title": "earendil-works/pi",
           "sub": "repository",
           "body": "earendil-works/pi",
           "pos": [
-            -380,
-            0
+            380,
+            260
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1550,13 +1835,241 @@
           }
         },
         {
+          "id": "z0://repo/kvnloo/flyforge",
+          "title": "FlyForge",
+          "sub": "repository",
+          "body": "kvnloo/flyforge",
+          "pos": [
+            -380,
+            520
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "FlyForge\n\ntype: repository\nrepo: kvnloo/flyforge\nsuiteRole: research_program\nsuiteAuthority: research\nsuiteStatus: reference\nsuiteSummary: Original research-program surface whose experiment engine now lives in Evolution Lab.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/flyforge",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/graphcon-deck",
+          "title": "graphcon-deck",
+          "sub": "repository",
+          "body": "kvnloo/graphcon-deck",
+          "pos": [
+            0,
+            520
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "graphcon-deck\n\ntype: repository\nrepo: kvnloo/graphcon-deck\nsuiteRole: presentation_substrate\nsuiteAuthority: external_substrate\nsuiteStatus: active\nsuiteSummary: Spatial knowledge-graph presentation substrate adapted by z0archy for authored scenes and interactive architecture exploration.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/graphcon-deck",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/hermes-agent",
+          "title": "Hermes Agent",
+          "sub": "repository",
+          "body": "kvnloo/hermes-agent",
+          "pos": [
+            380,
+            520
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Hermes Agent\n\ntype: repository\nrepo: kvnloo/hermes-agent\nsuiteRole: execution_runtime\nsuiteAuthority: implementation\nsuiteStatus: active\nsuiteSummary: Cross-platform self-improving agent runtime with gateway, memory, skills, subagents, automation, and trajectory tooling.\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/hermes-agent",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/hermes-agent-self-evolution",
+          "title": "Hermes Agent Self-Evolution",
+          "sub": "repository",
+          "body": "kvnloo/hermes-agent-self-evolution",
+          "pos": [
+            -380,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Hermes Agent Self-Evolution\n\ntype: repository\nrepo: kvnloo/hermes-agent-self-evolution\nsuiteRole: evolution_engine\nsuiteAuthority: implementation\nsuiteStatus: experimental\nsuiteSummary: DSPy and GEPA based evolutionary optimization of Hermes skills, prompts, tool descriptions, and code candidates.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/hermes-agent-self-evolution",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/hermes-jev-skills",
+          "title": "Hermes Jev Skills",
+          "sub": "repository",
+          "body": "kvnloo/hermes-jev-skills",
+          "pos": [
+            0,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Hermes Jev Skills\n\ntype: repository\nrepo: kvnloo/hermes-jev-skills\nsuiteRole: decision_extension\nsuiteAuthority: implementation\nsuiteStatus: experimental\nsuiteSummary: Typed Jev decision skills for routing, retrieval, turn selection, triage, and computer-use decisions.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/hermes-jev-skills",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/hermes-keel",
+          "title": "Hermes Keel",
+          "sub": "repository",
+          "body": "kvnloo/hermes-keel",
+          "pos": [
+            380,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Hermes Keel\n\ntype: repository\nrepo: kvnloo/hermes-keel\nsuiteRole: governance_spec\nsuiteAuthority: constitutional\nsuiteStatus: bootstrap\nsuiteSummary: Governance layer defining capability boundaries, evidence requirements, staged promotion, and rollback around Hermes execution.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/hermes-keel",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/hermes-lcm",
+          "title": "Hermes LCM",
+          "sub": "repository",
+          "body": "kvnloo/hermes-lcm",
+          "pos": [
+            -380,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Hermes LCM\n\ntype: repository\nrepo: kvnloo/hermes-lcm\nsuiteRole: context_extension\nsuiteAuthority: implementation\nsuiteStatus: experimental\nsuiteSummary: Lossless context-management plugin with a recoverable SQLite-backed summary DAG and bounded recall.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/hermes-lcm",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/hermes-mesh-keel",
+          "title": "Hermes Mesh Keel",
+          "sub": "repository",
+          "body": "kvnloo/hermes-mesh-keel",
+          "pos": [
+            0,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Hermes Mesh Keel\n\ntype: repository\nrepo: kvnloo/hermes-mesh-keel\nsuiteRole: signed_mesh_transport\nsuiteAuthority: pre_activation\nsuiteStatus: experimental\nsuiteSummary: Signed durable transport for bounded Hermes Kanban intents with destination Keel revalidation and receipt evidence.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/hermes-mesh-keel",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/hermes-model-passports",
+          "title": "Hermes Model Passports",
+          "sub": "repository",
+          "body": "kvnloo/hermes-model-passports",
+          "pos": [
+            380,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Hermes Model Passports\n\ntype: repository\nrepo: kvnloo/hermes-model-passports\nsuiteRole: model_identity_language\nsuiteAuthority: metadata\nsuiteStatus: design_seed\nsuiteSummary: Portable model identity, capability, lifecycle, maker, and route metadata language with compact visual sigils.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/hermes-model-passports",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/hermes-privilege-broker",
+          "title": "Hermes Privilege Broker",
+          "sub": "repository",
+          "body": "kvnloo/hermes-privilege-broker",
+          "pos": [
+            -380,
+            1300
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Hermes Privilege Broker\n\ntype: repository\nrepo: kvnloo/hermes-privilege-broker\nsuiteRole: privilege_boundary\nsuiteAuthority: security_reference\nsuiteStatus: development_candidate\nsuiteSummary: Split-authority typed privilege broker reference implementation kept separate from Hermes core.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/hermes-privilege-broker",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/hermes-talk",
+          "title": "Hermes Talk",
+          "sub": "repository",
+          "body": "kvnloo/hermes-talk",
+          "pos": [
+            0,
+            1300
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Hermes Talk\n\ntype: repository\nrepo: kvnloo/hermes-talk\nsuiteRole: voice_orchestrator\nsuiteAuthority: implementation\nsuiteStatus: experimental\nsuiteSummary: Realtime duplex voice control layer that delegates work to Hermes agents while the conversation continues.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/hermes-talk",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/Hermes3D",
+          "title": "Hermes3D",
+          "sub": "repository",
+          "body": "kvnloo/Hermes3D",
+          "pos": [
+            380,
+            1300
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Hermes3D\n\ntype: repository\nrepo: kvnloo/Hermes3D\nsuiteRole: spatial_frontend\nsuiteAuthority: projection\nsuiteStatus: experimental\nsuiteSummary: 3D and 2D spatial workspace that visualizes agents while runtime truth stays in the connected backend.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/Hermes3D",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://repo/kvnloo/.files",
           "title": "kvnloo/.files",
           "sub": "repository",
           "body": "kvnloo/.files",
           "pos": [
-            0,
-            0
+            -380,
+            1560
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1574,8 +2087,8 @@
           "sub": "repository",
           "body": "kvnloo/agenttrace",
           "pos": [
-            380,
-            0
+            0,
+            1560
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1593,8 +2106,8 @@
           "sub": "repository",
           "body": "kvnloo/aodl",
           "pos": [
-            -380,
-            260
+            380,
+            1560
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1607,32 +2120,13 @@
           }
         },
         {
-          "id": "z0://repo/kvnloo/deepseek-harness",
-          "title": "kvnloo/deepseek-harness",
-          "sub": "repository",
-          "body": "kvnloo/deepseek-harness",
-          "pos": [
-            0,
-            260
-          ],
-          "w": 320,
-          "kind": "tiny contract",
-          "tip": "kvnloo/deepseek-harness\n\ntype: repository\nrepo: kvnloo/deepseek-harness\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
-          "meta": {
-            "graphType": "repository",
-            "graphId": "z0://repo/kvnloo/deepseek-harness",
-            "semanticLevel": 3,
-            "truthClass": "declared"
-          }
-        },
-        {
           "id": "z0://repo/kvnloo/evolution-lab",
           "title": "kvnloo/evolution-lab",
           "sub": "repository",
           "body": "kvnloo/evolution-lab",
           "pos": [
-            380,
-            260
+            -380,
+            1820
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1650,8 +2144,8 @@
           "sub": "repository",
           "body": "kvnloo/frontier-kb",
           "pos": [
-            -380,
-            520
+            0,
+            1820
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1664,32 +2158,13 @@
           }
         },
         {
-          "id": "z0://repo/kvnloo/hermes-agent",
-          "title": "kvnloo/hermes-agent",
-          "sub": "repository",
-          "body": "kvnloo/hermes-agent",
-          "pos": [
-            0,
-            520
-          ],
-          "w": 320,
-          "kind": "tiny contract",
-          "tip": "kvnloo/hermes-agent\n\ntype: repository\nrepo: kvnloo/hermes-agent\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
-          "meta": {
-            "graphType": "repository",
-            "graphId": "z0://repo/kvnloo/hermes-agent",
-            "semanticLevel": 3,
-            "truthClass": "declared"
-          }
-        },
-        {
           "id": "z0://repo/kvnloo/kerdoios",
           "title": "kvnloo/kerdoios",
           "sub": "repository",
           "body": "kvnloo/kerdoios",
           "pos": [
             380,
-            520
+            1820
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1708,7 +2183,7 @@
           "body": "kvnloo/Memento",
           "pos": [
             -380,
-            780
+            2080
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1727,7 +2202,7 @@
           "body": "kvnloo/oh-my-pi",
           "pos": [
             0,
-            780
+            2080
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1740,51 +2215,13 @@
           }
         },
         {
-          "id": "z0://repo/kvnloo/SoL-Pi",
-          "title": "kvnloo/SoL-Pi",
-          "sub": "repository",
-          "body": "kvnloo/SoL-Pi",
-          "pos": [
-            380,
-            780
-          ],
-          "w": 320,
-          "kind": "tiny contract",
-          "tip": "kvnloo/SoL-Pi\n\ntype: repository\nrepo: kvnloo/SoL-Pi\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
-          "meta": {
-            "graphType": "repository",
-            "graphId": "z0://repo/kvnloo/SoL-Pi",
-            "semanticLevel": 3,
-            "truthClass": "declared"
-          }
-        },
-        {
-          "id": "z0://repo/kvnloo/sol-pi-hermes",
-          "title": "kvnloo/sol-pi-hermes",
-          "sub": "repository",
-          "body": "kvnloo/sol-pi-hermes",
-          "pos": [
-            -380,
-            1040
-          ],
-          "w": 320,
-          "kind": "tiny contract",
-          "tip": "kvnloo/sol-pi-hermes\n\ntype: repository\nrepo: kvnloo/sol-pi-hermes\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
-          "meta": {
-            "graphType": "repository",
-            "graphId": "z0://repo/kvnloo/sol-pi-hermes",
-            "semanticLevel": 3,
-            "truthClass": "declared"
-          }
-        },
-        {
           "id": "z0://repo/kvnloo/tokenomics",
           "title": "kvnloo/tokenomics",
           "sub": "repository",
           "body": "kvnloo/tokenomics",
           "pos": [
-            0,
-            1040
+            380,
+            2080
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1797,51 +2234,13 @@
           }
         },
         {
-          "id": "z0://repo/kvnloo/verified-oss-loop",
-          "title": "kvnloo/verified-oss-loop",
-          "sub": "repository",
-          "body": "kvnloo/verified-oss-loop",
-          "pos": [
-            380,
-            1040
-          ],
-          "w": 320,
-          "kind": "tiny contract",
-          "tip": "kvnloo/verified-oss-loop\n\ntype: repository\nrepo: kvnloo/verified-oss-loop\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
-          "meta": {
-            "graphType": "repository",
-            "graphId": "z0://repo/kvnloo/verified-oss-loop",
-            "semanticLevel": 3,
-            "truthClass": "declared"
-          }
-        },
-        {
-          "id": "z0://repo/kvnloo/z0",
-          "title": "kvnloo/z0",
-          "sub": "repository",
-          "body": "kvnloo/z0",
-          "pos": [
-            -380,
-            1300
-          ],
-          "w": 320,
-          "kind": "tiny contract",
-          "tip": "kvnloo/z0\n\ntype: repository\nrepo: kvnloo/z0\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
-          "meta": {
-            "graphType": "repository",
-            "graphId": "z0://repo/kvnloo/z0",
-            "semanticLevel": 3,
-            "truthClass": "declared"
-          }
-        },
-        {
           "id": "z0://repo/kvnloo/z0intelligence",
           "title": "kvnloo/z0intelligence",
           "sub": "repository",
           "body": "kvnloo/z0intelligence",
           "pos": [
-            0,
-            1300
+            -380,
+            2340
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1859,8 +2258,8 @@
           "sub": "repository",
           "body": "openai/codex",
           "pos": [
-            380,
-            1300
+            0,
+            2340
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1868,6 +2267,139 @@
           "meta": {
             "graphType": "repository",
             "graphId": "z0://repo/openai/codex",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/ripple",
+          "title": "Ripple",
+          "sub": "repository",
+          "body": "kvnloo/ripple",
+          "pos": [
+            380,
+            2340
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Ripple\n\ntype: repository\nrepo: kvnloo/ripple\nsuiteRole: intent_surface\nsuiteAuthority: interaction\nsuiteStatus: experimental\nsuiteSummary: Ephemeral multimodal intent surface that consumes AODL contracts while keeping AODL itself as IR.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/ripple",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/SoL-Pi",
+          "title": "SoL-Pi",
+          "sub": "repository",
+          "body": "kvnloo/SoL-Pi",
+          "pos": [
+            -380,
+            2600
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "SoL-Pi\n\ntype: repository\nrepo: kvnloo/SoL-Pi\nsuiteRole: mechanism_bundle\nsuiteAuthority: implementation\nsuiteStatus: experimental\nsuiteSummary: Pi extension packaging reusable agent-efficiency mechanisms discovered through auto-research.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/SoL-Pi",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/sol-pi-hermes",
+          "title": "sol-pi-hermes",
+          "sub": "repository",
+          "body": "kvnloo/sol-pi-hermes",
+          "pos": [
+            0,
+            2600
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "sol-pi-hermes\n\ntype: repository\nrepo: kvnloo/sol-pi-hermes\nsuiteRole: mechanism_port\nsuiteAuthority: implementation\nsuiteStatus: experimental\nsuiteSummary: Hermes plugin port of SoL-Pi mechanisms using Hermes-native context and tool seams.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/sol-pi-hermes",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/verified-oss-loop",
+          "title": "Verified OSS Loop",
+          "sub": "repository",
+          "body": "kvnloo/verified-oss-loop",
+          "pos": [
+            380,
+            2600
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Verified OSS Loop\n\ntype: repository\nrepo: kvnloo/verified-oss-loop\nsuiteRole: contribution_protocol\nsuiteAuthority: protocol\nsuiteStatus: active\nsuiteSummary: Evidence-gated distributed OSS contribution protocol with claim leases, isolated work, verification, and human merge authority.\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/verified-oss-loop",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/z0archy",
+          "title": "z0archy",
+          "sub": "repository",
+          "body": "kvnloo/z0archy",
+          "pos": [
+            -380,
+            2860
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "z0archy\n\ntype: repository\nrepo: kvnloo/z0archy\nsuiteRole: architecture_projection\nsuiteAuthority: derived\nsuiteStatus: active\nsuiteSummary: Dynamic architecture world model, exact-ref implementation evidence, history, counterfactuals, and semantic compression.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/z0archy",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/z0evals",
+          "title": "z0evals",
+          "sub": "repository",
+          "body": "kvnloo/z0evals",
+          "pos": [
+            0,
+            2860
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "z0evals\n\ntype: repository\nrepo: kvnloo/z0evals\nsuiteRole: publication_evidence\nsuiteAuthority: frozen_evidence\nsuiteStatus: active\nsuiteSummary: Reproducible evaluations, frozen datasets, analysis, figures, and public reports for Zer0 studies.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/z0evals",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/z0",
+          "title": "Zer0",
+          "sub": "repository",
+          "body": "kvnloo/z0",
+          "pos": [
+            380,
+            2860
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Zer0\n\ntype: repository\nrepo: kvnloo/z0\nsuiteRole: architecture_registry\nsuiteAuthority: canonical\nsuiteStatus: active\nsuiteSummary: Canonical semantic architecture registries, install profiles, generated docs, and onboarding.\n\ndeclared: kvnloo/z0@main\npath: registry/lifecycles.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/z0",
             "semanticLevel": 3,
             "truthClass": "declared"
           }
@@ -1926,13 +2458,51 @@
           }
         },
         {
+          "id": "z0://representation/hierarchy-proposal",
+          "title": "Architecture hierarchy proposal",
+          "sub": "representation",
+          "body": "Evidence-backed keep, merge, split, prune, or no-update suggestion derived from architecture history withou...",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "Architecture hierarchy proposal\n\ntype: representation\nkind: proposal\nscale: compact\nsensitivity: public\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/hierarchy-proposal",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://representation/architecture-snapshot",
+          "title": "Architecture snapshot",
+          "sub": "representation",
+          "body": "Content-addressed semantic architecture state that can be replayed, compared, or forked without mutating ca...",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "Architecture snapshot\n\ntype: representation\nkind: world_state\nscale: large\nsensitivity: public\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/architecture-snapshot",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://representation/compiled-decision-state",
           "title": "Compiled decision state",
           "sub": "representation",
           "body": "Decision-relevant state after retrieval, filtering, and bounded context compilation.",
           "pos": [
-            380,
-            0
+            0,
+            260
           ],
           "w": 320,
           "kind": "hub decision",
@@ -1950,7 +2520,7 @@
           "sub": "representation",
           "body": "Runtime-safe plan compiled from typed intent before execution.",
           "pos": [
-            -380,
+            380,
             260
           ],
           "w": 320,
@@ -1969,8 +2539,8 @@
           "sub": "representation",
           "body": "Structured audit record of a routing or policy decision.",
           "pos": [
-            0,
-            260
+            -380,
+            520
           ],
           "w": 320,
           "kind": "hub decision",
@@ -1988,8 +2558,8 @@
           "sub": "representation",
           "body": "Quote-verifiable compressed diagnostic evidence with a fall-open path when verification fails.",
           "pos": [
-            380,
-            260
+            0,
+            520
           ],
           "w": 320,
           "kind": "hub compute",
@@ -2002,13 +2572,70 @@
           }
         },
         {
+          "id": "z0://representation/evaluation-artifact",
+          "title": "Frozen evaluation artifact",
+          "sub": "representation",
+          "body": "Pinned reproducible study data, analysis, figure, or report whose public claim resolves to frozen evidence.",
+          "pos": [
+            380,
+            520
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "Frozen evaluation artifact\n\ntype: representation\nkind: evidence\nscale: bounded\nsensitivity: public\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/evaluation-artifact",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://representation/lossless-context-node",
+          "title": "Lossless context DAG node",
+          "sub": "representation",
+          "body": "Recoverable raw-message or hierarchical summary node with explicit source lineage and drill-down.",
+          "pos": [
+            -380,
+            780
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "Lossless context DAG node\n\ntype: representation\nkind: memory\nscale: bounded\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/lossless-context-node",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://representation/model-passport",
+          "title": "Model passport",
+          "sub": "representation",
+          "body": "Portable descriptor separating maker, canonical model identity, verified capabilities/lifecycle, and servin...",
+          "pos": [
+            0,
+            780
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "Model passport\n\ntype: representation\nkind: metadata\nscale: small\nsensitivity: public\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/model-passport",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://representation/observation-pack",
           "title": "ObservationPack",
           "sub": "representation",
           "body": "Stable compact handle plus exact recall path for large observations.",
           "pos": [
-            -380,
-            520
+            380,
+            780
           ],
           "w": 320,
           "kind": "hub compute",
@@ -2026,8 +2653,8 @@
           "sub": "representation",
           "body": "What actually ran, kept distinct from desired intent and compiled plan.",
           "pos": [
-            0,
-            520
+            -380,
+            1040
           ],
           "w": 320,
           "kind": "hub measurement",
@@ -2040,13 +2667,32 @@
           }
         },
         {
+          "id": "z0://representation/privilege-grant",
+          "title": "Privilege grant",
+          "sub": "representation",
+          "body": "One-use monotonic-TTL authorization bound to an immutable approved privileged-operation digest.",
+          "pos": [
+            0,
+            1040
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "Privilege grant\n\ntype: representation\nkind: authorization\nscale: tiny\nsensitivity: private\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/privilege-grant",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://representation/raw-context",
           "title": "Raw context",
           "sub": "representation",
           "body": "Uncompressed source text, logs, files, observations, or conversation state.",
           "pos": [
             380,
-            520
+            1040
           ],
           "w": 320,
           "kind": "hub compute",
@@ -2065,7 +2711,7 @@
           "body": "Stable handle that keeps large context externally addressable instead of replaying it into the frontier win...",
           "pos": [
             -380,
-            780
+            1300
           ],
           "w": 320,
           "kind": "hub compute",
@@ -2078,13 +2724,51 @@
           }
         },
         {
+          "id": "z0://representation/semantic-compression-receipt",
+          "title": "Semantic compression receipt",
+          "sub": "representation",
+          "body": "Audit of a compressed architecture view recording retained/hidden structure, cut relations, provenance, and...",
+          "pos": [
+            0,
+            1300
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "Semantic compression receipt\n\ntype: representation\nkind: evidence_bundle\nscale: compact\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/semantic-compression-receipt",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://representation/signed-mesh-intent",
+          "title": "Signed Mesh intent",
+          "sub": "representation",
+          "body": "Versioned bounded execution intent carrying task revision, capability/policy hashes, privacy class, replay ...",
+          "pos": [
+            380,
+            1300
+          ],
+          "w": 320,
+          "kind": "hub decision",
+          "tip": "Signed Mesh intent\n\ntype: representation\nkind: intent\nscale: compact\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/signed-mesh-intent",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://representation/tokenomics-event",
           "title": "Tokenomics event",
           "sub": "representation",
           "body": "Vendor-neutral token, cost, latency, and execution measurement envelope.",
           "pos": [
-            0,
-            780
+            -380,
+            1560
           ],
           "w": 320,
           "kind": "hub measurement",
@@ -2131,13 +2815,70 @@
           }
         },
         {
+          "id": "z0://evidence-dependency/architecture-compression-is-audited",
+          "title": "architecture-compression-is-audited",
+          "sub": "evidence dependency",
+          "body": "audited_by",
+          "pos": [
+            0,
+            0
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "architecture-compression-is-audited\n\ntype: evidence_dependency\nrelation: audited_by\nconfidence: declared\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_dependency",
+            "graphId": "z0://evidence-dependency/architecture-compression-is-audited",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-dependency/architecture-history-to-hierarchy-proposal",
+          "title": "architecture-history-to-hierarchy-proposal",
+          "sub": "evidence dependency",
+          "body": "analyzed_as",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "architecture-history-to-hierarchy-proposal\n\ntype: evidence_dependency\nrelation: analyzed_as\nconfidence: declared\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_dependency",
+            "graphId": "z0://evidence-dependency/architecture-history-to-hierarchy-proposal",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-dependency/compiled-plan-to-signed-mesh-intent",
+          "title": "compiled-plan-to-signed-mesh-intent",
+          "sub": "evidence dependency",
+          "body": "transported_as",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "compiled-plan-to-signed-mesh-intent\n\ntype: evidence_dependency\nrelation: transported_as\nconfidence: declared\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_dependency",
+            "graphId": "z0://evidence-dependency/compiled-plan-to-signed-mesh-intent",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://evidence-dependency/decision-state-to-receipt",
           "title": "decision-state-to-receipt",
           "sub": "evidence dependency",
           "body": "decides_to",
           "pos": [
             0,
-            0
+            260
           ],
           "w": 320,
           "kind": "hub research",
@@ -2156,7 +2897,7 @@
           "body": "compresses_to",
           "pos": [
             380,
-            0
+            260
           ],
           "w": 320,
           "kind": "hub research",
@@ -2175,7 +2916,7 @@
           "body": "measured_as",
           "pos": [
             -380,
-            260
+            520
           ],
           "w": 320,
           "kind": "hub research",
@@ -2188,13 +2929,51 @@
           }
         },
         {
+          "id": "z0://evidence-ref/kvnloo/hermes-lcm:README.md%23what-it-does",
+          "title": "kvnloo/hermes-lcm:README.md#what-it-does",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            0,
+            520
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/hermes-lcm:README.md#what-it-does\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/kvnloo/hermes-lcm:README.md%23what-it-does",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/kvnloo/hermes-mesh-keel:README.md",
+          "title": "kvnloo/hermes-mesh-keel:README.md",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            380,
+            520
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/hermes-mesh-keel:README.md\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/kvnloo/hermes-mesh-keel:README.md",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://evidence-ref/kvnloo/oh-my-pi:README.md",
           "title": "kvnloo/oh-my-pi:README.md",
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            0,
-            260
+            -380,
+            780
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2207,13 +2986,89 @@
           }
         },
         {
+          "id": "z0://evidence-ref/kvnloo/z0archy:README.md%23semantic-compression-receipts",
+          "title": "kvnloo/z0archy:README.md#semantic-compression-receipts",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            0,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/z0archy:README.md#semantic-compression-receipts\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/kvnloo/z0archy:README.md%23semantic-compression-receipts",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/kvnloo/z0archy:README.md%23slow-hierarchy-meta-learning",
+          "title": "kvnloo/z0archy:README.md#slow-hierarchy-meta-learning",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            380,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/z0archy:README.md#slow-hierarchy-meta-learning\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/kvnloo/z0archy:README.md%23slow-hierarchy-meta-learning",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/kvnloo/z0evals:README.md%23rules",
+          "title": "kvnloo/z0evals:README.md#rules",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            -380,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/z0evals:README.md#rules\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/kvnloo/z0evals:README.md%23rules",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-dependency/lossless-context-preserves-drilldown",
+          "title": "lossless-context-preserves-drilldown",
+          "sub": "evidence dependency",
+          "body": "compacts_to",
+          "pos": [
+            0,
+            1040
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "lossless-context-preserves-drilldown\n\ntype: evidence_dependency\nrelation: compacts_to\nconfidence: declared\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_dependency",
+            "graphId": "z0://evidence-dependency/lossless-context-preserves-drilldown",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://evidence-dependency/observation-pack-compresses-context",
           "title": "observation-pack-compresses-context",
           "sub": "evidence dependency",
           "body": "compresses_to",
           "pos": [
             380,
-            260
+            1040
           ],
           "w": 320,
           "kind": "hub research",
@@ -2232,7 +3087,7 @@
           "body": "implements",
           "pos": [
             -380,
-            520
+            1300
           ],
           "w": 320,
           "kind": "hub research",
@@ -2251,7 +3106,7 @@
           "body": "observed_as",
           "pos": [
             0,
-            520
+            1300
           ],
           "w": 320,
           "kind": "hub research",
@@ -2270,7 +3125,7 @@
           "body": "",
           "pos": [
             380,
-            520
+            1300
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2289,7 +3144,7 @@
           "body": "",
           "pos": [
             -380,
-            780
+            1560
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2308,7 +3163,7 @@
           "body": "",
           "pos": [
             0,
-            780
+            1560
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2327,7 +3182,7 @@
           "body": "",
           "pos": [
             380,
-            780
+            1560
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2346,7 +3201,7 @@
           "body": "",
           "pos": [
             -380,
-            1040
+            1820
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2365,7 +3220,7 @@
           "body": "",
           "pos": [
             0,
-            1040
+            1820
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2378,13 +3233,51 @@
           }
         },
         {
+          "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.frozen-eval-publication",
+          "title": "registry/mechanisms.yaml#mechanisms.frozen-eval-publication",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            380,
+            1820
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "registry/mechanisms.yaml#mechanisms.frozen-eval-publication\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.frozen-eval-publication",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.hermes-lossless-context-dag",
+          "title": "registry/mechanisms.yaml#mechanisms.hermes-lossless-context-dag",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            -380,
+            2080
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "registry/mechanisms.yaml#mechanisms.hermes-lossless-context-dag\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.hermes-lossless-context-dag",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.jev-typed-decision",
           "title": "registry/mechanisms.yaml#mechanisms.jev-typed-decision",
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            380,
-            1040
+            0,
+            2080
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2397,13 +3290,32 @@
           }
         },
         {
+          "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.mesh-signed-intent-transport",
+          "title": "registry/mechanisms.yaml#mechanisms.mesh-signed-intent-transport",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            380,
+            2080
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "registry/mechanisms.yaml#mechanisms.mesh-signed-intent-transport\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.mesh-signed-intent-transport",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.sol-pi-evidence-reducer",
           "title": "registry/mechanisms.yaml#mechanisms.sol-pi-evidence-reducer",
           "sub": "evidence reference",
           "body": "",
           "pos": [
             -380,
-            1300
+            2340
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2422,7 +3334,7 @@
           "body": "",
           "pos": [
             0,
-            1300
+            2340
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2431,6 +3343,63 @@
             "graphType": "evidence_reference",
             "graphId": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.sol-pi-observation-pack",
             "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.z0archy-hierarchy-meta-learning",
+          "title": "registry/mechanisms.yaml#mechanisms.z0archy-hierarchy-meta-learning",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            380,
+            2340
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "registry/mechanisms.yaml#mechanisms.z0archy-hierarchy-meta-learning\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.z0archy-hierarchy-meta-learning",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.z0archy-semantic-compression",
+          "title": "registry/mechanisms.yaml#mechanisms.z0archy-semantic-compression",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            -380,
+            2600
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "registry/mechanisms.yaml#mechanisms.z0archy-semantic-compression\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.z0archy-semantic-compression",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+          "title": "tokenomics-to-frozen-evaluation",
+          "sub": "evidence dependency",
+          "body": "frozen_as",
+          "pos": [
+            0,
+            2600
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "tokenomics-to-frozen-evaluation\n\ntype: evidence_dependency\nrelation: frozen_as\nconfidence: declared\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_dependency",
+            "graphId": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+            "semanticLevel": 3,
             "truthClass": "declared"
           }
         }
@@ -2709,6 +3678,24 @@
       "label": "compiles to"
     },
     {
+      "from": "z0://representation/architecture-snapshot",
+      "to": "z0://representation/semantic-compression-receipt",
+      "kind": "epistemic",
+      "label": "audited by"
+    },
+    {
+      "from": "z0://representation/architecture-snapshot",
+      "to": "z0://representation/hierarchy-proposal",
+      "kind": "epistemic",
+      "label": "analyzed as"
+    },
+    {
+      "from": "z0://representation/compiled-plan",
+      "to": "z0://representation/signed-mesh-intent",
+      "kind": "epistemic",
+      "label": "transported as"
+    },
+    {
       "from": "z0://representation/compiled-decision-state",
       "to": "z0://representation/decision-receipt",
       "kind": "epistemic",
@@ -2725,6 +3712,12 @@
       "to": "z0://representation/tokenomics-event",
       "kind": "epistemic",
       "label": "measured as"
+    },
+    {
+      "from": "z0://representation/raw-context",
+      "to": "z0://representation/lossless-context-node",
+      "kind": "epistemic",
+      "label": "compacts to"
     },
     {
       "from": "z0://representation/raw-context",
@@ -2745,8 +3738,32 @@
       "label": "observed as"
     },
     {
+      "from": "z0://representation/tokenomics-event",
+      "to": "z0://representation/evaluation-artifact",
+      "kind": "epistemic",
+      "label": "frozen as"
+    },
+    {
       "from": "z0://evidence-dependency/aodl-intent-to-plan",
       "to": "z0://representation/compiled-plan",
+      "kind": "epistemic",
+      "label": "evidence object"
+    },
+    {
+      "from": "z0://evidence-dependency/architecture-compression-is-audited",
+      "to": "z0://representation/semantic-compression-receipt",
+      "kind": "epistemic",
+      "label": "evidence object"
+    },
+    {
+      "from": "z0://evidence-dependency/architecture-history-to-hierarchy-proposal",
+      "to": "z0://representation/hierarchy-proposal",
+      "kind": "epistemic",
+      "label": "evidence object"
+    },
+    {
+      "from": "z0://evidence-dependency/compiled-plan-to-signed-mesh-intent",
+      "to": "z0://representation/signed-mesh-intent",
       "kind": "epistemic",
       "label": "evidence object"
     },
@@ -2769,6 +3786,12 @@
       "label": "evidence object"
     },
     {
+      "from": "z0://evidence-dependency/lossless-context-preserves-drilldown",
+      "to": "z0://representation/lossless-context-node",
+      "kind": "epistemic",
+      "label": "evidence object"
+    },
+    {
       "from": "z0://evidence-dependency/observation-pack-compresses-context",
       "to": "z0://representation/observation-pack",
       "kind": "epistemic",
@@ -2787,8 +3810,32 @@
       "label": "evidence object"
     },
     {
+      "from": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+      "to": "z0://representation/evaluation-artifact",
+      "kind": "epistemic",
+      "label": "evidence object"
+    },
+    {
       "from": "z0://representation/aodl-intent",
       "to": "z0://evidence-dependency/aodl-intent-to-plan",
+      "kind": "epistemic",
+      "label": "evidence subject"
+    },
+    {
+      "from": "z0://representation/architecture-snapshot",
+      "to": "z0://evidence-dependency/architecture-compression-is-audited",
+      "kind": "epistemic",
+      "label": "evidence subject"
+    },
+    {
+      "from": "z0://representation/architecture-snapshot",
+      "to": "z0://evidence-dependency/architecture-history-to-hierarchy-proposal",
+      "kind": "epistemic",
+      "label": "evidence subject"
+    },
+    {
+      "from": "z0://representation/compiled-plan",
+      "to": "z0://evidence-dependency/compiled-plan-to-signed-mesh-intent",
       "kind": "epistemic",
       "label": "evidence subject"
     },
@@ -2812,6 +3859,12 @@
     },
     {
       "from": "z0://representation/raw-context",
+      "to": "z0://evidence-dependency/lossless-context-preserves-drilldown",
+      "kind": "epistemic",
+      "label": "evidence subject"
+    },
+    {
+      "from": "z0://representation/raw-context",
       "to": "z0://evidence-dependency/observation-pack-compresses-context",
       "kind": "epistemic",
       "label": "evidence subject"
@@ -2825,6 +3878,12 @@
     {
       "from": "z0://representation/compiled-plan",
       "to": "z0://evidence-dependency/plan-to-observed-topology",
+      "kind": "epistemic",
+      "label": "evidence subject"
+    },
+    {
+      "from": "z0://representation/tokenomics-event",
+      "to": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
       "kind": "epistemic",
       "label": "evidence subject"
     },
@@ -2991,6 +4050,12 @@
       "label": "implemented by"
     },
     {
+      "from": "z0://mechanism/hermes-lossless-context-dag",
+      "to": "z0://harness/hermes",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
       "from": "z0://mechanism/jev-typed-decision",
       "to": "oh-my-pi",
       "kind": "integrates",
@@ -3015,6 +4080,12 @@
       "label": "implemented by"
     },
     {
+      "from": "z0://mechanism/mesh-signed-intent-transport",
+      "to": "z0://harness/hermes",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
       "from": "oh-my-pi",
       "to": "z0://repo/kvnloo/oh-my-pi",
       "kind": "integrates",
@@ -3029,6 +4100,12 @@
     {
       "from": "z0://harness/pi",
       "to": "z0://repo/earendil-works/pi",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/realtime-voice-orchestration",
+      "to": "z0://harness/hermes",
       "kind": "integrates",
       "label": "implemented by"
     },
@@ -3111,6 +4188,18 @@
       "label": "implemented in repo"
     },
     {
+      "from": "z0://mechanism/frozen-eval-publication",
+      "to": "z0://repo/kvnloo/z0evals",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/hermes-lossless-context-dag",
+      "to": "z0://repo/kvnloo/hermes-lcm",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
       "from": "z0://mechanism/jev-typed-decision",
       "to": "z0://repo/kvnloo/oh-my-pi",
       "kind": "integrates",
@@ -3119,6 +4208,30 @@
     {
       "from": "z0://mechanism/jev-typed-decision",
       "to": "z0://repo/kvnloo/z0intelligence",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/keel-governed-execution",
+      "to": "z0://repo/kvnloo/hermes-keel",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/mesh-signed-intent-transport",
+      "to": "z0://repo/kvnloo/hermes-mesh-keel",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/model-passport-identity",
+      "to": "z0://repo/kvnloo/hermes-model-passports",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/realtime-voice-orchestration",
+      "to": "z0://repo/kvnloo/hermes-talk",
       "kind": "integrates",
       "label": "implemented in repo"
     },
@@ -3173,6 +4286,30 @@
     {
       "from": "z0://mechanism/sol-pi-online-context-compact",
       "to": "z0://repo/kvnloo/sol-pi-hermes",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/split-authority-privilege-broker",
+      "to": "z0://repo/kvnloo/hermes-privilege-broker",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/z0archy-hierarchy-meta-learning",
+      "to": "z0://repo/kvnloo/z0archy",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/z0archy-history-fork-diff",
+      "to": "z0://repo/kvnloo/z0archy",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/z0archy-semantic-compression",
+      "to": "z0://repo/kvnloo/z0archy",
       "kind": "integrates",
       "label": "implemented in repo"
     },
@@ -3417,6 +4554,30 @@
       "label": "produces representation"
     },
     {
+      "from": "z0://mechanism/frozen-eval-publication",
+      "to": "z0://representation/evaluation-artifact",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
+      "from": "z0://mechanism/hermes-lossless-context-dag",
+      "to": "z0://representation/lossless-context-node",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
+      "from": "z0://mechanism/mesh-signed-intent-transport",
+      "to": "z0://representation/signed-mesh-intent",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
+      "from": "z0://mechanism/model-passport-identity",
+      "to": "z0://representation/model-passport",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
       "from": "z0://mechanism/rlm-context-spill",
       "to": "z0://representation/rlm-address",
       "kind": "provides",
@@ -3435,6 +4596,30 @@
       "label": "produces representation"
     },
     {
+      "from": "z0://mechanism/split-authority-privilege-broker",
+      "to": "z0://representation/privilege-grant",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
+      "from": "z0://mechanism/z0archy-hierarchy-meta-learning",
+      "to": "z0://representation/hierarchy-proposal",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
+      "from": "z0://mechanism/z0archy-history-fork-diff",
+      "to": "z0://representation/architecture-snapshot",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
+      "from": "z0://mechanism/z0archy-semantic-compression",
+      "to": "z0://representation/semantic-compression-receipt",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
       "from": "z0://evidence-dependency/aodl-intent-to-plan",
       "to": "z0://evidence-ref/registry/interfaces.yaml%23interfaces.aodl.intent.v1",
       "kind": "epistemic",
@@ -3443,6 +4628,42 @@
     {
       "from": "z0://evidence-dependency/aodl-intent-to-plan",
       "to": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.aodl-intent-plan-observed",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/architecture-compression-is-audited",
+      "to": "z0://evidence-ref/kvnloo/z0archy:README.md%23semantic-compression-receipts",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/architecture-compression-is-audited",
+      "to": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.z0archy-semantic-compression",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/architecture-history-to-hierarchy-proposal",
+      "to": "z0://evidence-ref/kvnloo/z0archy:README.md%23slow-hierarchy-meta-learning",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/architecture-history-to-hierarchy-proposal",
+      "to": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.z0archy-hierarchy-meta-learning",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/compiled-plan-to-signed-mesh-intent",
+      "to": "z0://evidence-ref/kvnloo/hermes-mesh-keel:README.md",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/compiled-plan-to-signed-mesh-intent",
+      "to": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.mesh-signed-intent-transport",
       "kind": "epistemic",
       "label": "requires evidence"
     },
@@ -3477,6 +4698,18 @@
       "label": "requires evidence"
     },
     {
+      "from": "z0://evidence-dependency/lossless-context-preserves-drilldown",
+      "to": "z0://evidence-ref/kvnloo/hermes-lcm:README.md%23what-it-does",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/lossless-context-preserves-drilldown",
+      "to": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.hermes-lossless-context-dag",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
       "from": "z0://evidence-dependency/observation-pack-compresses-context",
       "to": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.sol-pi-observation-pack",
       "kind": "epistemic",
@@ -3507,14 +4740,362 @@
       "label": "requires evidence"
     },
     {
+      "from": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+      "to": "z0://evidence-ref/kvnloo/z0evals:README.md%23rules",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+      "to": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.frozen-eval-publication",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
       "from": "z0://harness/omp",
       "to": "oh-my-pi",
       "kind": "depends",
       "label": "runtime surface of"
     },
     {
+      "from": "z0://repo/kvnloo/deepseek-harness",
+      "to": "z0://harness/deepseek",
+      "kind": "default",
+      "label": "extends harness"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-agent",
+      "to": "z0://harness/hermes",
+      "kind": "default",
+      "label": "extends harness"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-jev-skills",
+      "to": "z0://harness/codex",
+      "kind": "default",
+      "label": "extends harness"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-jev-skills",
+      "to": "z0://harness/hermes",
+      "kind": "default",
+      "label": "extends harness"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-lcm",
+      "to": "z0://harness/hermes",
+      "kind": "default",
+      "label": "extends harness"
+    },
+    {
+      "from": "z0://repo/kvnloo/sol-pi-hermes",
+      "to": "z0://harness/hermes",
+      "kind": "default",
+      "label": "extends harness"
+    },
+    {
+      "from": "z0://repo/kvnloo/SoL-Pi",
+      "to": "z0://harness/pi",
+      "kind": "default",
+      "label": "extends harness"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-jev-skills",
+      "to": "z0://mechanism/jev-typed-decision",
+      "kind": "default",
+      "label": "implements mechanism"
+    },
+    {
+      "from": "z0://repo/kvnloo/sol-pi-hermes",
+      "to": "z0://mechanism/sol-pi-action-fusion",
+      "kind": "default",
+      "label": "implements mechanism"
+    },
+    {
+      "from": "z0://repo/kvnloo/sol-pi-hermes",
+      "to": "z0://mechanism/sol-pi-evidence-reducer",
+      "kind": "default",
+      "label": "implements mechanism"
+    },
+    {
+      "from": "z0://repo/kvnloo/sol-pi-hermes",
+      "to": "z0://mechanism/sol-pi-observation-pack",
+      "kind": "default",
+      "label": "implements mechanism"
+    },
+    {
+      "from": "z0://repo/kvnloo/sol-pi-hermes",
+      "to": "z0://mechanism/sol-pi-online-context-compact",
+      "kind": "default",
+      "label": "implements mechanism"
+    },
+    {
+      "from": "z0://repo/kvnloo/SoL-Pi",
+      "to": "z0://mechanism/sol-pi-action-fusion",
+      "kind": "default",
+      "label": "implements mechanism"
+    },
+    {
+      "from": "z0://repo/kvnloo/SoL-Pi",
+      "to": "z0://mechanism/sol-pi-evidence-reducer",
+      "kind": "default",
+      "label": "implements mechanism"
+    },
+    {
+      "from": "z0://repo/kvnloo/SoL-Pi",
+      "to": "z0://mechanism/sol-pi-observation-pack",
+      "kind": "default",
+      "label": "implements mechanism"
+    },
+    {
+      "from": "z0://repo/kvnloo/SoL-Pi",
+      "to": "z0://mechanism/sol-pi-online-context-compact",
+      "kind": "default",
+      "label": "implements mechanism"
+    },
+    {
+      "from": "z0://repo/kvnloo/flyforge",
+      "to": "z0://lifecycle/evolution-lab-promotion",
+      "kind": "default",
+      "label": "participates in lifecycle"
+    },
+    {
+      "from": "z0://repo/kvnloo/verified-oss-loop",
+      "to": "z0://lifecycle/verified-oss-rolling",
+      "kind": "default",
+      "label": "participates in lifecycle"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0archy",
+      "to": "z0://lifecycle/architecture-truth",
+      "kind": "default",
+      "label": "participates in lifecycle"
+    },
+    {
+      "from": "z0://repo/kvnloo/flyforge",
+      "to": "aodl",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/flyforge",
+      "to": "evolution-lab",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/flyforge",
+      "to": "frontier-kb",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-agent-self-evolution",
+      "to": "evolution-lab",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/ripple",
+      "to": "aodl",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0archy",
+      "to": "agenttrace",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0archy",
+      "to": "aodl",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0archy",
+      "to": "evolution-lab",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0archy",
+      "to": "frontier-kb",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0archy",
+      "to": "kerdoios",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0archy",
+      "to": "memento",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0archy",
+      "to": "oh-my-pi",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0archy",
+      "to": "tokenomics",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0archy",
+      "to": "z0intelligence",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0evals",
+      "to": "evolution-lab",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0evals",
+      "to": "frontier-kb",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0evals",
+      "to": "kerdoios",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0evals",
+      "to": "tokenomics",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0evals",
+      "to": "z0intelligence",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/company-os",
+      "to": "z0://repo/kvnloo/hermes-agent",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-agent-self-evolution",
+      "to": "z0://repo/kvnloo/hermes-agent",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-jev-skills",
+      "to": "z0://repo/kvnloo/hermes-agent",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-keel",
+      "to": "z0://repo/kvnloo/hermes-agent",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-lcm",
+      "to": "z0://repo/kvnloo/hermes-agent",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-mesh-keel",
+      "to": "z0://repo/kvnloo/hermes-agent",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-mesh-keel",
+      "to": "z0://repo/kvnloo/hermes-keel",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-model-passports",
+      "to": "z0://repo/kvnloo/hermes-agent",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-privilege-broker",
+      "to": "z0://repo/kvnloo/hermes-agent",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
+      "from": "z0://repo/kvnloo/hermes-talk",
+      "to": "z0://repo/kvnloo/hermes-agent",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
+      "from": "z0://repo/kvnloo/Hermes3D",
+      "to": "z0://repo/kvnloo/hermes-agent",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
+      "from": "z0://repo/kvnloo/sol-pi-hermes",
+      "to": "z0://repo/kvnloo/hermes-agent",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
+      "from": "z0://repo/kvnloo/sol-pi-hermes",
+      "to": "z0://repo/kvnloo/SoL-Pi",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0archy",
+      "to": "z0://repo/kvnloo/activegraph",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
+      "from": "z0://repo/kvnloo/z0archy",
+      "to": "z0://repo/kvnloo/graphcon-deck",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
       "from": "z0://evidence-dependency/aodl-intent-to-plan",
       "to": "z0://mechanism/aodl-intent-plan-observed",
+      "kind": "epistemic",
+      "label": "verified via"
+    },
+    {
+      "from": "z0://evidence-dependency/architecture-compression-is-audited",
+      "to": "z0://mechanism/z0archy-semantic-compression",
+      "kind": "epistemic",
+      "label": "verified via"
+    },
+    {
+      "from": "z0://evidence-dependency/architecture-history-to-hierarchy-proposal",
+      "to": "z0://mechanism/z0archy-hierarchy-meta-learning",
+      "kind": "epistemic",
+      "label": "verified via"
+    },
+    {
+      "from": "z0://evidence-dependency/compiled-plan-to-signed-mesh-intent",
+      "to": "z0://mechanism/mesh-signed-intent-transport",
       "kind": "epistemic",
       "label": "verified via"
     },
@@ -3531,6 +5112,12 @@
       "label": "verified via"
     },
     {
+      "from": "z0://evidence-dependency/lossless-context-preserves-drilldown",
+      "to": "z0://mechanism/hermes-lossless-context-dag",
+      "kind": "epistemic",
+      "label": "verified via"
+    },
+    {
       "from": "z0://evidence-dependency/observation-pack-compresses-context",
       "to": "z0://mechanism/sol-pi-observation-pack",
       "kind": "epistemic",
@@ -3539,6 +5126,12 @@
     {
       "from": "z0://evidence-dependency/plan-to-observed-topology",
       "to": "z0://mechanism/aodl-intent-plan-observed",
+      "kind": "epistemic",
+      "label": "verified via"
+    },
+    {
+      "from": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+      "to": "z0://mechanism/frozen-eval-publication",
       "kind": "epistemic",
       "label": "verified via"
     }

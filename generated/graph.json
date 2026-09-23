@@ -1,7 +1,7 @@
 {
   "schemaVersion": "0.2.0",
   "snapshot": {
-    "generatedAt": "2026-09-22T11:38:05.641018Z",
+    "generatedAt": "2026-09-23T11:36:12.496581Z",
     "truthClass": "declared",
     "source": {
       "repo": "kvnloo/z0",
@@ -685,6 +685,122 @@
       ]
     },
     {
+      "id": "z0://evidence-dependency/architecture-compression-is-audited",
+      "type": "evidence_dependency",
+      "label": "architecture-compression-is-audited",
+      "attributes": {
+        "evidence_dependency_id": "architecture-compression-is-audited",
+        "from": "representation:architecture-snapshot",
+        "to": "representation:semantic-compression-receipt",
+        "relation": "audited_by",
+        "via": "mechanism:z0archy-semantic-compression",
+        "required_evidence": [
+          "registry/mechanisms.yaml#mechanisms.z0archy-semantic-compression",
+          "kvnloo/z0archy:README.md#semantic-compression-receipts"
+        ],
+        "invariants": [
+          "Hidden high-relevance concepts make a compressed view insufficient rather than silently complete.",
+          "Visible concepts retain provenance back to the reconstructable source world.",
+          "Structural entropy is not mislabeled as semantic information content."
+        ],
+        "invalidators": [
+          "A compressed map claims sufficiency while omitting concepts above its relevance threshold.",
+          "The compressed view cannot reconstruct visible claims back to source provenance."
+        ],
+        "retrieval": {
+          "fastest": "compression-receipt",
+          "fallback": "full-architecture-snapshot"
+        },
+        "confidence": "declared"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-compression-is-audited"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-dependency/architecture-history-to-hierarchy-proposal",
+      "type": "evidence_dependency",
+      "label": "architecture-history-to-hierarchy-proposal",
+      "attributes": {
+        "evidence_dependency_id": "architecture-history-to-hierarchy-proposal",
+        "from": "representation:architecture-snapshot",
+        "to": "representation:hierarchy-proposal",
+        "relation": "analyzed_as",
+        "via": "mechanism:z0archy-hierarchy-meta-learning",
+        "required_evidence": [
+          "registry/mechanisms.yaml#mechanisms.z0archy-hierarchy-meta-learning",
+          "kvnloo/z0archy:README.md#slow-hierarchy-meta-learning"
+        ],
+        "invariants": [
+          "Hierarchy changes remain proposals until a human changes canonical z0.",
+          "Declared nodes are never automatic prune candidates.",
+          "Weak evidence resolves to no-update rather than forcing taxonomy change."
+        ],
+        "invalidators": [
+          "A meta-learning proposal directly mutates canonical architecture.",
+          "A declared concept is automatically pruned from weak historical evidence."
+        ],
+        "retrieval": {
+          "fastest": "hierarchy-proposal",
+          "fallback": "architecture-history"
+        },
+        "confidence": "declared"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-history-to-hierarchy-proposal"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-dependency/compiled-plan-to-signed-mesh-intent",
+      "type": "evidence_dependency",
+      "label": "compiled-plan-to-signed-mesh-intent",
+      "attributes": {
+        "evidence_dependency_id": "compiled-plan-to-signed-mesh-intent",
+        "from": "representation:compiled-plan",
+        "to": "representation:signed-mesh-intent",
+        "relation": "transported_as",
+        "via": "mechanism:mesh-signed-intent-transport",
+        "required_evidence": [
+          "registry/mechanisms.yaml#mechanisms.mesh-signed-intent-transport",
+          "kvnloo/hermes-mesh-keel:README.md"
+        ],
+        "invariants": [
+          "Destination Keel revalidates authority before bounded execution.",
+          "Transport receipts do not silently mutate canonical Kanban lifecycle state."
+        ],
+        "invalidators": [
+          "Transported data executes without destination authority revalidation.",
+          "Receipt projection completes or reviews a task without the canonical lifecycle owner."
+        ],
+        "retrieval": {
+          "fastest": "signed-receipt",
+          "fallback": "durable-mesh-ledger"
+        },
+        "confidence": "declared"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.compiled-plan-to-signed-mesh-intent"
+        }
+      ]
+    },
+    {
       "id": "z0://evidence-dependency/decision-state-to-receipt",
       "type": "evidence_dependency",
       "label": "decision-state-to-receipt",
@@ -789,6 +905,44 @@
           "ref": "main",
           "path": "registry/evidence_dependencies.yaml",
           "field": "evidence_dependencies.execution-to-tokenomics"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-dependency/lossless-context-preserves-drilldown",
+      "type": "evidence_dependency",
+      "label": "lossless-context-preserves-drilldown",
+      "attributes": {
+        "evidence_dependency_id": "lossless-context-preserves-drilldown",
+        "from": "representation:raw-context",
+        "to": "representation:lossless-context-node",
+        "relation": "compacts_to",
+        "via": "mechanism:hermes-lossless-context-dag",
+        "required_evidence": [
+          "registry/mechanisms.yaml#mechanisms.hermes-lossless-context-dag",
+          "kvnloo/hermes-lcm:README.md#what-it-does"
+        ],
+        "invariants": [
+          "Raw messages remain recoverable after active-context compaction.",
+          "Summary nodes retain source lineage and bounded drill-down paths."
+        ],
+        "invalidators": [
+          "Compaction deletes the only recoverable copy of source messages.",
+          "A summary is presented as lossless without a path back to its source lineage."
+        ],
+        "retrieval": {
+          "fastest": "lcm-recall",
+          "fallback": "plugin-store"
+        },
+        "confidence": "declared"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.lossless-context-preserves-drilldown"
         }
       ]
     },
@@ -905,6 +1059,79 @@
       ]
     },
     {
+      "id": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+      "type": "evidence_dependency",
+      "label": "tokenomics-to-frozen-evaluation",
+      "attributes": {
+        "evidence_dependency_id": "tokenomics-to-frozen-evaluation",
+        "from": "representation:tokenomics-event",
+        "to": "representation:evaluation-artifact",
+        "relation": "frozen_as",
+        "via": "mechanism:frozen-eval-publication",
+        "required_evidence": [
+          "registry/mechanisms.yaml#mechanisms.frozen-eval-publication",
+          "kvnloo/z0evals:README.md#rules"
+        ],
+        "invariants": [
+          "Published claims resolve to pinned study artifacts.",
+          "Source-reported benchmarks and reproduced measurements remain distinct.",
+          "A label-generating system does not silently become its own verifier."
+        ],
+        "invalidators": [
+          "A public claim cannot resolve to frozen evidence.",
+          "Private traces or secrets are included in the public evaluation artifact."
+        ],
+        "retrieval": {
+          "fastest": "frozen-study-artifact",
+          "fallback": "pinned-source-revision"
+        },
+        "confidence": "declared"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.tokenomics-to-frozen-evaluation"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/kvnloo/hermes-lcm:README.md%23what-it-does",
+      "type": "evidence_reference",
+      "label": "kvnloo/hermes-lcm:README.md#what-it-does",
+      "attributes": {
+        "reference": "kvnloo/hermes-lcm:README.md#what-it-does"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.lossless-context-preserves-drilldown.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/kvnloo/hermes-mesh-keel:README.md",
+      "type": "evidence_reference",
+      "label": "kvnloo/hermes-mesh-keel:README.md",
+      "attributes": {
+        "reference": "kvnloo/hermes-mesh-keel:README.md"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.compiled-plan-to-signed-mesh-intent.required_evidence"
+        }
+      ]
+    },
+    {
       "id": "z0://evidence-ref/kvnloo/oh-my-pi:README.md",
       "type": "evidence_reference",
       "label": "kvnloo/oh-my-pi:README.md",
@@ -918,6 +1145,57 @@
           "ref": "main",
           "path": "registry/evidence_dependencies.yaml",
           "field": "evidence_dependencies.omp-rlm-context-spill.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/kvnloo/z0archy:README.md%23semantic-compression-receipts",
+      "type": "evidence_reference",
+      "label": "kvnloo/z0archy:README.md#semantic-compression-receipts",
+      "attributes": {
+        "reference": "kvnloo/z0archy:README.md#semantic-compression-receipts"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-compression-is-audited.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/kvnloo/z0archy:README.md%23slow-hierarchy-meta-learning",
+      "type": "evidence_reference",
+      "label": "kvnloo/z0archy:README.md#slow-hierarchy-meta-learning",
+      "attributes": {
+        "reference": "kvnloo/z0archy:README.md#slow-hierarchy-meta-learning"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-history-to-hierarchy-proposal.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/kvnloo/z0evals:README.md%23rules",
+      "type": "evidence_reference",
+      "label": "kvnloo/z0evals:README.md#rules",
+      "attributes": {
+        "reference": "kvnloo/z0evals:README.md#rules"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.tokenomics-to-frozen-evaluation.required_evidence"
         }
       ]
     },
@@ -1038,6 +1316,40 @@
       ]
     },
     {
+      "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.frozen-eval-publication",
+      "type": "evidence_reference",
+      "label": "registry/mechanisms.yaml#mechanisms.frozen-eval-publication",
+      "attributes": {
+        "reference": "registry/mechanisms.yaml#mechanisms.frozen-eval-publication"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.tokenomics-to-frozen-evaluation.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.hermes-lossless-context-dag",
+      "type": "evidence_reference",
+      "label": "registry/mechanisms.yaml#mechanisms.hermes-lossless-context-dag",
+      "attributes": {
+        "reference": "registry/mechanisms.yaml#mechanisms.hermes-lossless-context-dag"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.lossless-context-preserves-drilldown.required_evidence"
+        }
+      ]
+    },
+    {
       "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.jev-typed-decision",
       "type": "evidence_reference",
       "label": "registry/mechanisms.yaml#mechanisms.jev-typed-decision",
@@ -1051,6 +1363,23 @@
           "ref": "main",
           "path": "registry/evidence_dependencies.yaml",
           "field": "evidence_dependencies.decision-state-to-receipt.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.mesh-signed-intent-transport",
+      "type": "evidence_reference",
+      "label": "registry/mechanisms.yaml#mechanisms.mesh-signed-intent-transport",
+      "attributes": {
+        "reference": "registry/mechanisms.yaml#mechanisms.mesh-signed-intent-transport"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.compiled-plan-to-signed-mesh-intent.required_evidence"
         }
       ]
     },
@@ -1085,6 +1414,40 @@
           "ref": "main",
           "path": "registry/evidence_dependencies.yaml",
           "field": "evidence_dependencies.observation-pack-compresses-context.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.z0archy-hierarchy-meta-learning",
+      "type": "evidence_reference",
+      "label": "registry/mechanisms.yaml#mechanisms.z0archy-hierarchy-meta-learning",
+      "attributes": {
+        "reference": "registry/mechanisms.yaml#mechanisms.z0archy-hierarchy-meta-learning"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-history-to-hierarchy-proposal.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.z0archy-semantic-compression",
+      "type": "evidence_reference",
+      "label": "registry/mechanisms.yaml#mechanisms.z0archy-semantic-compression",
+      "attributes": {
+        "reference": "registry/mechanisms.yaml#mechanisms.z0archy-semantic-compression"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-compression-is-audited.required_evidence"
         }
       ]
     },
@@ -1864,6 +2227,66 @@
       ]
     },
     {
+      "id": "z0://mechanism/frozen-eval-publication",
+      "type": "mechanism",
+      "label": "Frozen evaluation publication",
+      "attributes": {
+        "mechanism_id": "frozen-eval-publication",
+        "name": "Frozen evaluation publication",
+        "kind": "evidence",
+        "stage": "active",
+        "purpose": "Turn pinned experiment inputs and independently inspectable outcomes into frozen datasets, analyses, figures, and public claims without becoming the experiment engine or verifier.\n",
+        "implementations": [
+          {
+            "repo": "kvnloo/z0evals"
+          }
+        ],
+        "evidence": [
+          "kvnloo/z0evals:README.md#ownership",
+          "kvnloo/z0evals:README.md#rules"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.frozen-eval-publication"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/hermes-lossless-context-dag",
+      "type": "mechanism",
+      "label": "Recoverable context DAG",
+      "attributes": {
+        "mechanism_id": "hermes-lossless-context-dag",
+        "name": "Recoverable context DAG",
+        "kind": "context",
+        "stage": "experimental",
+        "purpose": "Keep active context bounded while preserving raw-message lineage, hierarchical summaries, exact drill-down, and recoverable externalized payloads.\n",
+        "implementations": [
+          {
+            "repo": "kvnloo/hermes-lcm",
+            "harness": "hermes"
+          }
+        ],
+        "evidence": [
+          "kvnloo/hermes-lcm:README.md#what-it-does"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.hermes-lossless-context-dag"
+        }
+      ]
+    },
+    {
       "id": "z0://mechanism/jev-typed-decision",
       "type": "mechanism",
       "label": "Jev / typed bounded decision",
@@ -1895,6 +2318,126 @@
           "ref": "main",
           "path": "registry/mechanisms.yaml",
           "field": "mechanisms.jev-typed-decision"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/keel-governed-execution",
+      "type": "mechanism",
+      "label": "Keel governed execution",
+      "attributes": {
+        "mechanism_id": "keel-governed-execution",
+        "name": "Keel governed execution",
+        "kind": "governance",
+        "stage": "bootstrap",
+        "purpose": "Bound agent execution with explicit capability rules, evidence requirements, staged promotion, adversarial verification, rollback, and non-self-authorizing evolution.\n",
+        "implementations": [
+          {
+            "repo": "kvnloo/hermes-keel"
+          }
+        ],
+        "evidence": [
+          "kvnloo/hermes-keel:README.md#constitutional-rule",
+          "kvnloo/hermes-keel:README.md#levels"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.keel-governed-execution"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/mesh-signed-intent-transport",
+      "type": "mechanism",
+      "label": "Signed Mesh intent transport",
+      "attributes": {
+        "mechanism_id": "mesh-signed-intent-transport",
+        "name": "Signed Mesh intent transport",
+        "kind": "transport",
+        "stage": "experimental",
+        "purpose": "Transport bounded signed execution intents between nodes while revalidating authority at the destination and returning signed receipt/evidence without replacing the canonical task lifecycle.\n",
+        "implementations": [
+          {
+            "repo": "kvnloo/hermes-mesh-keel",
+            "harness": "hermes"
+          }
+        ],
+        "evidence": [
+          "kvnloo/hermes-mesh-keel:README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.mesh-signed-intent-transport"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/model-passport-identity",
+      "type": "mechanism",
+      "label": "Model passport identity",
+      "attributes": {
+        "mechanism_id": "model-passport-identity",
+        "name": "Model passport identity",
+        "kind": "metadata",
+        "stage": "design_seed",
+        "purpose": "Keep maker, canonical model identity, verified capabilities, lifecycle, and serving route distinct while exposing one portable descriptor to every UI.\n",
+        "implementations": [
+          {
+            "repo": "kvnloo/hermes-model-passports"
+          }
+        ],
+        "evidence": [
+          "kvnloo/hermes-model-passports:README.md#design-thesis",
+          "kvnloo/hermes-model-passports:README.md#data-resolution"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.model-passport-identity"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/realtime-voice-orchestration",
+      "type": "mechanism",
+      "label": "Realtime voice orchestration",
+      "attributes": {
+        "mechanism_id": "realtime-voice-orchestration",
+        "name": "Realtime voice orchestration",
+        "kind": "interaction",
+        "stage": "experimental",
+        "purpose": "Keep a duplex voice session active while delegating durable background agent work, querying memory/tools, and speaking results when they arrive.\n",
+        "implementations": [
+          {
+            "repo": "kvnloo/hermes-talk",
+            "harness": "hermes"
+          }
+        ],
+        "evidence": [
+          "kvnloo/hermes-talk:README.md#what-this-actually-is"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.realtime-voice-orchestration"
         }
       ]
     },
@@ -2069,6 +2612,125 @@
           "ref": "main",
           "path": "registry/mechanisms.yaml",
           "field": "mechanisms.sol-pi-online-context-compact"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/split-authority-privilege-broker",
+      "type": "mechanism",
+      "label": "Split-authority privilege broker",
+      "attributes": {
+        "mechanism_id": "split-authority-privilege-broker",
+        "name": "Split-authority privilege broker",
+        "kind": "security",
+        "stage": "development_candidate",
+        "purpose": "Separate request, operator approval, immutable grant, and bounded privileged execution so an agent cannot manufacture its own elevation authority.\n",
+        "implementations": [
+          {
+            "repo": "kvnloo/hermes-privilege-broker"
+          }
+        ],
+        "evidence": [
+          "kvnloo/hermes-privilege-broker:README.md#contract",
+          "kvnloo/hermes-privilege-broker:docs/THREAT_MODEL.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.split-authority-privilege-broker"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/z0archy-hierarchy-meta-learning",
+      "type": "mechanism",
+      "label": "Slow architecture hierarchy meta-learning",
+      "attributes": {
+        "mechanism_id": "z0archy-hierarchy-meta-learning",
+        "name": "Slow architecture hierarchy meta-learning",
+        "kind": "learning",
+        "stage": "experimental",
+        "purpose": "Analyze architecture history for conservative keep, merge, split, prune, or no-update proposals while keeping canonical ontology changes human-approved.\n",
+        "implementations": [
+          {
+            "repo": "kvnloo/z0archy"
+          }
+        ],
+        "evidence": [
+          "kvnloo/z0archy:README.md#slow-hierarchy-meta-learning"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.z0archy-hierarchy-meta-learning"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/z0archy-history-fork-diff",
+      "type": "mechanism",
+      "label": "Replayable architecture fork and diff",
+      "attributes": {
+        "mechanism_id": "z0archy-history-fork-diff",
+        "name": "Replayable architecture fork and diff",
+        "kind": "history",
+        "stage": "active",
+        "purpose": "Preserve content-addressed architecture history as event-sourced runs that can be replayed, forked at prior states, reconciled to alternate ref selections, and structurally diffed without contaminating canonical truth.\n",
+        "implementations": [
+          {
+            "repo": "kvnloo/z0archy"
+          }
+        ],
+        "evidence": [
+          "kvnloo/z0archy:README.md#activegraph-architecture-history",
+          "kvnloo/z0archy:README.md#counterfactual-architecture-worlds"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.z0archy-history-fork-diff"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/z0archy-semantic-compression",
+      "type": "mechanism",
+      "label": "Loss-aware semantic architecture compression",
+      "attributes": {
+        "mechanism_id": "z0archy-semantic-compression",
+        "name": "Loss-aware semantic architecture compression",
+        "kind": "compression",
+        "stage": "active",
+        "purpose": "Compile a large architecture world into question- or zoom-conditioned maps while emitting receipts for retained structure, hidden evidence, cut edges, provenance reconstructability, and high-relevance omissions.\n",
+        "implementations": [
+          {
+            "repo": "kvnloo/z0archy"
+          }
+        ],
+        "evidence": [
+          "kvnloo/z0archy:README.md#semantic-zoom",
+          "kvnloo/z0archy:README.md#semantic-compression-receipts"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.z0archy-semantic-compression"
         }
       ]
     },
@@ -2269,6 +2931,33 @@
       ]
     },
     {
+      "id": "z0://repo/kvnloo/Hermes3D",
+      "type": "repository",
+      "label": "Hermes3D",
+      "attributes": {
+        "repo": "kvnloo/Hermes3D",
+        "suite_id": "hermes3d",
+        "suiteRole": "spatial_frontend",
+        "suiteAuthority": "projection",
+        "suiteStatus": "experimental",
+        "suiteSummary": "3D and 2D spatial workspace that visualizes agents while runtime truth stays in the connected backend.",
+        "suiteEvidence": [
+          "kvnloo/Hermes3D:README.md",
+          "kvnloo/Hermes3D:ARCHITECTURE.md"
+        ],
+        "suiteUpstream": null
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes3d"
+        }
+      ]
+    },
+    {
       "id": "z0://repo/kvnloo/Memento",
       "type": "repository",
       "label": "kvnloo/Memento",
@@ -2288,9 +2977,17 @@
     {
       "id": "z0://repo/kvnloo/SoL-Pi",
       "type": "repository",
-      "label": "kvnloo/SoL-Pi",
+      "label": "SoL-Pi",
       "attributes": {
-        "repo": "kvnloo/SoL-Pi"
+        "repo": "kvnloo/SoL-Pi",
+        "suite_id": "sol-pi",
+        "suiteRole": "mechanism_bundle",
+        "suiteAuthority": "implementation",
+        "suiteStatus": "experimental",
+        "suiteSummary": "Pi extension packaging reusable agent-efficiency mechanisms discovered through auto-research.",
+        "suiteEvidence": [
+          "kvnloo/SoL-Pi:README.md"
+        ]
       },
       "provenance": [
         {
@@ -2320,6 +3017,39 @@
           "ref": "main",
           "path": "registry/mechanisms.yaml",
           "field": "mechanisms.sol-pi-online-context-compact.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/activegraph",
+      "type": "repository",
+      "label": "ActiveGraph",
+      "attributes": {
+        "repo": "kvnloo/activegraph",
+        "suite_id": "activegraph",
+        "suiteRole": "temporal_graph_substrate",
+        "suiteAuthority": "external_substrate",
+        "suiteStatus": "active",
+        "suiteSummary": "Event-sourced reactive graph runtime used by z0archy for resumable, forkable, diffable architecture history.",
+        "suiteEvidence": [
+          "kvnloo/activegraph:README.md"
+        ],
+        "suiteUpstream": "yoheinakajima/activegraph"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.activegraph"
         }
       ]
     },
@@ -2372,11 +3102,72 @@
       ]
     },
     {
+      "id": "z0://repo/kvnloo/codex-router",
+      "type": "repository",
+      "label": "Codex Router",
+      "attributes": {
+        "repo": "kvnloo/codex-router",
+        "suite_id": "codex-router",
+        "suiteRole": "provider_router",
+        "suiteAuthority": "implementation",
+        "suiteStatus": "experimental",
+        "suiteSummary": "Local provider/model routing surface serving Codex and additional harnesses while keeping provider credentials local.",
+        "suiteEvidence": [
+          "kvnloo/codex-router:README.md"
+        ],
+        "suiteUpstream": null
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.codex-router"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/company-os",
+      "type": "repository",
+      "label": "Company OS",
+      "attributes": {
+        "repo": "kvnloo/company-os",
+        "suite_id": "company-os",
+        "suiteRole": "operational_projection",
+        "suiteAuthority": "read_only_projection",
+        "suiteStatus": "experimental",
+        "suiteSummary": "Thin Hermes HUD that projects live host state without becoming a second control plane or execution authority.",
+        "suiteEvidence": [
+          "kvnloo/company-os:README.md"
+        ],
+        "suiteUpstream": null
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.company-os"
+        }
+      ]
+    },
+    {
       "id": "z0://repo/kvnloo/deepseek-harness",
       "type": "repository",
-      "label": "kvnloo/deepseek-harness",
+      "label": "DeepSeek Harness",
       "attributes": {
-        "repo": "kvnloo/deepseek-harness"
+        "repo": "kvnloo/deepseek-harness",
+        "suite_id": "deepseek-harness",
+        "suiteRole": "execution_runtime",
+        "suiteAuthority": "implementation",
+        "suiteStatus": "developer_preview",
+        "suiteSummary": "Plugin-tree agent harness used as a Zer0 execution and inspection surface.",
+        "suiteEvidence": [
+          "kvnloo/deepseek-harness:README.md",
+          "kvnloo/deepseek-harness:docs/architecture.md"
+        ]
       },
       "provenance": [
         {
@@ -2385,6 +3176,39 @@
           "ref": "main",
           "path": "registry/harnesses.yaml",
           "field": "harnesses.deepseek.repo"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.deepseek-harness"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/ds4",
+      "type": "repository",
+      "label": "DwarfStar",
+      "attributes": {
+        "repo": "kvnloo/ds4",
+        "suite_id": "dwarfstar",
+        "suiteRole": "local_inference_engine",
+        "suiteAuthority": "implementation",
+        "suiteStatus": "beta",
+        "suiteSummary": "Narrow native inference engine for capable open-weight models on consumer hardware across Metal, CUDA, and ROCm.",
+        "suiteEvidence": [
+          "kvnloo/ds4:README.md"
+        ],
+        "suiteUpstream": null
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.dwarfstar"
         }
       ]
     },
@@ -2413,6 +3237,32 @@
       ]
     },
     {
+      "id": "z0://repo/kvnloo/flyforge",
+      "type": "repository",
+      "label": "FlyForge",
+      "attributes": {
+        "repo": "kvnloo/flyforge",
+        "suite_id": "flyforge",
+        "suiteRole": "research_program",
+        "suiteAuthority": "research",
+        "suiteStatus": "reference",
+        "suiteSummary": "Original research-program surface whose experiment engine now lives in Evolution Lab.",
+        "suiteEvidence": [
+          "kvnloo/flyforge:README.md"
+        ],
+        "suiteUpstream": null
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.flyforge"
+        }
+      ]
+    },
+    {
       "id": "z0://repo/kvnloo/frontier-kb",
       "type": "repository",
       "label": "kvnloo/frontier-kb",
@@ -2430,11 +3280,45 @@
       ]
     },
     {
+      "id": "z0://repo/kvnloo/graphcon-deck",
+      "type": "repository",
+      "label": "graphcon-deck",
+      "attributes": {
+        "repo": "kvnloo/graphcon-deck",
+        "suite_id": "graphcon-deck",
+        "suiteRole": "presentation_substrate",
+        "suiteAuthority": "external_substrate",
+        "suiteStatus": "active",
+        "suiteSummary": "Spatial knowledge-graph presentation substrate adapted by z0archy for authored scenes and interactive architecture exploration.",
+        "suiteEvidence": [
+          "kvnloo/graphcon-deck:README.md"
+        ],
+        "suiteUpstream": "yoheinakajima/graphcon-deck"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.graphcon-deck"
+        }
+      ]
+    },
+    {
       "id": "z0://repo/kvnloo/hermes-agent",
       "type": "repository",
-      "label": "kvnloo/hermes-agent",
+      "label": "Hermes Agent",
       "attributes": {
-        "repo": "kvnloo/hermes-agent"
+        "repo": "kvnloo/hermes-agent",
+        "suite_id": "hermes-agent",
+        "suiteRole": "execution_runtime",
+        "suiteAuthority": "implementation",
+        "suiteStatus": "active",
+        "suiteSummary": "Cross-platform self-improving agent runtime with gateway, memory, skills, subagents, automation, and trajectory tooling.",
+        "suiteEvidence": [
+          "kvnloo/hermes-agent:README.md"
+        ]
       },
       "provenance": [
         {
@@ -2443,6 +3327,259 @@
           "ref": "main",
           "path": "registry/harnesses.yaml",
           "field": "harnesses.hermes.repo"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-agent"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/hermes-agent-self-evolution",
+      "type": "repository",
+      "label": "Hermes Agent Self-Evolution",
+      "attributes": {
+        "repo": "kvnloo/hermes-agent-self-evolution",
+        "suite_id": "hermes-agent-self-evolution",
+        "suiteRole": "evolution_engine",
+        "suiteAuthority": "implementation",
+        "suiteStatus": "experimental",
+        "suiteSummary": "DSPy and GEPA based evolutionary optimization of Hermes skills, prompts, tool descriptions, and code candidates.",
+        "suiteEvidence": [
+          "kvnloo/hermes-agent-self-evolution:README.md"
+        ],
+        "suiteUpstream": null
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-agent-self-evolution"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/hermes-jev-skills",
+      "type": "repository",
+      "label": "Hermes Jev Skills",
+      "attributes": {
+        "repo": "kvnloo/hermes-jev-skills",
+        "suite_id": "hermes-jev-skills",
+        "suiteRole": "decision_extension",
+        "suiteAuthority": "implementation",
+        "suiteStatus": "experimental",
+        "suiteSummary": "Typed Jev decision skills for routing, retrieval, turn selection, triage, and computer-use decisions.",
+        "suiteEvidence": [
+          "kvnloo/hermes-jev-skills:README.md"
+        ],
+        "suiteUpstream": null
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-jev-skills"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/hermes-keel",
+      "type": "repository",
+      "label": "Hermes Keel",
+      "attributes": {
+        "repo": "kvnloo/hermes-keel",
+        "suite_id": "hermes-keel",
+        "suiteRole": "governance_spec",
+        "suiteAuthority": "constitutional",
+        "suiteStatus": "bootstrap",
+        "suiteSummary": "Governance layer defining capability boundaries, evidence requirements, staged promotion, and rollback around Hermes execution.",
+        "suiteEvidence": [
+          "kvnloo/hermes-keel:README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.keel-governed-execution.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-keel"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/hermes-lcm",
+      "type": "repository",
+      "label": "Hermes LCM",
+      "attributes": {
+        "repo": "kvnloo/hermes-lcm",
+        "suite_id": "hermes-lcm",
+        "suiteRole": "context_extension",
+        "suiteAuthority": "implementation",
+        "suiteStatus": "experimental",
+        "suiteSummary": "Lossless context-management plugin with a recoverable SQLite-backed summary DAG and bounded recall.",
+        "suiteEvidence": [
+          "kvnloo/hermes-lcm:README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.hermes-lossless-context-dag.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-lcm"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/hermes-mesh-keel",
+      "type": "repository",
+      "label": "Hermes Mesh Keel",
+      "attributes": {
+        "repo": "kvnloo/hermes-mesh-keel",
+        "suite_id": "hermes-mesh-keel",
+        "suiteRole": "signed_mesh_transport",
+        "suiteAuthority": "pre_activation",
+        "suiteStatus": "experimental",
+        "suiteSummary": "Signed durable transport for bounded Hermes Kanban intents with destination Keel revalidation and receipt evidence.",
+        "suiteEvidence": [
+          "kvnloo/hermes-mesh-keel:README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.mesh-signed-intent-transport.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-mesh-keel"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/hermes-model-passports",
+      "type": "repository",
+      "label": "Hermes Model Passports",
+      "attributes": {
+        "repo": "kvnloo/hermes-model-passports",
+        "suite_id": "hermes-model-passports",
+        "suiteRole": "model_identity_language",
+        "suiteAuthority": "metadata",
+        "suiteStatus": "design_seed",
+        "suiteSummary": "Portable model identity, capability, lifecycle, maker, and route metadata language with compact visual sigils.",
+        "suiteEvidence": [
+          "kvnloo/hermes-model-passports:README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.model-passport-identity.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-model-passports"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/hermes-privilege-broker",
+      "type": "repository",
+      "label": "Hermes Privilege Broker",
+      "attributes": {
+        "repo": "kvnloo/hermes-privilege-broker",
+        "suite_id": "hermes-privilege-broker",
+        "suiteRole": "privilege_boundary",
+        "suiteAuthority": "security_reference",
+        "suiteStatus": "development_candidate",
+        "suiteSummary": "Split-authority typed privilege broker reference implementation kept separate from Hermes core.",
+        "suiteEvidence": [
+          "kvnloo/hermes-privilege-broker:README.md",
+          "kvnloo/hermes-privilege-broker:docs/ARCHITECTURE.md",
+          "kvnloo/hermes-privilege-broker:docs/THREAT_MODEL.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.split-authority-privilege-broker.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-privilege-broker"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/hermes-talk",
+      "type": "repository",
+      "label": "Hermes Talk",
+      "attributes": {
+        "repo": "kvnloo/hermes-talk",
+        "suite_id": "hermes-talk",
+        "suiteRole": "voice_orchestrator",
+        "suiteAuthority": "implementation",
+        "suiteStatus": "experimental",
+        "suiteSummary": "Realtime duplex voice control layer that delegates work to Hermes agents while the conversation continues.",
+        "suiteEvidence": [
+          "kvnloo/hermes-talk:README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.realtime-voice-orchestration.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-talk"
         }
       ]
     },
@@ -2502,11 +3639,45 @@
       ]
     },
     {
+      "id": "z0://repo/kvnloo/ripple",
+      "type": "repository",
+      "label": "Ripple",
+      "attributes": {
+        "repo": "kvnloo/ripple",
+        "suite_id": "ripple",
+        "suiteRole": "intent_surface",
+        "suiteAuthority": "interaction",
+        "suiteStatus": "experimental",
+        "suiteSummary": "Ephemeral multimodal intent surface that consumes AODL contracts while keeping AODL itself as IR.",
+        "suiteEvidence": [
+          "kvnloo/ripple:README.md"
+        ],
+        "suiteUpstream": null
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.ripple"
+        }
+      ]
+    },
+    {
       "id": "z0://repo/kvnloo/sol-pi-hermes",
       "type": "repository",
-      "label": "kvnloo/sol-pi-hermes",
+      "label": "sol-pi-hermes",
       "attributes": {
-        "repo": "kvnloo/sol-pi-hermes"
+        "repo": "kvnloo/sol-pi-hermes",
+        "suite_id": "sol-pi-hermes",
+        "suiteRole": "mechanism_port",
+        "suiteAuthority": "implementation",
+        "suiteStatus": "experimental",
+        "suiteSummary": "Hermes plugin port of SoL-Pi mechanisms using Hermes-native context and tool seams.",
+        "suiteEvidence": [
+          "kvnloo/sol-pi-hermes:README.md"
+        ]
       },
       "provenance": [
         {
@@ -2536,6 +3707,13 @@
           "ref": "main",
           "path": "registry/mechanisms.yaml",
           "field": "mechanisms.sol-pi-online-context-compact.implementation[1]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi-hermes"
         }
       ]
     },
@@ -2559,9 +3737,18 @@
     {
       "id": "z0://repo/kvnloo/verified-oss-loop",
       "type": "repository",
-      "label": "kvnloo/verified-oss-loop",
+      "label": "Verified OSS Loop",
       "attributes": {
-        "repo": "kvnloo/verified-oss-loop"
+        "repo": "kvnloo/verified-oss-loop",
+        "suite_id": "verified-oss-loop",
+        "suiteRole": "contribution_protocol",
+        "suiteAuthority": "protocol",
+        "suiteStatus": "active",
+        "suiteSummary": "Evidence-gated distributed OSS contribution protocol with claim leases, isolated work, verification, and human merge authority.",
+        "suiteEvidence": [
+          "kvnloo/verified-oss-loop:README.md",
+          "kvnloo/verified-oss-loop:SPEC.md"
+        ]
       },
       "provenance": [
         {
@@ -2570,15 +3757,31 @@
           "ref": "main",
           "path": "registry/lifecycles.yaml",
           "field": "lifecycles.verified-oss-rolling.owner_repo"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.verified-oss-loop"
         }
       ]
     },
     {
       "id": "z0://repo/kvnloo/z0",
       "type": "repository",
-      "label": "kvnloo/z0",
+      "label": "Zer0",
       "attributes": {
-        "repo": "kvnloo/z0"
+        "repo": "kvnloo/z0",
+        "suite_id": "z0",
+        "suiteRole": "architecture_registry",
+        "suiteAuthority": "canonical",
+        "suiteStatus": "active",
+        "suiteSummary": "Canonical semantic architecture registries, install profiles, generated docs, and onboarding.",
+        "suiteEvidence": [
+          "README.md",
+          "ARCHITECTURE.md"
+        ]
       },
       "provenance": [
         {
@@ -2587,6 +3790,92 @@
           "ref": "main",
           "path": "registry/lifecycles.yaml",
           "field": "lifecycles.architecture-truth.owner_repo"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/z0archy",
+      "type": "repository",
+      "label": "z0archy",
+      "attributes": {
+        "repo": "kvnloo/z0archy",
+        "suite_id": "z0archy",
+        "suiteRole": "architecture_projection",
+        "suiteAuthority": "derived",
+        "suiteStatus": "active",
+        "suiteSummary": "Dynamic architecture world model, exact-ref implementation evidence, history, counterfactuals, and semantic compression.",
+        "suiteEvidence": [
+          "kvnloo/z0archy:README.md",
+          "kvnloo/z0archy:docs/ARCHITECTURE.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.z0archy-semantic-compression.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.z0archy-history-fork-diff.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.z0archy-hierarchy-meta-learning.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0archy"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/z0evals",
+      "type": "repository",
+      "label": "z0evals",
+      "attributes": {
+        "repo": "kvnloo/z0evals",
+        "suite_id": "z0evals",
+        "suiteRole": "publication_evidence",
+        "suiteAuthority": "frozen_evidence",
+        "suiteStatus": "active",
+        "suiteSummary": "Reproducible evaluations, frozen datasets, analysis, figures, and public reports for Zer0 studies.",
+        "suiteEvidence": [
+          "kvnloo/z0evals:README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.frozen-eval-publication.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0evals"
         }
       ]
     },
@@ -2654,6 +3943,34 @@
           "ref": "main",
           "path": "registry/representations.yaml",
           "field": "representations.aodl-intent"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/architecture-snapshot",
+      "type": "representation",
+      "label": "Architecture snapshot",
+      "attributes": {
+        "representation_id": "architecture-snapshot",
+        "name": "Architecture snapshot",
+        "kind": "world_state",
+        "scale": "large",
+        "summary": "Content-addressed semantic architecture state that can be replayed, compared, or forked without mutating canonical truth.",
+        "sensitivity": "public",
+        "produced_by": [
+          "z0archy-history-fork-diff"
+        ],
+        "evidence": [
+          "registry/mechanisms.yaml#mechanisms.z0archy-history-fork-diff"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.architecture-snapshot"
         }
       ]
     },
@@ -2738,6 +4055,34 @@
       ]
     },
     {
+      "id": "z0://representation/evaluation-artifact",
+      "type": "representation",
+      "label": "Frozen evaluation artifact",
+      "attributes": {
+        "representation_id": "evaluation-artifact",
+        "name": "Frozen evaluation artifact",
+        "kind": "evidence",
+        "scale": "bounded",
+        "summary": "Pinned reproducible study data, analysis, figure, or report whose public claim resolves to frozen evidence.",
+        "sensitivity": "public",
+        "produced_by": [
+          "frozen-eval-publication"
+        ],
+        "evidence": [
+          "registry/mechanisms.yaml#mechanisms.frozen-eval-publication"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.evaluation-artifact"
+        }
+      ]
+    },
+    {
       "id": "z0://representation/evidence-receipt",
       "type": "representation",
       "label": "Evidence receipt",
@@ -2762,6 +4107,90 @@
           "ref": "main",
           "path": "registry/representations.yaml",
           "field": "representations.evidence-receipt"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/hierarchy-proposal",
+      "type": "representation",
+      "label": "Architecture hierarchy proposal",
+      "attributes": {
+        "representation_id": "hierarchy-proposal",
+        "name": "Architecture hierarchy proposal",
+        "kind": "proposal",
+        "scale": "compact",
+        "summary": "Evidence-backed keep, merge, split, prune, or no-update suggestion derived from architecture history without changing canonical ontology.",
+        "sensitivity": "public",
+        "produced_by": [
+          "z0archy-hierarchy-meta-learning"
+        ],
+        "evidence": [
+          "registry/mechanisms.yaml#mechanisms.z0archy-hierarchy-meta-learning"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.hierarchy-proposal"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/lossless-context-node",
+      "type": "representation",
+      "label": "Lossless context DAG node",
+      "attributes": {
+        "representation_id": "lossless-context-node",
+        "name": "Lossless context DAG node",
+        "kind": "memory",
+        "scale": "bounded",
+        "summary": "Recoverable raw-message or hierarchical summary node with explicit source lineage and drill-down.",
+        "sensitivity": "inherited",
+        "produced_by": [
+          "hermes-lossless-context-dag"
+        ],
+        "evidence": [
+          "registry/mechanisms.yaml#mechanisms.hermes-lossless-context-dag"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.lossless-context-node"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/model-passport",
+      "type": "representation",
+      "label": "Model passport",
+      "attributes": {
+        "representation_id": "model-passport",
+        "name": "Model passport",
+        "kind": "metadata",
+        "scale": "small",
+        "summary": "Portable descriptor separating maker, canonical model identity, verified capabilities/lifecycle, and serving route.",
+        "sensitivity": "public",
+        "produced_by": [
+          "model-passport-identity"
+        ],
+        "evidence": [
+          "registry/mechanisms.yaml#mechanisms.model-passport-identity"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.model-passport"
         }
       ]
     },
@@ -2824,6 +4253,34 @@
       ]
     },
     {
+      "id": "z0://representation/privilege-grant",
+      "type": "representation",
+      "label": "Privilege grant",
+      "attributes": {
+        "representation_id": "privilege-grant",
+        "name": "Privilege grant",
+        "kind": "authorization",
+        "scale": "tiny",
+        "summary": "One-use monotonic-TTL authorization bound to an immutable approved privileged-operation digest.",
+        "sensitivity": "private",
+        "produced_by": [
+          "split-authority-privilege-broker"
+        ],
+        "evidence": [
+          "registry/mechanisms.yaml#mechanisms.split-authority-privilege-broker"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.privilege-grant"
+        }
+      ]
+    },
+    {
       "id": "z0://representation/raw-context",
       "type": "representation",
       "label": "Raw context",
@@ -2874,6 +4331,62 @@
           "ref": "main",
           "path": "registry/representations.yaml",
           "field": "representations.rlm-address"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/semantic-compression-receipt",
+      "type": "representation",
+      "label": "Semantic compression receipt",
+      "attributes": {
+        "representation_id": "semantic-compression-receipt",
+        "name": "Semantic compression receipt",
+        "kind": "evidence_bundle",
+        "scale": "compact",
+        "summary": "Audit of a compressed architecture view recording retained/hidden structure, cut relations, provenance, and high-relevance omissions.",
+        "sensitivity": "inherited",
+        "produced_by": [
+          "z0archy-semantic-compression"
+        ],
+        "evidence": [
+          "registry/mechanisms.yaml#mechanisms.z0archy-semantic-compression"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.semantic-compression-receipt"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/signed-mesh-intent",
+      "type": "representation",
+      "label": "Signed Mesh intent",
+      "attributes": {
+        "representation_id": "signed-mesh-intent",
+        "name": "Signed Mesh intent",
+        "kind": "intent",
+        "scale": "compact",
+        "summary": "Versioned bounded execution intent carrying task revision, capability/policy hashes, privacy class, replay controls, and signature.",
+        "sensitivity": "inherited",
+        "produced_by": [
+          "mesh-signed-intent-transport"
+        ],
+        "evidence": [
+          "registry/mechanisms.yaml#mechanisms.mesh-signed-intent-transport"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.signed-mesh-intent"
         }
       ]
     },
@@ -3327,6 +4840,66 @@
       }
     },
     {
+      "id": "z0://edge/epistemic:architecture-compression-is-audited",
+      "type": "audited_by",
+      "source": "z0://representation/architecture-snapshot",
+      "target": "z0://representation/semantic-compression-receipt",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-compression-is-audited"
+        }
+      ],
+      "attributes": {
+        "epistemic": true,
+        "evidenceDependency": "z0://evidence-dependency/architecture-compression-is-audited",
+        "confidence": "declared"
+      }
+    },
+    {
+      "id": "z0://edge/epistemic:architecture-history-to-hierarchy-proposal",
+      "type": "analyzed_as",
+      "source": "z0://representation/architecture-snapshot",
+      "target": "z0://representation/hierarchy-proposal",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-history-to-hierarchy-proposal"
+        }
+      ],
+      "attributes": {
+        "epistemic": true,
+        "evidenceDependency": "z0://evidence-dependency/architecture-history-to-hierarchy-proposal",
+        "confidence": "declared"
+      }
+    },
+    {
+      "id": "z0://edge/epistemic:compiled-plan-to-signed-mesh-intent",
+      "type": "transported_as",
+      "source": "z0://representation/compiled-plan",
+      "target": "z0://representation/signed-mesh-intent",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.compiled-plan-to-signed-mesh-intent"
+        }
+      ],
+      "attributes": {
+        "epistemic": true,
+        "evidenceDependency": "z0://evidence-dependency/compiled-plan-to-signed-mesh-intent",
+        "confidence": "declared"
+      }
+    },
+    {
       "id": "z0://edge/epistemic:decision-state-to-receipt",
       "type": "decides_to",
       "source": "z0://representation/compiled-decision-state",
@@ -3383,6 +4956,26 @@
       "attributes": {
         "epistemic": true,
         "evidenceDependency": "z0://evidence-dependency/execution-to-tokenomics",
+        "confidence": "declared"
+      }
+    },
+    {
+      "id": "z0://edge/epistemic:lossless-context-preserves-drilldown",
+      "type": "compacts_to",
+      "source": "z0://representation/raw-context",
+      "target": "z0://representation/lossless-context-node",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.lossless-context-preserves-drilldown"
+        }
+      ],
+      "attributes": {
+        "epistemic": true,
+        "evidenceDependency": "z0://evidence-dependency/lossless-context-preserves-drilldown",
         "confidence": "declared"
       }
     },
@@ -3447,6 +5040,26 @@
       }
     },
     {
+      "id": "z0://edge/epistemic:tokenomics-to-frozen-evaluation",
+      "type": "frozen_as",
+      "source": "z0://representation/tokenomics-event",
+      "target": "z0://representation/evaluation-artifact",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.tokenomics-to-frozen-evaluation"
+        }
+      ],
+      "attributes": {
+        "epistemic": true,
+        "evidenceDependency": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+        "confidence": "declared"
+      }
+    },
+    {
       "id": "z0://edge/evidence-object:aodl-intent-to-plan",
       "type": "evidence_object",
       "source": "z0://evidence-dependency/aodl-intent-to-plan",
@@ -3458,6 +5071,51 @@
           "ref": "main",
           "path": "registry/evidence_dependencies.yaml",
           "field": "evidence_dependencies.aodl-intent-to-plan.to"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-object:architecture-compression-is-audited",
+      "type": "evidence_object",
+      "source": "z0://evidence-dependency/architecture-compression-is-audited",
+      "target": "z0://representation/semantic-compression-receipt",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-compression-is-audited.to"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-object:architecture-history-to-hierarchy-proposal",
+      "type": "evidence_object",
+      "source": "z0://evidence-dependency/architecture-history-to-hierarchy-proposal",
+      "target": "z0://representation/hierarchy-proposal",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-history-to-hierarchy-proposal.to"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-object:compiled-plan-to-signed-mesh-intent",
+      "type": "evidence_object",
+      "source": "z0://evidence-dependency/compiled-plan-to-signed-mesh-intent",
+      "target": "z0://representation/signed-mesh-intent",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.compiled-plan-to-signed-mesh-intent.to"
         }
       ]
     },
@@ -3507,6 +5165,21 @@
       ]
     },
     {
+      "id": "z0://edge/evidence-object:lossless-context-preserves-drilldown",
+      "type": "evidence_object",
+      "source": "z0://evidence-dependency/lossless-context-preserves-drilldown",
+      "target": "z0://representation/lossless-context-node",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.lossless-context-preserves-drilldown.to"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/evidence-object:observation-pack-compresses-context",
       "type": "evidence_object",
       "source": "z0://evidence-dependency/observation-pack-compresses-context",
@@ -3552,6 +5225,21 @@
       ]
     },
     {
+      "id": "z0://edge/evidence-object:tokenomics-to-frozen-evaluation",
+      "type": "evidence_object",
+      "source": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+      "target": "z0://representation/evaluation-artifact",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.tokenomics-to-frozen-evaluation.to"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/evidence-subject:aodl-intent-to-plan",
       "type": "evidence_subject",
       "source": "z0://representation/aodl-intent",
@@ -3563,6 +5251,51 @@
           "ref": "main",
           "path": "registry/evidence_dependencies.yaml",
           "field": "evidence_dependencies.aodl-intent-to-plan.from"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-subject:architecture-compression-is-audited",
+      "type": "evidence_subject",
+      "source": "z0://representation/architecture-snapshot",
+      "target": "z0://evidence-dependency/architecture-compression-is-audited",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-compression-is-audited.from"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-subject:architecture-history-to-hierarchy-proposal",
+      "type": "evidence_subject",
+      "source": "z0://representation/architecture-snapshot",
+      "target": "z0://evidence-dependency/architecture-history-to-hierarchy-proposal",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-history-to-hierarchy-proposal.from"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-subject:compiled-plan-to-signed-mesh-intent",
+      "type": "evidence_subject",
+      "source": "z0://representation/compiled-plan",
+      "target": "z0://evidence-dependency/compiled-plan-to-signed-mesh-intent",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.compiled-plan-to-signed-mesh-intent.from"
         }
       ]
     },
@@ -3612,6 +5345,21 @@
       ]
     },
     {
+      "id": "z0://edge/evidence-subject:lossless-context-preserves-drilldown",
+      "type": "evidence_subject",
+      "source": "z0://representation/raw-context",
+      "target": "z0://evidence-dependency/lossless-context-preserves-drilldown",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.lossless-context-preserves-drilldown.from"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/evidence-subject:observation-pack-compresses-context",
       "type": "evidence_subject",
       "source": "z0://representation/raw-context",
@@ -3653,6 +5401,21 @@
           "ref": "main",
           "path": "registry/evidence_dependencies.yaml",
           "field": "evidence_dependencies.plan-to-observed-topology.from"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-subject:tokenomics-to-frozen-evaluation",
+      "type": "evidence_subject",
+      "source": "z0://representation/tokenomics-event",
+      "target": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.tokenomics-to-frozen-evaluation.from"
         }
       ]
     },
@@ -4062,6 +5825,21 @@
       ]
     },
     {
+      "id": "z0://edge/implemented_by:hermes-lossless-context-dag-%3Ehermes",
+      "type": "implemented_by",
+      "source": "z0://mechanism/hermes-lossless-context-dag",
+      "target": "z0://harness/hermes",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.hermes-lossless-context-dag.implementation[0]"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/implemented_by:jev-typed-decision-%3Eoh-my-pi",
       "type": "implemented_by",
       "source": "z0://mechanism/jev-typed-decision",
@@ -4122,6 +5900,21 @@
       ]
     },
     {
+      "id": "z0://edge/implemented_by:mesh-signed-intent-transport-%3Ehermes",
+      "type": "implemented_by",
+      "source": "z0://mechanism/mesh-signed-intent-transport",
+      "target": "z0://harness/hermes",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.mesh-signed-intent-transport.implementation[0]"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/implemented_by:oh-my-pi-%3Ekvnloo/oh-my-pi",
       "type": "implemented_by",
       "source": "z0://component/oh-my-pi",
@@ -4163,6 +5956,21 @@
           "ref": "main",
           "path": "registry/harnesses.yaml",
           "field": "harnesses.pi.repo"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:realtime-voice-orchestration-%3Ehermes",
+      "type": "implemented_by",
+      "source": "z0://mechanism/realtime-voice-orchestration",
+      "target": "z0://harness/hermes",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.realtime-voice-orchestration.implementation[0]"
         }
       ]
     },
@@ -4362,6 +6170,36 @@
       ]
     },
     {
+      "id": "z0://edge/implemented_in_repo:frozen-eval-publication-%3Ekvnloo/z0evals",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/frozen-eval-publication",
+      "target": "z0://repo/kvnloo/z0evals",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.frozen-eval-publication.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:hermes-lossless-context-dag-%3Ekvnloo/hermes-lcm",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/hermes-lossless-context-dag",
+      "target": "z0://repo/kvnloo/hermes-lcm",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.hermes-lossless-context-dag.implementation[0]"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/implemented_in_repo:jev-typed-decision-%3Ekvnloo/oh-my-pi",
       "type": "implemented_in_repo",
       "source": "z0://mechanism/jev-typed-decision",
@@ -4388,6 +6226,66 @@
           "ref": "main",
           "path": "registry/mechanisms.yaml",
           "field": "mechanisms.jev-typed-decision.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:keel-governed-execution-%3Ekvnloo/hermes-keel",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/keel-governed-execution",
+      "target": "z0://repo/kvnloo/hermes-keel",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.keel-governed-execution.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:mesh-signed-intent-transport-%3Ekvnloo/hermes-mesh-keel",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/mesh-signed-intent-transport",
+      "target": "z0://repo/kvnloo/hermes-mesh-keel",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.mesh-signed-intent-transport.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:model-passport-identity-%3Ekvnloo/hermes-model-passports",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/model-passport-identity",
+      "target": "z0://repo/kvnloo/hermes-model-passports",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.model-passport-identity.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:realtime-voice-orchestration-%3Ekvnloo/hermes-talk",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/realtime-voice-orchestration",
+      "target": "z0://repo/kvnloo/hermes-talk",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.realtime-voice-orchestration.implementation[0]"
         }
       ]
     },
@@ -4523,6 +6421,66 @@
           "ref": "main",
           "path": "registry/mechanisms.yaml",
           "field": "mechanisms.sol-pi-online-context-compact.implementation[1]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:split-authority-privilege-broker-%3Ekvnloo/hermes-privilege-broker",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/split-authority-privilege-broker",
+      "target": "z0://repo/kvnloo/hermes-privilege-broker",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.split-authority-privilege-broker.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:z0archy-hierarchy-meta-learning-%3Ekvnloo/z0archy",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/z0archy-hierarchy-meta-learning",
+      "target": "z0://repo/kvnloo/z0archy",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.z0archy-hierarchy-meta-learning.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:z0archy-history-fork-diff-%3Ekvnloo/z0archy",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/z0archy-history-fork-diff",
+      "target": "z0://repo/kvnloo/z0archy",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.z0archy-history-fork-diff.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:z0archy-semantic-compression-%3Ekvnloo/z0archy",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/z0archy-semantic-compression",
+      "target": "z0://repo/kvnloo/z0archy",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.z0archy-semantic-compression.implementation[0]"
         }
       ]
     },
@@ -5502,6 +7460,66 @@
       ]
     },
     {
+      "id": "z0://edge/produces-representation:frozen-eval-publication-%3Eevaluation-artifact",
+      "type": "produces_representation",
+      "source": "z0://mechanism/frozen-eval-publication",
+      "target": "z0://representation/evaluation-artifact",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.evaluation-artifact.produced_by"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/produces-representation:hermes-lossless-context-dag-%3Elossless-context-node",
+      "type": "produces_representation",
+      "source": "z0://mechanism/hermes-lossless-context-dag",
+      "target": "z0://representation/lossless-context-node",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.lossless-context-node.produced_by"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/produces-representation:mesh-signed-intent-transport-%3Esigned-mesh-intent",
+      "type": "produces_representation",
+      "source": "z0://mechanism/mesh-signed-intent-transport",
+      "target": "z0://representation/signed-mesh-intent",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.signed-mesh-intent.produced_by"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/produces-representation:model-passport-identity-%3Emodel-passport",
+      "type": "produces_representation",
+      "source": "z0://mechanism/model-passport-identity",
+      "target": "z0://representation/model-passport",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.model-passport.produced_by"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/produces-representation:rlm-context-spill-%3Erlm-address",
       "type": "produces_representation",
       "source": "z0://mechanism/rlm-context-spill",
@@ -5543,6 +7561,66 @@
           "ref": "main",
           "path": "registry/representations.yaml",
           "field": "representations.observation-pack.produced_by"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/produces-representation:split-authority-privilege-broker-%3Eprivilege-grant",
+      "type": "produces_representation",
+      "source": "z0://mechanism/split-authority-privilege-broker",
+      "target": "z0://representation/privilege-grant",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.privilege-grant.produced_by"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/produces-representation:z0archy-hierarchy-meta-learning-%3Ehierarchy-proposal",
+      "type": "produces_representation",
+      "source": "z0://mechanism/z0archy-hierarchy-meta-learning",
+      "target": "z0://representation/hierarchy-proposal",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.hierarchy-proposal.produced_by"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/produces-representation:z0archy-history-fork-diff-%3Earchitecture-snapshot",
+      "type": "produces_representation",
+      "source": "z0://mechanism/z0archy-history-fork-diff",
+      "target": "z0://representation/architecture-snapshot",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.architecture-snapshot.produced_by"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/produces-representation:z0archy-semantic-compression-%3Esemantic-compression-receipt",
+      "type": "produces_representation",
+      "source": "z0://mechanism/z0archy-semantic-compression",
+      "target": "z0://representation/semantic-compression-receipt",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.semantic-compression-receipt.produced_by"
         }
       ]
     },
@@ -5727,6 +7805,96 @@
       ]
     },
     {
+      "id": "z0://edge/requires-evidence:architecture-compression-is-audited-%3Ekvnloo/z0archy:README.md%23semantic-compression-receipts",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/architecture-compression-is-audited",
+      "target": "z0://evidence-ref/kvnloo/z0archy:README.md%23semantic-compression-receipts",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-compression-is-audited.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:architecture-compression-is-audited-%3Eregistry/mechanisms.yaml%23mechanisms.z0archy-semantic-compression",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/architecture-compression-is-audited",
+      "target": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.z0archy-semantic-compression",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-compression-is-audited.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:architecture-history-to-hierarchy-proposal-%3Ekvnloo/z0archy:README.md%23slow-hierarchy-meta-learning",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/architecture-history-to-hierarchy-proposal",
+      "target": "z0://evidence-ref/kvnloo/z0archy:README.md%23slow-hierarchy-meta-learning",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-history-to-hierarchy-proposal.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:architecture-history-to-hierarchy-proposal-%3Eregistry/mechanisms.yaml%23mechanisms.z0archy-hierarchy-meta-learning",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/architecture-history-to-hierarchy-proposal",
+      "target": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.z0archy-hierarchy-meta-learning",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-history-to-hierarchy-proposal.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:compiled-plan-to-signed-mesh-intent-%3Ekvnloo/hermes-mesh-keel:README.md",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/compiled-plan-to-signed-mesh-intent",
+      "target": "z0://evidence-ref/kvnloo/hermes-mesh-keel:README.md",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.compiled-plan-to-signed-mesh-intent.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:compiled-plan-to-signed-mesh-intent-%3Eregistry/mechanisms.yaml%23mechanisms.mesh-signed-intent-transport",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/compiled-plan-to-signed-mesh-intent",
+      "target": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.mesh-signed-intent-transport",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.compiled-plan-to-signed-mesh-intent.required_evidence"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/requires-evidence:decision-state-to-receipt-%3Eregistry/interfaces.yaml%23interfaces.z0int.decision_receipt.v1",
       "type": "requires_evidence",
       "source": "z0://evidence-dependency/decision-state-to-receipt",
@@ -5798,6 +7966,36 @@
           "ref": "main",
           "path": "registry/evidence_dependencies.yaml",
           "field": "evidence_dependencies.execution-to-tokenomics.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:lossless-context-preserves-drilldown-%3Ekvnloo/hermes-lcm:README.md%23what-it-does",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/lossless-context-preserves-drilldown",
+      "target": "z0://evidence-ref/kvnloo/hermes-lcm:README.md%23what-it-does",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.lossless-context-preserves-drilldown.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:lossless-context-preserves-drilldown-%3Eregistry/mechanisms.yaml%23mechanisms.hermes-lossless-context-dag",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/lossless-context-preserves-drilldown",
+      "target": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.hermes-lossless-context-dag",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.lossless-context-preserves-drilldown.required_evidence"
         }
       ]
     },
@@ -5877,6 +8075,36 @@
       ]
     },
     {
+      "id": "z0://edge/requires-evidence:tokenomics-to-frozen-evaluation-%3Ekvnloo/z0evals:README.md%23rules",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+      "target": "z0://evidence-ref/kvnloo/z0evals:README.md%23rules",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.tokenomics-to-frozen-evaluation.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:tokenomics-to-frozen-evaluation-%3Eregistry/mechanisms.yaml%23mechanisms.frozen-eval-publication",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+      "target": "z0://evidence-ref/registry/mechanisms.yaml%23mechanisms.frozen-eval-publication",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.tokenomics-to-frozen-evaluation.required_evidence"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/runtime_surface_of:omp-%3Eoh-my-pi",
       "type": "runtime_surface_of",
       "source": "z0://harness/omp",
@@ -5892,6 +8120,960 @@
       ]
     },
     {
+      "id": "z0://edge/suite:extends_harness:deepseek-harness:harness:deepseek",
+      "type": "extends_harness",
+      "source": "z0://repo/kvnloo/deepseek-harness",
+      "target": "z0://harness/deepseek",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.deepseek-harness.extends_harnesses"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:extends_harness:hermes-agent:harness:hermes",
+      "type": "extends_harness",
+      "source": "z0://repo/kvnloo/hermes-agent",
+      "target": "z0://harness/hermes",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-agent.extends_harnesses"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:extends_harness:hermes-jev-skills:harness:codex",
+      "type": "extends_harness",
+      "source": "z0://repo/kvnloo/hermes-jev-skills",
+      "target": "z0://harness/codex",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-jev-skills.extends_harnesses"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:extends_harness:hermes-jev-skills:harness:hermes",
+      "type": "extends_harness",
+      "source": "z0://repo/kvnloo/hermes-jev-skills",
+      "target": "z0://harness/hermes",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-jev-skills.extends_harnesses"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:extends_harness:hermes-lcm:harness:hermes",
+      "type": "extends_harness",
+      "source": "z0://repo/kvnloo/hermes-lcm",
+      "target": "z0://harness/hermes",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-lcm.extends_harnesses"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:extends_harness:sol-pi-hermes:harness:hermes",
+      "type": "extends_harness",
+      "source": "z0://repo/kvnloo/sol-pi-hermes",
+      "target": "z0://harness/hermes",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi-hermes.extends_harnesses"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:extends_harness:sol-pi:harness:pi",
+      "type": "extends_harness",
+      "source": "z0://repo/kvnloo/SoL-Pi",
+      "target": "z0://harness/pi",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi.extends_harnesses"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:implements_mechanism:hermes-jev-skills:mechanism:jev-typed-decision",
+      "type": "implements_mechanism",
+      "source": "z0://repo/kvnloo/hermes-jev-skills",
+      "target": "z0://mechanism/jev-typed-decision",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-jev-skills.implements_mechanisms"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:implements_mechanism:sol-pi-hermes:mechanism:sol-pi-action-fusion",
+      "type": "implements_mechanism",
+      "source": "z0://repo/kvnloo/sol-pi-hermes",
+      "target": "z0://mechanism/sol-pi-action-fusion",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi-hermes.implements_mechanisms"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:implements_mechanism:sol-pi-hermes:mechanism:sol-pi-evidence-reducer",
+      "type": "implements_mechanism",
+      "source": "z0://repo/kvnloo/sol-pi-hermes",
+      "target": "z0://mechanism/sol-pi-evidence-reducer",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi-hermes.implements_mechanisms"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:implements_mechanism:sol-pi-hermes:mechanism:sol-pi-observation-pack",
+      "type": "implements_mechanism",
+      "source": "z0://repo/kvnloo/sol-pi-hermes",
+      "target": "z0://mechanism/sol-pi-observation-pack",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi-hermes.implements_mechanisms"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:implements_mechanism:sol-pi-hermes:mechanism:sol-pi-online-context-compact",
+      "type": "implements_mechanism",
+      "source": "z0://repo/kvnloo/sol-pi-hermes",
+      "target": "z0://mechanism/sol-pi-online-context-compact",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi-hermes.implements_mechanisms"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:implements_mechanism:sol-pi:mechanism:sol-pi-action-fusion",
+      "type": "implements_mechanism",
+      "source": "z0://repo/kvnloo/SoL-Pi",
+      "target": "z0://mechanism/sol-pi-action-fusion",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi.implements_mechanisms"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:implements_mechanism:sol-pi:mechanism:sol-pi-evidence-reducer",
+      "type": "implements_mechanism",
+      "source": "z0://repo/kvnloo/SoL-Pi",
+      "target": "z0://mechanism/sol-pi-evidence-reducer",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi.implements_mechanisms"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:implements_mechanism:sol-pi:mechanism:sol-pi-observation-pack",
+      "type": "implements_mechanism",
+      "source": "z0://repo/kvnloo/SoL-Pi",
+      "target": "z0://mechanism/sol-pi-observation-pack",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi.implements_mechanisms"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:implements_mechanism:sol-pi:mechanism:sol-pi-online-context-compact",
+      "type": "implements_mechanism",
+      "source": "z0://repo/kvnloo/SoL-Pi",
+      "target": "z0://mechanism/sol-pi-online-context-compact",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi.implements_mechanisms"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:participates_in_lifecycle:flyforge:lifecycle:evolution-lab-promotion",
+      "type": "participates_in_lifecycle",
+      "source": "z0://repo/kvnloo/flyforge",
+      "target": "z0://lifecycle/evolution-lab-promotion",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.flyforge.lifecycle"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:participates_in_lifecycle:verified-oss-loop:lifecycle:verified-oss-rolling",
+      "type": "participates_in_lifecycle",
+      "source": "z0://repo/kvnloo/verified-oss-loop",
+      "target": "z0://lifecycle/verified-oss-rolling",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.verified-oss-loop.lifecycle"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:participates_in_lifecycle:z0archy:lifecycle:architecture-truth",
+      "type": "participates_in_lifecycle",
+      "source": "z0://repo/kvnloo/z0archy",
+      "target": "z0://lifecycle/architecture-truth",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0archy.lifecycle"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:flyforge:component:aodl",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/flyforge",
+      "target": "z0://component/aodl",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.flyforge.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:flyforge:component:evolution-lab",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/flyforge",
+      "target": "z0://component/evolution-lab",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.flyforge.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:flyforge:component:frontier-kb",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/flyforge",
+      "target": "z0://component/frontier-kb",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.flyforge.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:hermes-agent-self-evolution:component:evolution-lab",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/hermes-agent-self-evolution",
+      "target": "z0://component/evolution-lab",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-agent-self-evolution.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:ripple:component:aodl",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/ripple",
+      "target": "z0://component/aodl",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.ripple.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:z0archy:component:agenttrace",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/z0archy",
+      "target": "z0://component/agenttrace",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0archy.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:z0archy:component:aodl",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/z0archy",
+      "target": "z0://component/aodl",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0archy.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:z0archy:component:evolution-lab",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/z0archy",
+      "target": "z0://component/evolution-lab",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0archy.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:z0archy:component:frontier-kb",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/z0archy",
+      "target": "z0://component/frontier-kb",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0archy.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:z0archy:component:kerdoios",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/z0archy",
+      "target": "z0://component/kerdoios",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0archy.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:z0archy:component:memento",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/z0archy",
+      "target": "z0://component/memento",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0archy.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:z0archy:component:oh-my-pi",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/z0archy",
+      "target": "z0://component/oh-my-pi",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0archy.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:z0archy:component:tokenomics",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/z0archy",
+      "target": "z0://component/tokenomics",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0archy.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:z0archy:component:z0intelligence",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/z0archy",
+      "target": "z0://component/z0intelligence",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0archy.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:z0evals:component:evolution-lab",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/z0evals",
+      "target": "z0://component/evolution-lab",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0evals.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:z0evals:component:frontier-kb",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/z0evals",
+      "target": "z0://component/frontier-kb",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0evals.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:z0evals:component:kerdoios",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/z0evals",
+      "target": "z0://component/kerdoios",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0evals.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:z0evals:component:tokenomics",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/z0evals",
+      "target": "z0://component/tokenomics",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0evals.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:z0evals:component:z0intelligence",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/z0evals",
+      "target": "z0://component/z0intelligence",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0evals.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:company-os:repo:hermes-agent",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/company-os",
+      "target": "z0://repo/kvnloo/hermes-agent",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.company-os.depends_on_repositories"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:hermes-agent-self-evolution:repo:hermes-agent",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/hermes-agent-self-evolution",
+      "target": "z0://repo/kvnloo/hermes-agent",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-agent-self-evolution.depends_on_repositories"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:hermes-jev-skills:repo:hermes-agent",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/hermes-jev-skills",
+      "target": "z0://repo/kvnloo/hermes-agent",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-jev-skills.depends_on_repositories"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:hermes-keel:repo:hermes-agent",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/hermes-keel",
+      "target": "z0://repo/kvnloo/hermes-agent",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-keel.depends_on_repositories"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:hermes-lcm:repo:hermes-agent",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/hermes-lcm",
+      "target": "z0://repo/kvnloo/hermes-agent",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-lcm.depends_on_repositories"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:hermes-mesh-keel:repo:hermes-agent",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/hermes-mesh-keel",
+      "target": "z0://repo/kvnloo/hermes-agent",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-mesh-keel.depends_on_repositories"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:hermes-mesh-keel:repo:hermes-keel",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/hermes-mesh-keel",
+      "target": "z0://repo/kvnloo/hermes-keel",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-mesh-keel.depends_on_repositories"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:hermes-model-passports:repo:hermes-agent",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/hermes-model-passports",
+      "target": "z0://repo/kvnloo/hermes-agent",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-model-passports.depends_on_repositories"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:hermes-privilege-broker:repo:hermes-agent",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/hermes-privilege-broker",
+      "target": "z0://repo/kvnloo/hermes-agent",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-privilege-broker.depends_on_repositories"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:hermes-talk:repo:hermes-agent",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/hermes-talk",
+      "target": "z0://repo/kvnloo/hermes-agent",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes-talk.depends_on_repositories"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:hermes3d:repo:hermes-agent",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/Hermes3D",
+      "target": "z0://repo/kvnloo/hermes-agent",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.hermes3d.depends_on_repositories"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:sol-pi-hermes:repo:hermes-agent",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/sol-pi-hermes",
+      "target": "z0://repo/kvnloo/hermes-agent",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi-hermes.depends_on_repositories"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:sol-pi-hermes:repo:sol-pi",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/sol-pi-hermes",
+      "target": "z0://repo/kvnloo/SoL-Pi",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi-hermes.depends_on_repositories"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:z0archy:repo:activegraph",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/z0archy",
+      "target": "z0://repo/kvnloo/activegraph",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0archy.depends_on_repositories"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:uses_repository:z0archy:repo:graphcon-deck",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/z0archy",
+      "target": "z0://repo/kvnloo/graphcon-deck",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.z0archy.depends_on_repositories"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/verified-via:aodl-intent-to-plan-%3Emechanism:aodl-intent-plan-observed",
       "type": "verified_via",
       "source": "z0://evidence-dependency/aodl-intent-to-plan",
@@ -5903,6 +9085,51 @@
           "ref": "main",
           "path": "registry/evidence_dependencies.yaml",
           "field": "evidence_dependencies.aodl-intent-to-plan.via"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/verified-via:architecture-compression-is-audited-%3Emechanism:z0archy-semantic-compression",
+      "type": "verified_via",
+      "source": "z0://evidence-dependency/architecture-compression-is-audited",
+      "target": "z0://mechanism/z0archy-semantic-compression",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-compression-is-audited.via"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/verified-via:architecture-history-to-hierarchy-proposal-%3Emechanism:z0archy-hierarchy-meta-learning",
+      "type": "verified_via",
+      "source": "z0://evidence-dependency/architecture-history-to-hierarchy-proposal",
+      "target": "z0://mechanism/z0archy-hierarchy-meta-learning",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.architecture-history-to-hierarchy-proposal.via"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/verified-via:compiled-plan-to-signed-mesh-intent-%3Emechanism:mesh-signed-intent-transport",
+      "type": "verified_via",
+      "source": "z0://evidence-dependency/compiled-plan-to-signed-mesh-intent",
+      "target": "z0://mechanism/mesh-signed-intent-transport",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.compiled-plan-to-signed-mesh-intent.via"
         }
       ]
     },
@@ -5937,6 +9164,21 @@
       ]
     },
     {
+      "id": "z0://edge/verified-via:lossless-context-preserves-drilldown-%3Emechanism:hermes-lossless-context-dag",
+      "type": "verified_via",
+      "source": "z0://evidence-dependency/lossless-context-preserves-drilldown",
+      "target": "z0://mechanism/hermes-lossless-context-dag",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.lossless-context-preserves-drilldown.via"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/verified-via:observation-pack-compresses-context-%3Emechanism:sol-pi-observation-pack",
       "type": "verified_via",
       "source": "z0://evidence-dependency/observation-pack-compresses-context",
@@ -5965,6 +9207,24 @@
           "field": "evidence_dependencies.plan-to-observed-topology.via"
         }
       ]
+    },
+    {
+      "id": "z0://edge/verified-via:tokenomics-to-frozen-evaluation-%3Emechanism:frozen-eval-publication",
+      "type": "verified_via",
+      "source": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+      "target": "z0://mechanism/frozen-eval-publication",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.tokenomics-to-frozen-evaluation.via"
+        }
+      ]
     }
-  ]
+  ],
+  "stats": {
+    "suiteRepositories": 24
+  }
 }
