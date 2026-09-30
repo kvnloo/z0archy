@@ -58,7 +58,9 @@ def record_architecture_snapshot(
     not append duplicate history. z0archy stable IDs remain data fields; ActiveGraph
     owns its own object/relation ids and event provenance.
     """
-    path = str(Path(store_path))
+    store = Path(store_path).expanduser()
+    store.parent.mkdir(parents=True, exist_ok=True)
+    path = str(store)
     digest = semantic_graph_hash(graph)
     run_id = RUN_PREFIX + digest
     created_at = _created_at(graph)
