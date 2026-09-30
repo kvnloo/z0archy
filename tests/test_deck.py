@@ -65,6 +65,39 @@ class DeckTests(unittest.TestCase):
         self.assertEqual(component["meta"]["graphType"], "component")
         self.assertEqual(component["meta"]["semanticLevel"], 1)
 
+    def test_first_party_core_scene_is_added_when_core_nodes_exist(self):
+        graph = self.semantic_graph()
+        graph["nodes"].append({
+            "id": "z0://mechanism/unified-memory-evidence-path",
+            "type": "mechanism",
+            "label": "Unified memory evidence path",
+            "attributes": {"kind": "memory", "purpose": "Resolve source-backed context."},
+            "provenance": [],
+        })
+        graph["nodes"].append({
+            "id": "z0://component/z0intelligence",
+            "type": "component",
+            "label": "z0intelligence",
+            "attributes": {
+                "component_id": "z0intelligence",
+                "name": "z0intelligence",
+                "repo": "kvnloo/z0intelligence",
+                "kind": "intelligence",
+                "status": "experimental",
+                "execution": "log_only",
+                "depends_on": [],
+                "integrates_with": [],
+                "provides": [],
+                "consumes": [],
+            },
+            "provenance": [],
+        })
+        deck = mod.build(graph)
+        scene = next(s for s in deck["slides"] if s["id"] == "first-party-core")
+        self.assertIn("z0intelligence", scene["include"])
+        self.assertIn("z0://mechanism/unified-memory-evidence-path", scene["include"])
+        self.assertIn("k8s-hermes-lab", scene["caption"])
+
     def test_deck_exposes_semantic_architecture_planes(self):
         deck = mod.build(self.semantic_graph())
         slide_ids = {s["id"] for s in deck["slides"]}
