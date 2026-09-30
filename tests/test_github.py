@@ -6,7 +6,7 @@ from z0archy_core.github import fetch_branch_index
 class FakeClient:
     def __init__(self):
         self.calls = []
-    def query(self, query, variables):
+    def query(self, query, variables, **kwargs):
         self.calls.append((query, variables))
         data = {"rateLimit": {"cost": 1, "remaining": 4999, "resetAt": "later"}}
         i = 0
@@ -27,6 +27,14 @@ class FakeClient:
         return {"data": data}
 
 
+class PartialErrorClient(FakeClient):
+    def query(self, query, variables, **kwargs):
+        payload = super().query(query, variables, **kwargs)
+        payload["data"]["r1"] = None
+        payload["errors"] = [{"message": "Could not resolve repository"}]
+        return payload
+
+
 class GithubTests(unittest.TestCase):
     def test_repos_are_batched(self):
         client = FakeClient()
@@ -34,6 +42,13 @@ class GithubTests(unittest.TestCase):
         self.assertEqual(len(client.calls), 1)
         self.assertEqual(out["o/a"]["defaultBranch"], "main")
         self.assertEqual([b["name"] for b in out["o/b"]["branches"]], ["main", "feat/x"])
+
+    def test_unavailable_repo_does_not_drop_batch(self):
+        client = PartialErrorClient()
+        out = fetch_branch_index(["o/a", "o/missing"], client)
+        self.assertEqual(out["o/a"]["defaultBranch"], "main")
+        self.assertEqual(out["o/missing"]["error"], "repository unavailable")
+        self.assertEqual(out["o/missing"]["branches"], [])
 
 
 if __name__ == "__main__":
