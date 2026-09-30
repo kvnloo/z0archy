@@ -5,6 +5,8 @@ A dynamic, zoomable architecture explorer and semantic world model for the Zer0 
 **Canonical architecture declarations live in [`kvnloo/z0`](https://github.com/kvnloo/z0).**
 z0archy compiles those declarations together with implementation evidence from exact Git refs and local worktrees. It does not silently promote observations into canonical truth.
 
+For the first-party control loop, see [`docs/CORE-STACK.md`](docs/CORE-STACK.md): unified memory, z0intelligence, its Kubernetes lane, Evolution Lab, AODL, Tokenomics, and z0evals.
+
 The presentation engine is adapted from Yohei Nakajima's MIT-licensed [`graphcon-deck`](https://github.com/kvnloo/graphcon-deck). ActiveGraph is the temporal substrate for content-addressed architecture history: semantic graph states are persisted as event-sourced runs while z0archy's stable `z0://` identities remain canonical within each run.
 
 ## World model
