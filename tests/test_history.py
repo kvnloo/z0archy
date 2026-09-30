@@ -29,7 +29,7 @@ class HistoryTests(unittest.TestCase):
 
     def test_content_addressed_runs_dedupe_and_link_history(self):
         with tempfile.TemporaryDirectory() as td:
-            db = Path(td) / "history.sqlite3"
+            db = Path(td) / "nested" / "history.sqlite3"
             first = record_architecture_snapshot(self.graph(), db)
             same = record_architecture_snapshot(self.graph(), db)
             self.assertTrue(first["created"])
