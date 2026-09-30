@@ -185,6 +185,33 @@ def build(graph: dict | None = None) -> dict:
         "layout": {"fitMargin": 180, "zoomMax": 0.72, "noCard": False},
     }]
 
+    first_party_ids = [
+        "aodl",
+        "z0intelligence",
+        "tokenomics",
+        "evolution-lab",
+        "z0://mechanism/unified-memory-evidence-path",
+        "z0://repo/kvnloo/z0evals",
+    ]
+    available_ids = {deck_id_for_graph_node(n) for n in graph_nodes}
+    available_ids.update(component_ids)
+    first_party_include = [node_id for node_id in first_party_ids if node_id in available_ids]
+    if first_party_include:
+        slides.append({
+            "id": "first-party-core",
+            "title": "First-party Zer0 core",
+            "caption": (
+                "Start here: AODL intent feeds z0intelligence; unified memory resolves "
+                "provenance-backed ContextPackets; Tokenomics measures outcomes; z0evals "
+                "freezes evidence; Evolution Lab searches and promotes measured specialists. "
+                "Select z0intelligence's exact ref to reveal the k8s-hermes-lab deployment lane."
+            ),
+            "anchor": [2500, -1250],
+            "nodes": [],
+            "include": first_party_include,
+            "layout": {"fitMargin": 190, "zoomMax": 0.82, "noCard": False},
+        })
+
     for pid, title, caption, anchor, style in PLANES:
         members = [(cid, c) for cid, c in components.items() if plane_of[cid] == pid]
         if not members:
