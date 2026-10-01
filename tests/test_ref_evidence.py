@@ -116,6 +116,67 @@ class RefEvidenceTests(unittest.TestCase):
         self.assertEqual(coverage["expectedWithStructuralManifest"], 1)
         self.assertEqual([row["component"] for row in coverage["missingExpected"]], ["b"])
 
+    def test_suite_manifest_coverage_uses_default_head_and_status(self):
+        index = {
+            "repos": {
+                "o/runtime": {
+                    "defaultHead": "a" * 40,
+                    "defaultManifestPath": "zer0.repo.yaml",
+                    "defaultStructuralManifest": True,
+                },
+                "o/missing": {
+                    "defaultHead": "b" * 40,
+                    "defaultManifestPath": None,
+                    "defaultStructuralManifest": False,
+                },
+                "o/reference": {
+                    "defaultHead": "c" * 40,
+                    "defaultStructuralManifest": False,
+                },
+            }
+        }
+        graph = {
+            "nodes": [
+                {
+                    "type": "repository",
+                    "attributes": {
+                        "repo": "o/runtime",
+                        "suite_id": "runtime",
+                        "suiteRole": "execution_runtime",
+                        "suiteAuthority": "implementation",
+                        "suiteStatus": "active",
+                    },
+                },
+                {
+                    "type": "repository",
+                    "attributes": {
+                        "repo": "o/missing",
+                        "suite_id": "missing",
+                        "suiteRole": "integration",
+                        "suiteAuthority": "implementation",
+                        "suiteStatus": "experimental",
+                    },
+                },
+                {
+                    "type": "repository",
+                    "attributes": {
+                        "repo": "o/reference",
+                        "suite_id": "reference",
+                        "suiteRole": "research_program",
+                        "suiteAuthority": "research",
+                        "suiteStatus": "reference",
+                    },
+                },
+            ]
+        }
+        coverage = mod.suite_manifest_coverage(index, graph)
+        self.assertEqual(coverage["expectedRepositories"], 2)
+        self.assertEqual(coverage["expectedWithStructuralManifest"], 1)
+        self.assertEqual(
+            [row["repo"] for row in coverage["missingExpected"]],
+            ["o/missing"],
+        )
+
     def test_canonical_component_pins_are_kept_exact(self):
         graph = {
             "nodes": [
