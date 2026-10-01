@@ -59,13 +59,20 @@ The unified-memory design is represented as the
 `unified-memory-evidence-path` mechanism and `context-packet` representation.
 Retrieval, model-visible injection, answer support, and verification stay distinct.
 
-### Kubernetes lane
+### Remote execution + Kubernetes lane
+
+Remote execution is a protocol boundary before it is a deployment boundary. A remote
+executor claims one request identity from the host dispatch authority, acquires provider
+admission, persists ordered physical receipts back through that authority, and must
+reconcile uncertain execution rather than retrying under a new trace. Canonical receipt
+persistence stays with the authority.
 
 The first Kubernetes topology is an implementation subsystem of z0intelligence rather
-than a new top-level product. The `hermes-lab` lane keeps z0int decision/dispatch authority and local model control
-host-side while exposing a hardened in-cluster executor through the z0intelligence
-service boundary. Provider credentials may be explicitly scoped into that executor as
-Kubernetes secrets; the architecture must not claim that all credentials remain host-only.
+than a new top-level product. The `hermes-lab` lane keeps z0int decision/dispatch
+authority and local model control host-side while exposing the stateless executor through
+the z0intelligence service boundary. Provider credentials may be explicitly scoped into
+that executor as Kubernetes secrets; the architecture must not claim that all credentials
+remain host-only.
 
 ### Evolution Lab
 
