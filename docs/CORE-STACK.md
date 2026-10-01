@@ -74,6 +74,27 @@ the z0intelligence service boundary. Provider credentials may be explicitly scop
 that executor as Kubernetes secrets; the architecture must not claim that all credentials
 remain host-only.
 
+The current merged deployment is deliberately narrow: one bounded remote-worker replica,
+with OpenRouter as the default explicitly enabled executor provider. Local Laya, SoL-Pi,
+RLM, and related cognition stay host-local. Autoscaling and a broad "all models in k8s"
+fabric are planned/experimental ideas, **not current implementation truth**.
+
+### DeepSeek Harness injection boundary
+
+DSH exposes a durable, harness-native context seam rather than requiring direct session-log
+mutation:
+
+- `followup(message)` appends to `next-turn` and wakes the driver;
+- `steer(message)` appends to `next-step` and wakes the nearest step;
+- `inject(message)` appends model-facing `next-step` context **without waking**;
+- pending input is reconstructed from durable `agent/inbox/spliced` session events; and
+- `agent/pre-step` is the final waterfall that may reject or replace the admitted message
+  batch before it becomes model-visible.
+
+For Zer0 integrations this is the preferred DSH context/steering boundary: inject evidence
+through the agent inbox and pre-step admission contract, not by patching transcript state
+out of band.
+
 ### Evolution Lab
 
 Owns experiment search, locked corpora/splits, candidate evolution, DAgger,
