@@ -103,3 +103,23 @@ and context cost separable so a configured index cannot masquerade as working me
 The result is one graph that can zoom from the first-party control loop down to the
 actual context resolver, decision backends, Kubernetes manifests, experiment machinery,
 schemas, tests, and frozen study surfaces while preserving provenance.
+
+## Adjacent active repository surfaces
+
+These repositories are part of the current Zer0 repository map without being promoted
+to new installable core components:
+
+- **Agent Orchestrator** — orchestration runtime experiments around z0intelligence
+  decisions/outcomes and AODL contracts.
+- **OptMem** — memory research substrate used by z0intelligence branches for temporal
+  projection and bounded-cover experiments; it does not own canonical memory truth.
+- **Bend** — proof-oriented compilation substrate explored for enforceable AODL /
+  z0intelligence contracts.
+- **AgentWeb / Emma integration** — downstream harness surface for typed decisions,
+  personal context, and orchestration experiments.
+- **SoL-Pi OMP** — OMP-focused port/packaging of reusable SoL-Pi efficiency mechanisms.
+
+Draft experiment branches remain non-canonical. z0archy indexes them as selectable exact
+refs while `kvnloo/z0` remains the authority for canonical repository membership and
+cross-system semantics.
+
