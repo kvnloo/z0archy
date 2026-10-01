@@ -37,9 +37,57 @@ def canonical_pins(graph: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
             "component": attrs.get("component_id") or node.get("label"),
             "branch": install.get("branch"),
             "ref": str(ref),
+            "status": attrs.get("status"),
+            "kind": attrs.get("kind"),
             "declaredBy": node.get("id"),
         })
     return pins
+
+
+def structural_manifest_path(pack: dict[str, Any]) -> str | None:
+    """Return the explicit implementation-manifest path carried by an evidence pack."""
+    for node in pack.get("nodes") or []:
+        if node.get("type") != "implementation_manifest":
+            continue
+        path = str((node.get("attributes") or {}).get("manifestPath") or "")
+        if path in {"zer0.repo.yaml", "zer0.component.yaml"}:
+            return path
+    return None
+
+
+def manifest_coverage(index: dict[str, Any]) -> dict[str, Any]:
+    """Summarize exact-pin structural coverage without treating idea-stage gaps as failures."""
+    rows: list[dict[str, Any]] = []
+    for repo, meta in sorted((index.get("repos") or {}).items()):
+        for pin in meta.get("pins") or []:
+            expected = pin.get("status") not in {"idea", "retired"}
+            rows.append({
+                "repo": repo,
+                "component": pin.get("component"),
+                "ref": pin.get("ref"),
+                "status": pin.get("status"),
+                "expected": expected,
+                "resolved": bool(pin.get("resolved")),
+                "manifestPath": pin.get("manifestPath"),
+                "structuralManifest": bool(pin.get("structuralManifest")),
+            })
+    expected_rows = [row for row in rows if row["expected"]]
+    missing_expected = [
+        row for row in expected_rows
+        if row["resolved"] and not row["structuralManifest"]
+    ]
+    unresolved_expected = [row for row in expected_rows if not row["resolved"]]
+    return {
+        "totalPins": len(rows),
+        "withStructuralManifest": sum(1 for row in rows if row["structuralManifest"]),
+        "expectedPins": len(expected_rows),
+        "expectedWithStructuralManifest": sum(
+            1 for row in expected_rows if row["structuralManifest"]
+        ),
+        "missingExpected": missing_expected,
+        "unresolvedExpected": unresolved_expected,
+        "rows": rows,
+    }
 
 
 def main() -> None:
@@ -133,9 +181,19 @@ def main() -> None:
 
             pack["branchHints"] = sorted(hints.get("branchHints") or [])
             pack["canonicalPins"] = hints.get("canonicalPins") or []
+
+            manifest_path = structural_manifest_path(pack)
+            repo_row = canonical_index["repos"].setdefault(repo, {"pins": []})
+            for pin in repo_row.get("pins") or []:
+                if pin.get("evidenceKey") != oid:
+                    continue
+                pin["manifestPath"] = manifest_path
+                pin["structuralManifest"] = bool(manifest_path)
             cache_path.parent.mkdir(parents=True, exist_ok=True)
             cache_path.write_text(json.dumps(pack, indent=2) + "\n", encoding="utf-8")
             shutil.copyfile(cache_path, out_path)
+
+    canonical_index["manifestCoverage"] = manifest_coverage(canonical_index)
 
     canonical_path = Path(args.canonical_index)
     canonical_path.parent.mkdir(parents=True, exist_ok=True)
@@ -143,7 +201,9 @@ def main() -> None:
 
     print(
         f"ref evidence: {built} built, {reused} cache hits, {failed} failed, "
-        f"{len(seen)} unique repo commits, {sum(len(v['pins']) for v in canonical_index['repos'].values())} canonical pin(s)"
+        f"{len(seen)} unique repo commits, {sum(len(v['pins']) for v in canonical_index['repos'].values())} canonical pin(s), "
+        f"{canonical_index['manifestCoverage']['expectedWithStructuralManifest']}/"
+        f"{canonical_index['manifestCoverage']['expectedPins']} expected pin(s) structurally manifest-backed"
     )
 
 
