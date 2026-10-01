@@ -44,6 +44,111 @@ def canonical_pins(graph: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
     return pins
 
 
+def _add_target(
+    targets: dict[str, dict[str, dict[str, Any]]],
+    repo: str,
+    oid: str | None,
+    *,
+    branch_hint: str | None = None,
+) -> None:
+    if not oid:
+        return
+    row = targets.setdefault(repo, {}).setdefault(
+        str(oid), {"branchHints": [], "canonicalPins": []}
+    )
+    if branch_hint and branch_hint not in row["branchHints"]:
+        row["branchHints"].append(branch_hint)
+
+
+def bounded_branch_targets(
+    index: dict[str, Any],
+    *,
+    branch_limit_per_repo: int = 4,
+    selection_docs: list[tuple[str, dict[str, Any]]] | None = None,
+) -> tuple[dict[str, dict[str, dict[str, Any]]], list[dict[str, str]]]:
+    """Choose a bounded hosted evidence set.
+
+    Full implementation evidence is materialized for default heads, a small recent
+    branch window, and every ref named by a checked-in selection preset. Canonical
+    component pins are added separately and are never subject to this bound.
+    """
+    targets: dict[str, dict[str, dict[str, Any]]] = {}
+    repositories = index.get("repositories") or {}
+
+    for repo, meta in sorted(repositories.items()):
+        _add_target(
+            targets,
+            repo,
+            meta.get("defaultHead"),
+            branch_hint=meta.get("defaultBranch"),
+        )
+        branches = list(meta.get("branches") or [])
+        limit = max(0, branch_limit_per_repo)
+        for branch in branches[:limit]:
+            _add_target(
+                targets,
+                repo,
+                branch.get("oid"),
+                branch_hint=branch.get("name"),
+            )
+
+    unresolved: list[dict[str, str]] = []
+    for source_name, doc in selection_docs or []:
+        for repo, spec in sorted((doc.get("repos") or {}).items()):
+            if not isinstance(spec, dict) or spec.get("source", "github") != "github":
+                continue
+            ref = str(spec.get("ref") or "")
+            if not ref:
+                continue
+            if _SHA.match(ref):
+                _add_target(targets, repo, ref, branch_hint=ref)
+                continue
+            meta = repositories.get(repo) or {}
+            match = next(
+                (
+                    branch for branch in (meta.get("branches") or [])
+                    if branch.get("name") == ref and branch.get("oid")
+                ),
+                None,
+            )
+            if match:
+                _add_target(
+                    targets,
+                    repo,
+                    match.get("oid"),
+                    branch_hint=match.get("name"),
+                )
+                continue
+            if meta.get("defaultBranch") == ref and meta.get("defaultHead"):
+                _add_target(
+                    targets,
+                    repo,
+                    meta.get("defaultHead"),
+                    branch_hint=ref,
+                )
+                continue
+            unresolved.append({
+                "selection": source_name,
+                "repo": repo,
+                "ref": ref,
+            })
+    return targets, unresolved
+
+
+def load_selection_docs(selection_dir: Path) -> list[tuple[str, dict[str, Any]]]:
+    if not selection_dir.is_dir():
+        return []
+    docs: list[tuple[str, dict[str, Any]]] = []
+    for path in sorted(selection_dir.glob("*.json")):
+        try:
+            doc = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if isinstance(doc, dict):
+            docs.append((path.name, doc))
+    return docs
+
+
 def structural_manifest_path(pack: dict[str, Any]) -> str | None:
     """Return the explicit implementation-manifest path carried by an evidence pack."""
     for node in pack.get("nodes") or []:
@@ -99,6 +204,13 @@ def main() -> None:
     p.add_argument("--canonical-index", default="generated/canonical-ref-index.json")
     p.add_argument("--output-dir", default="generated/ref-evidence")
     p.add_argument("--cache-dir", default=".cache/ref-evidence")
+    p.add_argument("--selection-dir", default="selections")
+    p.add_argument(
+        "--branch-limit-per-repo",
+        type=int,
+        default=4,
+        help="recent branch heads to prebuild per repo in addition to default, canonical pins, and selection presets",
+    )
     args = p.parse_args()
 
     index = json.loads(Path(args.index).read_text(encoding="utf-8"))
@@ -110,16 +222,12 @@ def main() -> None:
     cache_root = Path(args.cache_dir)
     source = GitHubRawSource()
 
-    targets: dict[str, dict[str, dict[str, Any]]] = {}
-    for repo, meta in sorted((index.get("repositories") or {}).items()):
-        repo_targets = targets.setdefault(repo, {})
-        for branch in meta.get("branches") or []:
-            oid = branch.get("oid")
-            if not oid:
-                continue
-            row = repo_targets.setdefault(str(oid), {"branchHints": [], "canonicalPins": []})
-            if branch.get("name") and branch["name"] not in row["branchHints"]:
-                row["branchHints"].append(branch["name"])
+    selection_docs = load_selection_docs(Path(args.selection_dir))
+    targets, unresolved_selection_targets = bounded_branch_targets(
+        index,
+        branch_limit_per_repo=args.branch_limit_per_repo,
+        selection_docs=selection_docs,
+    )
 
     canonical_index: dict[str, Any] = {"version": 1, "repos": {}}
     for repo, pins in sorted(pin_map.items()):
@@ -133,10 +241,13 @@ def main() -> None:
                 # head is equivalent to the declared canonical identity.
                 repo_row["pins"].append({**pin, "evidenceKey": None, "resolved": False})
                 continue
-            target = targets.setdefault(repo, {}).setdefault(
-                evidence_key, {"branchHints": [], "canonicalPins": []}
+            _add_target(
+                targets,
+                repo,
+                evidence_key,
+                branch_hint=str(pin.get("branch") or "") or None,
             )
-            target["canonicalPins"].append(pin)
+            targets[repo][evidence_key]["canonicalPins"].append(pin)
             repo_row["pins"].append({**pin, "evidenceKey": evidence_key, "resolved": True})
 
     # Also expose unpinned repos seen by the GitHub index. The browser can choose
@@ -146,6 +257,16 @@ def main() -> None:
         repo_row["defaultBranch"] = meta.get("defaultBranch")
         repo_row["defaultHead"] = meta.get("defaultHead")
         repo_row["canonical"] = bool(repo_row["pins"])
+        repo_row["materializedEvidenceKeys"] = sorted(targets.get(repo, {}))
+
+    canonical_index["evidenceMaterialization"] = {
+        "policy": "canonical + default + recent-window + checked-in selections",
+        "branchLimitPerRepo": args.branch_limit_per_repo,
+        "selectionFiles": [name for name, _ in selection_docs],
+        "unresolvedSelectionTargets": unresolved_selection_targets,
+        "targetRepoCount": len(targets),
+        "targetCommitCount": sum(len(commits) for commits in targets.values()),
+    }
 
     built = reused = failed = 0
     seen: set[tuple[str, str]] = set()
