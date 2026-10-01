@@ -195,6 +195,53 @@ def manifest_coverage(index: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def suite_manifest_coverage(
+    index: dict[str, Any],
+    graph: dict[str, Any],
+) -> dict[str, Any]:
+    """Report default-head structural coverage for suite repositories."""
+    suite_rows: list[dict[str, Any]] = []
+    for node in graph.get("nodes") or []:
+        if node.get("type") != "repository":
+            continue
+        attrs = node.get("attributes") or {}
+        if not attrs.get("suite_id") or not attrs.get("repo"):
+            continue
+        repo = str(attrs["repo"])
+        repo_meta = (index.get("repos") or {}).get(repo) or {}
+        status = attrs.get("suiteStatus")
+        expected = status not in {"design_seed", "reference"}
+        suite_rows.append({
+            "repo": repo,
+            "suiteId": attrs.get("suite_id"),
+            "role": attrs.get("suiteRole"),
+            "authority": attrs.get("suiteAuthority"),
+            "status": status,
+            "upstream": attrs.get("suiteUpstream"),
+            "expected": expected,
+            "defaultHead": repo_meta.get("defaultHead"),
+            "manifestPath": repo_meta.get("defaultManifestPath"),
+            "structuralManifest": bool(repo_meta.get("defaultStructuralManifest")),
+        })
+    suite_rows.sort(key=lambda row: (str(row["repo"]), str(row["suiteId"])))
+    expected_rows = [row for row in suite_rows if row["expected"]]
+    return {
+        "totalRepositories": len(suite_rows),
+        "withStructuralManifest": sum(1 for row in suite_rows if row["structuralManifest"]),
+        "expectedRepositories": len(expected_rows),
+        "expectedWithStructuralManifest": sum(
+            1 for row in expected_rows if row["structuralManifest"]
+        ),
+        "missingExpected": [
+            row for row in expected_rows if row["defaultHead"] and not row["structuralManifest"]
+        ],
+        "unresolvedExpected": [
+            row for row in expected_rows if not row["defaultHead"]
+        ],
+        "rows": suite_rows,
+    }
+
+
 def main() -> None:
     p = argparse.ArgumentParser(
         description="Materialize branch + canonical-pin evidence keyed by immutable Git SHA"
@@ -305,6 +352,9 @@ def main() -> None:
 
             manifest_path = structural_manifest_path(pack)
             repo_row = canonical_index["repos"].setdefault(repo, {"pins": []})
+            if repo_row.get("defaultHead") == oid:
+                repo_row["defaultManifestPath"] = manifest_path
+                repo_row["defaultStructuralManifest"] = bool(manifest_path)
             for pin in repo_row.get("pins") or []:
                 if pin.get("evidenceKey") != oid:
                     continue
@@ -315,6 +365,7 @@ def main() -> None:
             shutil.copyfile(cache_path, out_path)
 
     canonical_index["manifestCoverage"] = manifest_coverage(canonical_index)
+    canonical_index["suiteManifestCoverage"] = suite_manifest_coverage(canonical_index, graph)
 
     canonical_path = Path(args.canonical_index)
     canonical_path.parent.mkdir(parents=True, exist_ok=True)
@@ -324,7 +375,9 @@ def main() -> None:
         f"ref evidence: {built} built, {reused} cache hits, {failed} failed, "
         f"{len(seen)} unique repo commits, {sum(len(v['pins']) for v in canonical_index['repos'].values())} canonical pin(s), "
         f"{canonical_index['manifestCoverage']['expectedWithStructuralManifest']}/"
-        f"{canonical_index['manifestCoverage']['expectedPins']} expected pin(s) structurally manifest-backed"
+        f"{canonical_index['manifestCoverage']['expectedPins']} expected pin(s) structurally manifest-backed, "
+        f"{canonical_index['suiteManifestCoverage']['expectedWithStructuralManifest']}/"
+        f"{canonical_index['suiteManifestCoverage']['expectedRepositories']} expected suite repo(s) manifest-backed"
     )
 
 
