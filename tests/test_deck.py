@@ -155,6 +155,54 @@ class DeckTests(unittest.TestCase):
         self.assertIn("EventLog", scene["caption"])
         self.assertIn("non-canonical", scene["caption"])
 
+    def test_canonical_implementation_scene_uses_exact_manifest_subsystems(self):
+        index = {
+            "repos": {
+                "o/a": {
+                    "pins": [{
+                        "component": "a",
+                        "ref": "a" * 40,
+                        "evidenceKey": "a" * 40,
+                        "resolved": True,
+                    }]
+                }
+            }
+        }
+        packs = {
+            "o/a": {
+                "nodes": [{
+                    "id": "z0://subsystem/o/a:dispatch",
+                    "type": "subsystem",
+                    "label": "Dispatch authority",
+                    "attributes": {
+                        "id": "dispatch",
+                        "kind": "authority",
+                        "summary": "Owns replay-safe execution identity.",
+                        "paths": ["src/dispatch.py"],
+                    },
+                }]
+            }
+        }
+        scene = mod.build_canonical_implementation_scene(index, packs)
+        self.assertIsNotNone(scene)
+        self.assertEqual(scene["id"], "canonical-implementation")
+        self.assertEqual(scene["include"], ["a"])
+        self.assertEqual(scene["nodes"][0]["meta"]["truthClass"], "implemented")
+        self.assertIn("a" * 40, scene["nodes"][0]["tip"])
+        self.assertEqual(scene["edges"][0]["from"], "a")
+
+    def test_deck_accepts_canonical_implementation_scene(self):
+        scene = {
+            "id": "canonical-implementation",
+            "title": "Canonical pinned implementation",
+            "caption": "exact refs",
+            "nodes": [],
+            "include": [],
+            "layout": {},
+        }
+        deck = mod.build(self.semantic_graph(), scene)
+        self.assertIn("canonical-implementation", {slide["id"] for slide in deck["slides"]})
+
     def test_deck_exposes_semantic_architecture_planes(self):
         deck = mod.build(self.semantic_graph())
         slide_ids = {s["id"] for s in deck["slides"]}
