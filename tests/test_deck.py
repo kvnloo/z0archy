@@ -123,6 +123,38 @@ class DeckTests(unittest.TestCase):
         self.assertNotIn("z0://repo/kvnloo/ds4", scene["include"])
         self.assertNotIn("z0://repo/kvnloo/Hermes3D", scene["include"])
 
+    def test_active_memory_scene_separates_merged_core_from_lab(self):
+        graph = self.semantic_graph()
+        graph["nodes"].extend([
+            {
+                "id": "z0://mechanism/unified-memory-evidence-path",
+                "type": "mechanism",
+                "label": "Unified memory evidence path",
+                "attributes": {"kind": "memory", "purpose": "Resolve source-backed context."},
+                "provenance": [],
+            },
+            {
+                "id": "z0://repo/kvnloo/OptMem",
+                "type": "repository",
+                "label": "OptMem",
+                "attributes": {"repo": "kvnloo/OptMem"},
+                "provenance": [],
+            },
+            {
+                "id": "z0://repo/kvnloo/hermes-lcm",
+                "type": "repository",
+                "label": "Hermes LCM",
+                "attributes": {"repo": "kvnloo/hermes-lcm"},
+                "provenance": [],
+            },
+        ])
+        deck = mod.build(graph)
+        scene = next(s for s in deck["slides"] if s["id"] == "active-memory-lab")
+        self.assertIn("z0://mechanism/unified-memory-evidence-path", scene["include"])
+        self.assertIn("z0://repo/kvnloo/OptMem", scene["include"])
+        self.assertIn("EventLog", scene["caption"])
+        self.assertIn("non-canonical", scene["caption"])
+
     def test_deck_exposes_semantic_architecture_planes(self):
         deck = mod.build(self.semantic_graph())
         slide_ids = {s["id"] for s in deck["slides"]}
