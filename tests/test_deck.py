@@ -98,6 +98,31 @@ class DeckTests(unittest.TestCase):
         self.assertIn("z0://mechanism/unified-memory-evidence-path", scene["include"])
         self.assertIn("k8s-hermes-lab", scene["caption"])
 
+    def test_active_execution_scene_prioritizes_current_harnesses(self):
+        graph = self.semantic_graph()
+        for repo_id, label in [
+            ("kvnloo/hermes-agent", "Hermes Agent"),
+            ("kvnloo/deepseek-harness", "DeepSeek Harness"),
+            ("kvnloo/hermes-lcm", "Hermes LCM"),
+            ("kvnloo/hermes-jev-skills", "Hermes Jev Skills"),
+            ("kvnloo/agent-orchestrator", "Agent Orchestrator"),
+            ("kvnloo/agentweb", "AgentWeb"),
+        ]:
+            graph["nodes"].append({
+                "id": f"z0://repo/{repo_id}",
+                "type": "repository",
+                "label": label,
+                "attributes": {"repo": repo_id},
+                "provenance": [],
+            })
+        deck = mod.build(graph)
+        scene = next(s for s in deck["slides"] if s["id"] == "active-execution")
+        self.assertIn("z0://repo/kvnloo/deepseek-harness", scene["include"])
+        self.assertIn("z0://repo/kvnloo/hermes-agent", scene["include"])
+        self.assertIn("z0://repo/kvnloo/agent-orchestrator", scene["include"])
+        self.assertNotIn("z0://repo/kvnloo/ds4", scene["include"])
+        self.assertNotIn("z0://repo/kvnloo/Hermes3D", scene["include"])
+
     def test_deck_exposes_semantic_architecture_planes(self):
         deck = mod.build(self.semantic_graph())
         slide_ids = {s["id"] for s in deck["slides"]}
