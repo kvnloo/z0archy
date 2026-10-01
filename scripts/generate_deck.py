@@ -123,7 +123,7 @@ def semantic_kind(node: dict) -> str:
 def semantic_tip(node: dict) -> str:
     attrs = node.get("attributes") or {}
     parts = [str(node.get("label", node.get("id", ""))), "", f"type: {node.get('type','')}"]
-    for key in ("kind", "adoption", "stage", "purpose", "repo", "suiteRole", "suiteAuthority", "suiteStatus", "suiteSummary", "rule", "scale", "sensitivity", "relation", "confidence"):
+    for key in ("kind", "adoption", "stage", "purpose", "repo", "suiteRole", "suiteAuthority", "suiteStatus", "suiteSummary", "suiteUpstream", "rule", "scale", "sensitivity", "relation", "confidence"):
         value = attrs.get(key)
         if value:
             parts.append(f"{key}: {' '.join(str(value).split())}")
@@ -496,22 +496,37 @@ def build(graph: dict | None = None, canonical_scene: dict | None = None) -> dic
         for i, node in enumerate(members):
             attrs = node.get("attributes") or {}
             retrieval = attrs.get("retrieval") or {}
-            body = (
-                attrs.get("repo")
-                or attrs.get("purpose")
-                or attrs.get("rule")
-                or attrs.get("summary")
-                or attrs.get("relation")
-                or retrieval.get("fastest")
-                or ""
-            )
+            if node.get("type") == "repository":
+                body = (
+                    attrs.get("suiteSummary")
+                    or attrs.get("repo")
+                    or ""
+                )
+                repo_sub_parts = [
+                    str(attrs.get("suiteRole") or "repository").replace("_", " "),
+                    str(attrs.get("suiteAuthority") or "").replace("_", " "),
+                ]
+                if attrs.get("suiteUpstream"):
+                    repo_sub_parts.append("downstream fork")
+                node_sub = " · ".join(part for part in repo_sub_parts if part)
+            else:
+                body = (
+                    attrs.get("repo")
+                    or attrs.get("purpose")
+                    or attrs.get("rule")
+                    or attrs.get("summary")
+                    or attrs.get("relation")
+                    or retrieval.get("fastest")
+                    or ""
+                )
+                node_sub = node.get("type", "").replace("_", " ")
             body = " ".join(str(body).split())
             if len(body) > 110:
                 body = body[:107] + "..."
             slide_nodes.append({
                 "id": deck_id_for_graph_node(node),
                 "title": node.get("label", node["id"]),
-                "sub": node.get("type", "").replace("_", " "),
+                "sub": node_sub,
                 "body": body,
                 "pos": grid_pos(i, len(members)),
                 "w": 320,
