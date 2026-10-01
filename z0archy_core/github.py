@@ -40,7 +40,13 @@ class GitHubGraphQLClient:
     def close(self) -> None:
         self.cache.close()
 
-    def query(self, query: str, variables: dict[str, Any]) -> dict[str, Any]:
+    def query(
+        self,
+        query: str,
+        variables: dict[str, Any],
+        *,
+        allow_partial_errors: bool = False,
+    ) -> dict[str, Any]:
         key = self.cache.request_key(query, variables)
         cached = self.cache.get(key)
         if cached is not None:
@@ -81,6 +87,10 @@ class GitHubGraphQLClient:
                 return stale
             raise
         if payload.get("errors"):
+            if allow_partial_errors and payload.get("data") is not None:
+                self._capture_rate_limit(payload)
+                self.cache.put(key, payload, self.ttl_seconds)
+                return payload
             if stale is not None:
                 self._capture_rate_limit(stale)
                 return stale
@@ -157,7 +167,7 @@ def fetch_branch_index(
                 """
             )
         query = "query(" + ", ".join(defs) + ") {\n" + "\n".join(fields) + "\nrateLimit { cost remaining resetAt }\n}"
-        payload = client.query(query, variables)
+        payload = client.query(query, variables, allow_partial_errors=True)
         data = payload.get("data") or {}
         for alias, repo in alias_to_repo.items():
             node = data.get(alias)
