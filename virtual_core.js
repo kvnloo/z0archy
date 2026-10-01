@@ -37,6 +37,13 @@
     return null;
   }
 
+  function evidenceMaterialized(repo,key,canonicalIndex){
+    const row=canonicalIndex&&canonicalIndex.repos&&canonicalIndex.repos[repo];
+    const keys=row&&row.materializedEvidenceKeys;
+    if(!Array.isArray(keys)) return null;
+    return keys.includes(key);
+  }
+
   function mergeEvidence(baseGraph,packs,selection){
     const graph=clone(baseGraph);
     const nodes=new Map((graph.nodes||[]).map(function(n){return [n.id,n];}));
@@ -231,6 +238,7 @@
   const api={
     branchTarget:branchTarget,
     canonicalTarget:canonicalTarget,
+    evidenceMaterialized:evidenceMaterialized,
     mergeEvidence:mergeEvidence,
     deriveCrossRepoPackageEdges:deriveCrossRepoPackageEdges,
     driftFindings:driftFindings,
