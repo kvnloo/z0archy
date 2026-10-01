@@ -243,6 +243,33 @@ def build(graph: dict | None = None) -> dict:
             "layout": {"fitMargin": 190, "zoomMax": 0.82, "noCard": False},
         })
 
+    active_memory_ids = [
+        "z0intelligence",
+        "z0://mechanism/unified-memory-evidence-path",
+        "z0://repo/kvnloo/OptMem",
+        "z0://repo/kvnloo/hermes-lcm",
+        "z0://repo/kvnloo/z0evals",
+    ]
+    active_memory_include = [
+        node_id for node_id in active_memory_ids if node_id in available_ids
+    ]
+    if active_memory_include:
+        slides.append({
+            "id": "active-memory-lab",
+            "title": "Unified memory: merged core + active lab",
+            "caption": (
+                "Merged truth: z0intelligence resolves provenance-backed ContextPackets "
+                "without becoming a universal memory database. Active, non-canonical memory "
+                "work layers an append-only EventLog with OptMem temporal projection, "
+                "FTS5 / AgentsView retrieval, TencentDB semantic memory, and query-time "
+                "StatePacket compilation. Exact branch selection remains the evidence boundary."
+            ),
+            "anchor": [900, -2850],
+            "nodes": [],
+            "include": active_memory_include,
+            "layout": {"fitMargin": 190, "zoomMax": 0.82, "noCard": False},
+        })
+
     for pid, title, caption, anchor, style in PLANES:
         members = [(cid, c) for cid, c in components.items() if plane_of[cid] == pid]
         if not members:
