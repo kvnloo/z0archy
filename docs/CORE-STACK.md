@@ -123,3 +123,34 @@ Draft experiment branches remain non-canonical. z0archy indexes them as selectab
 refs while `kvnloo/z0` remains the authority for canonical repository membership and
 cross-system semantics.
 
+## Current z0intelligence decision truth
+
+The current production-facing decision story is no longer the early NanoJev prototype:
+
+- **TypeSafe Jev 1.13.0** is the reference verifier for the registered evidence-sufficiency capability.
+- **Laya 421M** is the resident local typed-decision fast path; broader automatic verification eligibility is still experimental.
+- **OpenJev**, Decider-2B, Julia-1, and image-decision backends remain benchmark / experimental surfaces unless a registered capability explicitly promotes them.
+- **NanoJev is legacy-only**, retained for reproducibility rather than as the verification default.
+- Deterministic legality, permissions, budgets, replay/conflict protection, and dispatch authority are compiled before learned choice.
+
+This distinction matters in z0archy: a backend existing in the repository does not imply authority to route or execute.
+
+## Unified memory: merged core vs active lab
+
+Merged canonical behavior remains the **unified-memory evidence path**: explicit information
+needs resolve into provenance-bearing ContextPackets / StatePacket-style bounded evidence,
+with retrieval, model-visible injection, answer support, and verification kept separate.
+
+The newer memory program is active but **not all merged into z0intelligence master yet**.
+Its intended split is:
+
+```text
+EPISODIC   EventLog + OptMem temporal projection
+RETRIEVAL  FTS5 + AgentsView
+SEMANTIC   TencentDB L1/L2/L3
+WORKING    StatePacket / query-time compiler
+PROCEDURAL verified routine compiler
+```
+
+z0archy therefore shows this as a lab view. Exact branch/PR evidence must be selected before
+those unmerged layers are treated as implementation truth.
