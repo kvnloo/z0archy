@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "repos": {
+    "kvnloo/z0intelligence": {
+      "source": "github",
+      "ref": "feat/memory-optmem-tree-v0"
+    },
+    "kvnloo/OptMem": {
+      "source": "github",
+      "ref": "main"
+    },
+    "kvnloo/hermes-lcm": {
+      "source": "github",
+      "ref": "main"
+    },
+    "kvnloo/z0evals": {
+      "source": "github",
+      "ref": "main"
+    }
+  }
+}
