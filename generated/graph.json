@@ -1,7 +1,7 @@
 {
   "schemaVersion": "0.2.0",
   "snapshot": {
-    "generatedAt": "2026-09-23T11:36:12.496581Z",
+    "generatedAt": "2026-10-01T19:20:14.362568Z",
     "truthClass": "declared",
     "source": {
       "repo": "kvnloo/z0",
@@ -66,7 +66,7 @@
         "install": {
           "clone": "https://github.com/kvnloo/agenttrace.git",
           "branch": "master",
-          "ref": "a34dea2b6ff7e2133b9e548b93d30bfe6ccf6ff5",
+          "ref": "6848aa10df9dae7034a7bfeaf9f51a7d55424862",
           "command": "pip install -e ."
         },
         "boundaries": {
@@ -119,7 +119,7 @@
         "install": {
           "clone": "https://github.com/kvnloo/aodl.git",
           "branch": "main",
-          "ref": "8e41ef024262339d28a968d71113fc52819d4bd4",
+          "ref": "416736c80a727757202bdeedb02579c3c820f7f6",
           "command": "pip install -e ."
         },
         "boundaries": {
@@ -154,7 +154,7 @@
         "status": "experimental",
         "execution": "shadow",
         "owner": "Research",
-        "summary": "Automatic AI research loop: hypothesis search, experiment runners, and verified candidate promotion.\n",
+        "summary": "Experiment engine for locked corpora/splits, candidate evolution, DAgger, Pareto/MAP-Elites comparison, and verified specialist promotion.\n",
         "required": false,
         "profiles": [
           "research",
@@ -175,17 +175,20 @@
         ],
         "install": {
           "clone": "https://github.com/kvnloo/evolution-lab.git",
-          "branch": "main",
-          "ref": "8cf7acff719470b74f20c90fd6e5f7cdb11c134a",
+          "branch": "trunk",
+          "ref": "1c9b5235d341f9108d6ea4cc886592be7004ef28",
           "command": "pip install -e ."
         },
         "boundaries": {
           "owns": [
             "experiment search",
-            "autoresearch orchestration"
+            "locked corpora and splits",
+            "candidate evolution",
+            "promotion evidence"
           ],
           "not_here": [
             "production runtime",
+            "source memory truth",
             "personal traces"
           ]
         }
@@ -295,7 +298,7 @@
         "install": {
           "clone": "https://github.com/kvnloo/frontier-kb.git",
           "branch": "main",
-          "ref": "aac71e8f73cbfe78118d2dd399ecceece2e42e71",
+          "ref": "22b4c0f1088abfef6184840cb79a0a6a6aceda44",
           "command": "echo 'Knowledge base \u2014 see README for ingest workflow'"
         },
         "boundaries": {
@@ -356,7 +359,7 @@
         "install": {
           "clone": "https://github.com/kvnloo/kerdoios.git",
           "branch": "main",
-          "ref": "e3100ae4b779253c3ff3e9a95cc79f0321edb784",
+          "ref": "cdb43b05a328a50649d5120bffcdecea09492219",
           "command": "pip install -e ."
         },
         "boundaries": {
@@ -548,7 +551,7 @@
         "install": {
           "clone": "https://github.com/kvnloo/tokenomics.git",
           "branch": "master",
-          "ref": "e67d76fe2f1d52a5911abc8974489a10e89bb431",
+          "ref": "65e8f2dd9d6c5784a2a1c67f5236d69a5ae94021",
           "command": "pip install -e packages/python && npm install -w packages/typescript"
         },
         "verify": {
@@ -593,7 +596,7 @@
         "status": "experimental",
         "execution": "log_only",
         "owner": "Personal Intelligence",
-        "summary": "Personal learned policy: specialists, routines, autoresearch, and decision receipts for routing and promotion.\n",
+        "summary": "Personal intelligence layer: provenance-backed context resolution, bounded decision backends, specialist/routine runtime, and auditable receipts.\n",
         "required": false,
         "profiles": [
           "personal",
@@ -607,19 +610,22 @@
           "oh-my-pi",
           "kerdoios",
           "evolution-lab",
-          "tokenomics"
+          "tokenomics",
+          "aodl"
         ],
         "provides": [
-          "z0int.decision_receipt.v1"
+          "z0int.decision_receipt.v1",
+          "z0int.context_resolve.v1"
         ],
         "consumes": [
           "tokenomics.report.v1",
-          "flow_prediction.v1"
+          "flow_prediction.v1",
+          "aodl.intent.v1"
         ],
         "install": {
           "clone": "https://github.com/kvnloo/z0intelligence.git",
           "branch": "master",
-          "ref": "5e7cf4a2d6faf6e537dbfbb52d90bf50410cea63",
+          "ref": "0563ed7a52071cca63ccc91b8c9040207ad23e5d",
           "command": "pip install -e ."
         },
         "verify": {
@@ -628,11 +634,15 @@
         "boundaries": {
           "owns": [
             "personal policy",
+            "provenance-backed context resolution",
+            "bounded decision backends",
             "routine promotion",
-            "specialists"
+            "specialist runtime"
           ],
           "not_here": [
-            "coding agent runtime",
+            "source memory databases",
+            "harness execution",
+            "experiment promotion",
             "OS prediction",
             "measurement kernel"
           ]
@@ -1098,6 +1108,48 @@
       ]
     },
     {
+      "id": "z0://evidence-dependency/unified-memory-preserves-provenance",
+      "type": "evidence_dependency",
+      "label": "unified-memory-preserves-provenance",
+      "attributes": {
+        "evidence_dependency_id": "unified-memory-preserves-provenance",
+        "from": "representation:raw-context",
+        "to": "representation:context-packet",
+        "relation": "resolves_to",
+        "via": "mechanism:unified-memory-evidence-path",
+        "required_evidence": [
+          "kvnloo/z0intelligence:src/z0int/context_resolve.py",
+          "kvnloo/z0evals:studies/unified-memory-v0/README.md"
+        ],
+        "invariants": [
+          "Carried evidence remains attributable by source id, version, locator, and trust class.",
+          "Contradictions and missing required evidence remain explicit instead of inventing a winner.",
+          "Retrieval, model-visible injection, answer support, and verification remain distinct stages."
+        ],
+        "invalidators": [
+          "A context packet carries unsupported claims while hiding an unresolved gap.",
+          "A configured index is treated as proof of model-visible or answer-supported memory."
+        ],
+        "retrieval": {
+          "fastest": "context-resolve-packet",
+          "fallback": "original-source"
+        },
+        "confidence": "declared",
+        "abstain_if": [
+          "provenance required by the question cannot be reconstructed from the selected sources."
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.unified-memory-preserves-provenance"
+        }
+      ]
+    },
+    {
       "id": "z0://evidence-ref/kvnloo/hermes-lcm:README.md%23what-it-does",
       "type": "evidence_reference",
       "label": "kvnloo/hermes-lcm:README.md#what-it-does",
@@ -1196,6 +1248,40 @@
           "ref": "main",
           "path": "registry/evidence_dependencies.yaml",
           "field": "evidence_dependencies.tokenomics-to-frozen-evaluation.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/kvnloo/z0evals:studies/unified-memory-v0/README.md",
+      "type": "evidence_reference",
+      "label": "kvnloo/z0evals:studies/unified-memory-v0/README.md",
+      "attributes": {
+        "reference": "kvnloo/z0evals:studies/unified-memory-v0/README.md"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.unified-memory-preserves-provenance.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://evidence-ref/kvnloo/z0intelligence:src/z0int/context_resolve.py",
+      "type": "evidence_reference",
+      "label": "kvnloo/z0intelligence:src/z0int/context_resolve.py",
+      "attributes": {
+        "reference": "kvnloo/z0intelligence:src/z0int/context_resolve.py"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.unified-memory-preserves-provenance.required_evidence"
         }
       ]
     },
@@ -1761,6 +1847,25 @@
           "ref": "main",
           "path": "registry/interfaces.yaml",
           "field": "interfaces.tokenomics.report.v1"
+        }
+      ]
+    },
+    {
+      "id": "z0://interface/z0int.context_resolve.v1",
+      "type": "interface",
+      "label": "z0int.context_resolve.v1",
+      "attributes": {
+        "interface": "z0int.context_resolve.v1",
+        "owner": "z0intelligence",
+        "summary": "Provenance-preserving bounded context packet for source-backed retrieval and harness injection."
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.z0int.context_resolve.v1"
         }
       ]
     },
@@ -2646,6 +2751,69 @@
       ]
     },
     {
+      "id": "z0://mechanism/unified-memory-evidence-path",
+      "type": "mechanism",
+      "label": "Unified memory evidence path",
+      "attributes": {
+        "mechanism_id": "unified-memory-evidence-path",
+        "name": "Unified memory evidence path",
+        "kind": "memory",
+        "stage": "experimental",
+        "purpose": "Resolve explicit information needs into provenance-bearing ContextPackets, inject only bounded evidence through harness-native seams, and preserve support/abstention evidence without replacing source stores with one database.\n",
+        "implemented_by": [
+          {
+            "component": "z0intelligence",
+            "repo": "kvnloo/z0intelligence"
+          }
+        ],
+        "evidence": [
+          "kvnloo/z0intelligence:src/z0int/context_resolve.py",
+          "kvnloo/z0evals:studies/unified-memory-v0/README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.unified-memory-evidence-path"
+        }
+      ]
+    },
+    {
+      "id": "z0://mechanism/verified-specialist-evolution",
+      "type": "mechanism",
+      "label": "Verified specialist evolution",
+      "attributes": {
+        "mechanism_id": "verified-specialist-evolution",
+        "name": "Verified specialist evolution",
+        "kind": "learning",
+        "stage": "experimental",
+        "purpose": "Search bounded specialist implementations against locked corpora, controls, sealed splits and external outcomes, then export only evidence-backed candidates into the z0intelligence runtime without allowing the optimizer to redefine its judge.\n",
+        "implemented_by": [
+          {
+            "component": "evolution-lab",
+            "repo": "kvnloo/evolution-lab"
+          }
+        ],
+        "evidence": [
+          "kvnloo/evolution-lab:README.md",
+          "kvnloo/evolution-lab:docs/phase2-corpus.md",
+          "kvnloo/z0intelligence:docs/evolution-lab.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.verified-specialist-evolution"
+        }
+      ]
+    },
+    {
       "id": "z0://mechanism/z0archy-hierarchy-meta-learning",
       "type": "mechanism",
       "label": "Slow architecture hierarchy meta-learning",
@@ -2975,6 +3143,32 @@
       ]
     },
     {
+      "id": "z0://repo/kvnloo/OptMem",
+      "type": "repository",
+      "label": "OptMem",
+      "attributes": {
+        "repo": "kvnloo/OptMem",
+        "suite_id": "optmem",
+        "suiteRole": "memory_research",
+        "suiteAuthority": "external_research",
+        "suiteStatus": "experimental",
+        "suiteSummary": "Memory research substrate used for temporal projection and bounded-cover experiments without becoming canonical memory authority.",
+        "suiteEvidence": [
+          "kvnloo/OptMem:README.md"
+        ],
+        "suiteUpstream": null
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.optmem"
+        }
+      ]
+    },
+    {
       "id": "z0://repo/kvnloo/SoL-Pi",
       "type": "repository",
       "label": "SoL-Pi",
@@ -3054,6 +3248,32 @@
       ]
     },
     {
+      "id": "z0://repo/kvnloo/agent-orchestrator",
+      "type": "repository",
+      "label": "Agent Orchestrator",
+      "attributes": {
+        "repo": "kvnloo/agent-orchestrator",
+        "suite_id": "agent-orchestrator",
+        "suiteRole": "orchestration_runtime",
+        "suiteAuthority": "implementation",
+        "suiteStatus": "experimental",
+        "suiteSummary": "Agent orchestration surface integrated with z0intelligence decision and outcome contracts.",
+        "suiteEvidence": [
+          "kvnloo/agent-orchestrator:README.md"
+        ],
+        "suiteUpstream": null
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.agent-orchestrator"
+        }
+      ]
+    },
+    {
       "id": "z0://repo/kvnloo/agenttrace",
       "type": "repository",
       "label": "kvnloo/agenttrace",
@@ -3078,6 +3298,32 @@
       ]
     },
     {
+      "id": "z0://repo/kvnloo/agentweb",
+      "type": "repository",
+      "label": "AgentWeb",
+      "attributes": {
+        "repo": "kvnloo/agentweb",
+        "suite_id": "agentweb",
+        "suiteRole": "agent_marketplace_harness",
+        "suiteAuthority": "downstream_integration",
+        "suiteStatus": "experimental",
+        "suiteSummary": "Downstream AgentWeb/Emma integration surface for typed decisions, personal context, and z0 orchestration experiments.",
+        "suiteEvidence": [
+          "kvnloo/agentweb:README.md"
+        ],
+        "suiteUpstream": "AgentWebPro/agentweb"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.agentweb"
+        }
+      ]
+    },
+    {
       "id": "z0://repo/kvnloo/aodl",
       "type": "repository",
       "label": "kvnloo/aodl",
@@ -3098,6 +3344,32 @@
           "ref": "main",
           "path": "registry/mechanisms.yaml",
           "field": "mechanisms.aodl-intent-plan-observed.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://repo/kvnloo/bend",
+      "type": "repository",
+      "label": "Bend",
+      "attributes": {
+        "repo": "kvnloo/bend",
+        "suite_id": "bend",
+        "suiteRole": "verified_compilation_substrate",
+        "suiteAuthority": "external_substrate",
+        "suiteStatus": "experimental",
+        "suiteSummary": "Parallel proof-oriented language explored as an enforceable compilation target for Zer0 orchestration contracts.",
+        "suiteEvidence": [
+          "kvnloo/bend:README.md"
+        ],
+        "suiteUpstream": "bendlang/bend"
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.bend"
         }
       ]
     },
@@ -3226,6 +3498,13 @@
           "ref": "main",
           "path": "registry/components.yaml",
           "field": "components.evolution-lab.repo"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.verified-specialist-evolution.implementation[0]"
         },
         {
           "class": "declared",
@@ -3718,6 +3997,32 @@
       ]
     },
     {
+      "id": "z0://repo/kvnloo/sol-pi-omp",
+      "type": "repository",
+      "label": "SoL-Pi OMP",
+      "attributes": {
+        "repo": "kvnloo/sol-pi-omp",
+        "suite_id": "sol-pi-omp",
+        "suiteRole": "mechanism_port",
+        "suiteAuthority": "implementation",
+        "suiteStatus": "experimental",
+        "suiteSummary": "OMP-focused packaging and experiments for reusable SoL-Pi efficiency mechanisms.",
+        "suiteEvidence": [
+          "kvnloo/sol-pi-omp:README.md"
+        ],
+        "suiteUpstream": null
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi-omp"
+        }
+      ]
+    },
+    {
       "id": "z0://repo/kvnloo/tokenomics",
       "type": "repository",
       "label": "kvnloo/tokenomics",
@@ -3900,6 +4205,13 @@
           "ref": "main",
           "path": "registry/mechanisms.yaml",
           "field": "mechanisms.jev-typed-decision.implementation[0]"
+        },
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.unified-memory-evidence-path.implementation[0]"
         }
       ]
     },
@@ -4025,6 +4337,36 @@
           "ref": "main",
           "path": "registry/representations.yaml",
           "field": "representations.compiled-plan"
+        }
+      ]
+    },
+    {
+      "id": "z0://representation/context-packet",
+      "type": "representation",
+      "label": "Context packet",
+      "attributes": {
+        "representation_id": "context-packet",
+        "name": "Context packet",
+        "kind": "evidence_bundle",
+        "scale": "compact",
+        "summary": "Bounded source-backed packet carrying information needs, EvidenceRefs, contradictions, unresolved gaps, resolution recipe, measurements, and AODL projection.",
+        "sensitivity": "inherited",
+        "interface": "z0int.context_resolve.v1",
+        "produced_by": [
+          "unified-memory-evidence-path"
+        ],
+        "evidence": [
+          "kvnloo/z0intelligence:src/z0int/context_resolve.py",
+          "kvnloo/z0evals:studies/unified-memory-v0/README.md"
+        ]
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.context-packet"
         }
       ]
     },
@@ -4460,6 +4802,21 @@
       ]
     },
     {
+      "id": "z0://edge/consumes:aodl.intent.v1-%3Ez0intelligence",
+      "type": "consumes",
+      "source": "z0://interface/aodl.intent.v1",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.z0intelligence.consumes"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/consumes:flow_prediction.v1-%3Etokenomics",
       "type": "consumes",
       "source": "z0://interface/flow_prediction.v1",
@@ -4775,6 +5132,21 @@
       ]
     },
     {
+      "id": "z0://edge/encoded-as:context-packet-%3Ez0int.context_resolve.v1",
+      "type": "encoded_as",
+      "source": "z0://representation/context-packet",
+      "target": "z0://interface/z0int.context_resolve.v1",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.context-packet.interface"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/encoded-as:decision-receipt-%3Ez0int.decision_receipt.v1",
       "type": "encoded_as",
       "source": "z0://representation/decision-receipt",
@@ -5060,6 +5432,26 @@
       }
     },
     {
+      "id": "z0://edge/epistemic:unified-memory-preserves-provenance",
+      "type": "resolves_to",
+      "source": "z0://representation/raw-context",
+      "target": "z0://representation/context-packet",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.unified-memory-preserves-provenance"
+        }
+      ],
+      "attributes": {
+        "epistemic": true,
+        "evidenceDependency": "z0://evidence-dependency/unified-memory-preserves-provenance",
+        "confidence": "declared"
+      }
+    },
+    {
       "id": "z0://edge/evidence-object:aodl-intent-to-plan",
       "type": "evidence_object",
       "source": "z0://evidence-dependency/aodl-intent-to-plan",
@@ -5240,6 +5632,21 @@
       ]
     },
     {
+      "id": "z0://edge/evidence-object:unified-memory-preserves-provenance",
+      "type": "evidence_object",
+      "source": "z0://evidence-dependency/unified-memory-preserves-provenance",
+      "target": "z0://representation/context-packet",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.unified-memory-preserves-provenance.to"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/evidence-subject:aodl-intent-to-plan",
       "type": "evidence_subject",
       "source": "z0://representation/aodl-intent",
@@ -5416,6 +5823,21 @@
           "ref": "main",
           "path": "registry/evidence_dependencies.yaml",
           "field": "evidence_dependencies.tokenomics-to-frozen-evaluation.from"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/evidence-subject:unified-memory-preserves-provenance",
+      "type": "evidence_subject",
+      "source": "z0://representation/raw-context",
+      "target": "z0://evidence-dependency/unified-memory-preserves-provenance",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.unified-memory-preserves-provenance.from"
         }
       ]
     },
@@ -6125,6 +6547,36 @@
       ]
     },
     {
+      "id": "z0://edge/implemented_by:unified-memory-evidence-path-%3Ez0intelligence",
+      "type": "implemented_by",
+      "source": "z0://mechanism/unified-memory-evidence-path",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.unified-memory-evidence-path.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_by:verified-specialist-evolution-%3Eevolution-lab",
+      "type": "implemented_by",
+      "source": "z0://mechanism/verified-specialist-evolution",
+      "target": "z0://component/evolution-lab",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.verified-specialist-evolution.implementation[0]"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/implemented_by:z0intelligence-%3Ekvnloo/z0intelligence",
       "type": "implemented_by",
       "source": "z0://component/z0intelligence",
@@ -6436,6 +6888,36 @@
           "ref": "main",
           "path": "registry/mechanisms.yaml",
           "field": "mechanisms.split-authority-privilege-broker.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:unified-memory-evidence-path-%3Ekvnloo/z0intelligence",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/unified-memory-evidence-path",
+      "target": "z0://repo/kvnloo/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.unified-memory-evidence-path.implementation[0]"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/implemented_in_repo:verified-specialist-evolution-%3Ekvnloo/evolution-lab",
+      "type": "implemented_in_repo",
+      "source": "z0://mechanism/verified-specialist-evolution",
+      "target": "z0://repo/kvnloo/evolution-lab",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/mechanisms.yaml",
+          "field": "mechanisms.verified-specialist-evolution.implementation[0]"
         }
       ]
     },
@@ -6826,6 +7308,21 @@
           "ref": "main",
           "path": "registry/components.yaml",
           "field": "components.oh-my-pi.integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/integrates_with:aodl-%3Ez0intelligence",
+      "type": "integrates_with",
+      "source": "z0://component/aodl",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.z0intelligence.integrates_with"
         }
       ]
     },
@@ -7400,6 +7897,21 @@
       ]
     },
     {
+      "id": "z0://edge/owned_by:z0int.context_resolve.v1-%3Ez0intelligence",
+      "type": "owned_by",
+      "source": "z0://interface/z0int.context_resolve.v1",
+      "target": "z0://component/z0intelligence",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/interfaces.yaml",
+          "field": "interfaces.z0int.context_resolve.v1.owner"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/owned_by:z0int.decision_receipt.v1-%3Ez0intelligence",
       "type": "owned_by",
       "source": "z0://interface/z0int.decision_receipt.v1",
@@ -7580,6 +8092,21 @@
       ]
     },
     {
+      "id": "z0://edge/produces-representation:unified-memory-evidence-path-%3Econtext-packet",
+      "type": "produces_representation",
+      "source": "z0://mechanism/unified-memory-evidence-path",
+      "target": "z0://representation/context-packet",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/representations.yaml",
+          "field": "representations.context-packet.produced_by"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/produces-representation:z0archy-hierarchy-meta-learning-%3Ehierarchy-proposal",
       "type": "produces_representation",
       "source": "z0://mechanism/z0archy-hierarchy-meta-learning",
@@ -7756,6 +8283,21 @@
           "ref": "main",
           "path": "registry/components.yaml",
           "field": "components.tokenomics.provides"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/provides:z0intelligence-%3Ez0int.context_resolve.v1",
+      "type": "provides",
+      "source": "z0://component/z0intelligence",
+      "target": "z0://interface/z0int.context_resolve.v1",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/components.yaml",
+          "field": "components.z0intelligence.provides"
         }
       ]
     },
@@ -8105,6 +8647,36 @@
       ]
     },
     {
+      "id": "z0://edge/requires-evidence:unified-memory-preserves-provenance-%3Ekvnloo/z0evals:studies/unified-memory-v0/README.md",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/unified-memory-preserves-provenance",
+      "target": "z0://evidence-ref/kvnloo/z0evals:studies/unified-memory-v0/README.md",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.unified-memory-preserves-provenance.required_evidence"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/requires-evidence:unified-memory-preserves-provenance-%3Ekvnloo/z0intelligence:src/z0int/context_resolve.py",
+      "type": "requires_evidence",
+      "source": "z0://evidence-dependency/unified-memory-preserves-provenance",
+      "target": "z0://evidence-ref/kvnloo/z0intelligence:src/z0int/context_resolve.py",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.unified-memory-preserves-provenance.required_evidence"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/runtime_surface_of:omp-%3Eoh-my-pi",
       "type": "runtime_surface_of",
       "source": "z0://harness/omp",
@@ -8224,6 +8796,24 @@
           "ref": "main",
           "path": "registry/suite.yaml",
           "field": "repositories.sol-pi-hermes.extends_harnesses"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:extends_harness:sol-pi-omp:harness:pi",
+      "type": "extends_harness",
+      "source": "z0://repo/kvnloo/sol-pi-omp",
+      "target": "z0://harness/pi",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi-omp.extends_harnesses"
         }
       ]
     },
@@ -8462,6 +9052,114 @@
       ]
     },
     {
+      "id": "z0://edge/suite:supports_component:agent-orchestrator:component:aodl",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/agent-orchestrator",
+      "target": "z0://component/aodl",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.agent-orchestrator.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:agent-orchestrator:component:z0intelligence",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/agent-orchestrator",
+      "target": "z0://component/z0intelligence",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.agent-orchestrator.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:agentweb:component:aodl",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/agentweb",
+      "target": "z0://component/aodl",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.agentweb.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:agentweb:component:z0intelligence",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/agentweb",
+      "target": "z0://component/z0intelligence",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.agentweb.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:bend:component:aodl",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/bend",
+      "target": "z0://component/aodl",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.bend.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:bend:component:z0intelligence",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/bend",
+      "target": "z0://component/z0intelligence",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.bend.supports_components"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/suite:supports_component:flyforge:component:aodl",
       "type": "supports_component",
       "source": "z0://repo/kvnloo/flyforge",
@@ -8530,6 +9228,24 @@
           "ref": "main",
           "path": "registry/suite.yaml",
           "field": "repositories.hermes-agent-self-evolution.supports_components"
+        }
+      ]
+    },
+    {
+      "id": "z0://edge/suite:supports_component:optmem:component:z0intelligence",
+      "type": "supports_component",
+      "source": "z0://repo/kvnloo/OptMem",
+      "target": "z0://component/z0intelligence",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.optmem.supports_components"
         }
       ]
     },
@@ -9038,6 +9754,24 @@
       ]
     },
     {
+      "id": "z0://edge/suite:uses_repository:sol-pi-omp:repo:sol-pi",
+      "type": "uses_repository",
+      "source": "z0://repo/kvnloo/sol-pi-omp",
+      "target": "z0://repo/kvnloo/SoL-Pi",
+      "attributes": {
+        "suiteRelation": true
+      },
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/suite.yaml",
+          "field": "repositories.sol-pi-omp.depends_on_repositories"
+        }
+      ]
+    },
+    {
       "id": "z0://edge/suite:uses_repository:z0archy:repo:activegraph",
       "type": "uses_repository",
       "source": "z0://repo/kvnloo/z0archy",
@@ -9222,9 +9956,24 @@
           "field": "evidence_dependencies.tokenomics-to-frozen-evaluation.via"
         }
       ]
+    },
+    {
+      "id": "z0://edge/verified-via:unified-memory-preserves-provenance-%3Emechanism:unified-memory-evidence-path",
+      "type": "verified_via",
+      "source": "z0://evidence-dependency/unified-memory-preserves-provenance",
+      "target": "z0://mechanism/unified-memory-evidence-path",
+      "provenance": [
+        {
+          "class": "declared",
+          "source": "kvnloo/z0",
+          "ref": "main",
+          "path": "registry/evidence_dependencies.yaml",
+          "field": "evidence_dependencies.unified-memory-preserves-provenance.via"
+        }
+      ]
     }
   ],
   "stats": {
-    "suiteRepositories": 24
+    "suiteRepositories": 29
   }
 }

@@ -200,6 +200,29 @@
       }
     },
     {
+      "id": "first-party-core",
+      "title": "First-party Zer0 core",
+      "caption": "Start here: AODL intent feeds z0intelligence; unified memory resolves provenance-backed ContextPackets; Tokenomics measures outcomes; z0evals freezes evidence; Evolution Lab searches and promotes measured specialists. Select z0intelligence's exact ref to reveal the k8s-hermes-lab deployment lane.",
+      "anchor": [
+        2500,
+        -1250
+      ],
+      "nodes": [],
+      "include": [
+        "aodl",
+        "z0intelligence",
+        "tokenomics",
+        "evolution-lab",
+        "z0://mechanism/unified-memory-evidence-path",
+        "z0://repo/kvnloo/z0evals"
+      ],
+      "layout": {
+        "fitMargin": 190,
+        "zoomMax": 0.82,
+        "noCard": false
+      }
+    },
+    {
       "id": "interaction",
       "title": "Interaction + runtime",
       "caption": "Where users and agents actually act. OMP owns execution; learned policy does not bypass runtime authority.",
@@ -262,7 +285,7 @@
             "component": "aodl",
             "repo": "kvnloo/aodl",
             "canonicalBranch": "main",
-            "canonicalRef": "8e41ef024262339d28a968d71113fc52819d4bd4",
+            "canonicalRef": "416736c80a727757202bdeedb02579c3c820f7f6",
             "graphType": "component",
             "graphId": "z0://component/aodl",
             "semanticLevel": 1,
@@ -280,12 +303,12 @@
           ],
           "w": 300,
           "kind": "hub decision",
-          "tip": "Personal learned policy: specialists, routines, autoresearch, and decision receipts for routing and promotion.\n\nrepo: kvnloo/z0intelligence\nstatus: experimental\nexecution: log_only",
+          "tip": "Personal intelligence layer: provenance-backed context resolution, bounded decision backends, specialist/routine runtime, and auditable receipts.\n\nrepo: kvnloo/z0intelligence\nstatus: experimental\nexecution: log_only",
           "meta": {
             "component": "z0intelligence",
             "repo": "kvnloo/z0intelligence",
             "canonicalBranch": "master",
-            "canonicalRef": "5e7cf4a2d6faf6e537dbfbb52d90bf50410cea63",
+            "canonicalRef": "0563ed7a52071cca63ccc91b8c9040207ad23e5d",
             "graphType": "component",
             "graphId": "z0://component/z0intelligence",
             "semanticLevel": 1,
@@ -323,7 +346,7 @@
             "component": "agenttrace",
             "repo": "kvnloo/agenttrace",
             "canonicalBranch": "master",
-            "canonicalRef": "a34dea2b6ff7e2133b9e548b93d30bfe6ccf6ff5",
+            "canonicalRef": "6848aa10df9dae7034a7bfeaf9f51a7d55424862",
             "graphType": "component",
             "graphId": "z0://component/agenttrace",
             "semanticLevel": 1,
@@ -346,7 +369,7 @@
             "component": "tokenomics",
             "repo": "kvnloo/tokenomics",
             "canonicalBranch": "master",
-            "canonicalRef": "e67d76fe2f1d52a5911abc8974489a10e89bb431",
+            "canonicalRef": "65e8f2dd9d6c5784a2a1c67f5236d69a5ae94021",
             "graphType": "component",
             "graphId": "z0://component/tokenomics",
             "semanticLevel": 1,
@@ -422,7 +445,7 @@
             "component": "kerdoios",
             "repo": "kvnloo/kerdoios",
             "canonicalBranch": "main",
-            "canonicalRef": "e3100ae4b779253c3ff3e9a95cc79f0321edb784",
+            "canonicalRef": "cdb43b05a328a50649d5120bffcdecea09492219",
             "graphType": "component",
             "graphId": "z0://component/kerdoios",
             "semanticLevel": 1,
@@ -455,12 +478,12 @@
           ],
           "w": 300,
           "kind": "hub research",
-          "tip": "Automatic AI research loop: hypothesis search, experiment runners, and verified candidate promotion.\n\nrepo: kvnloo/evolution-lab\nstatus: experimental\nexecution: shadow",
+          "tip": "Experiment engine for locked corpora/splits, candidate evolution, DAgger, Pareto/MAP-Elites comparison, and verified specialist promotion.\n\nrepo: kvnloo/evolution-lab\nstatus: experimental\nexecution: shadow",
           "meta": {
             "component": "evolution-lab",
             "repo": "kvnloo/evolution-lab",
-            "canonicalBranch": "main",
-            "canonicalRef": "8cf7acff719470b74f20c90fd6e5f7cdb11c134a",
+            "canonicalBranch": "trunk",
+            "canonicalRef": "1c9b5235d341f9108d6ea4cc886592be7004ef28",
             "graphType": "component",
             "graphId": "z0://component/evolution-lab",
             "semanticLevel": 1,
@@ -483,7 +506,7 @@
             "component": "frontier-kb",
             "repo": "kvnloo/frontier-kb",
             "canonicalBranch": "main",
-            "canonicalRef": "aac71e8f73cbfe78118d2dd399ecceece2e42e71",
+            "canonicalRef": "22b4c0f1088abfef6184840cb79a0a6a6aceda44",
             "graphType": "component",
             "graphId": "z0://component/frontier-kb",
             "semanticLevel": 1,
@@ -715,12 +738,31 @@
           }
         },
         {
+          "id": "iface:z0int.context_resolve.v1",
+          "title": "z0int.context_resolve.v1",
+          "sub": "owner: z0intelligence",
+          "body": "Provenance-preserving bounded context packet for source-backed retrieval and harness injection.",
+          "pos": [
+            -380,
+            780
+          ],
+          "w": 285,
+          "kind": "tiny contract",
+          "tip": "Provenance-preserving bounded context packet for source-backed retrieval and harness injection.\n\nowner: z0intelligence",
+          "meta": {
+            "graphType": "interface",
+            "graphId": "z0://interface/z0int.context_resolve.v1",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "iface:z0int.decision_receipt.v1",
           "title": "z0int.decision_receipt.v1",
           "sub": "owner: z0intelligence",
           "body": "Structured decision receipt for routing and policy audit.",
           "pos": [
-            -380,
+            0,
             780
           ],
           "w": 285,
@@ -1215,6 +1257,44 @@
           "meta": {
             "graphType": "mechanism",
             "graphId": "z0://mechanism/split-authority-privilege-broker",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/unified-memory-evidence-path",
+          "title": "Unified memory evidence path",
+          "sub": "mechanism",
+          "body": "Resolve explicit information needs into provenance-bearing ContextPackets, inject only bounded evidence thr...",
+          "pos": [
+            0,
+            1560
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "Unified memory evidence path\n\ntype: mechanism\nkind: memory\nstage: experimental\npurpose: Resolve explicit information needs into provenance-bearing ContextPackets, inject only bounded evidence through harness-native seams, and preserve support/abstention evidence without replacing source stores with one database.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/unified-memory-evidence-path",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://mechanism/verified-specialist-evolution",
+          "title": "Verified specialist evolution",
+          "sub": "mechanism",
+          "body": "Search bounded specialist implementations against locked corpora, controls, sealed splits and external outc...",
+          "pos": [
+            380,
+            1560
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "Verified specialist evolution\n\ntype: mechanism\nkind: learning\nstage: experimental\npurpose: Search bounded specialist implementations against locked corpora, controls, sealed splits and external outcomes, then export only evidence-backed candidates into the z0intelligence runtime without allowing the optimizer to redefine its judge.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "meta": {
+            "graphType": "mechanism",
+            "graphId": "z0://mechanism/verified-specialist-evolution",
             "semanticLevel": 2,
             "truthClass": "declared"
           }
@@ -1740,13 +1820,70 @@
           }
         },
         {
+          "id": "z0://repo/kvnloo/agent-orchestrator",
+          "title": "Agent Orchestrator",
+          "sub": "repository",
+          "body": "kvnloo/agent-orchestrator",
+          "pos": [
+            0,
+            0
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Agent Orchestrator\n\ntype: repository\nrepo: kvnloo/agent-orchestrator\nsuiteRole: orchestration_runtime\nsuiteAuthority: implementation\nsuiteStatus: experimental\nsuiteSummary: Agent orchestration surface integrated with z0intelligence decision and outcome contracts.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/agent-orchestrator",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/agentweb",
+          "title": "AgentWeb",
+          "sub": "repository",
+          "body": "kvnloo/agentweb",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "AgentWeb\n\ntype: repository\nrepo: kvnloo/agentweb\nsuiteRole: agent_marketplace_harness\nsuiteAuthority: downstream_integration\nsuiteStatus: experimental\nsuiteSummary: Downstream AgentWeb/Emma integration surface for typed decisions, personal context, and z0 orchestration experiments.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/agentweb",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://repo/kvnloo/bend",
+          "title": "Bend",
+          "sub": "repository",
+          "body": "kvnloo/bend",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "Bend\n\ntype: repository\nrepo: kvnloo/bend\nsuiteRole: verified_compilation_substrate\nsuiteAuthority: external_substrate\nsuiteStatus: experimental\nsuiteSummary: Parallel proof-oriented language explored as an enforceable compilation target for Zer0 orchestration contracts.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/bend",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://repo/kvnloo/codex-router",
           "title": "Codex Router",
           "sub": "repository",
           "body": "kvnloo/codex-router",
           "pos": [
             0,
-            0
+            260
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1765,7 +1902,7 @@
           "body": "kvnloo/company-os",
           "pos": [
             380,
-            0
+            260
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1784,7 +1921,7 @@
           "body": "kvnloo/deepseek-harness",
           "pos": [
             -380,
-            260
+            520
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1803,7 +1940,7 @@
           "body": "kvnloo/ds4",
           "pos": [
             0,
-            260
+            520
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1822,7 +1959,7 @@
           "body": "earendil-works/pi",
           "pos": [
             380,
-            260
+            520
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1841,7 +1978,7 @@
           "body": "kvnloo/flyforge",
           "pos": [
             -380,
-            520
+            780
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1860,7 +1997,7 @@
           "body": "kvnloo/graphcon-deck",
           "pos": [
             0,
-            520
+            780
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1879,7 +2016,7 @@
           "body": "kvnloo/hermes-agent",
           "pos": [
             380,
-            520
+            780
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1898,7 +2035,7 @@
           "body": "kvnloo/hermes-agent-self-evolution",
           "pos": [
             -380,
-            780
+            1040
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1917,7 +2054,7 @@
           "body": "kvnloo/hermes-jev-skills",
           "pos": [
             0,
-            780
+            1040
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1936,7 +2073,7 @@
           "body": "kvnloo/hermes-keel",
           "pos": [
             380,
-            780
+            1040
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1955,7 +2092,7 @@
           "body": "kvnloo/hermes-lcm",
           "pos": [
             -380,
-            1040
+            1300
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1974,7 +2111,7 @@
           "body": "kvnloo/hermes-mesh-keel",
           "pos": [
             0,
-            1040
+            1300
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1993,7 +2130,7 @@
           "body": "kvnloo/hermes-model-passports",
           "pos": [
             380,
-            1040
+            1300
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2012,7 +2149,7 @@
           "body": "kvnloo/hermes-privilege-broker",
           "pos": [
             -380,
-            1300
+            1560
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2031,7 +2168,7 @@
           "body": "kvnloo/hermes-talk",
           "pos": [
             0,
-            1300
+            1560
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2050,7 +2187,7 @@
           "body": "kvnloo/Hermes3D",
           "pos": [
             380,
-            1300
+            1560
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2069,7 +2206,7 @@
           "body": "kvnloo/.files",
           "pos": [
             -380,
-            1560
+            1820
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2088,7 +2225,7 @@
           "body": "kvnloo/agenttrace",
           "pos": [
             0,
-            1560
+            1820
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2107,7 +2244,7 @@
           "body": "kvnloo/aodl",
           "pos": [
             380,
-            1560
+            1820
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2126,7 +2263,7 @@
           "body": "kvnloo/evolution-lab",
           "pos": [
             -380,
-            1820
+            2080
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2145,7 +2282,7 @@
           "body": "kvnloo/frontier-kb",
           "pos": [
             0,
-            1820
+            2080
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2164,7 +2301,7 @@
           "body": "kvnloo/kerdoios",
           "pos": [
             380,
-            1820
+            2080
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2183,7 +2320,7 @@
           "body": "kvnloo/Memento",
           "pos": [
             -380,
-            2080
+            2340
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2202,7 +2339,7 @@
           "body": "kvnloo/oh-my-pi",
           "pos": [
             0,
-            2080
+            2340
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2221,7 +2358,7 @@
           "body": "kvnloo/tokenomics",
           "pos": [
             380,
-            2080
+            2340
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2240,7 +2377,7 @@
           "body": "kvnloo/z0intelligence",
           "pos": [
             -380,
-            2340
+            2600
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2259,7 +2396,7 @@
           "body": "openai/codex",
           "pos": [
             0,
-            2340
+            2600
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2272,13 +2409,32 @@
           }
         },
         {
+          "id": "z0://repo/kvnloo/OptMem",
+          "title": "OptMem",
+          "sub": "repository",
+          "body": "kvnloo/OptMem",
+          "pos": [
+            380,
+            2600
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "OptMem\n\ntype: repository\nrepo: kvnloo/OptMem\nsuiteRole: memory_research\nsuiteAuthority: external_research\nsuiteStatus: experimental\nsuiteSummary: Memory research substrate used for temporal projection and bounded-cover experiments without becoming canonical memory authority.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/OptMem",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://repo/kvnloo/ripple",
           "title": "Ripple",
           "sub": "repository",
           "body": "kvnloo/ripple",
           "pos": [
-            380,
-            2340
+            -380,
+            2860
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2296,8 +2452,8 @@
           "sub": "repository",
           "body": "kvnloo/SoL-Pi",
           "pos": [
-            -380,
-            2600
+            0,
+            2860
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2310,13 +2466,32 @@
           }
         },
         {
+          "id": "z0://repo/kvnloo/sol-pi-omp",
+          "title": "SoL-Pi OMP",
+          "sub": "repository",
+          "body": "kvnloo/sol-pi-omp",
+          "pos": [
+            380,
+            2860
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "SoL-Pi OMP\n\ntype: repository\nrepo: kvnloo/sol-pi-omp\nsuiteRole: mechanism_port\nsuiteAuthority: implementation\nsuiteStatus: experimental\nsuiteSummary: OMP-focused packaging and experiments for reusable SoL-Pi efficiency mechanisms.\n\ndeclared: kvnloo/z0@main\npath: registry/suite.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/sol-pi-omp",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://repo/kvnloo/sol-pi-hermes",
           "title": "sol-pi-hermes",
           "sub": "repository",
           "body": "kvnloo/sol-pi-hermes",
           "pos": [
-            0,
-            2600
+            -380,
+            3120
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2334,8 +2509,8 @@
           "sub": "repository",
           "body": "kvnloo/verified-oss-loop",
           "pos": [
-            380,
-            2600
+            0,
+            3120
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2353,8 +2528,8 @@
           "sub": "repository",
           "body": "kvnloo/z0archy",
           "pos": [
-            -380,
-            2860
+            380,
+            3120
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2372,8 +2547,8 @@
           "sub": "repository",
           "body": "kvnloo/z0evals",
           "pos": [
-            0,
-            2860
+            -380,
+            3380
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2391,8 +2566,8 @@
           "sub": "repository",
           "body": "kvnloo/z0",
           "pos": [
-            380,
-            2860
+            0,
+            3380
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2534,12 +2709,31 @@
           }
         },
         {
+          "id": "z0://representation/context-packet",
+          "title": "Context packet",
+          "sub": "representation",
+          "body": "Bounded source-backed packet carrying information needs, EvidenceRefs, contradictions, unresolved gaps, res...",
+          "pos": [
+            -380,
+            520
+          ],
+          "w": 320,
+          "kind": "hub compute",
+          "tip": "Context packet\n\ntype: representation\nkind: evidence_bundle\nscale: compact\nsensitivity: inherited\n\ndeclared: kvnloo/z0@main\npath: registry/representations.yaml",
+          "meta": {
+            "graphType": "representation",
+            "graphId": "z0://representation/context-packet",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://representation/decision-receipt",
           "title": "Decision receipt",
           "sub": "representation",
           "body": "Structured audit record of a routing or policy decision.",
           "pos": [
-            -380,
+            0,
             520
           ],
           "w": 320,
@@ -2558,7 +2752,7 @@
           "sub": "representation",
           "body": "Quote-verifiable compressed diagnostic evidence with a fall-open path when verification fails.",
           "pos": [
-            0,
+            380,
             520
           ],
           "w": 320,
@@ -2577,8 +2771,8 @@
           "sub": "representation",
           "body": "Pinned reproducible study data, analysis, figure, or report whose public claim resolves to frozen evidence.",
           "pos": [
-            380,
-            520
+            -380,
+            780
           ],
           "w": 320,
           "kind": "hub compute",
@@ -2596,7 +2790,7 @@
           "sub": "representation",
           "body": "Recoverable raw-message or hierarchical summary node with explicit source lineage and drill-down.",
           "pos": [
-            -380,
+            0,
             780
           ],
           "w": 320,
@@ -2615,7 +2809,7 @@
           "sub": "representation",
           "body": "Portable descriptor separating maker, canonical model identity, verified capabilities/lifecycle, and servin...",
           "pos": [
-            0,
+            380,
             780
           ],
           "w": 320,
@@ -2634,8 +2828,8 @@
           "sub": "representation",
           "body": "Stable compact handle plus exact recall path for large observations.",
           "pos": [
-            380,
-            780
+            -380,
+            1040
           ],
           "w": 320,
           "kind": "hub compute",
@@ -2653,7 +2847,7 @@
           "sub": "representation",
           "body": "What actually ran, kept distinct from desired intent and compiled plan.",
           "pos": [
-            -380,
+            0,
             1040
           ],
           "w": 320,
@@ -2672,7 +2866,7 @@
           "sub": "representation",
           "body": "One-use monotonic-TTL authorization bound to an immutable approved privileged-operation digest.",
           "pos": [
-            0,
+            380,
             1040
           ],
           "w": 320,
@@ -2691,8 +2885,8 @@
           "sub": "representation",
           "body": "Uncompressed source text, logs, files, observations, or conversation state.",
           "pos": [
-            380,
-            1040
+            -380,
+            1300
           ],
           "w": 320,
           "kind": "hub compute",
@@ -2710,7 +2904,7 @@
           "sub": "representation",
           "body": "Stable handle that keeps large context externally addressable instead of replaying it into the frontier win...",
           "pos": [
-            -380,
+            0,
             1300
           ],
           "w": 320,
@@ -2729,7 +2923,7 @@
           "sub": "representation",
           "body": "Audit of a compressed architecture view recording retained/hidden structure, cut relations, provenance, and...",
           "pos": [
-            0,
+            380,
             1300
           ],
           "w": 320,
@@ -2748,8 +2942,8 @@
           "sub": "representation",
           "body": "Versioned bounded execution intent carrying task revision, capability/policy hashes, privacy class, replay ...",
           "pos": [
-            380,
-            1300
+            -380,
+            1560
           ],
           "w": 320,
           "kind": "hub decision",
@@ -2767,7 +2961,7 @@
           "sub": "representation",
           "body": "Vendor-neutral token, cost, latency, and execution measurement envelope.",
           "pos": [
-            -380,
+            0,
             1560
           ],
           "w": 320,
@@ -3043,13 +3237,51 @@
           }
         },
         {
+          "id": "z0://evidence-ref/kvnloo/z0evals:studies/unified-memory-v0/README.md",
+          "title": "kvnloo/z0evals:studies/unified-memory-v0/README.md",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            0,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/z0evals:studies/unified-memory-v0/README.md\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/kvnloo/z0evals:studies/unified-memory-v0/README.md",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-ref/kvnloo/z0intelligence:src/z0int/context_resolve.py",
+          "title": "kvnloo/z0intelligence:src/z0int/context_resolve.py",
+          "sub": "evidence reference",
+          "body": "",
+          "pos": [
+            380,
+            1040
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/z0intelligence:src/z0int/context_resolve.py\n\ntype: evidence_reference\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_reference",
+            "graphId": "z0://evidence-ref/kvnloo/z0intelligence:src/z0int/context_resolve.py",
+            "semanticLevel": 4,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://evidence-dependency/lossless-context-preserves-drilldown",
           "title": "lossless-context-preserves-drilldown",
           "sub": "evidence dependency",
           "body": "compacts_to",
           "pos": [
-            0,
-            1040
+            -380,
+            1300
           ],
           "w": 320,
           "kind": "hub research",
@@ -3067,8 +3299,8 @@
           "sub": "evidence dependency",
           "body": "compresses_to",
           "pos": [
-            380,
-            1040
+            0,
+            1300
           ],
           "w": 320,
           "kind": "hub research",
@@ -3086,7 +3318,7 @@
           "sub": "evidence dependency",
           "body": "implements",
           "pos": [
-            -380,
+            380,
             1300
           ],
           "w": 320,
@@ -3105,8 +3337,8 @@
           "sub": "evidence dependency",
           "body": "observed_as",
           "pos": [
-            0,
-            1300
+            -380,
+            1560
           ],
           "w": 320,
           "kind": "hub research",
@@ -3124,8 +3356,8 @@
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            380,
-            1300
+            0,
+            1560
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -3143,7 +3375,7 @@
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            -380,
+            380,
             1560
           ],
           "w": 320,
@@ -3162,8 +3394,8 @@
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            0,
-            1560
+            -380,
+            1820
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -3181,8 +3413,8 @@
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            380,
-            1560
+            0,
+            1820
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -3200,7 +3432,7 @@
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            -380,
+            380,
             1820
           ],
           "w": 320,
@@ -3219,8 +3451,8 @@
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            0,
-            1820
+            -380,
+            2080
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -3238,8 +3470,8 @@
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            380,
-            1820
+            0,
+            2080
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -3257,7 +3489,7 @@
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            -380,
+            380,
             2080
           ],
           "w": 320,
@@ -3276,8 +3508,8 @@
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            0,
-            2080
+            -380,
+            2340
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -3295,8 +3527,8 @@
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            380,
-            2080
+            0,
+            2340
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -3314,7 +3546,7 @@
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            -380,
+            380,
             2340
           ],
           "w": 320,
@@ -3333,8 +3565,8 @@
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            0,
-            2340
+            -380,
+            2600
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -3352,8 +3584,8 @@
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            380,
-            2340
+            0,
+            2600
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -3371,7 +3603,7 @@
           "sub": "evidence reference",
           "body": "",
           "pos": [
-            -380,
+            380,
             2600
           ],
           "w": 320,
@@ -3390,8 +3622,8 @@
           "sub": "evidence dependency",
           "body": "frozen_as",
           "pos": [
-            0,
-            2600
+            -380,
+            2860
           ],
           "w": 320,
           "kind": "hub research",
@@ -3399,6 +3631,25 @@
           "meta": {
             "graphType": "evidence_dependency",
             "graphId": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://evidence-dependency/unified-memory-preserves-provenance",
+          "title": "unified-memory-preserves-provenance",
+          "sub": "evidence dependency",
+          "body": "resolves_to",
+          "pos": [
+            0,
+            2860
+          ],
+          "w": 320,
+          "kind": "hub research",
+          "tip": "unified-memory-preserves-provenance\n\ntype: evidence_dependency\nrelation: resolves_to\nconfidence: declared\n\ndeclared: kvnloo/z0@main\npath: registry/evidence_dependencies.yaml",
+          "meta": {
+            "graphType": "evidence_dependency",
+            "graphId": "z0://evidence-dependency/unified-memory-preserves-provenance",
             "semanticLevel": 3,
             "truthClass": "declared"
           }
@@ -3634,7 +3885,17 @@
     },
     {
       "from": "z0intelligence",
+      "to": "aodl",
+      "kind": "integrates"
+    },
+    {
+      "from": "z0intelligence",
       "to": "iface:z0int.decision_receipt.v1",
+      "kind": "provides"
+    },
+    {
+      "from": "z0intelligence",
+      "to": "iface:z0int.context_resolve.v1",
       "kind": "provides"
     },
     {
@@ -3648,8 +3909,19 @@
       "kind": "consumes"
     },
     {
+      "from": "iface:aodl.intent.v1",
+      "to": "z0intelligence",
+      "kind": "consumes"
+    },
+    {
       "from": "z0://representation/aodl-intent",
       "to": "iface:aodl.intent.v1",
+      "kind": "integrates",
+      "label": "encoded as"
+    },
+    {
+      "from": "z0://representation/context-packet",
+      "to": "iface:z0int.context_resolve.v1",
       "kind": "integrates",
       "label": "encoded as"
     },
@@ -3744,6 +4016,12 @@
       "label": "frozen as"
     },
     {
+      "from": "z0://representation/raw-context",
+      "to": "z0://representation/context-packet",
+      "kind": "epistemic",
+      "label": "resolves to"
+    },
+    {
       "from": "z0://evidence-dependency/aodl-intent-to-plan",
       "to": "z0://representation/compiled-plan",
       "kind": "epistemic",
@@ -3816,6 +4094,12 @@
       "label": "evidence object"
     },
     {
+      "from": "z0://evidence-dependency/unified-memory-preserves-provenance",
+      "to": "z0://representation/context-packet",
+      "kind": "epistemic",
+      "label": "evidence object"
+    },
+    {
       "from": "z0://representation/aodl-intent",
       "to": "z0://evidence-dependency/aodl-intent-to-plan",
       "kind": "epistemic",
@@ -3884,6 +4168,12 @@
     {
       "from": "z0://representation/tokenomics-event",
       "to": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
+      "kind": "epistemic",
+      "label": "evidence subject"
+    },
+    {
+      "from": "z0://representation/raw-context",
+      "to": "z0://evidence-dependency/unified-memory-preserves-provenance",
       "kind": "epistemic",
       "label": "evidence subject"
     },
@@ -4170,6 +4460,18 @@
       "label": "implemented by"
     },
     {
+      "from": "z0://mechanism/unified-memory-evidence-path",
+      "to": "z0intelligence",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://mechanism/verified-specialist-evolution",
+      "to": "evolution-lab",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
       "from": "z0intelligence",
       "to": "z0://repo/kvnloo/z0intelligence",
       "kind": "integrates",
@@ -4292,6 +4594,18 @@
     {
       "from": "z0://mechanism/split-authority-privilege-broker",
       "to": "z0://repo/kvnloo/hermes-privilege-broker",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/unified-memory-evidence-path",
+      "to": "z0://repo/kvnloo/z0intelligence",
+      "kind": "integrates",
+      "label": "implemented in repo"
+    },
+    {
+      "from": "z0://mechanism/verified-specialist-evolution",
+      "to": "z0://repo/kvnloo/evolution-lab",
       "kind": "integrates",
       "label": "implemented in repo"
     },
@@ -4602,6 +4916,12 @@
       "label": "produces representation"
     },
     {
+      "from": "z0://mechanism/unified-memory-evidence-path",
+      "to": "z0://representation/context-packet",
+      "kind": "provides",
+      "label": "produces representation"
+    },
+    {
       "from": "z0://mechanism/z0archy-hierarchy-meta-learning",
       "to": "z0://representation/hierarchy-proposal",
       "kind": "provides",
@@ -4752,6 +5072,18 @@
       "label": "requires evidence"
     },
     {
+      "from": "z0://evidence-dependency/unified-memory-preserves-provenance",
+      "to": "z0://evidence-ref/kvnloo/z0evals:studies/unified-memory-v0/README.md",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
+      "from": "z0://evidence-dependency/unified-memory-preserves-provenance",
+      "to": "z0://evidence-ref/kvnloo/z0intelligence:src/z0int/context_resolve.py",
+      "kind": "epistemic",
+      "label": "requires evidence"
+    },
+    {
       "from": "z0://harness/omp",
       "to": "oh-my-pi",
       "kind": "depends",
@@ -4790,6 +5122,12 @@
     {
       "from": "z0://repo/kvnloo/sol-pi-hermes",
       "to": "z0://harness/hermes",
+      "kind": "default",
+      "label": "extends harness"
+    },
+    {
+      "from": "z0://repo/kvnloo/sol-pi-omp",
+      "to": "z0://harness/pi",
       "kind": "default",
       "label": "extends harness"
     },
@@ -4872,6 +5210,42 @@
       "label": "participates in lifecycle"
     },
     {
+      "from": "z0://repo/kvnloo/agent-orchestrator",
+      "to": "aodl",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/agent-orchestrator",
+      "to": "z0intelligence",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/agentweb",
+      "to": "aodl",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/agentweb",
+      "to": "z0intelligence",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/bend",
+      "to": "aodl",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/bend",
+      "to": "z0intelligence",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
       "from": "z0://repo/kvnloo/flyforge",
       "to": "aodl",
       "kind": "default",
@@ -4892,6 +5266,12 @@
     {
       "from": "z0://repo/kvnloo/hermes-agent-self-evolution",
       "to": "evolution-lab",
+      "kind": "default",
+      "label": "supports component"
+    },
+    {
+      "from": "z0://repo/kvnloo/OptMem",
+      "to": "z0intelligence",
       "kind": "default",
       "label": "supports component"
     },
@@ -5064,6 +5444,12 @@
       "label": "uses repository"
     },
     {
+      "from": "z0://repo/kvnloo/sol-pi-omp",
+      "to": "z0://repo/kvnloo/SoL-Pi",
+      "kind": "default",
+      "label": "uses repository"
+    },
+    {
       "from": "z0://repo/kvnloo/z0archy",
       "to": "z0://repo/kvnloo/activegraph",
       "kind": "default",
@@ -5132,6 +5518,12 @@
     {
       "from": "z0://evidence-dependency/tokenomics-to-frozen-evaluation",
       "to": "z0://mechanism/frozen-eval-publication",
+      "kind": "epistemic",
+      "label": "verified via"
+    },
+    {
+      "from": "z0://evidence-dependency/unified-memory-preserves-provenance",
+      "to": "z0://mechanism/unified-memory-evidence-path",
       "kind": "epistemic",
       "label": "verified via"
     }
