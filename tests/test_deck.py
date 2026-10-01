@@ -203,6 +203,31 @@ class DeckTests(unittest.TestCase):
         deck = mod.build(self.semantic_graph(), scene)
         self.assertIn("canonical-implementation", {slide["id"] for slide in deck["slides"]})
 
+    def test_repository_scene_surfaces_downstream_provenance(self):
+        graph = self.semantic_graph()
+        graph["nodes"].append({
+            "id": "z0://repo/o/downstream",
+            "type": "repository",
+            "label": "Downstream",
+            "attributes": {
+                "repo": "o/downstream",
+                "suiteRole": "execution_runtime",
+                "suiteAuthority": "implementation",
+                "suiteStatus": "active",
+                "suiteSummary": "Downstream runtime integration.",
+                "suiteUpstream": "upstream/runtime",
+            },
+            "provenance": [],
+        })
+        deck = mod.build(graph)
+        node = next(
+            node for slide in deck["slides"] if slide["id"] == "repositories"
+            for node in slide["nodes"] if node["id"] == "z0://repo/o/downstream"
+        )
+        self.assertIn("downstream fork", node["sub"])
+        self.assertIn("suiteUpstream: upstream/runtime", node["tip"])
+        self.assertEqual(node["body"], "Downstream runtime integration.")
+
     def test_deck_exposes_semantic_architecture_planes(self):
         deck = mod.build(self.semantic_graph())
         slide_ids = {s["id"] for s in deck["slides"]}
