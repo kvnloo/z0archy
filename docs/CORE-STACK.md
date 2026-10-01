@@ -62,9 +62,10 @@ Retrieval, model-visible injection, answer support, and verification stay distin
 ### Kubernetes lane
 
 The first Kubernetes topology is an implementation subsystem of z0intelligence rather
-than a new top-level product. The `hermes-lab` lane keeps host authority, local
-models, and credentials outside the cluster while exposing a hardened in-cluster
-executor through the z0intelligence service boundary.
+than a new top-level product. The `hermes-lab` lane keeps z0int decision/dispatch authority and local model control
+host-side while exposing a hardened in-cluster executor through the z0intelligence
+service boundary. Provider credentials may be explicitly scoped into that executor as
+Kubernetes secrets; the architecture must not claim that all credentials remain host-only.
 
 ### Evolution Lab
 
