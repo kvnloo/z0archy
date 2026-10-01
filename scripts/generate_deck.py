@@ -212,6 +212,37 @@ def build(graph: dict | None = None) -> dict:
             "layout": {"fitMargin": 190, "zoomMax": 0.82, "noCard": False},
         })
 
+    active_execution_ids = [
+        "z0intelligence",
+        "aodl",
+        "z0://repo/kvnloo/hermes-agent",
+        "z0://repo/kvnloo/deepseek-harness",
+        "z0://repo/kvnloo/hermes-lcm",
+        "z0://repo/kvnloo/hermes-jev-skills",
+        "z0://repo/kvnloo/agent-orchestrator",
+        "z0://repo/kvnloo/agentweb",
+        "z0://repo/kvnloo/sol-pi-hermes",
+    ]
+    active_execution_include = [
+        node_id for node_id in active_execution_ids if node_id in available_ids
+    ]
+    if active_execution_include:
+        slides.append({
+            "id": "active-execution",
+            "title": "Active execution + harness path",
+            "caption": (
+                "The current execution path around z0intelligence and AODL: Hermes Agent "
+                "and DeepSeek Harness as primary runtimes; Hermes LCM and Jev as context / "
+                "typed-decision extensions; Agent Orchestrator and AgentWeb as active "
+                "integration surfaces. Peripheral catalog repos stay discoverable without "
+                "crowding this operational view."
+            ),
+            "anchor": [2500, -2850],
+            "nodes": [],
+            "include": active_execution_include,
+            "layout": {"fitMargin": 190, "zoomMax": 0.82, "noCard": False},
+        })
+
     for pid, title, caption, anchor, style in PLANES:
         members = [(cid, c) for cid, c in components.items() if plane_of[cid] == pid]
         if not members:
