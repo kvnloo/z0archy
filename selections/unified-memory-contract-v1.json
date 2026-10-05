@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "repos": {
+    "kvnloo/z0intelligence": {
+      "source": "github",
+      "ref": "feat/memory-contract-v1-66-preview"
+    },
+    "kvnloo/z0evals": {
+      "source": "github",
+      "ref": "main"
+    }
+  }
+}
