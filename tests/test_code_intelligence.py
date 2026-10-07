@@ -10,6 +10,7 @@ class CodeIntelligenceNormalizationTests(unittest.TestCase):
             "provider": "fixture-index",
             "sourceRevision": "abc123",
             "inputFingerprint": "sha256:fixture",
+            "confidence": "structural",
             "symbols": [
                 {
                     "id": "demo.foo",
@@ -74,11 +75,13 @@ class CodeIntelligenceNormalizationTests(unittest.TestCase):
         self.assertEqual(foo["type"], "code_symbol")
         self.assertEqual(foo["attributes"]["provider"], "fixture-index")
         self.assertEqual(foo["attributes"]["inputFingerprint"], "sha256:fixture")
+        self.assertEqual(foo["attributes"]["confidence"], "structural")
         self.assertEqual(foo["attributes"]["externalId"], "demo.foo")
         self.assertEqual(foo["provenance"][0]["source"], "kvnloo/demo")
         self.assertEqual(foo["provenance"][0]["ref"], "abc123")
         self.assertEqual(foo["provenance"][0]["path"], "src/demo.py")
         self.assertEqual(foo["provenance"][0]["provider"], "fixture-index")
+        self.assertEqual(foo["provenance"][0]["confidence"], "structural")
 
     def test_stale_source_revision_is_not_materialized(self):
         snapshot = self.snapshot()
@@ -117,12 +120,39 @@ class CodeIntelligenceNormalizationTests(unittest.TestCase):
         self.assertEqual(len(unresolved), 1)
         self.assertEqual(unresolved[0]["target"], "demo.missing")
 
+    def test_unsupported_relation_kind_is_not_materialized(self):
+        snapshot = self.snapshot()
+        snapshot["relations"].append(
+            {
+                "kind": "provider_magic",
+                "source": "demo.bar",
+                "target": "demo.foo",
+            }
+        )
+
+        result = normalize_code_intelligence_snapshot(
+            snapshot, repo="kvnloo/demo", resolved_ref="abc123"
+        )
+
+        self.assertEqual(len(result["edges"]), 2)
+        self.assertIn(
+            "unsupported_relation_kind",
+            {row["code"] for row in result["diagnostics"]},
+        )
+
     def test_provider_fingerprint_and_confidence_are_required(self):
         missing_provider = self.snapshot()
         missing_provider["provider"] = ""
         with self.assertRaisesRegex(ValueError, "provider"):
             normalize_code_intelligence_snapshot(
                 missing_provider, repo="kvnloo/demo", resolved_ref="abc123"
+            )
+
+        missing_confidence = self.snapshot()
+        missing_confidence.pop("confidence")
+        with self.assertRaisesRegex(ValueError, "confidence"):
+            normalize_code_intelligence_snapshot(
+                missing_confidence, repo="kvnloo/demo", resolved_ref="abc123"
             )
 
         missing_fingerprint = self.snapshot()
