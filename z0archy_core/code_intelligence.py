@@ -8,6 +8,7 @@ from .graph import zid
 
 
 SUPPORTED_VERSION = 1
+RELATION_KINDS = {"calls", "references", "implements", "inherits", "imports", "verified_by"}
 
 
 def normalize_code_intelligence_snapshot(
@@ -29,6 +30,7 @@ def normalize_code_intelligence_snapshot(
     provider = _required_text(snapshot, "provider")
     source_revision = _required_text(snapshot, "sourceRevision")
     input_fingerprint = _required_text(snapshot, "inputFingerprint")
+    confidence = _required_text(snapshot, "confidence")
 
     result: dict[str, Any] = {
         "version": SUPPORTED_VERSION,
@@ -37,6 +39,7 @@ def normalize_code_intelligence_snapshot(
         "resolvedRef": resolved_ref,
         "sourceRevision": source_revision,
         "inputFingerprint": input_fingerprint,
+        "confidence": confidence,
         "status": "current",
         "nodes": [],
         "edges": [],
@@ -104,6 +107,7 @@ def normalize_code_intelligence_snapshot(
             resolved_ref=resolved_ref,
             provider=provider,
             input_fingerprint=input_fingerprint,
+            confidence=confidence,
         )
         if node is None:
             result["diagnostics"].append({
@@ -122,6 +126,14 @@ def normalize_code_intelligence_snapshot(
         kind = _text(relation.get("kind"))
         source_external = _text(relation.get("source"))
         target_external = _text(relation.get("target"))
+        if kind not in RELATION_KINDS:
+            result["diagnostics"].append({
+                "code": "unsupported_relation_kind",
+                "kind": kind,
+                "source": source_external,
+                "target": target_external,
+            })
+            continue
         source_id = symbol_ids.get(source_external or "")
         target_id = symbol_ids.get(target_external or "")
         if not kind or not source_id or not target_id:
@@ -148,6 +160,7 @@ def normalize_code_intelligence_snapshot(
             resolved_ref=resolved_ref,
             provider=provider,
             input_fingerprint=input_fingerprint,
+            confidence=confidence,
             path=relation_path,
             field=f"code_intelligence.relation.{kind}",
         )
@@ -160,6 +173,7 @@ def normalize_code_intelligence_snapshot(
                 "provider": provider,
                 "sourceRevision": resolved_ref,
                 "inputFingerprint": input_fingerprint,
+                "confidence": confidence,
                 "path": relation_path,
                 "line": line,
             },
@@ -180,6 +194,7 @@ def _symbol_node(
     resolved_ref: str,
     provider: str,
     input_fingerprint: str,
+    confidence: str,
 ) -> dict[str, Any] | None:
     external_id = _text(row.get("id"))
     name = _text(row.get("name"))
@@ -197,6 +212,7 @@ def _symbol_node(
         "provider": provider,
         "sourceRevision": resolved_ref,
         "inputFingerprint": input_fingerprint,
+        "confidence": confidence,
         "externalId": external_id,
         "kind": _text(row.get("kind")) or ("test" if is_test else "symbol"),
         "path": path,
@@ -215,6 +231,7 @@ def _symbol_node(
             resolved_ref=resolved_ref,
             provider=provider,
             input_fingerprint=input_fingerprint,
+            confidence=confidence,
             path=path,
             field="code_intelligence.symbol",
         ),
@@ -227,6 +244,7 @@ def _provenance(
     resolved_ref: str,
     provider: str,
     input_fingerprint: str,
+    confidence: str,
     path: str | None,
     field: str,
 ) -> list[dict[str, Any]]:
@@ -238,6 +256,7 @@ def _provenance(
         "field": field,
         "provider": provider,
         "inputFingerprint": input_fingerprint,
+        "confidence": confidence,
     }]
 
 
