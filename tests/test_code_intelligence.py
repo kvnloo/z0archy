@@ -117,7 +117,7 @@ class CodeIntelligenceNormalizationTests(unittest.TestCase):
         self.assertEqual(len(unresolved), 1)
         self.assertEqual(unresolved[0]["target"], "demo.missing")
 
-    def test_provider_and_fingerprint_are_required(self):
+    def test_provider_fingerprint_and_confidence_are_required(self):
         missing_provider = self.snapshot()
         missing_provider["provider"] = ""
         with self.assertRaisesRegex(ValueError, "provider"):
