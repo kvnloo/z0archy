@@ -59,6 +59,12 @@ function optionForTarget(target,label){
   return option;
 }
 
+function materializationSuffix(repo,key){
+  if(!key||typeof z0VirtualCore.evidenceMaterialized!=="function") return "";
+  const state=z0VirtualCore.evidenceMaterialized(repo,key,matrixState.canonical);
+  return state===false?" · metadata only":"";
+}
+
 function rowTarget(select){
   const option=select.options[select.selectedIndex];
   return option&&option.dataset.target?JSON.parse(option.dataset.target):null;
@@ -100,7 +106,8 @@ function buildMatrixPanel(){
       const prefix=canonical.declared?"canonical":"default";
       select.appendChild(optionForTarget(
         canonical,
-        prefix+" · "+canonical.ref+" @ "+shortSha(canonical.evidenceKey)
+        prefix+" · "+canonical.ref+" @ "+shortSha(canonical.evidenceKey)+
+        materializationSuffix(repo,canonical.evidenceKey)
       ));
     }
 
@@ -113,7 +120,7 @@ function buildMatrixPanel(){
       };
       select.appendChild(optionForTarget(
         target,
-        branch.name+" @ "+shortSha(branch.oid)
+        branch.name+" @ "+shortSha(branch.oid)+materializationSuffix(repo,branch.oid)
       ));
     });
 
@@ -246,7 +253,10 @@ function installVirtualScene(packs,diffs){
     const col=index%3,row=Math.floor(index/3);
     const canonical=canonicalForRepo(repo);
     let body="";
-    if(!canonical||!canonical.declared){
+    const pack=packs[repo];
+    if(!pack){
+      body="exact ref indexed · implementation evidence not materialized";
+    }else if(!canonical||!canonical.declared){
       body="un-pinned · default is observational baseline";
     }else if(diff&&diff.count){
       body=diff.count+" evidence delta"+(diff.count===1?"":"s")+" vs canonical";
@@ -260,7 +270,7 @@ function installVirtualScene(packs,diffs){
       body:body,
       pos:[-680+col*680,row*250],
       w:390,
-      kind:diff&&diff.count?"hub research":"hub compute",
+      kind:!pack?"hub contract":(diff&&diff.count?"hub research":"hub compute"),
       tip:virtualTip(repo,target,canonical,diff,packs[repo]),
       meta:{
         graphType:"repo_ref",
@@ -300,7 +310,8 @@ function virtualTip(repo,target,canonical,diff,pack){
       ?"canonical: "+canonical.ref+" @ "+canonical.evidenceKey
       :"canonical: not pinned in z0"
   ];
-  if(pack&&pack.error) lines.push("evidence error: "+pack.error);
+  if(!pack) lines.push("implementation evidence: not materialized in hosted build");
+  else if(pack.error) lines.push("evidence error: "+pack.error);
   if(diff){
     lines.push("added evidence: "+diff.added.length);
     lines.push("removed evidence: "+diff.removed.length);
@@ -318,7 +329,12 @@ function updateMatrixDiffLabels(diffs){
     const label=row.querySelector(".matrix-diff");
     const diff=diffs[repo];
     const canonical=canonicalForRepo(repo);
-    if(!canonical||!canonical.declared) label.textContent="un-pinned";
+    const target=matrixState.rows[repo];
+    const materialized=target&&typeof z0VirtualCore.evidenceMaterialized==="function"
+      ?z0VirtualCore.evidenceMaterialized(repo,target.evidenceKey,matrixState.canonical)
+      :null;
+    if(materialized===false) label.textContent="metadata only";
+    else if(!canonical||!canonical.declared) label.textContent="un-pinned";
     else if(diff&&diff.count) label.textContent=diff.count+" Δ";
     else label.textContent="0 Δ";
   });

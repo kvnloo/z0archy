@@ -14,14 +14,23 @@ const github={repositories:{
   }
 }};
 const canonical={repos:{
-  "o/a":{pins:[{component:"a",branch:"main",ref:"aaa",evidenceKey:"aaa",resolved:true}]},
-  "o/b":{pins:[],defaultBranch:"main",defaultHead:"333",canonical:false}
+  "o/a":{
+    pins:[{component:"a",branch:"main",ref:"aaa",evidenceKey:"aaa",resolved:true}],
+    materializedEvidenceKeys:["aaa","222"]
+  },
+  "o/b":{
+    pins:[],defaultBranch:"main",defaultHead:"333",canonical:false,
+    materializedEvidenceKeys:["333"]
+  }
 }};
 
 assert.deepStrictEqual(v.canonicalTarget("o/a",canonical,github).evidenceKey,"aaa");
 assert.strictEqual(v.canonicalTarget("o/a",canonical,github).declared,true);
 assert.strictEqual(v.canonicalTarget("o/b",canonical,github).fallback,true);
 assert.strictEqual(v.branchTarget("o/a","feat/x",github).evidenceKey,"222");
+assert.strictEqual(v.evidenceMaterialized("o/a","222",canonical),true);
+assert.strictEqual(v.evidenceMaterialized("o/a","999",canonical),false);
+assert.strictEqual(v.evidenceMaterialized("missing","999",canonical),null);
 
 const basePack={nodes:[
   {type:"source_artifact",label:"README.md",attributes:{path:"README.md",sha256:"a",bytes:10}},
