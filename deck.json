@@ -184,6 +184,7 @@
       "include": [
         "agenttrace",
         "aodl",
+        "dash",
         "evolution-lab",
         "flow",
         "frontier-kb",
@@ -191,6 +192,7 @@
         "memento",
         "oh-my-pi",
         "tokenomics",
+        "z0evals",
         "z0intelligence"
       ],
       "layout": {
@@ -275,7 +277,7 @@
           "sub": "contract \u00b7 experimental \u00b7 shadow",
           "body": "kvnloo/aodl",
           "pos": [
-            -290,
+            -380,
             0
           ],
           "w": 300,
@@ -293,12 +295,35 @@
           }
         },
         {
+          "id": "dash",
+          "title": "Dash",
+          "sub": "interface \u00b7 canary \u00b7 live",
+          "body": "kvnloo/dash",
+          "pos": [
+            0,
+            0
+          ],
+          "w": 300,
+          "kind": "hub decision",
+          "tip": "Phone app plus agent bridge: a Bun/Expo client that drives the detected harnesses through an authenticated bridge bound to the tailnet.\n\nrepo: kvnloo/dash\nstatus: canary\nexecution: live",
+          "meta": {
+            "component": "dash",
+            "repo": "kvnloo/dash",
+            "canonicalBranch": "integrate/dash-v2",
+            "canonicalRef": "5f3ee27f6e431ba83abfe9a4a94b2c0757910ddb",
+            "graphType": "component",
+            "graphId": "z0://component/dash",
+            "semanticLevel": 1,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0intelligence",
           "title": "z0intelligence",
           "sub": "intelligence \u00b7 experimental \u00b7 log_only",
           "body": "kvnloo/z0intelligence",
           "pos": [
-            290,
+            380,
             0
           ],
           "w": 300,
@@ -308,7 +333,7 @@
             "component": "z0intelligence",
             "repo": "kvnloo/z0intelligence",
             "canonicalBranch": "master",
-            "canonicalRef": "0563ed7a52071cca63ccc91b8c9040207ad23e5d",
+            "canonicalRef": "9c1631683c63f6eb48bea70962fd54f0ece312fb",
             "graphType": "component",
             "graphId": "z0://component/z0intelligence",
             "semanticLevel": 1,
@@ -473,7 +498,7 @@
           "sub": "research \u00b7 experimental \u00b7 shadow",
           "body": "kvnloo/evolution-lab",
           "pos": [
-            -290,
+            -380,
             0
           ],
           "w": 300,
@@ -496,7 +521,7 @@
           "sub": "research \u00b7 experimental \u00b7 shadow",
           "body": "kvnloo/frontier-kb",
           "pos": [
-            290,
+            0,
             0
           ],
           "w": 300,
@@ -509,6 +534,29 @@
             "canonicalRef": "22b4c0f1088abfef6184840cb79a0a6a6aceda44",
             "graphType": "component",
             "graphId": "z0://component/frontier-kb",
+            "semanticLevel": 1,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0evals",
+          "title": "z0evals",
+          "sub": "research \u00b7 stable \u00b7 live",
+          "body": "kvnloo/z0evals",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 300,
+          "kind": "hub research",
+          "tip": "Static evaluation and publication repo: Python validators and generators plus a Next.js static-export site. No services and no GPU work.\n\nrepo: kvnloo/z0evals\nstatus: stable\nexecution: live",
+          "meta": {
+            "component": "z0evals",
+            "repo": "kvnloo/z0evals",
+            "canonicalBranch": "main",
+            "canonicalRef": "b6e3da7ad9eda4f87f9f8e94c6ab0fc97d44bb10",
+            "graphType": "component",
+            "graphId": "z0://component/z0evals",
             "semanticLevel": 1,
             "truthClass": "declared"
           }
@@ -791,12 +839,31 @@
       ],
       "nodes": [
         {
+          "id": "z0://harness/claude-code",
+          "title": "Claude Code",
+          "sub": "harness",
+          "body": "anthropics/claude-code",
+          "pos": [
+            -380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub runtime",
+          "tip": "Claude Code\n\ntype: harness\nkind: executor\nadoption: active\nrepo: anthropics/claude-code\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "harness",
+            "graphId": "z0://harness/claude-code",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://harness/codex",
           "title": "Codex",
           "sub": "harness",
           "body": "openai/codex",
           "pos": [
-            -380,
+            0,
             0
           ],
           "w": 320,
@@ -810,13 +877,51 @@
           }
         },
         {
+          "id": "z0://harness/codexbar",
+          "title": "CodexBar",
+          "sub": "harness",
+          "body": "Usage meter for agent quotas. Detected only.",
+          "pos": [
+            380,
+            0
+          ],
+          "w": 320,
+          "kind": "hub runtime",
+          "tip": "CodexBar\n\ntype: harness\nkind: observer\nadoption: research\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "harness",
+            "graphId": "z0://harness/codexbar",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://harness/cursor-agent",
+          "title": "Cursor Agent",
+          "sub": "harness",
+          "body": "Detected and reported only. Never configured, probed, offloaded to, or put on a bridge PATH.",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 320,
+          "kind": "hub runtime",
+          "tip": "Cursor Agent\n\ntype: harness\nkind: executor\nadoption: excluded\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "harness",
+            "graphId": "z0://harness/cursor-agent",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://harness/deepseek",
           "title": "DeepSeek Harness",
           "sub": "harness",
           "body": "kvnloo/deepseek-harness",
           "pos": [
             0,
-            0
+            260
           ],
           "w": 320,
           "kind": "hub runtime",
@@ -829,13 +934,89 @@
           }
         },
         {
+          "id": "z0://harness/dsh",
+          "title": "DeepSeek Harness shell",
+          "sub": "harness",
+          "body": "kvnloo/deepseek-harness",
+          "pos": [
+            380,
+            260
+          ],
+          "w": 320,
+          "kind": "hub runtime",
+          "tip": "DeepSeek Harness shell\n\ntype: harness\nkind: executor\nadoption: active\nrepo: kvnloo/deepseek-harness\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "harness",
+            "graphId": "z0://harness/dsh",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://harness/fx",
+          "title": "fx",
+          "sub": "harness",
+          "body": "Detected only; dash can drive it as a CLI harness.",
+          "pos": [
+            -380,
+            520
+          ],
+          "w": 320,
+          "kind": "hub runtime",
+          "tip": "fx\n\ntype: harness\nkind: executor\nadoption: research\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "harness",
+            "graphId": "z0://harness/fx",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://harness/gemini",
+          "title": "Gemini CLI",
+          "sub": "harness",
+          "body": "google-gemini/gemini-cli",
+          "pos": [
+            0,
+            520
+          ],
+          "w": 320,
+          "kind": "hub runtime",
+          "tip": "Gemini CLI\n\ntype: harness\nkind: executor\nadoption: research\nrepo: google-gemini/gemini-cli\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "harness",
+            "graphId": "z0://harness/gemini",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
+          "id": "z0://harness/grok",
+          "title": "Grok CLI",
+          "sub": "harness",
+          "body": "Detected and reported only. Never configured, probed, offloaded to, or put on a bridge PATH.",
+          "pos": [
+            380,
+            520
+          ],
+          "w": 320,
+          "kind": "hub runtime",
+          "tip": "Grok CLI\n\ntype: harness\nkind: executor\nadoption: excluded\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "harness",
+            "graphId": "z0://harness/grok",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://harness/hermes",
           "title": "Hermes Agent",
           "sub": "harness",
           "body": "kvnloo/hermes-agent",
           "pos": [
-            380,
-            0
+            -380,
+            780
           ],
           "w": 320,
           "kind": "hub runtime",
@@ -848,13 +1029,32 @@
           }
         },
         {
+          "id": "z0://harness/kimi",
+          "title": "Kimi CLI",
+          "sub": "harness",
+          "body": "MoonshotAI/kimi-cli",
+          "pos": [
+            0,
+            780
+          ],
+          "w": 320,
+          "kind": "hub runtime",
+          "tip": "Kimi CLI\n\ntype: harness\nkind: executor\nadoption: research\nrepo: MoonshotAI/kimi-cli\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "harness",
+            "graphId": "z0://harness/kimi",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://harness/omp",
           "title": "Oh My Pi",
           "sub": "harness",
           "body": "kvnloo/oh-my-pi",
           "pos": [
-            -380,
-            260
+            380,
+            780
           ],
           "w": 320,
           "kind": "hub runtime",
@@ -867,13 +1067,32 @@
           }
         },
         {
+          "id": "z0://harness/opencode",
+          "title": "opencode",
+          "sub": "harness",
+          "body": "sst/opencode",
+          "pos": [
+            -380,
+            1040
+          ],
+          "w": 320,
+          "kind": "hub runtime",
+          "tip": "opencode\n\ntype: harness\nkind: executor\nadoption: research\nrepo: sst/opencode\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "harness",
+            "graphId": "z0://harness/opencode",
+            "semanticLevel": 2,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://harness/pi",
           "title": "Pi",
           "sub": "harness",
           "body": "earendil-works/pi",
           "pos": [
             0,
-            260
+            1040
           ],
           "w": 320,
           "kind": "hub runtime",
@@ -1713,7 +1932,7 @@
           "id": "profile:full",
           "title": "full",
           "sub": "profile",
-          "body": "All stable/canary components (excludes idea/reference-only).",
+          "body": "Every installable component, including shadow ones (flow, evolution-lab, frontier-kb, aodl); excludes idea/...",
           "pos": [
             -380,
             260
@@ -1858,12 +2077,31 @@
           }
         },
         {
+          "id": "z0://repo/anthropics/claude-code",
+          "title": "anthropics/claude-code",
+          "sub": "repository",
+          "body": "anthropics/claude-code",
+          "pos": [
+            -380,
+            260
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "anthropics/claude-code\n\ntype: repository\nrepo: anthropics/claude-code\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/anthropics/claude-code",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://repo/kvnloo/bend",
           "title": "Bend",
           "sub": "repository",
           "body": "kvnloo/bend",
           "pos": [
-            -380,
+            0,
             260
           ],
           "w": 320,
@@ -1882,7 +2120,7 @@
           "sub": "repository",
           "body": "kvnloo/codex-router",
           "pos": [
-            0,
+            380,
             260
           ],
           "w": 320,
@@ -1901,8 +2139,8 @@
           "sub": "repository",
           "body": "kvnloo/company-os",
           "pos": [
-            380,
-            260
+            -380,
+            520
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1920,7 +2158,7 @@
           "sub": "repository",
           "body": "kvnloo/deepseek-harness",
           "pos": [
-            -380,
+            0,
             520
           ],
           "w": 320,
@@ -1939,7 +2177,7 @@
           "sub": "repository",
           "body": "kvnloo/ds4",
           "pos": [
-            0,
+            380,
             520
           ],
           "w": 320,
@@ -1958,8 +2196,8 @@
           "sub": "repository",
           "body": "earendil-works/pi",
           "pos": [
-            380,
-            520
+            -380,
+            780
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -1977,7 +2215,7 @@
           "sub": "repository",
           "body": "kvnloo/flyforge",
           "pos": [
-            -380,
+            0,
             780
           ],
           "w": 320,
@@ -1991,13 +2229,32 @@
           }
         },
         {
+          "id": "z0://repo/google-gemini/gemini-cli",
+          "title": "google-gemini/gemini-cli",
+          "sub": "repository",
+          "body": "google-gemini/gemini-cli",
+          "pos": [
+            380,
+            780
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "google-gemini/gemini-cli\n\ntype: repository\nrepo: google-gemini/gemini-cli\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/google-gemini/gemini-cli",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://repo/kvnloo/graphcon-deck",
           "title": "graphcon-deck",
           "sub": "repository",
           "body": "kvnloo/graphcon-deck",
           "pos": [
-            0,
-            780
+            -380,
+            1040
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2015,8 +2272,8 @@
           "sub": "repository",
           "body": "kvnloo/hermes-agent",
           "pos": [
-            380,
-            780
+            0,
+            1040
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2034,7 +2291,7 @@
           "sub": "repository",
           "body": "kvnloo/hermes-agent-self-evolution",
           "pos": [
-            -380,
+            380,
             1040
           ],
           "w": 320,
@@ -2053,8 +2310,8 @@
           "sub": "repository",
           "body": "kvnloo/hermes-jev-skills",
           "pos": [
-            0,
-            1040
+            -380,
+            1300
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2072,8 +2329,8 @@
           "sub": "repository",
           "body": "kvnloo/hermes-keel",
           "pos": [
-            380,
-            1040
+            0,
+            1300
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2091,7 +2348,7 @@
           "sub": "repository",
           "body": "kvnloo/hermes-lcm",
           "pos": [
-            -380,
+            380,
             1300
           ],
           "w": 320,
@@ -2110,8 +2367,8 @@
           "sub": "repository",
           "body": "kvnloo/hermes-mesh-keel",
           "pos": [
-            0,
-            1300
+            -380,
+            1560
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2129,8 +2386,8 @@
           "sub": "repository",
           "body": "kvnloo/hermes-model-passports",
           "pos": [
-            380,
-            1300
+            0,
+            1560
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2148,7 +2405,7 @@
           "sub": "repository",
           "body": "kvnloo/hermes-privilege-broker",
           "pos": [
-            -380,
+            380,
             1560
           ],
           "w": 320,
@@ -2167,8 +2424,8 @@
           "sub": "repository",
           "body": "kvnloo/hermes-talk",
           "pos": [
-            0,
-            1560
+            -380,
+            1820
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2186,8 +2443,8 @@
           "sub": "repository",
           "body": "kvnloo/Hermes3D",
           "pos": [
-            380,
-            1560
+            0,
+            1820
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2205,7 +2462,7 @@
           "sub": "repository",
           "body": "kvnloo/.files",
           "pos": [
-            -380,
+            380,
             1820
           ],
           "w": 320,
@@ -2224,8 +2481,8 @@
           "sub": "repository",
           "body": "kvnloo/agenttrace",
           "pos": [
-            0,
-            1820
+            -380,
+            2080
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2243,8 +2500,8 @@
           "sub": "repository",
           "body": "kvnloo/aodl",
           "pos": [
-            380,
-            1820
+            0,
+            2080
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2257,13 +2514,32 @@
           }
         },
         {
+          "id": "z0://repo/kvnloo/dash",
+          "title": "kvnloo/dash",
+          "sub": "repository",
+          "body": "kvnloo/dash",
+          "pos": [
+            380,
+            2080
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "kvnloo/dash\n\ntype: repository\nrepo: kvnloo/dash\n\ndeclared: kvnloo/z0@main\npath: registry/components.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/kvnloo/dash",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://repo/kvnloo/evolution-lab",
           "title": "kvnloo/evolution-lab",
           "sub": "repository",
           "body": "kvnloo/evolution-lab",
           "pos": [
             -380,
-            2080
+            2340
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2282,7 +2558,7 @@
           "body": "kvnloo/frontier-kb",
           "pos": [
             0,
-            2080
+            2340
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2301,7 +2577,7 @@
           "body": "kvnloo/kerdoios",
           "pos": [
             380,
-            2080
+            2340
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2320,7 +2596,7 @@
           "body": "kvnloo/Memento",
           "pos": [
             -380,
-            2340
+            2600
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2339,7 +2615,7 @@
           "body": "kvnloo/oh-my-pi",
           "pos": [
             0,
-            2340
+            2600
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2358,7 +2634,7 @@
           "body": "kvnloo/tokenomics",
           "pos": [
             380,
-            2340
+            2600
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2377,7 +2653,7 @@
           "body": "kvnloo/z0intelligence",
           "pos": [
             -380,
-            2600
+            2860
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2390,13 +2666,32 @@
           }
         },
         {
+          "id": "z0://repo/MoonshotAI/kimi-cli",
+          "title": "MoonshotAI/kimi-cli",
+          "sub": "repository",
+          "body": "MoonshotAI/kimi-cli",
+          "pos": [
+            0,
+            2860
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "MoonshotAI/kimi-cli\n\ntype: repository\nrepo: MoonshotAI/kimi-cli\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/MoonshotAI/kimi-cli",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://repo/openai/codex",
           "title": "openai/codex",
           "sub": "repository",
           "body": "openai/codex",
           "pos": [
-            0,
-            2600
+            380,
+            2860
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2414,8 +2709,8 @@
           "sub": "repository",
           "body": "kvnloo/OptMem",
           "pos": [
-            380,
-            2600
+            -380,
+            3120
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2433,8 +2728,8 @@
           "sub": "repository",
           "body": "kvnloo/ripple",
           "pos": [
-            -380,
-            2860
+            0,
+            3120
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2452,8 +2747,8 @@
           "sub": "repository",
           "body": "kvnloo/SoL-Pi",
           "pos": [
-            0,
-            2860
+            380,
+            3120
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2471,8 +2766,8 @@
           "sub": "repository",
           "body": "kvnloo/sol-pi-omp",
           "pos": [
-            380,
-            2860
+            -380,
+            3380
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2490,8 +2785,8 @@
           "sub": "repository",
           "body": "kvnloo/sol-pi-hermes",
           "pos": [
-            -380,
-            3120
+            0,
+            3380
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2504,13 +2799,32 @@
           }
         },
         {
+          "id": "z0://repo/sst/opencode",
+          "title": "sst/opencode",
+          "sub": "repository",
+          "body": "sst/opencode",
+          "pos": [
+            380,
+            3380
+          ],
+          "w": 320,
+          "kind": "tiny contract",
+          "tip": "sst/opencode\n\ntype: repository\nrepo: sst/opencode\n\ndeclared: kvnloo/z0@main\npath: registry/harnesses.yaml",
+          "meta": {
+            "graphType": "repository",
+            "graphId": "z0://repo/sst/opencode",
+            "semanticLevel": 3,
+            "truthClass": "declared"
+          }
+        },
+        {
           "id": "z0://repo/kvnloo/verified-oss-loop",
           "title": "Verified OSS Loop",
           "sub": "repository",
           "body": "kvnloo/verified-oss-loop",
           "pos": [
-            0,
-            3120
+            -380,
+            3640
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2528,8 +2842,8 @@
           "sub": "repository",
           "body": "kvnloo/z0archy",
           "pos": [
-            380,
-            3120
+            0,
+            3640
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -2547,12 +2861,12 @@
           "sub": "repository",
           "body": "kvnloo/z0evals",
           "pos": [
-            -380,
-            3380
+            380,
+            3640
           ],
           "w": 320,
           "kind": "tiny contract",
-          "tip": "z0evals\n\ntype: repository\nrepo: kvnloo/z0evals\nsuiteRole: publication_evidence\nsuiteAuthority: frozen_evidence\nsuiteStatus: active\nsuiteSummary: Reproducible evaluations, frozen datasets, analysis, figures, and public reports for Zer0 studies.\n\ndeclared: kvnloo/z0@main\npath: registry/mechanisms.yaml",
+          "tip": "z0evals\n\ntype: repository\nrepo: kvnloo/z0evals\nsuiteRole: publication_evidence\nsuiteAuthority: frozen_evidence\nsuiteStatus: active\nsuiteSummary: Reproducible evaluations, frozen datasets, analysis, figures, and public reports for Zer0 studies.\n\ndeclared: kvnloo/z0@main\npath: registry/components.yaml",
           "meta": {
             "graphType": "repository",
             "graphId": "z0://repo/kvnloo/z0evals",
@@ -2566,8 +2880,8 @@
           "sub": "repository",
           "body": "kvnloo/z0",
           "pos": [
-            0,
-            3380
+            -380,
+            3900
           ],
           "w": 320,
           "kind": "tiny contract",
@@ -3698,6 +4012,16 @@
       "kind": "provides"
     },
     {
+      "from": "dash",
+      "to": "oh-my-pi",
+      "kind": "integrates"
+    },
+    {
+      "from": "dash",
+      "to": "z0intelligence",
+      "kind": "integrates"
+    },
+    {
       "from": "z0intelligence",
       "to": "evolution-lab",
       "kind": "depends",
@@ -3878,10 +4202,14 @@
       "kind": "consumes"
     },
     {
-      "from": "tokenomics",
+      "from": "z0evals",
       "to": "z0intelligence",
-      "kind": "depends",
-      "label": "depends"
+      "kind": "integrates"
+    },
+    {
+      "from": "z0evals",
+      "to": "tokenomics",
+      "kind": "integrates"
     },
     {
       "from": "z0intelligence",
@@ -4304,13 +4632,31 @@
       "label": "implemented by"
     },
     {
+      "from": "z0://harness/claude-code",
+      "to": "z0://repo/anthropics/claude-code",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
       "from": "z0://harness/codex",
       "to": "z0://repo/openai/codex",
       "kind": "integrates",
       "label": "implemented by"
     },
     {
+      "from": "dash",
+      "to": "z0://repo/kvnloo/dash",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
       "from": "z0://harness/deepseek",
+      "to": "z0://repo/kvnloo/deepseek-harness",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://harness/dsh",
       "to": "z0://repo/kvnloo/deepseek-harness",
       "kind": "integrates",
       "label": "implemented by"
@@ -4330,6 +4676,12 @@
     {
       "from": "frontier-kb",
       "to": "z0://repo/kvnloo/frontier-kb",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://harness/gemini",
+      "to": "z0://repo/google-gemini/gemini-cli",
       "kind": "integrates",
       "label": "implemented by"
     },
@@ -4364,6 +4716,12 @@
       "label": "implemented by"
     },
     {
+      "from": "z0://harness/kimi",
+      "to": "z0://repo/MoonshotAI/kimi-cli",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
       "from": "memento",
       "to": "z0://repo/kvnloo/Memento",
       "kind": "integrates",
@@ -4384,6 +4742,12 @@
     {
       "from": "z0://harness/omp",
       "to": "z0://repo/kvnloo/oh-my-pi",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0://harness/opencode",
+      "to": "z0://repo/sst/opencode",
       "kind": "integrates",
       "label": "implemented by"
     },
@@ -4468,6 +4832,12 @@
     {
       "from": "z0://mechanism/verified-specialist-evolution",
       "to": "evolution-lab",
+      "kind": "integrates",
+      "label": "implemented by"
+    },
+    {
+      "from": "z0evals",
+      "to": "z0://repo/kvnloo/z0evals",
       "kind": "integrates",
       "label": "implemented by"
     },
