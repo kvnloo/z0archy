@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "repos": {
+    "kvnloo/z0": {
+      "source": "github",
+      "ref": "lab/agentweb-emma-v0"
+    },
+    "kvnloo/aodl": {
+      "source": "github",
+      "ref": "lab/agentweb-emma-v0"
+    },
+    "kvnloo/agentweb": {
+      "source": "github",
+      "ref": "lab/z0-agentweb-emma-v0"
+    },
+    "kvnloo/z0intelligence": {
+      "source": "github",
+      "ref": "lab/agentweb-emma-v0"
+    },
+    "kvnloo/z0evals": {
+      "source": "github",
+      "ref": "study/agentweb-emma-z0-v0"
+    }
+  }
+}
