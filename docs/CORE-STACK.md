@@ -59,12 +59,41 @@ The unified-memory design is represented as the
 `unified-memory-evidence-path` mechanism and `context-packet` representation.
 Retrieval, model-visible injection, answer support, and verification stay distinct.
 
-### Kubernetes lane
+### Remote execution + Kubernetes lane
+
+Remote execution is a protocol boundary before it is a deployment boundary. A remote
+executor claims one request identity from the host dispatch authority, acquires provider
+admission, persists ordered physical receipts back through that authority, and must
+reconcile uncertain execution rather than retrying under a new trace. Canonical receipt
+persistence stays with the authority.
 
 The first Kubernetes topology is an implementation subsystem of z0intelligence rather
-than a new top-level product. The `hermes-lab` lane keeps host authority, local
-models, and credentials outside the cluster while exposing a hardened in-cluster
-executor through the z0intelligence service boundary.
+than a new top-level product. The `hermes-lab` lane keeps z0int decision/dispatch
+authority and local model control host-side while exposing the stateless executor through
+the z0intelligence service boundary. Provider credentials may be explicitly scoped into
+that executor as Kubernetes secrets; the architecture must not claim that all credentials
+remain host-only.
+
+The current merged deployment is deliberately narrow: one bounded remote-worker replica,
+with OpenRouter as the default explicitly enabled executor provider. Local Laya, SoL-Pi,
+RLM, and related cognition stay host-local. Autoscaling and a broad "all models in k8s"
+fabric are planned/experimental ideas, **not current implementation truth**.
+
+### DeepSeek Harness injection boundary
+
+DSH exposes a durable, harness-native context seam rather than requiring direct session-log
+mutation:
+
+- `followup(message)` appends to `next-turn` and wakes the driver;
+- `steer(message)` appends to `next-step` and wakes the nearest step;
+- `inject(message)` appends model-facing `next-step` context **without waking**;
+- pending input is reconstructed from durable `agent/inbox/spliced` session events; and
+- `agent/pre-step` is the final waterfall that may reject or replace the admitted message
+  batch before it becomes model-visible.
+
+For Zer0 integrations this is the preferred DSH context/steering boundary: inject evidence
+through the agent inbox and pre-step admission contract, not by patching transcript state
+out of band.
 
 ### Evolution Lab
 
@@ -123,3 +152,34 @@ Draft experiment branches remain non-canonical. z0archy indexes them as selectab
 refs while `kvnloo/z0` remains the authority for canonical repository membership and
 cross-system semantics.
 
+## Current z0intelligence decision truth
+
+The current production-facing decision story is no longer the early NanoJev prototype:
+
+- **TypeSafe Jev 1.13.0** is the reference verifier for the registered evidence-sufficiency capability.
+- **Laya 421M** is the resident local typed-decision fast path; broader automatic verification eligibility is still experimental.
+- **OpenJev**, Decider-2B, Julia-1, and image-decision backends remain benchmark / experimental surfaces unless a registered capability explicitly promotes them.
+- **NanoJev is legacy-only**, retained for reproducibility rather than as the verification default.
+- Deterministic legality, permissions, budgets, replay/conflict protection, and dispatch authority are compiled before learned choice.
+
+This distinction matters in z0archy: a backend existing in the repository does not imply authority to route or execute.
+
+## Unified memory: merged core vs active lab
+
+Merged canonical behavior remains the **unified-memory evidence path**: explicit information
+needs resolve into provenance-bearing ContextPackets / StatePacket-style bounded evidence,
+with retrieval, model-visible injection, answer support, and verification kept separate.
+
+The newer memory program is active but **not all merged into z0intelligence master yet**.
+Its intended split is:
+
+```text
+EPISODIC   EventLog + OptMem temporal projection
+RETRIEVAL  FTS5 + AgentsView
+SEMANTIC   TencentDB L1/L2/L3
+WORKING    StatePacket / query-time compiler
+PROCEDURAL verified routine compiler
+```
+
+z0archy therefore shows this as a lab view. Exact branch/PR evidence must be selected before
+those unmerged layers are treated as implementation truth.

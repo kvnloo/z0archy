@@ -123,7 +123,7 @@ def semantic_kind(node: dict) -> str:
 def semantic_tip(node: dict) -> str:
     attrs = node.get("attributes") or {}
     parts = [str(node.get("label", node.get("id", ""))), "", f"type: {node.get('type','')}"]
-    for key in ("kind", "adoption", "stage", "purpose", "repo", "suiteRole", "suiteAuthority", "suiteStatus", "suiteSummary", "rule", "scale", "sensitivity", "relation", "confidence"):
+    for key in ("kind", "adoption", "stage", "purpose", "repo", "suiteRole", "suiteAuthority", "suiteStatus", "suiteSummary", "suiteUpstream", "rule", "scale", "sensitivity", "relation", "confidence"):
         value = attrs.get(key)
         if value:
             parts.append(f"{key}: {' '.join(str(value).split())}")
@@ -134,7 +134,146 @@ def semantic_tip(node: dict) -> str:
     return "\n".join(parts)
 
 
-def build(graph: dict | None = None) -> dict:
+def build_canonical_implementation_scene(
+    canonical_index: dict | None,
+    packs: dict[str, dict] | None,
+) -> dict | None:
+    """Project explicit subsystems from exact canonical component pins into one scene."""
+    if not canonical_index or not packs:
+        return None
+
+    rows: list[dict] = []
+    component_ids: list[str] = []
+    scene_edges: list[dict] = []
+    for repo, meta in sorted((canonical_index.get("repos") or {}).items()):
+        pins = [
+            pin for pin in (meta.get("pins") or [])
+            if pin.get("resolved") and pin.get("evidenceKey")
+        ]
+        if not pins:
+            continue
+        pin = pins[0]
+        component = str(pin.get("component") or "")
+        pack = packs.get(repo)
+        if not component or not pack:
+            continue
+        subsystems = [
+            node for node in (pack.get("nodes") or [])
+            if node.get("type") == "subsystem"
+        ]
+        if not subsystems:
+            continue
+        if component not in component_ids:
+            component_ids.append(component)
+        subsystems.sort(key=lambda node: str(node.get("label") or node.get("id") or "").lower())
+        for node in subsystems:
+            attrs = node.get("attributes") or {}
+            summary = " ".join(str(attrs.get("summary") or "").split())
+            if len(summary) > 130:
+                summary = summary[:127] + "..."
+            paths = attrs.get("paths") or []
+            kind = str(attrs.get("kind") or "subsystem")
+            style = {
+                "memory": "memory",
+                "context": "memory",
+                "decision": "decision",
+                "policy": "decision",
+                "authority": "contract",
+                "orchestration": "decision",
+                "measurement": "measurement",
+                "evidence": "research",
+                "learning": "research",
+                "deployment": "compute",
+                "compute": "compute",
+                "integration": "runtime",
+                "execution": "runtime",
+                "runtime": "runtime",
+                "interaction": "environment",
+            }.get(kind, "contract")
+            card_id = f"canonical-impl:{repo}:{attrs.get('id') or node.get('id')}"
+            rows.append({
+                "id": card_id,
+                "title": node.get("label") or attrs.get("name") or attrs.get("id") or "subsystem",
+                "sub": f"{component} · {kind}",
+                "body": summary,
+                "w": 350,
+                "kind": f"hub {style}",
+                "tip": "\n".join([
+                    str(node.get("label") or attrs.get("id") or "subsystem"),
+                    "",
+                    f"component: {component}",
+                    f"repo: {repo}",
+                    f"pinned ref: {pin.get('ref')}",
+                    f"evidence: {pin.get('evidenceKey')}",
+                    f"kind: {kind}",
+                    *([f"paths: {', '.join(str(p) for p in paths[:6])}"] if paths else []),
+                ]),
+                "meta": {
+                    "component": component,
+                    "repo": repo,
+                    "canonicalRef": pin.get("ref"),
+                    "canonicalEvidenceKey": pin.get("evidenceKey"),
+                    "graphType": "subsystem",
+                    "graphId": node.get("id"),
+                    "semanticLevel": 4,
+                    "truthClass": "implemented",
+                },
+            })
+            scene_edges.append({
+                "from": component,
+                "to": card_id,
+                "kind": "integrates",
+                "label": "pinned implementation",
+            })
+
+    if not rows:
+        return None
+    for i, row in enumerate(rows):
+        row["pos"] = grid_pos(i, len(rows))
+
+    return {
+        "id": "canonical-implementation",
+        "title": "Canonical pinned implementation",
+        "caption": (
+            "Implementation subsystems compiled from the exact Git SHAs pinned by z0. "
+            "Only explicit zer0.repo.yaml / legacy manifests appear here; opaque pins remain "
+            "visible elsewhere but are not granted invented structure."
+        ),
+        "anchor": [7300, -1250],
+        "nodes": rows,
+        "include": component_ids,
+        "edges": scene_edges,
+        "layout": {"fitMargin": 180, "zoomMax": 0.82, "noCard": False},
+    }
+
+
+def load_canonical_implementation_scene(
+    canonical_index_path: Path,
+    evidence_root: Path,
+) -> dict | None:
+    if not canonical_index_path.is_file() or not evidence_root.is_dir():
+        return None
+    canonical_index = json.loads(canonical_index_path.read_text(encoding="utf-8"))
+    packs: dict[str, dict] = {}
+    for repo, meta in sorted((canonical_index.get("repos") or {}).items()):
+        pins = [
+            pin for pin in (meta.get("pins") or [])
+            if pin.get("resolved") and pin.get("evidenceKey")
+        ]
+        if not pins or "/" not in repo:
+            continue
+        owner, name = repo.split("/", 1)
+        path = evidence_root / owner / name / f"{pins[0]['evidenceKey']}.json"
+        if not path.is_file():
+            continue
+        try:
+            packs[repo] = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+    return build_canonical_implementation_scene(canonical_index, packs)
+
+
+def build(graph: dict | None = None, canonical_scene: dict | None = None) -> dict:
     if graph is None:
         component_doc = fetch_yaml("registry/components.yaml")
         interface_doc = fetch_yaml("registry/interfaces.yaml")
@@ -211,6 +350,67 @@ def build(graph: dict | None = None) -> dict:
             "include": first_party_include,
             "layout": {"fitMargin": 190, "zoomMax": 0.82, "noCard": False},
         })
+
+    active_execution_ids = [
+        "z0intelligence",
+        "aodl",
+        "z0://repo/kvnloo/hermes-agent",
+        "z0://repo/kvnloo/deepseek-harness",
+        "z0://repo/kvnloo/hermes-lcm",
+        "z0://repo/kvnloo/hermes-jev-skills",
+        "z0://repo/kvnloo/agent-orchestrator",
+        "z0://repo/kvnloo/agentweb",
+        "z0://repo/kvnloo/sol-pi-hermes",
+    ]
+    active_execution_include = [
+        node_id for node_id in active_execution_ids if node_id in available_ids
+    ]
+    if active_execution_include:
+        slides.append({
+            "id": "active-execution",
+            "title": "Active execution + harness path",
+            "caption": (
+                "The current execution path around z0intelligence and AODL: Hermes Agent "
+                "and DeepSeek Harness as primary runtimes; Hermes LCM and Jev as context / "
+                "typed-decision extensions; Agent Orchestrator and AgentWeb as active "
+                "integration surfaces. Peripheral catalog repos stay discoverable without "
+                "crowding this operational view."
+            ),
+            "anchor": [2500, -2850],
+            "nodes": [],
+            "include": active_execution_include,
+            "layout": {"fitMargin": 190, "zoomMax": 0.82, "noCard": False},
+        })
+
+    active_memory_ids = [
+        "z0intelligence",
+        "z0://mechanism/unified-memory-evidence-path",
+        "z0://repo/kvnloo/OptMem",
+        "z0://repo/kvnloo/hermes-lcm",
+        "z0://repo/kvnloo/z0evals",
+    ]
+    active_memory_include = [
+        node_id for node_id in active_memory_ids if node_id in available_ids
+    ]
+    if active_memory_include:
+        slides.append({
+            "id": "active-memory-lab",
+            "title": "Unified memory: merged core + active lab",
+            "caption": (
+                "Merged truth: z0intelligence resolves provenance-backed ContextPackets "
+                "without becoming a universal memory database. Active, non-canonical memory "
+                "work layers an append-only EventLog with OptMem temporal projection, "
+                "FTS5 / AgentsView retrieval, TencentDB semantic memory, and query-time "
+                "StatePacket compilation. Exact branch selection remains the evidence boundary."
+            ),
+            "anchor": [900, -2850],
+            "nodes": [],
+            "include": active_memory_include,
+            "layout": {"fitMargin": 190, "zoomMax": 0.82, "noCard": False},
+        })
+
+    if canonical_scene:
+        slides.append(canonical_scene)
 
     for pid, title, caption, anchor, style in PLANES:
         members = [(cid, c) for cid, c in components.items() if plane_of[cid] == pid]
@@ -296,22 +496,37 @@ def build(graph: dict | None = None) -> dict:
         for i, node in enumerate(members):
             attrs = node.get("attributes") or {}
             retrieval = attrs.get("retrieval") or {}
-            body = (
-                attrs.get("repo")
-                or attrs.get("purpose")
-                or attrs.get("rule")
-                or attrs.get("summary")
-                or attrs.get("relation")
-                or retrieval.get("fastest")
-                or ""
-            )
+            if node.get("type") == "repository":
+                body = (
+                    attrs.get("suiteSummary")
+                    or attrs.get("repo")
+                    or ""
+                )
+                repo_sub_parts = [
+                    str(attrs.get("suiteRole") or "repository").replace("_", " "),
+                    str(attrs.get("suiteAuthority") or "").replace("_", " "),
+                ]
+                if attrs.get("suiteUpstream"):
+                    repo_sub_parts.append("downstream fork")
+                node_sub = " · ".join(part for part in repo_sub_parts if part)
+            else:
+                body = (
+                    attrs.get("repo")
+                    or attrs.get("purpose")
+                    or attrs.get("rule")
+                    or attrs.get("summary")
+                    or attrs.get("relation")
+                    or retrieval.get("fastest")
+                    or ""
+                )
+                node_sub = node.get("type", "").replace("_", " ")
             body = " ".join(str(body).split())
             if len(body) > 110:
                 body = body[:107] + "..."
             slide_nodes.append({
                 "id": deck_id_for_graph_node(node),
                 "title": node.get("label", node["id"]),
-                "sub": node.get("type", "").replace("_", " "),
+                "sub": node_sub,
                 "body": body,
                 "pos": grid_pos(i, len(members)),
                 "w": 320,
@@ -460,12 +675,18 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--graph", default="generated/graph.json")
     parser.add_argument("--output", default="deck.json")
+    parser.add_argument("--canonical-index", default="generated/canonical-ref-index.json")
+    parser.add_argument("--ref-evidence-dir", default="generated/ref-evidence")
     args = parser.parse_args()
     graph_path = Path(args.graph)
     graph = json.loads(graph_path.read_text(encoding="utf-8")) if graph_path.exists() else None
+    canonical_scene = load_canonical_implementation_scene(
+        Path(args.canonical_index),
+        Path(args.ref_evidence_dir),
+    )
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(build(graph), indent=2) + "\n", encoding="utf-8")
+    output.write_text(json.dumps(build(graph, canonical_scene), indent=2) + "\n", encoding="utf-8")
     print(f"wrote {output}")
 
 if __name__ == "__main__":
