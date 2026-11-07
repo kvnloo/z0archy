@@ -92,16 +92,6 @@ def latest_canonical_run_id(store_path: str | Path) -> str | None:
     return candidates[-1].run_id if candidates else None
 
 
-def counterfactual_parts(run_id: str) -> tuple[str, str] | None:
-    if not run_id.startswith(COUNTERFACTUAL_PREFIX):
-        return None
-    value = run_id.removeprefix(COUNTERFACTUAL_PREFIX)
-    target_hash, sep, lineage = value.rpartition("_")
-    if not sep or len(target_hash) != 64 or not lineage:
-        return None
-    return target_hash, lineage
-
-
 def _reconcile_architecture_graph(
     fork: Runtime,
     target_graph: dict[str, Any],
