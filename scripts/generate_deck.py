@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
-import os
 import urllib.request
 from pathlib import Path
 

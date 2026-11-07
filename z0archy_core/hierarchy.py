@@ -28,7 +28,6 @@ def propose_hierarchy_changes(
         node["id"]: node for node in current.get("nodes") or []
         if node.get("type") in targets
     }
-    current_edges = current.get("edges") or []
     history_presence = Counter()
     for world in worlds:
         ids = {node["id"] for node in world.get("nodes") or []}
