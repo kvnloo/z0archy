@@ -23,6 +23,7 @@ architecture:
       paths:
         - z0archy_core/sources.py
         - z0archy_core/introspection.py
+        - z0archy_core/code_intelligence.py
         - z0archy_core/virtual.py
       depends_on: [semantic-compiler]
 
